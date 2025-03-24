@@ -1,17 +1,16 @@
-import type { Metadata } from "next"
-import { inter, mainFont } from "./config/fonts";
-import "./globals.css"
-
+import type { Metadata } from 'next'
+import { inter, mainFont } from './config/fonts'
+import './globals.css'
 
 export const metadata: Metadata = {
-  title: "Beauty Booking",
-  description: "The best beauty salons, spas and barbershops",
-};
+  title: 'Beauty Booking',
+  description: 'The best beauty salons, spas and barbershops'
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -19,5 +18,5 @@ export default function RootLayout({
         {children}
       </body>
     </html>
-  );
+  )
 }

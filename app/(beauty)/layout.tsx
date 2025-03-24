@@ -1,4 +1,4 @@
-import { Header } from "../components";
+import { Header } from '../components'
 
 export default function BeautyLayout({
     children,
@@ -12,5 +12,5 @@ export default function BeautyLayout({
                 {children}
             </main>
         </>
-    );
+    )
 }

@@ -1,7 +1,7 @@
-import clsx from "clsx"
-import Image from "next/image"
-import Link from "next/link"
-import { FaStar } from "react-icons/fa6"
+import Image from 'next/image'
+import Link from 'next/link'
+import clsx from 'clsx'
+import { FaStar } from 'react-icons/fa6'
 
 interface Props {
     cardWidth?: number,

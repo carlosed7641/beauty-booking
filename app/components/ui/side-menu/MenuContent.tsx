@@ -4,7 +4,7 @@ import { FiMapPin } from 'react-icons/fi'
 import { IoSettingsOutline, IoStorefrontOutline } from 'react-icons/io5'
 import { LuNotebook } from 'react-icons/lu'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
-import { RxCaretRight } from "react-icons/rx"
+import { RxCaretRight } from 'react-icons/rx'
 
 
 export const MenuContent = () => {

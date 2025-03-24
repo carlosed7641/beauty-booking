@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Dialog } from '../dialog/Dialog'
-import { RxCaretDown } from "react-icons/rx"
+import { RxCaretDown } from 'react-icons/rx'
 
 export const UserMenu = () => {
 
