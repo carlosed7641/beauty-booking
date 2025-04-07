@@ -3,7 +3,7 @@ import { ShopCardLayout } from '../shop-card/ShopCardLayout'
 import { ShopCard } from '../shop-card/ShopCard'
 
 const cardExample1 = {
-  href: "/",
+  href: "/entity/422",
   imageSrc: "https://picsum.photos/300/180",
   imageWidth: 300,
   imageHeight: 180,

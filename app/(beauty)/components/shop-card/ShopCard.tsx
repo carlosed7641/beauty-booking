@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const ShopCard = ({ 
-    cardWidth = 52, 
+    cardWidth = 208, 
     href,
     imageSrc,
     imageWidth,
@@ -34,7 +34,7 @@ export const ShopCard = ({
     const title = serviceName ? serviceName : shopName
 
     return (
-        <li className={`bg-[#e8f7ea] rounded-b-md  w-${cardWidth} md:w-auto shrink-0`}>
+        <li className={`bg-[#e8f7ea] rounded-b-md md:w-auto! shrink-0`}  style={{ width: cardWidth}}>
             <Link title={title} href={href} className="flex flex-col">
                 <div className="relative">
                     <Image className="rounded-t-md" alt={title} width={imageWidth} height={imageHeight} src={imageSrc} />
@@ -44,7 +44,7 @@ export const ShopCard = ({
                     </div>
                 </div>
                 <div className="flex flex-col gap-2 p-5">
-                    { serviceName && <span className="font-bold">Corte hombre</span> } 
+                    { serviceName && <span className="font-bold">{serviceName}</span> } 
                     <span className={clsx({ "font-bold": !serviceName })
                     }>{shopName}</span>
                     {

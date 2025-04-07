@@ -1,0 +1,71 @@
+import { excludeHours, scheduleHours } from '@/util/fake-data'
+
+export const generateHoursArray = (frequencyMinutes: number, dateString: string): string[] | null => {
+
+    const now = new Date()
+    const date = new Date(dateString)
+
+    const [startHour, startMinute] = scheduleHours[0].split(':').map(Number);
+    const [endHour, endMinute] = scheduleHours[1].split(':').map(Number)
+
+
+    const start = new Date()
+    start.setHours(startHour, startMinute, 0, 0)
+
+    const end = new Date()
+    end.setHours(endHour, endMinute, 0, 0)
+
+    let current: Date
+
+
+    if (isSameDay(date, now)) {
+        current = new Date(now)
+        if (current < start) current = new Date(start)
+    } else {
+        current = new Date(start)
+    }
+
+    const minutes = current.getMinutes()
+    const remainder = minutes % frequencyMinutes
+
+    if (remainder !== 0) {
+        current.setMinutes(minutes + (frequencyMinutes - remainder))
+    }
+
+    const result = []
+
+    while (current <= end) {
+
+
+        if (!excludeHours.includes(format24(current))) {
+            const hours = current.getHours()
+            const mins = current.getMinutes()
+
+            const period = hours >= 12 ? 'PM' : 'AM'
+            const displayHour = hours % 12 === 0 ? 12 : hours % 12
+            const displayMinutes = mins.toString().padStart(2, '0')
+
+            result.push(`${displayHour}:${displayMinutes} ${period}`)
+
+        }
+
+        current = new Date(current.getTime() + frequencyMinutes * 60000)
+
+    }
+
+    return result.length ? result : null
+}
+
+export const format24 = (date: Date): string => {
+    const h = date.getHours().toString().padStart(2, '0');
+    const m = date.getMinutes().toString().padStart(2, '0');
+    return `${h}:${m}`
+}
+
+export const isSameDay = (d1: Date, d2: Date): boolean => {
+    return (
+        d1.getFullYear() === d2.getFullYear() &&
+        d1.getMonth() === d2.getMonth() &&
+        d1.getDate() === d2.getDate()
+    )
+}

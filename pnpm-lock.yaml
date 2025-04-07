@@ -43,8 +43,8 @@ importers:
         specifier: ^4
         version: 4.0.12
       typescript:
-        specifier: ^5
-        version: 5.8.2
+        specifier: 5.9.0-dev.20250328
+        version: 5.9.0-dev.20250328
 
 packages:
 
@@ -514,8 +514,8 @@ packages:
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
-  typescript@5.8.2:
-    resolution: {integrity: sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==}
+  typescript@5.9.0-dev.20250328:
+    resolution: {integrity: sha512-m38Gb1vTDu8LugpOKL4cw7FbjQhZDYf7X2oumF4GvAs7T9O3q0Apv26ckQKuSXTQJAUUCiRfST+QHWXvssdCpQ==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -925,7 +925,7 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  typescript@5.8.2: {}
+  typescript@5.9.0-dev.20250328: {}
 
   undici-types@6.19.8: {}
 

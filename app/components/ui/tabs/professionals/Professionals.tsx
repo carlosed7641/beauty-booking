@@ -1,0 +1,29 @@
+import Image from 'next/image'
+import { FaStar } from 'react-icons/fa'
+import { profesionals } from '@/util/fake-data'
+
+export const Professionals = () => {
+  return (
+    <div className="grid grid-cols-2 gap-1 md:grid-cols-7 md:gap-3">
+    {
+      profesionals.map(p => (
+        <div className="flex flex-col gap-2 items-center cursor-pointer" key={p.name}>
+          <Image className="rounded-full" src={p.photo} alt={p.name} width={150} height={150} />
+          <div className="flex flex-col items-center">
+            <p className="font-bold">{p.name}</p>
+            {
+              p.reviews.count > 0 &&
+              <div className="flex my-1">
+                {Array.from({ length: Math.round(p.reviews.points) }, (_, i) => (
+                  <FaStar key={i} className="text-amber-300" />
+                ))}
+              </div>
+            }
+            <span className="text-zinc-500">{p.reviews.count > 0 ? `(${p.reviews.count}) Ver reseñas` : 'No hay reseñas'}</span>
+          </div>
+        </div>
+      ))
+    }
+    </div>
+  )
+}
