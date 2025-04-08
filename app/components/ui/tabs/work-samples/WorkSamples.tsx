@@ -48,7 +48,7 @@ export const WorkSamples = () => {
 
     return (
         <>
-            <div className="grid grid-cols-3 gap-2 md:grid-cols-7 md:gap-3">
+            <div className="grid grid-cols-3 gap-2 md:grid-cols-7 md:gap-3 mt-4">
                 {
                     Object.entries(categoryMap).map(([category, sample]) => (
                         sample && sample.length > 0 && (
