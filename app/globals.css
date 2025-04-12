@@ -32,6 +32,14 @@ body {
 .scroll-none {
   scrollbar-width: none;
 }
+.slick-arrow::before,
+.slick-dots button::before {
+  @apply text-green-700!;
+}
+
+.slick-dots li button:before {
+  font-size: 10px !important;
+}
 
 @keyframes fadeIn {
   from { opacity: 0; }
