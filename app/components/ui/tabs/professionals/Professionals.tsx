@@ -1,13 +1,14 @@
+import Link from 'next/link'
 import Image from 'next/image'
 import { FaStar } from 'react-icons/fa'
 import { profesionals } from '@/util/fake-data'
 
 export const Professionals = () => {
   return (
-    <div className="grid grid-cols-2 gap-1 md:grid-cols-7 md:gap-3">
+    <div className="grid grid-cols-2 gap-1 md:grid-cols-7 md:gap-3 mt-4">
     {
       profesionals.map(p => (
-        <div className="flex flex-col gap-2 items-center cursor-pointer" key={p.name}>
+        <Link href={`/professional/${p.id}`} className="flex flex-col gap-2 items-center cursor-pointer" key={p.id}>
           <Image className="rounded-full" src={p.photo} alt={p.name} width={150} height={150} />
           <div className="flex flex-col items-center">
             <p className="font-bold">{p.name}</p>
@@ -21,7 +22,7 @@ export const Professionals = () => {
             }
             <span className="text-zinc-500">{p.reviews.count > 0 ? `(${p.reviews.count}) Ver reseñas` : 'No hay reseñas'}</span>
           </div>
-        </div>
+        </Link>
       ))
     }
     </div>

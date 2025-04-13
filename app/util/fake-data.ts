@@ -19,6 +19,7 @@ export const serviceList: Service[] = [
 
 export const profesionals = [
   {
+    id: 'abc',
     name: 'Gregorio Carrena',
     photo: 'https://picsum.photos/150/150',
     entityId: 422,
@@ -29,6 +30,7 @@ export const profesionals = [
     }
   },
   {
+    id: 'bcf',
     name: 'Carlos Castro',
     photo: 'https://picsum.photos/150/150',
     entityId: 422,
@@ -43,3 +45,21 @@ export const profesionals = [
 export const availableDates = generateDatesArray()
 export const scheduleHours = ['10:00', '20:00']
 export const excludeHours = ['12:00', '12:30', '13:00']
+
+export const workSamples = [
+    {
+        category: 'Fade',
+        image: 'https://picsum.photos/160/170',
+        author: 'Carlos Castro'
+    },
+    {
+        category: 'Siete',
+        image: 'https://picsum.photos/160/170',
+        author: 'Gregorio Carrena'
+    },
+    {
+        category: 'Fade',
+        image: 'https://picsum.photos/160/170',
+        author: 'Gregorio Carrena'
+    }
+]

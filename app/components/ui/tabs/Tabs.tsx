@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ServiceListTab, WorkSamples, Professionals } from '.'
+import { ServiceListTab, WorkSamplesTab, Professionals } from '.'
 import { TabsHeader } from './TabsHeader'
 import type { Tab } from '@/interfaces/tab.interface'
 
@@ -14,7 +14,7 @@ const tabs: Tab[] = [
   {
     id: 'work-samples',
     label: 'Muestras de trabajo',
-    tab: <WorkSamples />  
+    tab: <WorkSamplesTab />  
   },
   {
     id: 'professionals',
