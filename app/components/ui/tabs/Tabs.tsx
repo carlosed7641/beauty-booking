@@ -5,25 +5,29 @@ import { ServiceListTab, WorkSamplesTab, Professionals } from '.'
 import { TabsHeader } from './TabsHeader'
 import type { Tab } from '@/interfaces/tab.interface'
 
-const tabs: Tab[] = [
-  {
-    id: 'services-list',
-    label: 'Lista de servicios',
-    tab: <ServiceListTab /> 
-  },
-  {
-    id: 'work-samples',
-    label: 'Muestras de trabajo',
-    tab: <WorkSamplesTab />  
-  },
-  {
-    id: 'professionals',
-    label: 'Profesionales',
-    tab: <Professionals />
-  }
-]
+export const Tabs = ({ professionalId  }: { professionalId?: string }) => {
 
-export const Tabs = () => {
+  const tabs: Tab[] = [
+    {
+      id: 'services-list',
+      label: 'Lista de servicios',
+      tab: <ServiceListTab professionalId={professionalId} /> 
+    },
+    {
+      id: 'work-samples',
+      label: 'Muestras de trabajo',
+      tab: <WorkSamplesTab professionalId={professionalId} />  
+    }
+  ]
+
+  if (!professionalId) {
+    tabs.push({
+      id: 'professionals',
+      label: 'Profesionales',
+      tab: <Professionals />
+    })
+  }
+
 
   const [activeTab, setActiveTab] = useState(tabs[0].id)
   const activeTabContent = tabs.find(t => t.id === activeTab)?.tab

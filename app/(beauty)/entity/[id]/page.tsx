@@ -1,39 +1,33 @@
-import { Tabs } from "@/components"
-import Image from "next/image"
-import Link from "next/link"
-import { FaStar, FaWhatsapp } from "react-icons/fa"
-import { FiMapPin } from "react-icons/fi"
-import { GoShareAndroid } from "react-icons/go"
+import Image from 'next/image'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import { FaStar, FaWhatsapp } from 'react-icons/fa'
+import { FiMapPin } from 'react-icons/fi'
+import { GoShareAndroid } from 'react-icons/go'
+import { Tabs } from '@/components'
+import { entities } from '@/util/fake-data'
 
-const data = {
-    imageSrc: 'https://picsum.photos/200/200',
-    name: 'Acicalate Vip',
-    address: {
-        street: 'Cra 30 #24-32',
-        city: 'Soledad',
-        state: 'Atlántico',
-        country: 'Colombia',
-        reference: 'Arriba del TA DA'
-    },
-    reviews: {
-        points: 4.5,
-        counts: 233
-    },
-    followers: 38,
-    scheduling: 104,
-    contactUrl: 'https://www.whatsapp.com/channel/0029Va4PN8hFCCoO00odQi0v'
+interface Props {
+    params: Promise<{ id: string }>
 }
 
-export default function EntityPage() {
+export default async function EntityPage({ params }: Props) {
+
+    const { id } = await params
+    const data = entities.find(e => e.id === id)
+
+    if (!data) {
+        redirect('/')
+    }
 
     return (
         <>
             <div className="flex gap-5">
                 <div className="flex flex-col">
                     <Image className="rounded-full self-start md:mb-8" width={200} height={200} src={data.imageSrc} alt={data.name} />
-                    <Social className="hidden md:flex" />
+                    <Social data={data} className="hidden md:flex" />
                 </div>
-                <div className='flex flex-col py-2 md:py-6'>
+                <div className="flex flex-col py-2 md:py-6 w-4/5 md:w-auto justify-center md:justify-start">
                     <p className="text-base md:text-3xl text-green-700 font-bold mb-2">{data.name}</p>
                     <p className="text-md md:text-lg text-zinc-500">
                         {data.address.street}, {data.address.city}, {data.address.state}, {data.address.country}
@@ -45,17 +39,17 @@ export default function EntityPage() {
                         <FiMapPin />
                         Ver en el mapa
                     </Link>
-                    <ShopInfo className="hidden md:flex" />
+                    <ShopInfo data={data} className="hidden md:flex" />
                 </div>
             </div>
-            <ShopInfo className="md:hidden justify-around" />
-            <Social className="md:hidden mt-6" />
+            <ShopInfo data={data} className="md:hidden justify-around" />
+            <Social data={data} className="md:hidden mt-6" />
             <Tabs />
         </>
     )
 }
 
-const ShopInfo = ({ className = '' }: { className?: string }) => {
+const ShopInfo = ({ data, className = '' }: { data: Entity, className?: string }) => {
     return (
 
         <div className={`${className} flex my-2 gap-10`}>
@@ -78,7 +72,7 @@ const ShopInfo = ({ className = '' }: { className?: string }) => {
     )
 }
 
-const Social = ({ className = '' }: { className?: string }) => {
+const Social = ({ data, className = '' }: { data: Entity, className?: string }) => {
     return (
         <div className={`${className} flex justify-around`}>
             <div className="flex flex-col gap-1 items-center text-zinc-500">
