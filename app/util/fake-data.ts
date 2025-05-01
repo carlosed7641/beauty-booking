@@ -19,6 +19,63 @@ export const entities: Entity[] = [
     followers: 38,
     scheduling: 104,
     contactUrl: 'https://www.whatsapp.com/channel/0029Va4PN8hFCCoO00odQi0v'
+  },
+  {
+    id: '423',
+    imageSrc: 'https://picsum.photos/200/200',
+    name: 'Acicalate Vip',
+    address: {
+      street: 'Cra 30 #24-32',
+      city: 'Soledad',
+      state: 'Atlántico',
+      country: 'Colombia',
+      reference: 'Arriba del TA DA'
+    },
+    reviews: {
+      points: 4.5,
+      counts: 233
+    },
+    followers: 38,
+    scheduling: 104,
+    contactUrl: 'https://www.whatsapp.com/channel/0029Va4PN8hFCCoO00odQi0v'
+  },
+  {
+    id: '424',
+    imageSrc: 'https://picsum.photos/200/200',
+    name: 'Acicalate Vip',
+    address: {
+      street: 'Cra 30 #24-32',
+      city: 'Soledad',
+      state: 'Atlántico',
+      country: 'Colombia',
+      reference: 'Arriba del TA DA'
+    },
+    reviews: {
+      points: 4.5,
+      counts: 233
+    },
+    followers: 38,
+    scheduling: 104,
+    contactUrl: 'https://www.whatsapp.com/channel/0029Va4PN8hFCCoO00odQi0v'
+  },
+  {
+    id: '425',
+    imageSrc: 'https://picsum.photos/200/200',
+    name: 'Acicalate Vip',
+    address: {
+      street: 'Cra 30 #24-32',
+      city: 'Soledad',
+      state: 'Atlántico',
+      country: 'Colombia',
+      reference: 'Arriba del TA DA'
+    },
+    reviews: {
+      points: 4.5,
+      counts: 233
+    },
+    followers: 38,
+    scheduling: 104,
+    contactUrl: 'https://www.whatsapp.com/channel/0029Va4PN8hFCCoO00odQi0v'
   }
 ]
 

@@ -34,7 +34,7 @@ export const ShopCard = ({
     const title = serviceName ? serviceName : shopName
 
     return (
-        <li className={`bg-[#e8f7ea] rounded-b-md md:w-auto! shrink-0`}  style={{ width: cardWidth}}>
+        <li className={`bg-[#e8f7ea] rounded-b-md md:w-auto! shrink-0`}  style={{ width: cardWidth }}>
             <Link title={title} href={href} className="flex flex-col">
                 <div className="relative">
                     <Image className="rounded-t-md" alt={title} width={imageWidth} height={imageHeight} src={imageSrc} />

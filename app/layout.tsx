@@ -7,6 +7,21 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
+// My reservations page 
+// Reputation page
+// Reviews page
+// Profile page
+// Favorites works samples
+// Search Page, search bar, filters
+// Map page
+// Login Page
+// -------------------
+// Modal Reviews, Entity Page - Barber Page
+// Next reservatioms - update - delete
+// Main menu, dk - mb
+// -------------------
+// Admin view
+
 export default function RootLayout({
   children,
 }: Readonly<{

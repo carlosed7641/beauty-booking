@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { FaRegStar } from 'react-icons/fa'
 import { FiMapPin } from 'react-icons/fi'
-import { IoSettingsOutline, IoStorefrontOutline } from 'react-icons/io5'
+import { IoStorefrontOutline } from 'react-icons/io5'
 import { LuNotebook } from 'react-icons/lu'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
 import { RxCaretRight } from 'react-icons/rx'
@@ -51,12 +51,6 @@ export const MenuContent = () => {
                <Link className="flex items-center gap-2 text-lg py-3 px-5" href="/my-reservations">
                     <FiMapPin className="text-2xl" />
                    Mapa
-               </Link> 
-            </li>
-            <li>
-               <Link className="flex items-center gap-2 text-lg py-3 px-5" href="/my-reservations">
-                    <IoSettingsOutline className="text-2xl" />
-                   Otros
                </Link> 
             </li>
         </ul>
