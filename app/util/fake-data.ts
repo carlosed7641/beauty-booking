@@ -145,3 +145,61 @@ export const workSamples = [
     authorId: 'abc'
   }
 ]
+
+export const reservations: Reservation[]= [
+  {
+    id: 123,
+    name: 'Corte adolescente',
+    price: 15000,
+    duration: '30m',
+    date: '15 de mayo de 2025',
+    hour: '9:30AM',
+    professional: 'Gregorio Carrena',
+    entity: 'Acicalate VIP',
+    status: 'completed'
+  },
+  {
+    id: 124,
+    name: 'Corte adulto',
+    price: 15000,
+    duration: '30m',
+    date: '15 de mayo de 2025',
+    hour: '9:30AM',
+    professional: 'Gregorio Carrena',
+    entity: 'Acicalate VIP',
+    status: 'completed'
+  },
+  {
+    id: 125,
+    name: 'Corte niño',
+    price: 15000,
+    duration: '30m',
+    date: '15 de mayo de 2025',
+    hour: '9:30AM',
+    professional: 'Gregorio Carrena',
+    entity: 'Acicalate VIP',
+    status: 'completed'
+  },
+  {
+    id: 126,
+    name: 'Corte siete',
+    price: 15000,
+    duration: '30m',
+    date: '15 de mayo de 2025',
+    hour: '9:30AM',
+    professional: 'Gregorio Carrena',
+    entity: 'Acicalate VIP',
+    status: 'canceled'
+  },
+  {
+    id: 127,
+    name: 'Corte hombre',
+    price: 15000,
+    duration: '30m',
+    date: '15 de mayo de 2025',
+    hour: '9:30AM',
+    professional: 'Gregorio Carrena',
+    entity: 'Acicalate VIP',
+    status: 'pending'
+  },
+]

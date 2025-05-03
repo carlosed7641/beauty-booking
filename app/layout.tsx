@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// My reservations page 
 // Reputation page
 // Reviews page
 // Profile page
