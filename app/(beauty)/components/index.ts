@@ -4,4 +4,5 @@ export * from './near-me/NearMe'
 
 export * from './entity-card/EntityCard'
 export * from './reservation-list/ReservationList'
+export * from './review-list/ReviewList'
 export * from './emotion/Emotion'

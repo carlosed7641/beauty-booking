@@ -1,4 +1,5 @@
 import { Emotion } from '../components'
+import { formatedDate } from '@/helpers'
 
 const professionalReviews = [
   {
@@ -64,11 +65,6 @@ export default function MyReputationPage() {
     ? totalPoints / reputationList.length
     : 0
   const reputationLevel = averagePoints >= 2.5 ? 'Buena' : averagePoints >= 1.5 ? 'Regular' : 'Mala'
-
-  const formatedDate = (timestamp: number) => {
-    const date: Date = new Date(timestamp)
-    return date.toLocaleDateString('es-ES')
-  }
 
   return (
     <>

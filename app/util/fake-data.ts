@@ -203,3 +203,66 @@ export const reservations: Reservation[]= [
     status: 'pending'
   },
 ]
+
+export const reviews: ReviewList[] = [
+  {
+    id: 1,
+    userId: 27,
+    service: {
+      id: '1',
+      name: 'Corte joven'
+    },
+    professional: {
+      id: 'abc',
+      name: 'Gregorio Carrena',
+      photo: 'https://picsum.photos/150/150'
+    },
+    date: 1746382434738,
+    points: 4
+  },
+  {
+    id: 2,
+    userId: 27,
+    service: {
+      id: '3',
+      name: 'Corte adulto'
+    },
+    professional: {
+      id: 'abc',
+      name: 'Gregorio Carrena',
+      photo: 'https://picsum.photos/150/150'
+    },
+    date: 1746382434338,
+    points: 5
+  },
+  {
+    id: 3,
+    userId: 27,
+    service: {
+      id: '2',
+      name: 'Corte adulto'
+    },
+    professional: {
+      id: 'def',
+      name: 'Carlos Castro',
+      photo: 'https://picsum.photos/150/150'
+    },
+    date: 1746385434338,
+    points: 5
+  },
+  {
+    id: 4,
+    userId: 32,
+    service: {
+      id: '2',
+      name: 'Corte prueba'
+    },
+    professional: {
+      id: 'def',
+      name: 'Carlos Castro',
+      photo: 'https://picsum.photos/150/150'
+    },
+    date: 1746385434338,
+    points: 3
+  }
+]
