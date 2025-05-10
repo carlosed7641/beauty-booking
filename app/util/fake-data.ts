@@ -266,3 +266,15 @@ export const reviews: ReviewList[] = [
     points: 3
   }
 ]
+
+export const session: Session = {
+  id: 57,
+  name: 'Carlos Castro Reales',
+  country: 'Colombia',
+  photo: 'https://picsum.photos/180/180',
+  indicator: '+57',
+  phone: '3004394704',
+  birthDay: '2000-04-26',
+  gender: 'Hombre',
+  shareNumberPhone: true
+}
