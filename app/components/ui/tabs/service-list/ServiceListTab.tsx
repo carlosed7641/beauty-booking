@@ -11,9 +11,14 @@ import { SelectHour } from './SelectHour'
 import { BookingButton } from './BookingButton'
 import { Confirm } from './Confirm'
 import { SERIVCE_INITIAL_STATE } from '@/util/const'
-import { profesionals } from '@/util/fake-data'
+import {  professionals as allProfessionals } from '@/util/fake-data'
+interface Props {
+    serviceList: Service[], 
+    professionals?: Professional[] 
+    professionalId?: string
+}
 
-export const ServiceListTab = ({ professionalId }: { professionalId?: string }) => {
+export const ServiceListTab = ({ serviceList, professionals, professionalId }: Props ) => {
 
     const [step, setStep] = useState(1)
     const [showModal, setShowModal] = useState(false)
@@ -25,7 +30,7 @@ export const ServiceListTab = ({ professionalId }: { professionalId?: string }) 
 
             if (professionalId && showModal) {
 
-                const professional = profesionals.find(p => p.id === professionalId)!
+                const professional = allProfessionals.find(p => p.id === professionalId)!
 
                 setServiceState({
                     ...serviceState,
@@ -46,7 +51,7 @@ export const ServiceListTab = ({ professionalId }: { professionalId?: string }) 
 
     return (
         <>
-            <ServiceList setShowModal={setShowModal} />
+            <ServiceList serviceList={serviceList} setShowModal={setShowModal} />
             {showModal && serviceState.selectedService &&
                 <Modal setShowModal={setShowModal}>
                     <ModalHeader setShowModal={setShowModal}>
@@ -70,7 +75,7 @@ export const ServiceListTab = ({ professionalId }: { professionalId?: string }) 
                         {
                             step === 1 &&
                             <>
-                                {!professionalId && <SelectProfessional />}
+                                {!professionalId && <SelectProfessional professionals={professionals!} />}
                                 {serviceState.selectedProfessional && <SelectDate />}
                                 {serviceState.selectedDate &&
                                     <>

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// Favorites works samples
+
 // Search Page, search bar, filters
 // Map page
 // Login Page

@@ -3,7 +3,14 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { FaStar } from 'react-icons/fa'
 import { Tabs } from '@/components'
-import { entities, profesionals } from '@/util/fake-data'
+import {  
+    entities,
+    workSamples as allWorkSamples, 
+    serviceList as allServiceList, 
+    professionals as allProfessionals, 
+     } from '@/util/fake-data'
+import { Tab } from '@/interfaces/tab.interface'
+import { ServiceListTab, WorkSamplesTab } from '@/components/ui/tabs'
 
 interface Props {
     params: Promise<{ id: string }>
@@ -12,13 +19,29 @@ interface Props {
 export default async function ProfessionalPage({ params }: Props) {
 
     const { id } = await params
-    const professional = profesionals.find(p => p.id === id)
+    const professional = allProfessionals.find(p => p.id === id)
 
     if (!professional) {
         redirect('/')
     }
-
+ 
     const entity = entities.find(e => e.id === professional.entityId)
+    const serviceList = allServiceList.filter(sl => sl.entityId === professional.entityId) // TODO: by professional
+    const workSamples = allWorkSamples.filter(ws => ws.authorId === id)
+
+    const tabs: Tab[] = [
+        {
+            id: 'services-list',
+            label: 'Lista de servicios',
+            tab: <ServiceListTab serviceList={serviceList} professionalId={id} />
+        },
+        {
+            id: 'work-samples',
+            label: 'Muestras de trabajo',
+            tab: <WorkSamplesTab workSamples={workSamples} />
+        }
+    ]
+
 
     return (
         <>
@@ -61,7 +84,7 @@ export default async function ProfessionalPage({ params }: Props) {
                     {entity?.address.street}, {entity?.address.city}, {entity?.address.state}, {entity?.address.country}
                 </p>
             </div>
-            <Tabs professionalId={professional.id} />
+            <Tabs tabs={tabs} />
         </>
     )
 }

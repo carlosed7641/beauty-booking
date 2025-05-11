@@ -81,6 +81,7 @@ export const entities: Entity[] = [
 
 export const serviceList: Service[] = [
   {
+    entityId: '422',
     category: "Color cabello",
     services: [
       { name: "Rayitos platinados", description: "Los mejores rayitos", duration: '4h', price: 30000 },
@@ -88,6 +89,7 @@ export const serviceList: Service[] = [
     ]
   },
   {
+    entityId: '422',
     category: "Cortes",
     services: [
       { name: "Sencillo", description: "Corte básico", duration: '30m', price: 15000 },
@@ -96,7 +98,7 @@ export const serviceList: Service[] = [
   }
 ]
 
-export const profesionals = [
+export const professionals: ProfessionalData[] = [
   {
     id: 'abc',
     name: 'Gregorio Carrena',
@@ -125,24 +127,27 @@ export const availableDates = generateDatesArray()
 export const scheduleHours = ['10:00', '20:00']
 export const excludeHours = ['12:00', '12:30', '13:00']
 
-export const workSamples = [
+export const workSamples: WorkSample[] = [
   {
     category: 'Fade',
     image: 'https://picsum.photos/160/170',
     author: 'Carlos Castro',
-    authorId: 'bcf'
+    authorId: 'bcf',
+    entityId: '422'
   },
   {
     category: 'Siete',
     image: 'https://picsum.photos/160/170',
     author: 'Gregorio Carrena',
-    authorId: 'abc'
+    authorId: 'abc',
+    entityId: '422'
   },
   {
     category: 'Fade',
     image: 'https://picsum.photos/160/170',
     author: 'Gregorio Carrena',
-    authorId: 'abc'
+    authorId: 'abc',
+    entityId: '422'
   }
 ]
 

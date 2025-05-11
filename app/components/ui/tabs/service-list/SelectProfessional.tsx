@@ -1,9 +1,8 @@
 import clsx from 'clsx'
 import Image from 'next/image'
 import { useService } from '@/store'
-import { profesionals } from '@/util/fake-data'
 
-export const SelectProfessional = () => {
+export const SelectProfessional = ({ professionals }: { professionals: Professional[] }) => {
 
     const { serviceState, setServiceState } = useService()
 
@@ -12,7 +11,7 @@ export const SelectProfessional = () => {
             <p className="text-xl">Selecciona el profesional</p>
             <div className="flex md:flex-wrap gap-1 md:gap-3 overflow-x-scroll md:overflow-auto scroll-none">
                 {
-                    profesionals.map(p => (
+                    professionals.map(p => (
                         <div onClick={() => setServiceState({
                             ...serviceState,
                             selectedProfessional: p.name

@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Slider from 'react-slick'
@@ -6,17 +7,12 @@ import 'slick-carousel/slick/slick.css'
 import { WorkSamples } from './WorkSamples'
 import { Modal } from '../../modal/Modal'
 import { SLIDER_SETTINGS } from '@/util/const'
-import { workSamples as allWorkSamples } from '@/util/fake-data'
 
-export const WorkSamplesTab = ({ professionalId }: { professionalId?: string }) => {
+export const WorkSamplesTab = ({ workSamples }: { workSamples: WorkSample[] }) => {
 
     const [showModal, setShowModal] = useState(false)
     const [selectedGallery, setSelectedGallery] = useState('')
     
-    const workSamples = professionalId
-    ? allWorkSamples.filter(ws => ws.authorId === professionalId)
-    : allWorkSamples
-
     // const categoryMap = Object.groupBy(workSamples, ({ category })=> category) // Not supportted
     const categoryMap = workSamples.reduce<Record<string, typeof workSamples>>((acc, sample) => {
         if (!acc[sample.category]) {

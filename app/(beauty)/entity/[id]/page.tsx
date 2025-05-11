@@ -5,7 +5,12 @@ import { FaStar, FaWhatsapp } from 'react-icons/fa'
 import { FiMapPin } from 'react-icons/fi'
 import { GoShareAndroid } from 'react-icons/go'
 import { Tabs } from '@/components'
-import { entities } from '@/util/fake-data'
+import { entities, 
+    workSamples as allWorkSamples, 
+    serviceList as allServiceList, 
+    professionals as allProfessionals } from '@/util/fake-data'
+import { Tab } from '@/interfaces/tab.interface'
+import { Professionals, ServiceListTab, WorkSamplesTab } from '@/components/ui/tabs'
 
 interface Props {
     params: Promise<{ id: string }>
@@ -19,6 +24,28 @@ export default async function EntityPage({ params }: Props) {
     if (!data) {
         redirect('/')
     }
+
+    const serviceList = allServiceList.filter(sl => sl.entityId === id)
+    const workSamples = allWorkSamples.filter(ws => ws.entityId === id)
+    const professionals = allProfessionals.filter(p => p.entityId === id)
+
+    const tabs: Tab[] = [
+        {
+            id: 'services-list',
+            label: 'Lista de servicios',
+            tab: <ServiceListTab serviceList={serviceList} professionals={professionals} />
+        },
+        {
+            id: 'work-samples',
+            label: 'Muestras de trabajo',
+            tab: <WorkSamplesTab workSamples={workSamples} />
+        },
+        {
+            id: 'professionals',
+            label: 'Profesionales',
+            tab: <Professionals professionals={professionals} />
+        }
+    ]
 
     return (
         <>
@@ -44,7 +71,7 @@ export default async function EntityPage({ params }: Props) {
             </div>
             <ShopInfo data={data} className="md:hidden justify-around" />
             <Social data={data} className="md:hidden mt-6" />
-            <Tabs />
+            <Tabs tabs={tabs} />
         </>
     )
 }

@@ -6,6 +6,7 @@ interface ServiceItem {
 }
 
 interface Service {
-    category: string,
+    entityId: string
+    category: string
     services: ServiceItem[]
 }

@@ -2,9 +2,8 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import { RxCaretDown } from 'react-icons/rx'
 import { useService } from '@/store'
-import { serviceList } from '@/util/fake-data'
 
-export const ServiceList = ({ setShowModal }: { setShowModal: (showModal: boolean) => void }) => {
+export const ServiceList = ({ serviceList, setShowModal }: { serviceList: Service[], setShowModal: (showModal: boolean) => void }) => {
 
     const [currentOpenCategory, setCurrentOpenCategory] = useState<string | null>(null)
     const { serviceState, setServiceState } = useService()
