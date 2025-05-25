@@ -13,7 +13,7 @@ export const entities: Entity[] = [
       reference: 'Arriba del TA DA'
     },
     reviews: {
-      points: 4.5,
+      points: 4.6,
       counts: 233
     },
     followers: 38,
@@ -23,7 +23,7 @@ export const entities: Entity[] = [
   {
     id: '423',
     imageSrc: 'https://picsum.photos/200/200',
-    name: 'Acicalate Vip',
+    name: 'Master Barber',
     address: {
       street: 'Cra 30 #24-32',
       city: 'Soledad',
@@ -42,7 +42,7 @@ export const entities: Entity[] = [
   {
     id: '424',
     imageSrc: 'https://picsum.photos/200/200',
-    name: 'Acicalate Vip',
+    name: 'Best Shop',
     address: {
       street: 'Cra 30 #24-32',
       city: 'Soledad',
@@ -61,7 +61,7 @@ export const entities: Entity[] = [
   {
     id: '425',
     imageSrc: 'https://picsum.photos/200/200',
-    name: 'Acicalate Vip',
+    name: 'Brothers Vip',
     address: {
       street: 'Cra 30 #24-32',
       city: 'Soledad',
@@ -70,7 +70,7 @@ export const entities: Entity[] = [
       reference: 'Arriba del TA DA'
     },
     reviews: {
-      points: 4.5,
+      points: 4.4,
       counts: 233
     },
     followers: 38,
@@ -94,6 +94,22 @@ export const serviceList: Service[] = [
     services: [
       { name: "Sencillo", description: "Corte básico", duration: '30m', price: 15000 },
       { name: "Corte y barba", description: "Corte y barba", duration: '45m', price: 20000 }
+    ]
+  },
+    {
+    entityId: '422',
+    category: "Peinados",
+    services: [
+      { name: "Trenzas", description: "Trenzas básicas", duration: '1h', price: 18000 },
+      { name: "Cepillado", description: "Cepillado básico", duration: '45m', price: 12000 }
+    ]
+  },
+  {
+    entityId: '425',
+    category: "Cortes",
+    services: [
+      { name: "Especial", description: "Corte especial", duration: '30m', price: 16000 },
+      { name: "Barba con pigmentación", description: "Barba con pigmentación", duration: '45m', price: 14000 }
     ]
   }
 ]
@@ -151,7 +167,7 @@ export const workSamples: WorkSample[] = [
   }
 ]
 
-export const reservations: Reservation[]= [
+export const reservations: Reservation[] = [
   {
     id: 123,
     name: 'Corte adolescente',
@@ -283,3 +299,5 @@ export const session: Session = {
   gender: 'Hombre',
   shareNumberPhone: true
 }
+
+export const categories = ['cortes', 'peinados', 'uñas', 'limpieza facial']

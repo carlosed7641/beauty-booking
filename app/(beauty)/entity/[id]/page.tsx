@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { FaStar, FaWhatsapp } from 'react-icons/fa'
 import { FiMapPin } from 'react-icons/fi'
 import { GoShareAndroid } from 'react-icons/go'
@@ -22,7 +22,7 @@ export default async function EntityPage({ params }: Props) {
     const data = entities.find(e => e.id === id)
 
     if (!data) {
-        redirect('/')
+        notFound()
     }
 
     const serviceList = allServiceList.filter(sl => sl.entityId === id)
