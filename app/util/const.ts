@@ -71,3 +71,18 @@ export const VIEWS = {
 }
 
 export const ORDER_OPTIONS = ['Precio mayor', 'Precio menor', 'Predeterminado'] //TODO: Más cerca de ti
+
+export const MONTHS = [
+    { month: 'ene', days: 31 },
+    { month: 'feb', days: 28 },
+    { month: 'mar', days: 31 },
+    { month: 'abr', days: 30 },
+    { month: 'may', days: 31 },
+    { month: 'jun', days: 30 },
+    { month: 'jul', days: 31 },
+    { month: 'ago', days: 31 },
+    { month: 'sep', days: 30 },
+    { month: 'oct', days: 31 },
+    { month: 'nov', days: 30 },
+    { month: 'dic', days: 31 },
+]
