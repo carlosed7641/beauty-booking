@@ -8,12 +8,17 @@ export const metadata: Metadata = {
 }
 
 // Modal Reviews, Entity Page - Barber Page
-// Next reservatioms - update - delete
+// Next reservations - update - delete
+// Home - (Next reservations - Favorite Shops)
 // Main menu, dk - mb
+// Merge entities page with search function
+// Loader
+// Keyboard actions
 // Refactor code
 // -------------------
 // Admin view
 // Map
+// Metadata
 
 export default function RootLayout({
   children,
