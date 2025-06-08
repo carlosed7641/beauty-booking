@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { SERIVCE_INITIAL_STATE } from '@/util/const'
+import { SERVICE_INITIAL_STATE } from '@/util/const'
 
 type ServiceState = {
     selectedService: ServiceItem | null
@@ -15,6 +15,6 @@ interface Store {
 }
 
 export const useService = create<Store>()((set) => ({
-    serviceState: SERIVCE_INITIAL_STATE,
+    serviceState: SERVICE_INITIAL_STATE,
     setServiceState: (serviceState: ServiceState) => set({ serviceState })
 }))

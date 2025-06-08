@@ -10,38 +10,36 @@ import { SelectDate } from './SelectDate'
 import { SelectHour } from './SelectHour'
 import { BookingButton } from './BookingButton'
 import { Confirm } from './Confirm'
-import { SERIVCE_INITIAL_STATE } from '@/util/const'
-import {  professionals as allProfessionals } from '@/util/fake-data'
+import { SERVICE_INITIAL_STATE } from '@/util/const'
+import { professionals as allProfessionals } from '@/util/fake-data'
 interface Props {
-    serviceList: Service[], 
-    professionals?: Professional[] 
+    serviceList: Service[],
+    professionals?: Professional[]
     professionalId?: string
 }
 
-export const ServiceListTab = ({ serviceList, professionals, professionalId }: Props ) => {
+export const ServiceListTab = ({ serviceList, professionals, professionalId }: Props) => {
 
     const [step, setStep] = useState(1)
-    const [showModal, setShowModal] = useState(false)
     const { serviceState, setServiceState } = useService()
+    const [showModal, setShowModal] = useState(Boolean(serviceState?.selectedService))
 
     useEffect(() => {
-
         if (showModal) {
-
-            if (professionalId && showModal) {
-
+            if (professionalId) {
                 const professional = allProfessionals.find(p => p.id === professionalId)!
 
-                setServiceState({
-                    ...serviceState,
-                    selectedProfessional: professional.name
-                })
+                if (professional) {
+                    setServiceState({
+                        ...serviceState,
+                        selectedProfessional: professional.name
+                    })
+                }
             }
 
             window.scrollTo(0, 0)
-
         } else {
-            setServiceState(SERIVCE_INITIAL_STATE)
+            setServiceState(SERVICE_INITIAL_STATE)
             setStep(1)
         }
 

@@ -1,4 +1,4 @@
-export const SERIVCE_INITIAL_STATE = {
+export const SERVICE_INITIAL_STATE = {
     selectedService: null,
     selectedProfessional: null,
     selectedDate: null,

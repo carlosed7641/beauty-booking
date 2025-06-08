@@ -84,32 +84,32 @@ export const serviceList: Service[] = [
     entityId: '422',
     category: "Color cabello",
     services: [
-      { name: "Rayitos platinados", description: "Los mejores rayitos", duration: '4h', price: 30000 },
-      { name: "Tinte", description: "El mejor tinte", duration: '3.5h', price: 25000 }
+      { serviceId: '001', name: "Rayitos platinados", description: "Los mejores rayitos", duration: '4h', price: 30000 },
+      { serviceId: '002', name: "Tinte", description: "El mejor tinte", duration: '3.5h', price: 25000 }
     ]
   },
   {
     entityId: '422',
     category: "Cortes",
     services: [
-      { name: "Sencillo", description: "Corte básico", duration: '30m', price: 15000 },
-      { name: "Corte y barba", description: "Corte y barba", duration: '45m', price: 20000 }
+      { serviceId: '003', name: "Sencillo", description: "Corte básico", duration: '30m', price: 15000 },
+      { serviceId: '004', name: "Corte y barba", description: "Corte y barba", duration: '45m', price: 20000 }
     ]
   },
-    {
+  {
     entityId: '422',
     category: "Peinados",
     services: [
-      { name: "Trenzas", description: "Trenzas básicas", duration: '1h', price: 18000 },
-      { name: "Cepillado", description: "Cepillado básico", duration: '45m', price: 12000 }
+      { serviceId: '005', name: "Trenzas", description: "Trenzas básicas", duration: '1h', price: 18000 },
+      { serviceId: '006', name: "Cepillado", description: "Cepillado básico", duration: '45m', price: 12000 }
     ]
   },
   {
     entityId: '425',
     category: "Cortes",
     services: [
-      { name: "Especial", description: "Corte especial", duration: '30m', price: 16000 },
-      { name: "Barba con pigmentación", description: "Barba con pigmentación", duration: '45m', price: 14000 }
+      { serviceId: '007', name: "Especial", description: "Corte especial", duration: '30m', price: 16000 },
+      { serviceId: '008', name: "Barba con pigmentación", description: "Barba con pigmentación", duration: '45m', price: 14000 }
     ]
   }
 ]
