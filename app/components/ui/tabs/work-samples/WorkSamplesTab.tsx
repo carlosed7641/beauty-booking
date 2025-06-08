@@ -49,7 +49,7 @@ export const WorkSamplesTab = ({ workSamples }: { workSamples: WorkSample[] }) =
                                         width={160}
                                         height={170} />
                                     <div className="flex gap-2 items-center mb-2 mt-4 justify-center">
-                                        <p className="text-green-700 font-bold">{item.category}</p>
+                                        <p className="text-green-700 font-bold">{item.name}</p>
                                         -
                                         <p>{item.author}</p>
                                     </div>

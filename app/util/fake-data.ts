@@ -145,21 +145,24 @@ export const excludeHours = ['12:00', '12:30', '13:00']
 
 export const workSamples: WorkSample[] = [
   {
-    category: 'Fade',
+    category: 'Cortes',
+    name: 'Fade',
     image: 'https://picsum.photos/160/170',
     author: 'Carlos Castro',
     authorId: 'bcf',
     entityId: '422'
   },
   {
-    category: 'Siete',
+    category: 'Peinados',
+    name: 'Alisado',
     image: 'https://picsum.photos/160/170',
     author: 'Gregorio Carrena',
     authorId: 'abc',
     entityId: '422'
   },
   {
-    category: 'Fade',
+    category: 'Cortes',
+    name: 'Siete',
     image: 'https://picsum.photos/160/170',
     author: 'Gregorio Carrena',
     authorId: 'abc',
