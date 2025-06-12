@@ -1,17 +1,18 @@
 interface ReviewList {
     id: number
-    userId: number
+    user: UserInfo
     service: {
         id: string
         name: string
     }
-    professional: Professional
+    professional: UserInfo
+    entityId: string
     date: number
     points: number
 }
 
-interface Professional {
+interface UserInfo {
     id: string
     name: string
-    photo: string
+    photo?: string
 }

@@ -1,12 +1,12 @@
-import { reviews as apiReviews } from '@/util/fake-data'
 import { FaRegStar } from 'react-icons/fa'
-import { ReviewList } from '../components'
+import { ReviewItem } from '../components/review-item/ReviewItem'
+import { reviews as apiReviews } from '@/util/fake-data'
 
-const userId = 27
+const userId = '27'
 
 export default function MyReviewsPage() {
 
-  const reviews = apiReviews.filter(r => r.userId === userId)
+  const reviews = apiReviews.filter(r => r.user.id === userId)
 
   return (
     <>
@@ -16,7 +16,18 @@ export default function MyReviewsPage() {
       </h1>
       {
         !reviews.length ? <h2>No hay reviews</h2> :
-          <ReviewList reviews={reviews} />
+          <ul className="flex flex-col gap-3 md:gap-6">
+            {reviews.map(review =>
+              <ReviewItem
+                key={review.id}
+                date={review.date}
+                name={review.professional.name}
+                photoUrl={review.professional.photo}
+                serviceName={review.service.name}
+                points={review.points}
+              />)
+            }
+          </ul>
       }
     </>
   )

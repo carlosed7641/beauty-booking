@@ -231,7 +231,10 @@ export const reservations: Reservation[] = [
 export const reviews: ReviewList[] = [
   {
     id: 1,
-    userId: 27,
+    user: {
+      id: '27',
+      name: 'Carlos Castro'
+    },
     service: {
       id: '1',
       name: 'Corte joven'
@@ -241,12 +244,16 @@ export const reviews: ReviewList[] = [
       name: 'Gregorio Carrena',
       photo: 'https://picsum.photos/150/150'
     },
+    entityId: '422',
     date: 1746382434738,
     points: 4
   },
   {
     id: 2,
-    userId: 27,
+    user: {
+      id: '27',
+      name: 'Carlos Castro'
+    },
     service: {
       id: '3',
       name: 'Corte adulto'
@@ -256,36 +263,45 @@ export const reviews: ReviewList[] = [
       name: 'Gregorio Carrena',
       photo: 'https://picsum.photos/150/150'
     },
+    entityId: '422',
     date: 1746382434338,
     points: 5
   },
   {
     id: 3,
-    userId: 27,
+    user: {
+      id: '27',
+      name: 'Carlos Castro'
+    },
     service: {
       id: '2',
       name: 'Corte adulto'
     },
     professional: {
-      id: 'def',
+      id: 'bcf',
       name: 'Carlos Castro',
       photo: 'https://picsum.photos/150/150'
     },
+    entityId: '422',
     date: 1746385434338,
     points: 5
   },
   {
     id: 4,
-    userId: 32,
+    user: {
+      id: '27',
+      name: 'Carlos Castro'
+    },
     service: {
       id: '2',
       name: 'Corte prueba'
     },
     professional: {
-      id: 'def',
+      id: 'bcf',
       name: 'Carlos Castro',
       photo: 'https://picsum.photos/150/150'
     },
+    entityId: '422',
     date: 1746385434338,
     points: 3
   }

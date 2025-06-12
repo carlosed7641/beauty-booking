@@ -1,16 +1,17 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { FaStar } from 'react-icons/fa'
 import { Tabs } from '@/components'
-import {  
+import {
     entities,
-    workSamples as allWorkSamples, 
-    serviceList as allServiceList, 
-    professionals as allProfessionals, 
-     } from '@/util/fake-data'
+    workSamples as allWorkSamples,
+    serviceList as allServiceList,
+    professionals as allProfessionals,
+    reviews as apiReviews,
+} from '@/util/fake-data'
 import { Tab } from '@/interfaces/tab.interface'
 import { ServiceListTab, WorkSamplesTab } from '@/components/ui/tabs'
+import { ReviewsModal } from '../../components/reviews-modal/ReviewsModal'
 
 interface Props {
     params: Promise<{ id: string }>
@@ -24,10 +25,11 @@ export default async function ProfessionalPage({ params }: Props) {
     if (!professional) {
         redirect('/')
     }
- 
+
     const entity = entities.find(e => e.id === professional.entityId)
     const serviceList = allServiceList.filter(sl => sl.entityId === professional.entityId) // TODO: by professional
     const workSamples = allWorkSamples.filter(ws => ws.authorId === id)
+    const reviews = apiReviews.filter(r => r.professional.id === id)
 
     const tabs: Tab[] = [
         {
@@ -51,17 +53,14 @@ export default async function ProfessionalPage({ params }: Props) {
                 </div>
                 <div className="flex flex-col py-2 md:py-6 w-4/5 md:w-auto justify-center md:justify-start">
                     <p className="text-base md:text-3xl text-green-700 font-bold mb-2">{professional.name}</p>
-                    <div className="flex flex-col mb-2">
-                        {
-                            professional.reviews.count > 0 &&
-                            <div className="flex my-1">
-                                {Array.from({ length: Math.round(professional.reviews.points) }, (_, i) => (
-                                    <FaStar key={i} className="text-amber-300" />
-                                ))}
-                            </div>
-                        }
-                        <span className="text-zinc-500 underline">{professional.reviews.count > 0 ? `(${professional.reviews.count}) Ver reseñas` : 'No hay reseñas'}</span>
-                    </div>
+                    <ReviewsModal 
+                        alternativeStyle
+                        name={professional.name}
+                        photo={professional.photo}
+                        counts={professional.reviews.count}
+                        points={professional.reviews.points}
+                        reviews={reviews} 
+                    />
                     <p className="text-md md:text-lg mb-2 hidden md:block">
                         {professional.resume}
                     </p>

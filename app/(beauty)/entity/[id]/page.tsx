@@ -5,12 +5,16 @@ import { FaStar, FaWhatsapp } from 'react-icons/fa'
 import { FiMapPin } from 'react-icons/fi'
 import { GoShareAndroid } from 'react-icons/go'
 import { Tabs } from '@/components'
-import { entities, 
-    workSamples as allWorkSamples, 
-    serviceList as allServiceList, 
-    professionals as allProfessionals } from '@/util/fake-data'
+import {
+    entities,
+    workSamples as allWorkSamples,
+    serviceList as allServiceList,
+    professionals as allProfessionals,
+    reviews as apiReviews
+} from '@/util/fake-data'
 import { Tab } from '@/interfaces/tab.interface'
 import { Professionals, ServiceListTab, WorkSamplesTab } from '@/components/ui/tabs'
+import { ReviewsModal } from '../../components/reviews-modal/ReviewsModal'
 
 interface Props {
     params: Promise<{ id: string }>
@@ -28,6 +32,7 @@ export default async function EntityPage({ params }: Props) {
     const serviceList = allServiceList.filter(sl => sl.entityId === id)
     const workSamples = allWorkSamples.filter(ws => ws.entityId === id)
     const professionals = allProfessionals.filter(p => p.entityId === id)
+    const reviews = apiReviews.filter(r => r.entityId === id)
 
     const tabs: Tab[] = [
         {
@@ -66,27 +71,27 @@ export default async function EntityPage({ params }: Props) {
                         <FiMapPin />
                         Ver en el mapa
                     </Link>
-                    <ShopInfo data={data} className="hidden md:flex" />
+                    <ShopInfo reviews={reviews} data={data} className="hidden md:flex" />
                 </div>
             </div>
-            <ShopInfo data={data} className="md:hidden justify-around" />
+            <ShopInfo reviews={reviews} data={data} className="md:hidden justify-around" />
             <Social data={data} className="md:hidden mt-6" />
             <Tabs tabs={tabs} />
         </>
     )
 }
 
-const ShopInfo = ({ data, className = '' }: { data: Entity, className?: string }) => {
+const ShopInfo = ({ data, reviews, className = '' }: { data: Entity, reviews: ReviewList[], className?: string }) => {
     return (
 
-        <div className={`${className} flex my-2 gap-10`}>
-            <button className="flex flex-col items-center cursor-pointer">
-                <div className="flex gap-1 items-center">
-                    <FaStar className="text-amber-300" />
-                    {data.reviews.points}
-                </div>
-                <p className="text-zinc-500 underline">({data.reviews.counts}) Ver</p>
-            </button>
+        <div className={`${className} flex my-2 gap-10 items-center`}>
+            <ReviewsModal
+                name={data.name}
+                photo={data.imageSrc}
+                counts={data.reviews.counts}
+                points={data.reviews.points}
+                reviews={reviews}
+            />
             <button className="flex flex-col items-center cursor-pointer">
                 <p className="text-green-700 font-bold">+ Seguir</p>
                 <p className="text-zinc-500">{data.followers} seguidores</p>

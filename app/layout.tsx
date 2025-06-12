@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// Modal Reviews, Entity Page - Barber Page
 // Next reservations - update - delete
 // Home - (Next reservations - Favorite Shops)
 // Main menu, dk - mb
