@@ -8,7 +8,7 @@ export const ServiceList = ({ serviceList, setShowModal }: { serviceList: Servic
     const [currentOpenCategory, setCurrentOpenCategory] = useState<string | null>(null)
     const { serviceState, setServiceState } = useService()
 
-    const handleSelectService = (serviceItem: ServiceItem) => {
+    const handleSelectService = (serviceItem: ServiceItemExtended) => {
         setServiceState({
             ...serviceState,
             selectedService: serviceItem
@@ -54,7 +54,7 @@ export const ServiceList = ({ serviceList, setShowModal }: { serviceList: Servic
                                         <p className="text-zinc-500">{service.description}</p>
                                         <p className="text-green-700 font-bold">${service.price}</p>
                                     </div>
-                                    <button onClick={() => handleSelectService(service)} className="rounded-md py-2 px-5 cursor-pointer text-white bg-green-700 hover:bg-green-900">Agendar</button>
+                                    <button onClick={() => handleSelectService({...service, entityName: s.entityName, category: s.category})} className="rounded-md py-2 px-5 cursor-pointer text-white bg-green-700 hover:bg-green-900">Agendar</button>
                                 </li>
                             ))}
                         </ul>

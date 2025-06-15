@@ -6,6 +6,7 @@ export const Confirm = ({ setShowModal}: { setShowModal: (showModal: boolean) =>
 
     const handleConfirmBooking = () => {
         console.log(serviceState)
+        //TODO: Create ID here & validate if update o create
         setShowModal(false)
     }
 

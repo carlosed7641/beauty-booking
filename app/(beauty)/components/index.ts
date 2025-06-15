@@ -1,6 +1,7 @@
 export * from './recent-services/RecentServices'
 export * from './categories/Categories'
 export * from './near-me/NearMe'
+export * from './next-reservations/NextReservations'
 
 export * from './entity-card/EntityCard'
 export * from './entity-card/EntitySearchCard'
@@ -16,3 +17,4 @@ export * from './star-quantity/StarQuantity'
 export * from './service-filters/ServiceFilters'
 export * from './filter-list/FilterList'
 export * from './service-order/ServiceOrder'
+export * from './booking-service/BookingServiceModal'

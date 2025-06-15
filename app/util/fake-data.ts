@@ -82,6 +82,7 @@ export const entities: Entity[] = [
 export const serviceList: Service[] = [
   {
     entityId: '422',
+    entityName: 'Acicalate Vip',
     category: "Color cabello",
     services: [
       { serviceId: '001', name: "Rayitos platinados", description: "Los mejores rayitos", duration: '4h', price: 30000 },
@@ -90,6 +91,7 @@ export const serviceList: Service[] = [
   },
   {
     entityId: '422',
+    entityName: 'Acicalate Vip',
     category: "Cortes",
     services: [
       { serviceId: '003', name: "Sencillo", description: "Corte básico", duration: '30m', price: 15000 },
@@ -98,6 +100,7 @@ export const serviceList: Service[] = [
   },
   {
     entityId: '422',
+    entityName: 'Acicalate Vip',
     category: "Peinados",
     services: [
       { serviceId: '005', name: "Trenzas", description: "Trenzas básicas", duration: '1h', price: 18000 },
@@ -106,6 +109,7 @@ export const serviceList: Service[] = [
   },
   {
     entityId: '425',
+    entityName: 'Prueba',
     category: "Cortes",
     services: [
       { serviceId: '007', name: "Especial", description: "Corte especial", duration: '30m', price: 16000 },
@@ -172,60 +176,73 @@ export const workSamples: WorkSample[] = [
 
 export const reservations: Reservation[] = [
   {
-    id: 123,
-    name: 'Corte adolescente',
-    price: 15000,
-    duration: '30m',
-    date: '15 de mayo de 2025',
-    hour: '9:30AM',
-    professional: 'Gregorio Carrena',
-    entity: 'Acicalate VIP',
+    id: 'abc',
+    selectedService: {
+      serviceId: "001",
+      entityName: 'Acicalate Vip',
+      category: 'Cortes',
+      name: "Rayitos platinados",
+      description: "Los mejores rayitos",
+      duration: "4h",
+      price: 30000
+    },
+    selectedProfessional: "Carlos Castro",
+    selectedDate: "16 de junio de 2025",
+    selectedHour: "2:00 PM",
+    isCompleted: true,
+    status: 'pending'
+  },
+  {
+    id: 'abd',
+    selectedService: {
+      serviceId: "001",
+      entityName: 'Acicalate Vip',
+      category: 'Cortes',
+      name: "Corte hombre",
+      description: "Los mejores rayitos",
+      duration: "4h",
+      price: 30000
+    },
+    selectedProfessional: "Carlos Castro",
+    selectedDate: "16 de junio de 2025",
+    selectedHour: "2:00 PM",
+    isCompleted: true,
     status: 'completed'
   },
   {
-    id: 124,
-    name: 'Corte adulto',
-    price: 15000,
-    duration: '30m',
-    date: '15 de mayo de 2025',
-    hour: '9:30AM',
-    professional: 'Gregorio Carrena',
-    entity: 'Acicalate VIP',
-    status: 'completed'
-  },
-  {
-    id: 125,
-    name: 'Corte niño',
-    price: 15000,
-    duration: '30m',
-    date: '15 de mayo de 2025',
-    hour: '9:30AM',
-    professional: 'Gregorio Carrena',
-    entity: 'Acicalate VIP',
-    status: 'completed'
-  },
-  {
-    id: 126,
-    name: 'Corte siete',
-    price: 15000,
-    duration: '30m',
-    date: '15 de mayo de 2025',
-    hour: '9:30AM',
-    professional: 'Gregorio Carrena',
-    entity: 'Acicalate VIP',
+    id: 'abe',
+    selectedService: {
+      serviceId: "001",
+      entityName: 'Acicalate Vip',
+      category: 'Cortes',
+      name: "Rayitos básicos",
+      description: "Los mejores rayitos",
+      duration: "4h",
+      price: 30000
+    },
+    selectedProfessional: "Carlos Castro",
+    selectedDate: "16 de junio de 2025",
+    selectedHour: "2:00 PM",
+    isCompleted: true,
     status: 'canceled'
   },
   {
-    id: 127,
-    name: 'Corte hombre',
-    price: 15000,
-    duration: '30m',
-    date: '15 de mayo de 2025',
-    hour: '9:30AM',
-    professional: 'Gregorio Carrena',
-    entity: 'Acicalate VIP',
-    status: 'pending'
-  },
+    id: 'abc',
+    selectedService: {
+      serviceId: "001",
+      entityName: 'Acicalate Vip',
+      category: 'Cortes',
+      name: "Rayitos platinados",
+      description: "Los mejores rayitos",
+      duration: "4h",
+      price: 30000
+    },
+    selectedProfessional: "Carlos Castro",
+    selectedDate: "16 de junio de 2025",
+    selectedHour: "2:00 PM",
+    isCompleted: true,
+    status: 'completed'
+  }
 ]
 
 export const reviews: ReviewList[] = [

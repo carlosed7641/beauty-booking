@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import Image from 'next/image'
 import { useService } from '@/store'
 
-export const SelectProfessional = ({ professionals }: { professionals: Professional[] }) => {
+export const SelectProfessional = ({ professionals }: { professionals: ProfessionalData[] }) => {
 
     const { serviceState, setServiceState } = useService()
 
