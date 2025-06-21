@@ -1,4 +1,4 @@
-import { Header } from '../components'
+import { Header, BottomMenu } from './components'
 
 export default function BeautyLayout({
     children,
@@ -11,6 +11,7 @@ export default function BeautyLayout({
             <main className="min-h-screen max-w-[1200px] my-0 mx-auto py-5 px-2">
                 {children}
             </main>
+            <BottomMenu />
         </>
     )
 }

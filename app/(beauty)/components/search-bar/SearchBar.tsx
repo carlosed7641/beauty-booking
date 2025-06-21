@@ -19,7 +19,7 @@ export const SearchBar = () => {
     }, [search])
 
     return (
-        <div className="relative w-4/5 md:w-3/5">
+        <div className="relative w-full md:w-3/5">
             <SearchInput
                 value={term}
                 onChange={setTerm}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog } from '../dialog/Dialog'
+import { Dialog } from '@/components/dialog/Dialog'
 import { RxCaretDown } from 'react-icons/rx'
 
 export const UserMenu = () => {
