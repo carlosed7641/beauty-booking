@@ -1,7 +1,9 @@
-export const Dialog = () => {
+import { ReactNode } from "react"
+
+export const Dialog = ({ children }: { children: ReactNode }) => {
     return (
-        <div className="absolute h-[200px] w-[200px] top-[47px] p-5 bg-white shadow-md rounded-md">
-            Carlos Castro
+        <div className="absolute w-[200px] top-[47px] bg-white shadow-lg rounded-md">
+            {children}
             <span className="absolute right-[80px] bottom-full h-5 w-5 box-border
         border-b-8 border-b-white
         border-l-8  border-l-transparent
