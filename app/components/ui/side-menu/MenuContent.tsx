@@ -1,59 +1,53 @@
-import Link from 'next/link'
-import { FaRegStar } from 'react-icons/fa'
-import { FiMapPin } from 'react-icons/fi'
-import { IoStorefrontOutline } from 'react-icons/io5'
-import { LuNotebook } from 'react-icons/lu'
-import { MdOutlineFavoriteBorder } from 'react-icons/md'
-import { RxCaretRight } from 'react-icons/rx'
-
+import Link from "next/link"
+import { IoCloseSharp } from "react-icons/io5"
+import { RxCaretRight } from "react-icons/rx"
+import { useMenu } from "@/store"
+import { MENU_OPTIONS } from "@/util/const"
 
 export const MenuContent = () => {
-  return (
-    <div className="h-auto w-full">
-        <Link href="/profile" className="flex gap-2 p-5 bg-[#E2F5E5]">
-            <span className="flex items-center justify-center rounded-full p-2 h-12 w-12 bg-white text-black border border-zinc-400">
-                CC
-            </span>
-            <div className="flex flex-col">
-                <p className="font-bold">Carlos Eduardo</p>
-                <span className="flex items-center h-5">
-                    Mi perfil
-                    <RxCaretRight size={24} />
-                </span>
+    
+    const { setIsOpenMenu } = useMenu()
+
+    const options = MENU_OPTIONS.filter(opt => !opt.onBotton?.only )
+
+    return (
+        <div className="h-auto w-full">
+            <div className="flex justify-between items-center bg-[#E2F5E5]">
+                <Link onClick={() => setIsOpenMenu(false)} href="/profile" className="flex gap-2 p-3 pl-5 flex-1">
+                    <span className="flex items-center justify-center rounded-full p-2 h-12 w-12 bg-white text-black border border-zinc-400">
+                        CC
+                    </span>
+                    <div className="flex flex-col">
+                        <p className="font-bold">Carlos Eduardo</p>
+                        <span className="flex items-center h-5">
+                            Mi perfil
+                            <RxCaretRight size={24} />
+                        </span>
+                    </div>
+                </Link>
+                <div
+                    className="p-5 pr-6 h-full flex"
+                    onClick={() => setIsOpenMenu(false)}
+                >
+                    <IoCloseSharp className="text-2xl" />
+                </div>
             </div>
-        </Link>
-        <ul className="flex flex-col gap-2 py-4">
-            <li>
-               <Link className="flex items-center gap-2 text-lg py-3 px-5" href="/my-reservations">
-                    <LuNotebook className="text-2xl" />
-                    Mis Reservas
-               </Link> 
-            </li>
-            <li>
-               <Link className="flex items-center gap-2 text-lg py-3 px-5" href="/my-reservations">
-                    <MdOutlineFavoriteBorder  className="text-2xl" />
-                    Mis Favoritos
-               </Link> 
-            </li>
-            <li>
-               <Link className="flex items-center gap-2 text-lg py-3 px-5" href="/my-reservations">
-                    <FaRegStar className="text-2xl" />
-                    Reseñas
-               </Link> 
-            </li>
-            <li>
-               <Link className="flex items-center gap-2 text-lg py-3 px-5" href="/my-reservations">
-                    <IoStorefrontOutline className="text-2xl" />
-                    Negocios Seguidos
-               </Link> 
-            </li>
-            <li>
-               <Link className="flex items-center gap-2 text-lg py-3 px-5" href="/my-reservations">
-                    <FiMapPin className="text-2xl" />
-                   Mapa
-               </Link> 
-            </li>
-        </ul>
-    </div>
-  )
+            <ul className="flex flex-col gap-2 py-4">
+                {
+                    options.map(({ Icon, label, href }) => (
+                        <li key={label}>
+                            <Link
+                                onClick={() => setIsOpenMenu(false)}
+                                className="flex items-center gap-2 text-lg py-3 px-5 active:bg-zinc-100 hover:bg-zinc-100 focus:g-zinc-100"
+                                href={href}
+                            >
+                                <Icon className="text-2xl" />
+                                {label}
+                            </Link>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+    )
 }

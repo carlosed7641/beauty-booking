@@ -1,3 +1,10 @@
+import { FaRegStar } from "react-icons/fa"
+import { FiMapPin } from "react-icons/fi"
+import { GrFavorite } from "react-icons/gr"
+import { IoHomeOutline, IoStorefrontOutline } from "react-icons/io5"
+import { LuNotebook } from "react-icons/lu"
+import { PiMedalLight } from "react-icons/pi"
+
 export const SERVICE_INITIAL_STATE = {
     selectedService: null,
     selectedProfessional: null,
@@ -42,7 +49,7 @@ export const COUNTRIES = [
     { name: 'República Dominicana', indicator: '+1' },
     { name: 'Uruguay', indicator: '+598' },
     { name: 'Venezuela', indicator: '+58' }
-];
+]
 export const GENDERS = [
     "Hombre",
     "Mujer",
@@ -85,4 +92,59 @@ export const MONTHS = [
     { month: 'oct', days: 31 },
     { month: 'nov', days: 30 },
     { month: 'dic', days: 31 },
+]
+
+export const MENU_OPTIONS = [
+    {
+        label: 'Inicio',
+        Icon: IoHomeOutline,
+        href: '/',
+        onBotton: {
+            is: true,
+            only: false
+        }
+    },
+    {
+        label: 'Mis Reservas',
+        Icon: LuNotebook,
+        href: '/my-reservations'
+    },
+    {
+        label: 'Negocios Seguidos',
+        Icon: IoStorefrontOutline,
+        href: 'favorite-entities'
+    },
+    {
+        label: 'Mis Reseñas',
+        Icon: FaRegStar,
+        href: '/my-reviews'
+    },
+    {
+        label: 'Mi Reputación',
+        Icon: PiMedalLight,
+        href: '/my-reputation'
+    },
+    {
+        label: 'Favoritos',
+        Icon: GrFavorite,
+        href: '/favorite-work-samples'
+    },
+    {
+        label: 'Mapa',
+        Icon: FiMapPin,
+        href: '/map',
+        onBotton: {
+            is: true,
+            only: false
+        }
+    },
+    {
+        label: 'Negocios',
+        Icon: IoStorefrontOutline,
+        href: '/entities',
+        onBotton: {
+            is: true,
+            only: true
+        }
+    }
 ]
