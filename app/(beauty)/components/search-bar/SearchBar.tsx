@@ -14,13 +14,13 @@ export const SearchBar = () => {
     const searchParams = useSearchParams()
     const search = searchParams.get('q')
 
-    useEffect(()=> {
+    useEffect(() => {
         setTerm(search ?? '')
     }, [search])
 
     return (
-        <div className="relative w-full md:w-3/5">
-             <Suspense>
+        <Suspense>
+            <div className="relative w-full md:w-3/5">
                 <SearchInput
                     value={term}
                     onChange={setTerm}
@@ -31,7 +31,7 @@ export const SearchBar = () => {
                     totalMatches={totalMatches}
                     term={term}
                 />}
-            </Suspense>
-        </div>
+            </div>
+        </Suspense>
     )
 }
