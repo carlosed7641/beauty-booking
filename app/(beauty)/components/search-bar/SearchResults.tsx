@@ -16,7 +16,7 @@ export const SearchResults = ({ results, totalMatches, term }: Props) => {
                     { results.map(entity => <EntitySearchCard key={entity.id} entity={entity} />) }
                     {
                         totalMatches > 3 && 
-                        <Link className="flex p-2 justify-center border-t border-zinc-200 underline text-green-700 font-bold" href={`/search/entity?q=${term}`}>
+                        <Link className="flex p-2 justify-center border-t border-zinc-200 underline text-green-700 font-bold" href={`/entities?q=${term}`}>
                             Ver más
                         </Link>
                     }

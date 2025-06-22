@@ -37,7 +37,7 @@ export const SearchInput = ({ value, onChange, setOpenResults }: Props) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        router.push(`/search/entity?q=${value}`)
+        router.push(`/entities?q=${value}`)
         setOpenResults(false)
     }
 

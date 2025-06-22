@@ -5,14 +5,16 @@ export default function FavoriteWorkSamplesPage() {
 
   const favoritesWorkSamples = [
     {
-      category: 'Fade',
+      category: 'Cortes',
+      name: 'Fade',
       image: 'https://picsum.photos/160/170',
       author: 'Carlos Castro',
       authorId: 'bcf',
       entityId: '422'
     },
     {
-      category: 'Fade',
+      category: 'Cortes',
+      name: 'Fade',
       image: 'https://picsum.photos/160/170',
       author: 'Gregorio Carrena',
       authorId: 'abc',
