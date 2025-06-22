@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { SearchInput } from './SearchInput'
 import { SearchResults } from './SearchResults'
 import { useFilteredEntities } from '@/hooks'
@@ -20,16 +20,18 @@ export const SearchBar = () => {
 
     return (
         <div className="relative w-full md:w-3/5">
-            <SearchInput
-                value={term}
-                onChange={setTerm}
-                setOpenResults={setOpenResults}
-            />
-            {term && openResults && <SearchResults
-                results={results}
-                totalMatches={totalMatches}
-                term={term}
-            />}
+             <Suspense>
+                <SearchInput
+                    value={term}
+                    onChange={setTerm}
+                    setOpenResults={setOpenResults}
+                />
+                {term && openResults && <SearchResults
+                    results={results}
+                    totalMatches={totalMatches}
+                    term={term}
+                />}
+            </Suspense>
         </div>
     )
 }
