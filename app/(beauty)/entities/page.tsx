@@ -1,11 +1,10 @@
 import { entities } from '@/util/fake-data'
-import { EntityResults } from '../components/entity/EntityResults'
+import { EntityCard } from '../components'
 
 interface Props {
   params: Promise<{ type: string }>
   searchParams: Promise<{ q: string }>
 }
-
 
 export default async function EntitiesPage({ searchParams }: Props) {
 
@@ -16,5 +15,15 @@ export default async function EntitiesPage({ searchParams }: Props) {
     entity.name.toLowerCase().includes(normalizedQuery)
   )
 
-  return <EntityResults results={results} query={q} />
+  return (
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {
+          results.map(entity => (
+            <EntityCard entity={entity} key={entity.id} />
+          ))
+        }
+      </div>
+    </>
+  )
 }

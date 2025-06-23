@@ -41,32 +41,6 @@ body {
   font-size: 10px !important;
 }
 
-/* Grid view */
-.grid-view {
-  @apply grid grid-cols-1 md:grid-cols-4 gap-4;
-}
-
-.grid-view-container {
-  @apply flex flex-col;
-}
-
-.grid-view-info {
-  @apply items-center justify-between;
-}
-
-/* List view */
-.list-view {
-  @apply flex flex-wrap gap-3;
-}
-
-.list-view-container {
-  @apply flex w-full;
-}
-
-.list-view-info {
-  @apply w-full flex-col items-start justify-center hover:bg-[#dbf0db];
-}
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }

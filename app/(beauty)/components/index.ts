@@ -12,8 +12,6 @@ export * from './reservation-list/ReservationList'
 export * from './emotion/Emotion'
 export * from './update-profile/UpdateProfile'
 
-export * from './view-switcher/ViewSwitcher'
-export * from './search-result/SearchResult'
 export * from './service-result/ServiceResult'
 export * from './star-quantity/StarQuantity'
 

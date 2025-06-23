@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// Merge entities page with search function
 // Loader
 // Keyboard actions
 // Refactor code

@@ -12,7 +12,7 @@ export const EntityCard = ({ entity }: Props) => {
     return (
         <div>
             <div className="relative">
-                <Image src={entity.imageSrc} width={600} height={200} alt={entity.name} />
+                <Image src={entity.imageSrc} width={500} height={500} alt={entity.name} />
                 <div className="bg-white round-md flex gap-2 items-center absolute bottom-3 left-3 px-2 rounded-md border border-zinc-500">
                     <FaStar className="text-amber-300" />
                     {entity.reviews.points ? `${entity.reviews.points} (${entity.reviews.counts})` : 'No hay reseñas'}
