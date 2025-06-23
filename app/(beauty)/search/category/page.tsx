@@ -1,5 +1,5 @@
 import { ServiceResult } from '../../components'
 
-export default async function SearchPage() {
+export default function SearchPage() {
   return <ServiceResult />
 }
