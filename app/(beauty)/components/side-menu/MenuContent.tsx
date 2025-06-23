@@ -2,15 +2,20 @@ import Link from "next/link"
 import { IoCloseSharp } from "react-icons/io5"
 import { RxCaretRight } from "react-icons/rx"
 import { useMenu } from "@/store"
-import { MENU_OPTIONS } from "@/util/const"
+import { useKeyboardOptions } from "@/hooks"
 import { showInitials } from "@/helpers"
+import { MENU_OPTIONS } from "@/util/const"
 
 export const MenuContent = () => {
-    
+
     const { setIsOpenMenu } = useMenu()
+    const options = MENU_OPTIONS.filter(opt => !opt.onBotton?.only)
 
-    const options = MENU_OPTIONS.filter(opt => !opt.onBotton?.only )
-
+    const { optionRef } = useKeyboardOptions({
+        totalOptions: options.length,
+        isOpenOptions: setIsOpenMenu
+    })
+  
     return (
         <div className="h-auto w-full">
             <div className="flex justify-between items-center bg-[#E2F5E5]">
@@ -37,11 +42,12 @@ export const MenuContent = () => {
             </div>
             <ul className="flex flex-col gap-2 py-4">
                 {
-                    options.map(({ Icon, label, href }) => (
+                    options.map(({ Icon, label, href }, index) => (
                         <li key={label}>
                             <Link
+                                ref={el => { optionRef.current[index] = el }}
                                 onClick={() => setIsOpenMenu(false)}
-                                className="flex items-center gap-2 text-lg py-3 px-5 active:bg-zinc-100 hover:bg-zinc-100 focus:g-zinc-100"
+                                className="flex items-center gap-2 text-lg py-3 px-5 active:bg-zinc-100 hover:bg-zinc-100 focus:bg-zinc-100 outline-0"
                                 href={href}
                             >
                                 <Icon className="text-2xl" />

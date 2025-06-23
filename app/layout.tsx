@@ -7,8 +7,6 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// Loader
-// Keyboard actions
 // Refactor code
 // -------------------
 // Admin view

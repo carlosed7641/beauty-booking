@@ -26,6 +26,7 @@ export const SearchBar = () => {
                 setOpenResults={setOpenResults}
             />
             {term && openResults && <SearchResults
+                setOpenResults={setOpenResults}
                 results={results}
                 totalMatches={totalMatches}
                 term={term}

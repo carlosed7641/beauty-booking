@@ -1,22 +1,29 @@
 import Link from 'next/link'
 import { EntitySearchCard } from "@/(beauty)/components"
+import { useKeyboardOptions } from '@/hooks'
 
 interface Props {
     results: Entity[]
     totalMatches: number
     term: string
+    setOpenResults: (value: boolean) => void
 }
 
-export const SearchResults = ({ results, totalMatches, term }: Props) => {
+export const SearchResults = ({ results, totalMatches, term, setOpenResults }: Props) => {
 
+    const { optionRef } = useKeyboardOptions({
+        totalOptions: totalMatches > 3 ? results.length + 1 : results.length,
+        isOpenOptions: setOpenResults
+    })
+    
     return (
         <div className="absolute bg-white w-full rounded-b-sm shadow-sm">
             {totalMatches > 0 ? (
                 <>
-                    { results.map(entity => <EntitySearchCard key={entity.id} entity={entity} />) }
+                    { results.map((entity, index) => <EntitySearchCard key={entity.id} ref={el => { optionRef.current[index] = el }} entity={entity} />) }
                     {
                         totalMatches > 3 && 
-                        <Link className="flex p-2 justify-center border-t border-zinc-200 underline text-green-700 font-bold" href={`/entities?q=${term}`}>
+                        <Link ref={el => { optionRef.current[results.length] = el }} className="flex p-2 justify-center border-t border-zinc-200 underline text-green-700 font-bold hover:bg-zinc-100 focus:bg-zinc-100 outline-0" href={`/entities?q=${term}`}>
                             Ver más
                         </Link>
                     }
