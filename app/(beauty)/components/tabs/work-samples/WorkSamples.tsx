@@ -1,7 +1,9 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { GrGallery } from 'react-icons/gr'
-import { FilterList } from '@/(beauty)/components'
+import { FilterList } from '../..'
 
 interface Props {
     categoryMap: Record<string, {

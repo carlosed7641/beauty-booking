@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { LiaFilterSolid } from 'react-icons/lia'
 import { useSelectedFilters } from '@/store'
-import { Modal, ModalHeader } from '@/components/ui/modal'
-import { FilterList } from '../filter-list/FilterList'
+import { Modal, ModalHeader } from '@/components'
+import { FilterList } from '..'
 import { categories } from '@/util/fake-data'
 
 export const ServiceFilters = () => {

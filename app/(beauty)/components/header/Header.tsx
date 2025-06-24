@@ -1,9 +1,6 @@
 import Link from 'next/link'
 import { IoMdNotificationsOutline } from 'react-icons/io'
-import { UserMenu } from '../user-menu/UserMenu'
-import { SideMenu } from '../side-menu/SideMenu'
-import { HamburgerMenu } from '../hamburger-menu/HamburgerMenu'
-import { SearchBar } from '../search-bar/SearchBar'
+import { UserMenu, SideMenu, SearchBar } from '..'
 
 export const Header = () => {
     return (

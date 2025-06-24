@@ -1,5 +1,5 @@
 interface WorkSample {
-    category:  string
+    category: string
     name: string
     image: string
     author: string

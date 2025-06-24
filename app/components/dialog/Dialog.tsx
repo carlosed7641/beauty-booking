@@ -1,6 +1,4 @@
-import { ReactNode } from "react"
-
-export const Dialog = ({ children }: { children: ReactNode }) => {
+export const Dialog = ({ children }: { children: React.ReactNode }) => {
     return (
         <div className="absolute w-[200px] top-[47px] bg-white shadow-lg rounded-md">
             {children}

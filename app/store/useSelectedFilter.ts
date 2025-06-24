@@ -11,9 +11,6 @@ export const useSelectedFilters = create<Store>()(
         (set) => ({
             selectedFilters: [],
             setSelectedFilters: (selectedFilters: string[]) => set({ selectedFilters })
-        }),
-        {
-            name: 'filter-storage'
-        }
+        }), { name: 'filter-storage' }
     )
 )

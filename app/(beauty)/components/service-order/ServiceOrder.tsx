@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { IoReorderFourOutline } from 'react-icons/io5'
-import { Modal, ModalHeader } from '@/components/ui/modal'
-import { FilterList } from '../filter-list/FilterList'
+import { Modal, ModalHeader } from '@/components'
+import { FilterList } from '..'
 import { ORDER_OPTIONS } from '@/util/const'
 
 interface Props {

@@ -5,9 +5,8 @@ export const generateHoursArray = (frequencyMinutes: number, dateString: string)
     const now = new Date()
     const date = new Date(dateString)
 
-    const [startHour, startMinute] = scheduleHours[0].split(':').map(Number);
+    const [startHour, startMinute] = scheduleHours[0].split(':').map(Number)
     const [endHour, endMinute] = scheduleHours[1].split(':').map(Number)
-
 
     const start = new Date()
     start.setHours(startHour, startMinute, 0, 0)
@@ -16,7 +15,6 @@ export const generateHoursArray = (frequencyMinutes: number, dateString: string)
     end.setHours(endHour, endMinute, 0, 0)
 
     let current: Date
-
 
     if (isSameDay(date, now)) {
         current = new Date(now)
@@ -35,7 +33,6 @@ export const generateHoursArray = (frequencyMinutes: number, dateString: string)
     const result = []
 
     while (current <= end) {
-
 
         if (!excludeHours.includes(format24(current))) {
             const hours = current.getHours()
@@ -57,8 +54,8 @@ export const generateHoursArray = (frequencyMinutes: number, dateString: string)
 }
 
 export const format24 = (date: Date): string => {
-    const h = date.getHours().toString().padStart(2, '0');
-    const m = date.getMinutes().toString().padStart(2, '0');
+    const h = date.getHours().toString().padStart(2, '0')
+    const m = date.getMinutes().toString().padStart(2, '0')
     return `${h}:${m}`
 }
 

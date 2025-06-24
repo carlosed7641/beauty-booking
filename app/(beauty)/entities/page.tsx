@@ -1,5 +1,5 @@
-import { entities } from '@/util/fake-data'
 import { EntityCard } from '../components'
+import { entities } from '@/util/fake-data'
 
 interface Props {
   params: Promise<{ type: string }>

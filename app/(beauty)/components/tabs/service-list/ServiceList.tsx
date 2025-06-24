@@ -1,9 +1,14 @@
+'use client'
+
 import clsx from 'clsx'
 import { useState } from 'react'
 import { RxCaretDown } from 'react-icons/rx'
 import { useService } from '@/store'
 
-export const ServiceList = ({ serviceList, setShowModal }: { serviceList: Service[], setShowModal: (showModal: boolean) => void }) => {
+export const ServiceList = ({ serviceList, setShowModal }: {
+    serviceList: Service[],
+    setShowModal: (showModal: boolean) => void
+}) => {
 
     const [currentOpenCategory, setCurrentOpenCategory] = useState<string | null>(null)
     const { serviceState, setServiceState } = useService()
@@ -54,7 +59,7 @@ export const ServiceList = ({ serviceList, setShowModal }: { serviceList: Servic
                                         <p className="text-zinc-500">{service.description}</p>
                                         <p className="text-green-700 font-bold">${service.price}</p>
                                     </div>
-                                    <button onClick={() => handleSelectService({...service, entityName: s.entityName, category: s.category})} className="rounded-md py-2 px-5 cursor-pointer text-white bg-green-700 hover:bg-green-900">Agendar</button>
+                                    <button onClick={() => handleSelectService({ ...service, entityName: s.entityName, category: s.category })} className="rounded-md py-2 px-5 cursor-pointer text-white bg-green-700 hover:bg-green-900">Agendar</button>
                                 </li>
                             ))}
                         </ul>

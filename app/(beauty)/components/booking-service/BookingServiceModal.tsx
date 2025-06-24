@@ -1,11 +1,7 @@
-import { useService } from '@/store'
+import { SelectProfessional, SelectDate, SelectHour, BookingButton, Confirm } from '..'
 import { Modal, ModalHeader } from '@/components/ui/modal'
-import { SelectProfessional } from '@/components/ui/tabs/service-list/SelectProfessional'
+import { useService } from '@/store'
 import { IoMdArrowRoundBack } from 'react-icons/io'
-import { SelectDate } from '@/components/ui/tabs/service-list/SelectDate'
-import { SelectHour } from '@/components/ui/tabs/service-list/SelectHour'
-import { BookingButton } from '@/components/ui/tabs/service-list/BookingButton'
-import { Confirm } from '@/components/ui/tabs/service-list/Confirm'
 
 interface Props {
     step: number
@@ -14,10 +10,10 @@ interface Props {
     professionals?: ProfessionalData[]
 }
 
-export const BookingServiceModal = ({ 
-    step, 
-    setStep, 
-    setShowModal, 
+export const BookingServiceModal = ({
+    step,
+    setStep,
+    setShowModal,
     professionals
 }: Props) => {
 

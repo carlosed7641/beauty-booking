@@ -22,10 +22,10 @@ export const ReviewItem = ({ photoUrl, name, points, date, serviceName }: Props)
                         height={80}
                         alt={name}
                     />
-                : 
-                <div className="flex items-center justify-center text-3xl h-20 w-20 rounded-full bg-green-700 text-white">
-                    {name[0]}
-                </div>
+                    :
+                    <div className="flex items-center justify-center text-3xl h-20 w-20 rounded-full bg-green-700 text-white">
+                        {name[0]}
+                    </div>
             }
             <div>
                 <p>{name}</p>

@@ -1,10 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { TabsHeader } from './TabsHeader'
-import type { Tab } from '@/interfaces/tab.interface'
+import { TabsHeader } from '.'
 
-export const Tabs = ({  tabs  }: {  tabs: Tab[] }) => {
+export const Tabs = ({ tabs }: { tabs: Tab[] }) => {
 
   const [activeTab, setActiveTab] = useState(tabs[0].id)
   const activeTabContent = tabs.find(t => t.id === activeTab)?.tab

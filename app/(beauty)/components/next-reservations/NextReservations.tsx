@@ -1,20 +1,12 @@
 'use client'
 
-import { JSX, useEffect, useState } from 'react'
-import { GiComb } from 'react-icons/gi'
+import { useEffect, useState } from 'react'
 import { FaEdit } from 'react-icons/fa'
-import { IoCutOutline } from 'react-icons/io5'
 import { IoCloseCircleOutline } from 'react-icons/io5'
 import { useService } from '@/store'
 import { Title } from '@/components'
-import { BookingServiceModal, BookingCancelModal } from '../booking-service'
+import { BookingServiceModal, BookingCancelModal, ServiceIcon } from '..'
 import { SERVICE_INITIAL_STATE } from '@/util/const'
-
-const SERVICE_ICONS: { [key: string]: JSX.Element } = {
-    'cortes': <IoCutOutline className="text-6xl" />,
-    'peinados': <GiComb className="text-6xl" />
-    // uñas, impieza facial
-}
 
 const currentReservations = [
     {
@@ -72,7 +64,9 @@ export const NextReservations = () => {
                     {
                         currentReservations.map(r => (
                             <li key={r.id} className="flex bg-[#e8f7ea] gap-3 shrink-0 items-center md:w-fit py-2 px-4 text-sm rounded-md">
-                                <div className="text-green-700">{SERVICE_ICONS[r.selectedService.category.toLocaleLowerCase()]}</div>
+                                <div className="text-green-700">
+                                    <ServiceIcon category={r.selectedService.category.toLocaleLowerCase()} className="text-6xl" />
+                                </div>
                                 <div className="flex flex-col gap-1">
                                     <p className="text-green-700 text-base">{r.selectedService.name}</p>
                                     <div className="flex items-center gap-1">

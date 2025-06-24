@@ -1,3 +1,5 @@
+'use client'
+
 import { ChangeEvent, MouseEvent, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { IoMdSearch } from 'react-icons/io'

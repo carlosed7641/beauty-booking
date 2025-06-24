@@ -1,5 +1,5 @@
 import { GrFavorite } from 'react-icons/gr'
-import { WorkSamplesTab } from '@/components/ui/tabs'
+import { WorkSamplesTab } from '../components'
 
 export default function FavoriteWorkSamplesPage() {
 

@@ -32,6 +32,7 @@ body {
 .scroll-none {
   scrollbar-width: none;
 }
+
 .slick-arrow::before,
 .slick-dots button::before {
   @apply text-green-700!;

@@ -3,9 +3,7 @@ import { IoCloseSharp } from 'react-icons/io5'
 interface Props {
     setShowModal: (showModal: boolean) => void
     children: React.ReactNode | React.ReactNode[]
-  }
-  
-
+}
 
 export const ModalHeader = ({ setShowModal, children }: Props) => {
     return (

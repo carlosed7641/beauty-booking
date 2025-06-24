@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { TfiAgenda } from 'react-icons/tfi'
 import clsx from 'clsx'
-import { reservations } from '@/util/fake-data'
 import { ReservationList } from '../components'
+import { reservations } from '@/util/fake-data'
 
 export default function MyReservationsPage() {
 
@@ -43,14 +43,14 @@ export default function MyReservationsPage() {
           Historial
         </div>
       </div>
-      <div>
+      <>
         {
           currentTab === 'current' ?
             <ReservationList reservations={currentReservations} />
             :
             <ReservationList reservations={oldReservations} />
         }
-      </div>
+      </>
     </>
   )
 }

@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import Link from 'next/link'
+import Image from 'next/image'
 import { redirect } from 'next/navigation'
-import { Tabs } from '@/components'
+import { Tabs, ReviewsModal, ServiceListTab, WorkSamplesTab } from '../../components'
 import {
     entities,
     workSamples as allWorkSamples,
@@ -9,9 +9,6 @@ import {
     professionals as allProfessionals,
     reviews as apiReviews,
 } from '@/util/fake-data'
-import { Tab } from '@/interfaces/tab.interface'
-import { ServiceListTab, WorkSamplesTab } from '@/components/ui/tabs'
-import { ReviewsModal } from '../../components/reviews-modal/ReviewsModal'
 
 interface Props {
     params: Promise<{ id: string }>
@@ -44,7 +41,6 @@ export default async function ProfessionalPage({ params }: Props) {
         }
     ]
 
-
     return (
         <>
             <div className="flex gap-5">
@@ -53,13 +49,13 @@ export default async function ProfessionalPage({ params }: Props) {
                 </div>
                 <div className="flex flex-col py-2 md:py-6 w-4/5 md:w-auto justify-center md:justify-start">
                     <p className="text-base md:text-3xl text-green-700 font-bold mb-2">{professional.name}</p>
-                    <ReviewsModal 
+                    <ReviewsModal
                         alternativeStyle
                         name={professional.name}
                         photo={professional.photo}
                         counts={professional.reviews.count}
                         points={professional.reviews.points}
-                        reviews={reviews} 
+                        reviews={reviews}
                     />
                     <p className="text-md md:text-lg mb-2 hidden md:block">
                         {professional.resume}

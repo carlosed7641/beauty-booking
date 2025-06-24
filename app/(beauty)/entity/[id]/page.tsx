@@ -1,10 +1,10 @@
-import Image from 'next/image'
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { FaStar, FaWhatsapp } from 'react-icons/fa'
+import { FaWhatsapp } from 'react-icons/fa'
 import { FiMapPin } from 'react-icons/fi'
 import { GoShareAndroid } from 'react-icons/go'
-import { Tabs } from '@/components'
+import { Tabs, ServiceListTab, WorkSamplesTab, Professionals, ReviewsModal } from '../../components'
 import {
     entities,
     workSamples as allWorkSamples,
@@ -12,9 +12,6 @@ import {
     professionals as allProfessionals,
     reviews as apiReviews
 } from '@/util/fake-data'
-import { Tab } from '@/interfaces/tab.interface'
-import { Professionals, ServiceListTab, WorkSamplesTab } from '@/components/ui/tabs'
-import { ReviewsModal } from '../../components/reviews-modal/ReviewsModal'
 
 interface Props {
     params: Promise<{ id: string }>

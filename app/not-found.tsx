@@ -10,7 +10,7 @@ export default function NotFound() {
             Página no encontrada
           </h1>
           <p className="mt-6 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-              Lo sentimos, no pudimos encontrar la página que estás buscando.
+            Lo sentimos, no pudimos encontrar la página que estás buscando.
           </p>
           <div className="mt-10 flex items-center justify-center">
             <Link

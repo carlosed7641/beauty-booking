@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Title } from '@/components'
+import { StarQuantity } from '..'
 import { favoriteEntities } from '@/util/fake-data'
-import { StarQuantity } from '../star-quantity/StarQuantity'
 
 export const FavoriteEntites = () => {
     

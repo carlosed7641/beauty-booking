@@ -1,10 +1,10 @@
-import Image from 'next/image'
 import Link from 'next/link'
+import Image from 'next/image'
 import { FaStar } from 'react-icons/fa'
 
-interface Props { 
+interface Props {
     ref: React.Ref<HTMLAnchorElement>
-    entity: Entity 
+    entity: Entity
 }
 
 export const EntitySearchCard = ({ ref, entity }: Props) => {

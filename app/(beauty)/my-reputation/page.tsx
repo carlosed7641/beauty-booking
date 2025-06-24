@@ -79,7 +79,7 @@ export default function MyReputationPage() {
       </div>
       <ul className="flex flex-col gap-5">
         {reputationList.map(rp => (
-          <li className="flex gap-5 items-center justify-between px-2 md:px-0" key={rp.userId+rp.date}>
+          <li className="flex gap-5 items-center justify-between px-2 md:px-0" key={rp.userId + rp.date}>
             <div className="flex flex-col">
               <p className="text-green-700">{rp.professional.name}</p>
               <p className="text-zinc-500">{rp.comment}</p>

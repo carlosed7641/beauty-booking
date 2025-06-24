@@ -19,9 +19,9 @@ export default function ProfilePage() {
           <button className='flex gap-2 items-center cursor-pointer w-fit'>
 
             {
-              session.shareNumberPhone ?  
-              <FaToggleOn className="text-green-700 text-xl" /> :
-              <FaToggleOff className="text-green-700 text-xl" />
+              session.shareNumberPhone ?
+                <FaToggleOn className="text-green-700 text-xl" /> :
+                <FaToggleOff className="text-green-700 text-xl" />
             }
 
             Compartir número

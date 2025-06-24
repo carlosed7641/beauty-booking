@@ -1,8 +1,8 @@
 'use client'
 
-import { redirect } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
+import Image from 'next/image'
+import { redirect } from 'next/navigation'
 import clsx from 'clsx'
 import { FaStar } from 'react-icons/fa6'
 import { useService } from '@/store'
@@ -38,7 +38,6 @@ export const ShopCard = ({
     const title = serviceName ? serviceName : shopName
     const { serviceState, setServiceState } = useService()
 
-
     const handleClickCta = () => {
 
         const { entityId, ...selectedService } = ctaData
@@ -47,7 +46,7 @@ export const ShopCard = ({
             ...serviceState,
             selectedService
         })
-        
+
         redirect(href)
     }
 

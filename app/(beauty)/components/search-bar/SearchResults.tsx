@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { EntitySearchCard } from "@/(beauty)/components"
+import { EntitySearchCard } from '..'
 import { useKeyboardOptions } from '@/hooks'
 
 interface Props {

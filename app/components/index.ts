@@ -1,2 +1,3 @@
+export * from './dialog/Dialog'
 export * from './ui/title/Title'
-export * from './ui/tabs/Tabs'
+export * from './ui/modal'

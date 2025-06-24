@@ -1,6 +1,5 @@
 import { Title } from '@/components'
-import { ShopCardLayout } from '../shop-card/ShopCardLayout'
-import { CategoryCard } from '../shop-card/CategoryCard'
+import { ShopCardLayout, CategoryCard } from '..'
 
 export const Categories = () => {
 

@@ -1,10 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { SearchInput } from './SearchInput'
-import { SearchResults } from './SearchResults'
-import { useFilteredEntities } from '@/hooks'
 import { useSearchParams } from 'next/navigation'
+import { SearchInput, SearchResults } from '.'
+import { useFilteredEntities } from '@/hooks'
 
 export const SearchBar = () => {
 

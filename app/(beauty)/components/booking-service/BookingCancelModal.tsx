@@ -1,4 +1,4 @@
-import { Modal, ModalHeader } from '@/components/ui/modal'
+import { Modal, ModalHeader } from '@/components'
 
 interface Props {
     setShowModal: (showModal: boolean) => void

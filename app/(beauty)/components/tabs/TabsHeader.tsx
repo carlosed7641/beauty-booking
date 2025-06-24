@@ -1,4 +1,3 @@
-import { Tab } from '@/interfaces/tab.interface'
 import clsx from 'clsx'
 
 interface Props {
@@ -7,7 +6,7 @@ interface Props {
     setActiveTab: (activeTab: string) => void
 }
 
-export const TabsHeader = ( { tabs, activeTab ,setActiveTab }: Props) => {
+export const TabsHeader = ({ tabs, activeTab, setActiveTab }: Props) => {
 
     return (
         <div role="tablist" className="flex border-b">

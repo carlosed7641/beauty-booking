@@ -1,5 +1,5 @@
 import { FaRegStar } from 'react-icons/fa'
-import { ReviewItem } from '../components/review-item/ReviewItem'
+import { ReviewItem } from '../components'
 import { reviews as apiReviews } from '@/util/fake-data'
 
 const userId = '27'

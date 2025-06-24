@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { FaStar } from 'react-icons/fa6'
-import { Modal, ModalHeader } from '@/components/ui/modal'
-import { ReviewItem } from '../review-item/ReviewItem'
+import { Modal, ModalHeader } from '@/components'
+import { ReviewItem } from '../reviews'
 
 interface Props {
     counts: number

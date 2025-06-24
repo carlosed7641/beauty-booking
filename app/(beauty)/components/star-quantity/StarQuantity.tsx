@@ -1,7 +1,7 @@
 import { FaStar, FaStarHalf } from 'react-icons/fa'
 import { getStars } from '@/helpers'
 
-export const StarQuantity = ({ points }: { points: number}) => {
+export const StarQuantity = ({ points }: { points: number }) => {
 
     const { fullStars, half } = getStars(points)
 

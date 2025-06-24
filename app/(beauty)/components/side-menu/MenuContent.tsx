@@ -1,10 +1,10 @@
-import Link from "next/link"
-import { IoCloseSharp } from "react-icons/io5"
-import { RxCaretRight } from "react-icons/rx"
-import { useMenu } from "@/store"
-import { useKeyboardOptions } from "@/hooks"
-import { showInitials } from "@/helpers"
-import { MENU_OPTIONS } from "@/util/const"
+import Link from 'next/link'
+import { IoCloseSharp } from 'react-icons/io5'
+import { RxCaretRight } from 'react-icons/rx'
+import { useMenu } from '@/store'
+import { useKeyboardOptions } from '@/hooks'
+import { showInitials } from '@/helpers'
+import { MENU_OPTIONS } from '@/util/const'
 
 export const MenuContent = () => {
 
@@ -15,7 +15,7 @@ export const MenuContent = () => {
         totalOptions: options.length,
         isOpenOptions: setIsOpenMenu
     })
-  
+
     return (
         <div className="h-auto w-full">
             <div className="flex justify-between items-center bg-[#E2F5E5]">

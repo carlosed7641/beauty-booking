@@ -1,12 +1,13 @@
 import { entities } from '@/util/fake-data'
 
 export const getServiceResults = (service: Service) => {
+    
     const entity = entities.find(e => e.id === service.entityId)
 
     if (!entity) return []
 
-    return service.services.map(({ name, price }) => (
-        {
+    const results = service.services.map(({ name, price }) => {
+        return {
             category: service.category.toLocaleLowerCase(),
             name,
             price,
@@ -16,5 +17,7 @@ export const getServiceResults = (service: Service) => {
                 reviews: entity.reviews
             }
         }
-    ))
+    })
+
+    return results
 }

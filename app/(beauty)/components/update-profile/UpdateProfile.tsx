@@ -1,10 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { FaEdit } from 'react-icons/fa'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Modal, ModalHeader } from '@/components/ui/modal'
-import { session } from '@/util/fake-data'
+import { FaEdit } from 'react-icons/fa'
+import { Modal, ModalHeader } from '@/components'
 import { COUNTRIES, GENDERS } from '@/util/const'
+import { session } from '@/util/fake-data'
 
 export const UpdateProfile = () => {
 

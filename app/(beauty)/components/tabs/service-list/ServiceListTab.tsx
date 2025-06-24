@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { useService } from '@/store'
-import { ServiceList } from './ServiceList'
+import { ServiceList, BookingServiceModal } from '../..'
 import { SERVICE_INITIAL_STATE } from '@/util/const'
 import { professionals as allProfessionals } from '@/util/fake-data'
-import { BookingServiceModal } from '@/(beauty)/components'
+
 interface Props {
     serviceList: Service[],
     professionals?: ProfessionalData[]
@@ -45,7 +45,7 @@ export const ServiceListTab = ({ serviceList, professionals, professionalId }: P
         <>
             <ServiceList serviceList={serviceList} setShowModal={setShowModal} />
             {showModal && serviceState.selectedService &&
-                <BookingServiceModal 
+                <BookingServiceModal
                     setShowModal={setShowModal}
                     setStep={setStep}
                     step={step}
@@ -55,4 +55,3 @@ export const ServiceListTab = ({ serviceList, professionals, professionalId }: P
         </>
     )
 }
-

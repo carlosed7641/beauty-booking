@@ -2,17 +2,17 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Slider from 'react-slick'
+import { WorkSamples } from './WorkSamples'
+import { Modal } from '@/components'
+import { SLIDER_SETTINGS } from '@/util/const'
 import 'slick-carousel/slick/slick-theme.css'
 import 'slick-carousel/slick/slick.css'
-import { WorkSamples } from './WorkSamples'
-import { Modal } from '../../modal/Modal'
-import { SLIDER_SETTINGS } from '@/util/const'
 
 export const WorkSamplesTab = ({ workSamples }: { workSamples: WorkSample[] }) => {
 
     const [showModal, setShowModal] = useState(false)
     const [selectedGallery, setSelectedGallery] = useState('')
-    
+
     // const categoryMap = Object.groupBy(workSamples, ({ category })=> category) // Not supportted
     const categoryMap = workSamples.reduce<Record<string, typeof workSamples>>((acc, sample) => {
         if (!acc[sample.category]) {

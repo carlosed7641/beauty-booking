@@ -2,12 +2,8 @@
 
 import { useState } from 'react'
 import { useSelectedFilters } from '@/store'
-import { FilterList } from '../filter-list/FilterList'
-import { ServiceResultList } from './ServiceResultList'
-import { ServiceFilters } from '../service-filters/ServiceFilters'
-import { ServiceOrder } from '../service-order/ServiceOrder'
-import { orderBy } from '@/helpers'
-import { getServiceResults } from '@/helpers/get-service-results'
+import { FilterList, ServiceResultList, ServiceFilters, ServiceOrder } from '..'
+import { orderBy, getServiceResults } from '@/helpers'
 import { serviceList } from '@/util/fake-data'
 
 export const ServiceResult = () => {

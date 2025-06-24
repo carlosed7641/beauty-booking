@@ -1,7 +1,5 @@
-import { ReactNode } from 'react'
-
-export interface Tab {
+interface Tab {
     id: string
     label: string
-    tab: ReactNode
+    tab: React.ReactNode
 }

@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 import { entities } from '@/util/fake-data'
 
@@ -24,7 +26,7 @@ export const useFilteredEntities = (term: string) => {
 
         setResults(filtered)
         setTotalMatches(totalMatches)
-        
+
     }, [term])
 
     return { results, totalMatches }

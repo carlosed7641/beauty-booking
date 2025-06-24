@@ -1,11 +1,11 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { MONTHS } from '@/util/const'
 
-type Inputs = {
+interface Inputs {
     name: string
     surname: string
     birthDay: string
@@ -37,18 +37,19 @@ export const NewAccountForm = () => {
         const formatedData = {
             ...rest,
             birhDate: `${birthDay}/${birthMonth}/${birthYear}`
-        } 
+        }
+
         console.log(formatedData)
     }
 
-    useEffect(()=> {
+    useEffect(() => {
 
         const limitDays = MONTHS[selectedMonth].days
         const birthDay = Number(getValues('birthDay'))
         if (birthDay > limitDays) {
             setValue('birthDay', limitDays.toString())
         }
-        
+
     }, [selectedMonth])
 
     return (
@@ -67,40 +68,40 @@ export const NewAccountForm = () => {
                 <p>Fecha de nacimiento</p>
                 <div className="grid grid-cols-3 gap-3">
                     <select {...register('birthDay', { required: true })} defaultValue={currentDay} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700">
-                        { days.map(day => <option key={day} value={day}>{day}</option>) }
+                        {days.map(day => <option key={day} value={day}>{day}</option>)}
                     </select>
-                     <select {...register('birthMonth', { required: true })} onChange={(e)=> setSelectecMonth(Number(e.target.value))} defaultValue={selectedMonth} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700">
-                        { MONTHS.map(({month}, index) => <option key={index} value={index}>{month}</option>) }
+                    <select {...register('birthMonth', { required: true })} onChange={(e) => setSelectecMonth(Number(e.target.value))} defaultValue={selectedMonth} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700">
+                        {MONTHS.map(({ month }, index) => <option key={index} value={index}>{month}</option>)}
                     </select>
                     <select {...register('birthYear', { required: true })} defaultValue={currentYear} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700">
-                        { years.map(year => <option key={year} value={year}>{year}</option>) }
+                        {years.map(year => <option key={year} value={year}>{year}</option>)}
                     </select>
                 </div>
             </div>
-               <div className="flex flex-col gap-2 ">
+            <div className="flex flex-col gap-2 ">
                 <p>Género</p>
                 <div className="grid grid-cols-3 gap-3">
-                   <label className="flex items-center justify-between p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700">
-                     Mujer
-                     <input {...register('gender', { required: true })} type="radio" value="women" name="gender" />
-                   </label>
-                     <label className="flex items-center justify-between p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700">
-                     Hombre
-                     <input {...register('gender', { required: true })} type="radio" value="men" name="gender" />
-                   </label>
-                     <label className="flex items-center justify-between p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700">
-                     Otro
-                     <input {...register('gender', { required: true })}  type="radio" value="other" name="gender" />
-                   </label>
+                    <label className="flex items-center justify-between p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700">
+                        Mujer
+                        <input {...register('gender', { required: true })} type="radio" value="women" name="gender" />
+                    </label>
+                    <label className="flex items-center justify-between p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700">
+                        Hombre
+                        <input {...register('gender', { required: true })} type="radio" value="men" name="gender" />
+                    </label>
+                    <label className="flex items-center justify-between p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700">
+                        Otro
+                        <input {...register('gender', { required: true })} type="radio" value="other" name="gender" />
+                    </label>
                 </div>
             </div>
             <label className="flex flex-col gap-2">
                 Correo electrónico
-                <input {...register('email', { required: true})} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" type="email" placeholder="tunombre@email.com" />
+                <input {...register('email', { required: true })} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" type="email" placeholder="tunombre@email.com" />
             </label>
             <label className="flex flex-col gap-2">
                 Contraseña nueva
-                <input {...register('password', { required: true})} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" type="password" placeholder="********" />
+                <input {...register('password', { required: true })} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" type="password" placeholder="********" />
             </label>
             <button className="bg-green-700 text-white rounded-md py-2 font-bold cursor-pointer hover:bg-green-800">Registrarte</button>
             <Link href="/auth/login" className="text-green-700 text-center">¿Ya tienes una cuenta?</Link>

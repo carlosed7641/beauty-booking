@@ -8,7 +8,7 @@ interface Props {
 
 export const FilterList = ({ items, selectedFilters, handleClick }: Props) => {
     return (
-    <ul className="flex flex-wrap items-center gap-2">
+        <ul className="flex flex-wrap items-center gap-2">
             {
                 items.map(item => (
                     <li className={clsx(

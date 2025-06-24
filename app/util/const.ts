@@ -1,9 +1,11 @@
-import { FaRegStar } from "react-icons/fa"
-import { FiMapPin } from "react-icons/fi"
-import { GrFavorite } from "react-icons/gr"
-import { IoHomeOutline, IoStorefrontOutline } from "react-icons/io5"
-import { LuNotebook } from "react-icons/lu"
-import { PiMedalLight } from "react-icons/pi"
+import { IconType } from 'react-icons'
+import { FaRegStar } from 'react-icons/fa'
+import { FiMapPin } from 'react-icons/fi'
+import { GiComb } from 'react-icons/gi'
+import { GrFavorite } from 'react-icons/gr'
+import { IoHomeOutline, IoStorefrontOutline, IoCutOutline } from 'react-icons/io5'
+import { LuNotebook } from 'react-icons/lu'
+import { PiMedalLight } from 'react-icons/pi'
 
 export const SERVICE_INITIAL_STATE = {
     selectedService: null,
@@ -50,32 +52,12 @@ export const COUNTRIES = [
     { name: 'Uruguay', indicator: '+598' },
     { name: 'Venezuela', indicator: '+58' }
 ]
+
 export const GENDERS = [
     "Hombre",
     "Mujer",
     "Otro"
 ]
-
-export const VIEWS = {
-    list: {
-        class: 'list-view',
-        imageSize: {
-            width: 150,
-            height: 150
-        },
-        container: 'list-view-container',
-        info: 'list-view-info'
-    },
-    grid: {
-        class: 'grid-view',
-        imageSize: {
-            width: 250,
-            height: 250
-        },
-        container: 'grid-view-container',
-        info: 'grid-view-info'
-    }
-}
 
 export const ORDER_OPTIONS = ['Precio mayor', 'Precio menor', 'Predeterminado'] //TODO: Más cerca de ti
 
@@ -148,3 +130,9 @@ export const MENU_OPTIONS = [
         }
     }
 ]
+
+export const SERVICE_ICONS: { [key: string]: IconType } = {
+    'cortes': IoCutOutline,
+    'peinados': GiComb
+    // uñas, impieza facial
+}

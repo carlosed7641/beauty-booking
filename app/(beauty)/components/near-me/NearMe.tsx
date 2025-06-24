@@ -1,6 +1,5 @@
 import { Title } from '@/components'
-import { ShopCardLayout } from '../shop-card/ShopCardLayout'
-import { ShopCard } from '../shop-card/ShopCard'
+import { ShopCardLayout, ShopCard } from '..'
 
 const cardExample2 = {
     href: '/',

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-type Inputs = {
+interface Inputs {
     email: string
     password: string
 }
@@ -25,10 +25,10 @@ export const LoginForm = () => {
             </label>
             <label className="flex flex-col gap-2">
                 Contraseña
-                <input {...register("password", { required: true })} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" type={showPassword ? 'text' : 'password'}  placeholder="********" />
+                <input {...register("password", { required: true })} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" type={showPassword ? 'text' : 'password'} placeholder="********" />
             </label>
             <label className="flex items-center gap-2">
-                <input className="w-[14px] h-[14px]" type="checkbox" onChange={()=> setShowPassword(!showPassword)} />
+                <input className="w-[14px] h-[14px]" type="checkbox" onChange={() => setShowPassword(!showPassword)} />
                 Mostrar contraseña
             </label>
             <input type="submit" className="bg-green-700 text-white rounded-md py-2 font-bold cursor-pointer hover:bg-green-800" value="Iniciar sesión" />

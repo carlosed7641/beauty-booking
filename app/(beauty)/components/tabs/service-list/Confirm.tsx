@@ -1,6 +1,6 @@
 import { useService } from '@/store'
 
-export const Confirm = ({ setShowModal}: { setShowModal: (showModal: boolean) => void }) => {
+export const Confirm = ({ setShowModal }: { setShowModal: (showModal: boolean) => void }) => {
 
     const { serviceState } = useService()
 
