@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useService } from '@/store'
+import { useModal, useService } from '@/store'
 import { ServiceList, BookingServiceModal } from '../..'
 import { SERVICE_INITIAL_STATE } from '@/util/const'
 import { professionals as allProfessionals } from '@/util/fake-data'
@@ -16,10 +16,10 @@ export const ServiceListTab = ({ serviceList, professionals, professionalId }: P
 
     const [step, setStep] = useState(1)
     const { serviceState, setServiceState } = useService()
-    const [showModal, setShowModal] = useState(Boolean(serviceState?.selectedService))
-
+    const { openModal } = useModal()
+    
     useEffect(() => {
-        if (showModal) {
+        if (openModal) {
             if (professionalId) {
                 const professional = allProfessionals.find(p => p.id === professionalId)!
 
@@ -30,23 +30,17 @@ export const ServiceListTab = ({ serviceList, professionals, professionalId }: P
                     })
                 }
             }
-
-            window.scrollTo(0, 0)
         } else {
-            setServiceState(SERVICE_INITIAL_STATE)
             setStep(1)
         }
 
-        document.body.classList.toggle('overflow-hidden', showModal)
-
-    }, [showModal])
+    }, [openModal])
 
     return (
         <>
-            <ServiceList serviceList={serviceList} setShowModal={setShowModal} />
-            {showModal && serviceState.selectedService &&
+            <ServiceList serviceList={serviceList} />
+            {openModal === 'ServiceList' && serviceState.selectedService &&
                 <BookingServiceModal
-                    setShowModal={setShowModal}
                     setStep={setStep}
                     step={step}
                     professionals={professionals}

@@ -7,6 +7,7 @@ export default function Loading() {
 
     useEffect(() => {
         document.body.classList.add('overflow-hidden')
+        return ()=> document.body.classList.remove('overflow-hidden')
     }, [])
     
     return (

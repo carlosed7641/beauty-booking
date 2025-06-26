@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { IoReorderFourOutline } from 'react-icons/io5'
+import { useModal } from '@/store'
 import { Modal, ModalHeader } from '@/components'
 import { FilterList } from '..'
 import { ORDER_OPTIONS } from '@/util/const'
@@ -13,29 +13,24 @@ interface Props {
 
 export const ServiceOrder = ({ selectedOrder, setSelectedOrder }: Props) => {
 
-    const [showModal, setShowModal] = useState(false)
+    const { openModal, setOpenModal } = useModal()
 
     const handleClickOption = (option: string) => {
         if (option === selectedOrder) return
         setSelectedOrder(option)
-        setShowModal(false)
+        setOpenModal(null)
     }
-
-    useEffect(() => {
-        window.scrollTo(0, 0)
-        document.body.classList.toggle('overflow-hidden', showModal)
-    }, [showModal])
 
     return (
         <>
-            <div onClick={() => setShowModal(true)} className="flex gap-1 items-center justify-center cursor-pointer border-b border-zinc-300 md:border-0 w-1/2 md:w-auto">
+            <div onClick={() => setOpenModal('ServiceOrder.name')} className="flex gap-1 items-center justify-center cursor-pointer border-b border-zinc-300 md:border-0 w-1/2 md:w-auto">
                 <IoReorderFourOutline />
                 Ordernar
             </div>
             {
-                showModal &&
-                <Modal setShowModal={setShowModal}>
-                    <ModalHeader setShowModal={setShowModal}>
+                openModal === 'ServiceOrder.name' &&
+                <Modal>
+                    <ModalHeader>
                         <p className="text-green-700 text-xl">Ordenar por</p>
                     </ModalHeader>
                     <FilterList

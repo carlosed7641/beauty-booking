@@ -1,12 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { FaEdit } from 'react-icons/fa'
 import { IoCloseCircleOutline } from 'react-icons/io5'
-import { useService } from '@/store'
 import { Title } from '@/components'
-import { BookingServiceModal, BookingCancelModal, ServiceIcon } from '..'
-import { SERVICE_INITIAL_STATE } from '@/util/const'
+import { ServiceIcon, ReservationOptions } from '..'
+import { useReservationOptions } from '@/hooks'
 
 const currentReservations = [
     {
@@ -30,31 +28,7 @@ const currentReservations = [
 export const NextReservations = () => {
 
     // const currentReservations = reservations.filter(r => r.status === 'pending').slice(0, 2)
-    const [step, setStep] = useState(1)
-    const { setServiceState } = useService()
-    const [showModal, setShowModal] = useState(false)
-    const [isUpdating, setIsUpdating] = useState(false)
-
-    const handleUpdate = (reservation: ServiceState) => {
-        setShowModal(true)
-        setIsUpdating(true)
-        console.log(reservation)
-        setServiceState(reservation)
-    }
-
-    const handleCancel = (id: string) => {
-        setShowModal(true)
-        setIsUpdating(false)
-    }
-
-    useEffect(() => {
-        if (!showModal) {
-            setServiceState(SERVICE_INITIAL_STATE)
-            setStep(1)
-        }
-        window.scrollTo(0, 0)
-        document.body.classList.toggle('overflow-hidden', showModal)
-    }, [showModal])
+    const { handleCancel, handleUpdate } = useReservationOptions()
 
     return (
         <>
@@ -91,16 +65,7 @@ export const NextReservations = () => {
                     }
                 </ul>
             </section>
-            {showModal && (
-                isUpdating ?
-                    <BookingServiceModal
-                        step={step}
-                        setStep={setStep}
-                        setShowModal={setShowModal}
-                    />
-                    :
-                    <BookingCancelModal setShowModal={setShowModal} />
-            )}
+            <ReservationOptions />
         </>
     )
 }

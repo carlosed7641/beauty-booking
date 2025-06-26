@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { ModalProvider } from '@/components'
 import { inter, mainFont } from './config/fonts'
 import './globals.css'
 
@@ -20,8 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body  className={`${inter.className} ${mainFont.className} antialiased`}>
-        {children}
+      <body className={`${inter.className} ${mainFont.className} antialiased`}>
+        <ModalProvider>
+          {children}
+        </ModalProvider>
       </body>
     </html>
   )

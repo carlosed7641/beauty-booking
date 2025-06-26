@@ -1,5 +1,6 @@
 'use client'
-import { useEffect, useState } from 'react'
+
+import { useModal } from '@/store'
 import Image from 'next/image'
 import { FaStar } from 'react-icons/fa6'
 import { Modal, ModalHeader } from '@/components'
@@ -16,24 +17,14 @@ interface Props {
 
 export const ReviewsModal = ({ photo, name, counts, points, reviews, alternativeStyle }: Props) => {
 
-    const [showModal, setShowModal] = useState(false)
-
-    const handleClick = () => {
-        setShowModal(true)
-    }
-
-    useEffect(() => {
-        window.scrollTo(0, 0)
-        document.body.classList.toggle('overflow-hidden', showModal)
-    }, [showModal])
-
+    const { openModal, setOpenModal } = useModal()
 
     return (
         <>
             {
                 counts > 0 ?
                     <>
-                        <button onClick={handleClick} className="flex flex-col items-center cursor-pointer w-fit">
+                        <button onClick={() => setOpenModal(ReviewsModal.name)} className="flex flex-col items-center cursor-pointer w-fit">
                             {
                                 alternativeStyle ?
                                     <div className="flex flex-col mb-2">
@@ -57,9 +48,9 @@ export const ReviewsModal = ({ photo, name, counts, points, reviews, alternative
                             }
                         </button>
                         {
-                            showModal &&
-                            <Modal setShowModal={setShowModal}>
-                                <ModalHeader setShowModal={setShowModal}>
+                            openModal === ReviewsModal.name &&
+                            <Modal>
+                                <ModalHeader>
                                     <div className="md:max-w-1/2">
                                         <div className="flex items-center gap-5">
                                             {

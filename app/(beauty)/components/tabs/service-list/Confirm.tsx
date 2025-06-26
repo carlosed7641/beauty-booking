@@ -1,13 +1,14 @@
-import { useService } from '@/store'
+import { useModal, useService } from '@/store'
 
-export const Confirm = ({ setShowModal }: { setShowModal: (showModal: boolean) => void }) => {
+export const Confirm = () => {
 
     const { serviceState } = useService()
+    const { setOpenModal } = useModal()
 
     const handleConfirmBooking = () => {
         console.log(serviceState)
         //TODO: Create ID here & validate if update o create
-        setShowModal(false)
+        setOpenModal(null)
     }
 
     return (

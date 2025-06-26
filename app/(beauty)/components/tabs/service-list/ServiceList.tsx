@@ -3,15 +3,15 @@
 import clsx from 'clsx'
 import { useState } from 'react'
 import { RxCaretDown } from 'react-icons/rx'
-import { useService } from '@/store'
+import { useModal, useService } from '@/store'
 
-export const ServiceList = ({ serviceList, setShowModal }: {
-    serviceList: Service[],
-    setShowModal: (showModal: boolean) => void
+export const ServiceList = ({ serviceList }: {
+    serviceList: Service[]
 }) => {
 
     const [currentOpenCategory, setCurrentOpenCategory] = useState<string | null>(null)
     const { serviceState, setServiceState } = useService()
+    const { setOpenModal } = useModal()
 
     const handleSelectService = (serviceItem: ServiceItemExtended) => {
         setServiceState({
@@ -19,7 +19,7 @@ export const ServiceList = ({ serviceList, setShowModal }: {
             selectedService: serviceItem
         })
 
-        setShowModal(true)
+        setOpenModal('ServiceList')
     }
 
     //TODO: Serivce list by professional

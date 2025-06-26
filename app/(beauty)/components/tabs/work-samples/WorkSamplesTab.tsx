@@ -1,7 +1,8 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import Slider from 'react-slick'
+import { useModal } from '@/store'
 import { WorkSamples } from './WorkSamples'
 import { Modal } from '@/components'
 import { SLIDER_SETTINGS } from '@/util/const'
@@ -10,8 +11,8 @@ import 'slick-carousel/slick/slick.css'
 
 export const WorkSamplesTab = ({ workSamples }: { workSamples: WorkSample[] }) => {
 
-    const [showModal, setShowModal] = useState(false)
     const [selectedGallery, setSelectedGallery] = useState('')
+    const { openModal, setOpenModal } = useModal()
 
     // const categoryMap = Object.groupBy(workSamples, ({ category })=> category) // Not supportted
     const categoryMap = workSamples.reduce<Record<string, typeof workSamples>>((acc, sample) => {
@@ -24,20 +25,15 @@ export const WorkSamplesTab = ({ workSamples }: { workSamples: WorkSample[] }) =
 
     const handleSelectGallery = (category: string) => {
         setSelectedGallery(category)
-        setShowModal(true)
+        setOpenModal(WorkSamplesTab.name)
     }
-
-    useEffect(() => {
-        window.scrollTo(0, 0)
-        document.body.classList.toggle('overflow-hidden', showModal)
-    }, [showModal])
 
     return (
         <>
             <WorkSamples categoryMap={categoryMap} handleSelectGallery={handleSelectGallery} />
             {
-                showModal &&
-                <Modal className="overflow-hidden! h-fit! pb-10! pt-5! px-0! md:px-6! md:pt-0! md:pb-6!  md:w-1/3! " setShowModal={setShowModal}>
+                openModal === WorkSamplesTab.name &&
+                <Modal className="overflow-hidden! h-fit! pb-10! pt-5! px-0! md:px-6! md:pt-0! md:pb-6!  md:w-1/3! ">
                     <div className="md:max-w-[400px] my-auto mx-auto md:p-2">
                         <Slider {...SLIDER_SETTINGS}>
                             {categoryMap[selectedGallery]?.map((item, index) => (

@@ -5,23 +5,21 @@ import { IoMdArrowRoundBack } from 'react-icons/io'
 
 interface Props {
     step: number
-    setStep: (showModal: number) => void
-    setShowModal: (showModal: boolean) => void
+    setStep: (step: number) => void
     professionals?: ProfessionalData[]
 }
 
 export const BookingServiceModal = ({
     step,
     setStep,
-    setShowModal,
     professionals
 }: Props) => {
 
     const { serviceState } = useService()
 
     return (
-        <Modal setShowModal={setShowModal}>
-            <ModalHeader setShowModal={setShowModal}>
+        <Modal>
+            <ModalHeader>
                 {step == 1 && <div className="flex flex-col gap-1">
                     <p className="text-xl font-bold">{serviceState.selectedService?.name}</p>
                     <p className="text-zinc-500">{serviceState.selectedService?.duration} aprox</p>
@@ -52,7 +50,7 @@ export const BookingServiceModal = ({
                         }
                     </>
                 }
-                {step === 2 && <Confirm setShowModal={setShowModal} />}
+                {step === 2 && <Confirm />}
             </div>
         </Modal>
     )

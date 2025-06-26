@@ -1,7 +1,8 @@
 'use client'
-import { useEffect, useState } from 'react'
+
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FaEdit } from 'react-icons/fa'
+import { useModal } from '@/store'
 import { Modal, ModalHeader } from '@/components'
 import { COUNTRIES, GENDERS } from '@/util/const'
 import { session } from '@/util/fake-data'
@@ -18,32 +19,27 @@ export const UpdateProfile = () => {
         gender: session.gender
     }
 
-    const [showModal, setShowModal] = useState(false)
+    const { openModal, setOpenModal } = useModal()
     const { register, handleSubmit, reset } = useForm<Omit<Session, 'id' | 'shareNumberPhone'>>({
         defaultValues
     })
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-        document.body.classList.toggle('overflow-hidden', showModal)
-    }, [showModal])
-
     const onSubmit: SubmitHandler<Omit<Session, 'id' | 'shareNumberPhone'>> = (data) => {
         console.log(data)
-        setShowModal(false)
+        setOpenModal(null)
         reset()
     }
 
     return (
         <>
-            <button onClick={() => setShowModal(true)} className="text-green-700 w-fit flex gap-1 items-center cursor-pointer">
+            <button onClick={() => setOpenModal(UpdateProfile.name)} className="text-green-700 w-fit flex gap-1 items-center cursor-pointer">
                 <FaEdit />
                 Editar perfil
             </button>
             {
-                showModal &&
-                <Modal setShowModal={setShowModal}>
-                    <ModalHeader setShowModal={setShowModal}>
+                openModal === UpdateProfile.name &&
+                <Modal>
+                    <ModalHeader>
                         <p className="text-green-700 text-lg">Editar datos del perfil</p>
                     </ModalHeader>
                     <form onSubmit={handleSubmit(onSubmit)} className="grid md:grid-cols-3 gap-3" >

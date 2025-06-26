@@ -1,11 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { RxCaretDown } from 'react-icons/rx'
 import clsx from 'clsx'
-import { useService } from '@/store'
-import { BookingCancelModal, BookingServiceModal } from '..'
-import { SERVICE_INITIAL_STATE } from '@/util/const'
+import { ReservationOptions } from '..'
+import { useReservationOptions } from '@/hooks'
 
 interface Props {
     reservations: Reservation[]
@@ -13,34 +12,8 @@ interface Props {
 
 export const ReservationList = ({ reservations }: Props) => {
 
-    // TODO: Re-use Next Reservations functions
     const [currentOpen, setCurrentOpen] = useState<string | number | null>(null)
-    const [step, setStep] = useState(1)
-    const { setServiceState } = useService()
-    const [showModal, setShowModal] = useState(false)
-    const [isUpdating, setIsUpdating] = useState(false)
-
-    const handleUpdate = (reservation: ServiceState) => {
-        setShowModal(true)
-        setIsUpdating(true)
-        console.log(reservation)
-        setServiceState(reservation)
-    }
-
-    const handleCancel = (id: string) => {
-        setShowModal(true)
-        setIsUpdating(false)
-    }
-
-    useEffect(() => {
-        if (!showModal) {
-            setServiceState(SERVICE_INITIAL_STATE)
-            setStep(1)
-        }
-        window.scrollTo(0, 0)
-        document.body.classList.toggle('overflow-hidden', showModal)
-    }, [showModal])
-
+    const { handleCancel, handleUpdate } = useReservationOptions()
 
     return (
         <>
@@ -116,16 +89,7 @@ export const ReservationList = ({ reservations }: Props) => {
 
                             </div>
                         ))}
-                        {showModal && (
-                            isUpdating ?
-                                <BookingServiceModal
-                                    step={step}
-                                    setStep={setStep}
-                                    setShowModal={setShowModal}
-                                />
-                                :
-                                <BookingCancelModal setShowModal={setShowModal} />
-                        )}
+                        {<ReservationOptions />}
                     </>
                     :
                     <div>No hay reservas</div>

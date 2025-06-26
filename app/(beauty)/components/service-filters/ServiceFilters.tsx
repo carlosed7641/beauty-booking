@@ -2,25 +2,23 @@
 
 import { useEffect, useState } from 'react'
 import { LiaFilterSolid } from 'react-icons/lia'
-import { useSelectedFilters } from '@/store'
+import { useModal, useSelectedFilters } from '@/store'
 import { Modal, ModalHeader } from '@/components'
 import { FilterList } from '..'
 import { categories } from '@/util/fake-data'
 
 export const ServiceFilters = () => {
 
-    const [showModal, setShowModal] = useState(false)
+    const { openModal, setOpenModal } = useModal()
     const { selectedFilters, setSelectedFilters } = useSelectedFilters()
     const [temporalSelectedFilters, setTemporalSelectedFilters] = useState([...selectedFilters])
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-        document.body.classList.toggle('overflow-hidden', showModal)
         setTemporalSelectedFilters([...selectedFilters])
-    }, [showModal])
+    }, [openModal])
 
     const handleClickButton = () => {
-        setShowModal(false)
+        setOpenModal(null)
         setSelectedFilters([...temporalSelectedFilters])
     }
 
@@ -34,14 +32,14 @@ export const ServiceFilters = () => {
 
     return (
         <>
-            <div onClick={() => setShowModal(true)} className="flex justify-center border-b border-zinc-300 md:border-0 items-center gap-1 cursor-pointer w-1/2 md:w-auto">
+            <div onClick={() => setOpenModal(ServiceFilters.name)} className="flex justify-center border-b border-zinc-300 md:border-0 items-center gap-1 cursor-pointer w-1/2 md:w-auto">
                 <LiaFilterSolid />
                 Filtrar
             </div>
             {
-                showModal &&
-                <Modal setShowModal={setShowModal}>
-                    <ModalHeader setShowModal={setShowModal}>
+                openModal === ServiceFilters.name &&
+                <Modal>
+                    <ModalHeader>
                         <p className="text-green-700 text-xl">Filtrar por categoría</p>
                     </ModalHeader>
                     <FilterList items={categories} handleClick={handleClickCategory} selectedFilters={temporalSelectedFilters} />
