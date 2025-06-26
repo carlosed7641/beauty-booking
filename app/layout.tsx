@@ -8,8 +8,6 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// Refactor code
-// -------------------
 // Admin view
 // Map
 // Metadata
