@@ -2,8 +2,8 @@ import { JSX } from 'react'
 import clsx from 'clsx'
 import { useSteps } from '../../store'
 
-export const Stepper = ({ steps }: { steps:  JSX.Element[] }) => {
-  const { step, setStep, completedSteps } = useSteps()
+export const Stepper = () => {
+    const { step, setStep, completedSteps } = useSteps()
 
     return (
         <div className="pt-5 pb-0 px-2">
@@ -27,7 +27,6 @@ export const Stepper = ({ steps }: { steps:  JSX.Element[] }) => {
                     </div>
                 ))}
             </div>
-            {steps[step]}
         </div>
     )
 }

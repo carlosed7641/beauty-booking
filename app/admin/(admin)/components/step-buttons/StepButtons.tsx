@@ -2,17 +2,18 @@ import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6'
 import { useSteps } from '../../store'
 
 export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
-    const { step, setStep, setShowErrors, completedSteps, setCompletedSteps, stepOneData } = useSteps()
+    const { step, setStep, setShowErrors, completedSteps, setCompletedSteps, data } = useSteps()
 
     const nextStep = () => {
         const next = step + 1
         setCompletedSteps(completedSteps > step ? completedSteps : next)
         setStep(next)
         setShowErrors(false)
+        //TODO: Save to BD
     }
 
     const steps = [
-        { isValid: () => [stepOneData.name, stepOneData.address, stepOneData.types.length > 0].every(Boolean) },
+        { isValid: () => [data.stepOne.name, data.stepOne.address, data.stepOne.types.length > 0].every(Boolean) },
         { isValid: () => true }
     ]
 

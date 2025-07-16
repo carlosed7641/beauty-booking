@@ -155,3 +155,14 @@ export const SERVICE_ICONS: { [key: string]: IconType } = {
     'peinados': GiComb
     // uñas, impieza facial
 }
+
+export const SERVICES_LIST = {
+    'Cortes': ['Corte', 'Corte hombre', 'Corte con barba', 'Corte niño'],
+    'Peinados': ['Peinados', 'Trenzas'],
+    'Color': ['Diseño color', 'Mechas', 'Efecto raíz'],
+    'Uñas': ['Manos', 'Pies', 'Manos y pies'],
+    'Cejas': ['Laminado', 'Micropigmentación'],
+    'Pestañas': ['Efecto natural', 'Efecto pestañina'],
+    'Masajes': ['Relajante', 'Deportivo', 'Reductor'],
+    'Maquillajes': ['Sencillo', 'Artístico']
+}
