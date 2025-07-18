@@ -16,7 +16,12 @@ const steps = [
     title: 'Elige los servicios que ofreces',
     subtitle: 'Más adelante puedes crear más',
     content: <StepTwo />
-  }
+  },
+    {
+    title: 'Elige los servicios que ofreces',
+    subtitle: 'Más adelante puedes crear más',
+    content: <StepThree />
+  },
 ]
 
 export const RegistrationSteps = () => {

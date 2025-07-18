@@ -14,7 +14,7 @@ export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
 
     const steps = [
         { isValid: () => [data.stepOne.name, data.stepOne.address, data.stepOne.types.length > 0].every(Boolean) },
-        { isValid: () => true }
+        { isValid: () => Boolean(data.stepTwo.selectedServices) }
     ]
 
     const handleChangeStep = (value: number) => {
@@ -36,7 +36,6 @@ export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
 
     return (
         <div className="bg-white md:bg-transparent w-full md:w-auto py-4 md:py-0 sticky md:relative border-t md:border-none border-zinc-300 bottom-0 md:bottom-auto justify-center flex gap-3 mt-8 md:justify-end md:px-2">
-            <div>Completed steps {completedSteps}</div>
             {
                 step > 0 &&
                 <button onClick={() => handleChangeStep(-1)} className="flex gap-2 items-center border border-green-700 text-green-700 rounded-full px-5 cursor-pointer">
