@@ -18,8 +18,8 @@ const steps = [
     content: <StepTwo />
   },
     {
-    title: 'Elige los servicios que ofreces',
-    subtitle: 'Más adelante puedes crear más',
+    title: 'Define la duración de cada servicio',
+    subtitle: 'Este tiempo se tomará en cuenta para la asignación de citas',
     content: <StepThree />
   },
 ]

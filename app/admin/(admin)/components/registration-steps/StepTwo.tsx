@@ -14,12 +14,12 @@ export const StepTwo = () => {
 
   const handleAddService = (key: string, value: string) => {
 
-    const existingServices = data.stepTwo.selectedServices?.[key] ?? []
-    let selectedServices: { [key: string]: string[] } | null = { ...data.stepTwo.selectedServices }
+    const existingServices = data.selectedServices?.[key] ?? []
+    let selectedServices: { [key: string]: ServiceData[] } | null = { ...data.selectedServices }
 
-    const updatedServices = existingServices.includes(value)
-      ? existingServices.filter(s => s !== value)
-      : [...existingServices, value]
+    const updatedServices = existingServices.some(s => s.name === value)
+      ? existingServices.filter(s => s.name !== value)
+      : [...existingServices, { name: value, duration: { hours: 0, minutes: 30 }, price: 0 }]
 
 
     if (updatedServices.length > 0) {
@@ -32,9 +32,7 @@ export const StepTwo = () => {
 
     setData({
       ...data,
-      stepTwo: {
-        selectedServices
-      }
+      selectedServices
     })
   }
 
@@ -42,7 +40,7 @@ export const StepTwo = () => {
     const value = customFields[name].find((_, idx) => idx === index) ?? ''
 
     if (value.length > 0) {
-      if (!data.stepTwo.selectedServices?.[name]?.includes(value)) {
+      if (!data.selectedServices?.[name]?.some(s => s.name === value)) {
 
         if (!serviceList[name].includes(value)) {
           setServiceList(oldServices => {
@@ -86,13 +84,10 @@ export const StepTwo = () => {
     })
   }
 
-  // TODO: Fix
   useEffect(() => {
     if (localStorage.getItem('service-list')) {
       const serviceList = localStorage.getItem('service-list')
       setServiceList(JSON.parse(serviceList!))
-    } else {
-      setServiceList(SERVICES_LIST)
     }
   }, [])
 
@@ -111,7 +106,7 @@ export const StepTwo = () => {
                         clsx(
                           "py-1 px-2 rounded-full border border-green-700 text-sm transition-all hover:bg-green-700 hover:text-white cursor-pointer",
                           {
-                            "bg-green-700 text-white": data.stepTwo.selectedServices?.[name]?.includes(service)
+                            "bg-green-700 text-white": data.selectedServices?.[name]?.some(s => s.name === service)
                           }
                         )
                       }>
@@ -147,7 +142,7 @@ export const StepTwo = () => {
         }
       </div>
       {
-        showErrors && !data.stepTwo.selectedServices &&
+        showErrors && !data.selectedServices &&
         <div className="hidden md:block mt-8 text-red-500 text-center">
           Debes elegir mínimo un servicio
         </div>

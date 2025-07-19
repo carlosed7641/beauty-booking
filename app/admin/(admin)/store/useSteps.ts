@@ -8,15 +8,11 @@ type StepOneData = {
     types: string[]
 }
 
-type StepTwoData = {
-    selectedServices: {
-        [key: string]: string[]
-    } | null
-}
-
 interface Data {
     stepOne: StepOneData
-    stepTwo: StepTwoData
+    selectedServices: {
+        [key: string]: ServiceData[]
+    } | null
 }
 
 interface Store {
@@ -42,9 +38,7 @@ export const useSteps = create<Store>()(
                     address: null,
                     types: []
                 },
-                stepTwo: {
-                    selectedServices: null
-                }
+                selectedServices: null
             },
             setStep: (step: number) => set({ step }),
             setShowErrors: (showErrors: boolean) => set({ showErrors }),

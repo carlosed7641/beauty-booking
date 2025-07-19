@@ -14,7 +14,7 @@ export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
 
     const steps = [
         { isValid: () => [data.stepOne.name, data.stepOne.address, data.stepOne.types.length > 0].every(Boolean) },
-        { isValid: () => Boolean(data.stepTwo.selectedServices) }
+        { isValid: () => Boolean(data.selectedServices) }
     ]
 
     const handleChangeStep = (value: number) => {
@@ -37,7 +37,7 @@ export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
     return (
         <div className="bg-white md:bg-transparent w-full md:w-auto py-4 md:py-0 sticky md:relative border-t md:border-none border-zinc-300 bottom-0 md:bottom-auto md:px-2 mt-8">
             {
-                showErrors && step === 1 && !data.stepTwo.selectedServices &&
+                showErrors && step === 1 && !data.selectedServices &&
                 <div className="md:hidden text-red-500 text-center mb-3">
                     Debes elegir mínimo un servicio
                 </div>
