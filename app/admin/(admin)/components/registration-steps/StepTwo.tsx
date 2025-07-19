@@ -43,13 +43,20 @@ export const StepTwo = () => {
 
     if (value.length > 0) {
       if (!data.stepTwo.selectedServices?.[name]?.includes(value)) {
-        setServiceList(oldServices => {
-          return {
-            ...oldServices,
-            [name]: [...oldServices[name], value]
-          }
-        })
-        handleAddService(name, value)
+
+        if (!serviceList[name].includes(value)) {
+          setServiceList(oldServices => {
+
+            const newValue = {
+              ...oldServices,
+              [name]: [...oldServices[name], value]
+            }
+
+            localStorage.setItem('service-list', JSON.stringify(newValue))
+            return newValue
+          })
+          handleAddService(name, value)
+        }
       }
 
       handleDeleteField(index, name)
@@ -84,15 +91,10 @@ export const StepTwo = () => {
     if (localStorage.getItem('service-list')) {
       const serviceList = localStorage.getItem('service-list')
       setServiceList(JSON.parse(serviceList!))
-      return
+    } else {
+      setServiceList(SERVICES_LIST)
     }
-    setServiceList(SERVICES_LIST)
-
   }, [])
-
-  useEffect(() => {
-    localStorage.setItem('service-list', JSON.stringify(serviceList))
-  }, [serviceList])
 
   return (
     <>
@@ -121,7 +123,7 @@ export const StepTwo = () => {
                   customFields[name]?.map((value, idx) => (
                     <div key={`${name}-${idx}`} className="flex items-center gap-2">
                       <input onChange={(e) => handleChangeField(e, idx, name)} value={value} type="text" placeholder="Nombre del servicio" className="border border-zinc-300 rounded-full px-3 py-0.5" />
-                      <button disabled={customFields[name].find((_, index) => idx === index)?.length === 0} onClick={() => handleAddCustomService(idx, name)} className="rounded-full cursor-pointer bg-blue-900 text-white p-1.5 disabled:opacity-50 disabled:pointer-events-none">
+                      <button onClick={() => handleAddCustomService(idx, name)} disabled={customFields[name].find((_, index) => idx === index)?.length === 0} className="rounded-full bg-blue-900 text-white p-1.5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
                         <FaRegCircleCheck />
                       </button>
                       <button onClick={() => handleDeleteField(idx, name)} className="rounded-full cursor-pointer bg-blue-900 opacity-90 text-white p-1.5">
@@ -146,7 +148,7 @@ export const StepTwo = () => {
       </div>
       {
         showErrors && !data.stepTwo.selectedServices &&
-        <div className="mt-8 text-red-500 text-center">
+        <div className="hidden md:block mt-8 text-red-500 text-center">
           Debes elegir mínimo un servicio
         </div>
       }

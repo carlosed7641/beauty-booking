@@ -2,7 +2,7 @@ import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6'
 import { useSteps } from '../../store'
 
 export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
-    const { step, setStep, setShowErrors, completedSteps, setCompletedSteps, data } = useSteps()
+    const { step, setStep, setShowErrors, completedSteps, setCompletedSteps, data, showErrors } = useSteps()
 
     const nextStep = () => {
         const next = step + 1
@@ -35,21 +35,30 @@ export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
     }
 
     return (
-        <div className="bg-white md:bg-transparent w-full md:w-auto py-4 md:py-0 sticky md:relative border-t md:border-none border-zinc-300 bottom-0 md:bottom-auto justify-center flex gap-3 mt-8 md:justify-end md:px-2">
+        <div className="bg-white md:bg-transparent w-full md:w-auto py-4 md:py-0 sticky md:relative border-t md:border-none border-zinc-300 bottom-0 md:bottom-auto md:px-2 mt-8">
             {
-                step > 0 &&
-                <button onClick={() => handleChangeStep(-1)} className="flex gap-2 items-center border border-green-700 text-green-700 rounded-full px-5 cursor-pointer">
-                    <FaArrowLeftLong />
-                    Anterior
-                </button>
+                showErrors && step === 1 && !data.stepTwo.selectedServices &&
+                <div className="md:hidden text-red-500 text-center mb-3">
+                    Debes elegir mínimo un servicio
+                </div>
             }
-            {
-                step !== stepQuantity - 1 &&
-                <button onClick={() => handleChangeStep(1)} className="flex gap-2 items-center border bg-green-700 text-white border-green-700 rounded-full px-5 cursor-pointer">
-                    Siguiente
-                    <FaArrowRightLong />
-                </button>
-            }
+            <div className="flex justify-center gap-3 md:justify-end">
+                {
+                    step > 0 &&
+                    <button onClick={() => handleChangeStep(-1)} className="flex gap-2 items-center border border-green-700 text-green-700 rounded-full px-5 cursor-pointer">
+                        <FaArrowLeftLong />
+                        Anterior
+                    </button>
+                }
+                {
+                    step !== stepQuantity - 1 &&
+                    <button onClick={() => handleChangeStep(1)} className="flex gap-2 items-center border bg-green-700 text-white border-green-700 rounded-full px-5 cursor-pointer">
+                        Siguiente
+                        <FaArrowRightLong />
+                    </button>
+                }
+            </div>
         </div>
+
     )
 }
