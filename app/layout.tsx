@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// Admin view
+// Merge step three-four
 // Map
 // Metadata
 

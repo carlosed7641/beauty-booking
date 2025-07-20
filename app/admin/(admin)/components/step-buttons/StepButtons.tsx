@@ -14,6 +14,8 @@ export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
 
     const steps = [
         { isValid: () => [data.stepOne.name, data.stepOne.address, data.stepOne.types.length > 0].every(Boolean) },
+        { isValid: () => Boolean(data.selectedServices) },
+        { isValid: () => Boolean(data.selectedServices) },  
         { isValid: () => Boolean(data.selectedServices) }
     ]
 

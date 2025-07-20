@@ -17,11 +17,21 @@ const steps = [
     subtitle: 'Más adelante puedes crear más',
     content: <StepTwo />
   },
-    {
+  {
     title: 'Define la duración de cada servicio',
     subtitle: 'Este tiempo se tomará en cuenta para la asignación de citas',
     content: <StepThree />
   },
+  {
+    title: 'Define el precio de cada servicio',
+    subtitle: 'Este es el precio que verá el cliente al agendar',
+    content: <StepFour />
+  },
+    {
+    title: 'Define la disponibilidad de tu negocio',
+    subtitle: 'Estas serán las horas de inicio y cierre de tu negocio.',
+    content: <StepFive />
+  }
 ]
 
 export const RegistrationSteps = () => {

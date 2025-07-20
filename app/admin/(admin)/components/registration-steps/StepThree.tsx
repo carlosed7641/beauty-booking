@@ -40,6 +40,7 @@ export const StepThree = () => {
 
   const setNewDuration = () => {
     if ((selectedTime.hours + selectedTime.minutes) === 0) return setError(true)
+      
     const newValue = data.selectedServices![selectedTime.service.key].map(service => {
       if (service.name !== selectedTime.service.name) return service
       return {
@@ -66,7 +67,7 @@ export const StepThree = () => {
   return (
     data.selectedServices ?
       <>
-        <div className="grid md:grid-cols-3 gap-3  md:gap-10">
+        <div className="grid md:grid-cols-3 gap-3 md:gap-10">
           {
             Object.entries(data.selectedServices).map(([name, services]) => (
               <div key={name} className="flex flex-col gap-2">
@@ -89,7 +90,7 @@ export const StepThree = () => {
         </div>
         {
           openModal === StepThree.name &&
-          <Modal className="md:w-1/3!">
+          <Modal className="md:w-1/3! overflow-auto!">
             <ModalHeader>
               <p className="text-green-700 font-bold text-lg">{selectedTime.service.name}</p>
             </ModalHeader>

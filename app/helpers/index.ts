@@ -1,3 +1,4 @@
+export * from './format-number'
 export * from './format-text'
 export * from './format-timestamp'
 export * from './generate-dates-array'
