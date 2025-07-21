@@ -1,11 +1,11 @@
-import { 
+import {
     ArgentinaFlag,
     BoliviaFlag,
     ChileFlag,
     ColombiaFlag,
     CostaRicaFlag,
     CubaFlag,
-    DominicanRepublicFlag, 
+    DominicanRepublicFlag,
     ElSalvadorFlag,
     GuatemalaFlag,
     HondurasFlag,
@@ -166,3 +166,6 @@ export const SERVICES_LIST = {
     'Masajes': ['Relajante', 'Deportivo', 'Reductor'],
     'Maquillajes': ['Sencillo', 'Artístico']
 }
+
+export const DAYS_OF_WEEK = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+export const MONTHS_OF_YEAR = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']

@@ -1,5 +1,6 @@
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6'
 import { useSteps } from '../../store'
+import { FaCheck } from 'react-icons/fa'
 
 export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
     const { step, setStep, setShowErrors, completedSteps, setCompletedSteps, data, showErrors } = useSteps()
@@ -9,14 +10,14 @@ export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
         setCompletedSteps(completedSteps > step ? completedSteps : next)
         setStep(next)
         setShowErrors(false)
-        //TODO: Save to BD
     }
 
     const steps = [
         { isValid: () => [data.stepOne.name, data.stepOne.address, data.stepOne.types.length > 0].every(Boolean) },
         { isValid: () => Boolean(data.selectedServices) },
-        { isValid: () => Boolean(data.selectedServices) },  
-        { isValid: () => Boolean(data.selectedServices) }
+        { isValid: () => Boolean(data.selectedServices) },
+        { isValid: () => Boolean(data.selectedServices) },
+        { isValid: () => data.workdays.every(day => !day.error) }
     ]
 
     const handleChangeStep = (value: number) => {
@@ -36,12 +37,29 @@ export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
         }
     }
 
+    const handleSaveData = () => {
+        const allStepsValid = steps.every(step => step.isValid())
+        if (allStepsValid) {
+            // TODO: Save To BD: isRegisterCompleted - true
+            // localStorage.removeItem('service-list')
+            // localStorage.removeItem('steps-data')
+            console.log(data)
+        }
+        setShowErrors(true)
+    }
+
     return (
         <div className="bg-white md:bg-transparent w-full md:w-auto py-4 md:py-0 sticky md:relative border-t md:border-none border-zinc-300 bottom-0 md:bottom-auto md:px-2 mt-8">
             {
                 showErrors && step === 1 && !data.selectedServices &&
                 <div className="md:hidden text-red-500 text-center mb-3">
                     Debes elegir mínimo un servicio
+                </div>
+            }
+            {
+                showErrors && step === stepQuantity - 1 &&
+                <div className="md:hidden text-red-500 text-center mb-3">
+                   Arregla los errores antes de continuar
                 </div>
             }
             <div className="flex justify-center gap-3 md:justify-end">
@@ -57,6 +75,13 @@ export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
                     <button onClick={() => handleChangeStep(1)} className="flex gap-2 items-center border bg-green-700 text-white border-green-700 rounded-full px-5 cursor-pointer">
                         Siguiente
                         <FaArrowRightLong />
+                    </button>
+                }
+                {
+                    step === stepQuantity - 1 &&
+                    <button onClick={() => handleSaveData()} className="flex gap-2 items-center border bg-green-700 text-white border-green-700 rounded-full px-5 cursor-pointer">
+                        Finalizar
+                        <FaCheck />
                     </button>
                 }
             </div>

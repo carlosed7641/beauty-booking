@@ -9,22 +9,22 @@ import { StepFive, StepFour, StepOne, StepThree, StepTwo } from '.'
 const steps = [
   {
     title: 'Información de negocio',
-    subtitle: 'Esta es la información básica del negocio todos los campos son obligatorios',
+    subtitle: 'Esta es la información básica del negocio todos los campos son obligatorios.',
     content: <StepOne />
   },
   {
     title: 'Elige los servicios que ofreces',
-    subtitle: 'Más adelante puedes crear más',
+    subtitle: 'Más adelante puedes crear más.',
     content: <StepTwo />
   },
   {
     title: 'Define la duración de cada servicio',
-    subtitle: 'Este tiempo se tomará en cuenta para la asignación de citas',
+    subtitle: 'Este tiempo se tomará en cuenta para la asignación de citas.',
     content: <StepThree />
   },
   {
     title: 'Define el precio de cada servicio',
-    subtitle: 'Este es el precio que verá el cliente al agendar',
+    subtitle: 'Este es el precio que verá el cliente al agendar.',
     content: <StepFour />
   },
     {

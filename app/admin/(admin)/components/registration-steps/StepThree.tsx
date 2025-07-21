@@ -8,22 +8,20 @@ export const StepThree = () => {
   const { data, setData } = useSteps()
   const { openModal, setOpenModal } = useModal()
   const [error, setError] = useState(false)
-  const [selectedTime, setSelectedTime] = useState({ hours: 0, minutes: 0, service: { key: '', name: '' } })
+  const [selectedService, setSelectedService] = useState({key: '', name: '', hours: 0, minutes: 0 })
 
   const handleOpenDuration = (name: string, service: ServiceData) => {
-    setSelectedTime({
+    setSelectedService({
       hours: service.duration.hours,
       minutes: service.duration.minutes,
-      service: {
-        key: name,
-        name: service.name
-      }
+      key: name,
+      name: service.name
     })
     setOpenModal(StepThree.name)
   }
 
   const onChangeDuration = (e: React.ChangeEvent<HTMLSelectElement>, type: 'hours' | 'minutes') => {
-    setSelectedTime(prev => {
+    setSelectedService(prev => {
       if (type === 'hours') {
         return {
           ...prev,
@@ -39,15 +37,15 @@ export const StepThree = () => {
   }
 
   const setNewDuration = () => {
-    if ((selectedTime.hours + selectedTime.minutes) === 0) return setError(true)
+    if ((selectedService.hours + selectedService.minutes) === 0) return setError(true)
       
-    const newValue = data.selectedServices![selectedTime.service.key].map(service => {
-      if (service.name !== selectedTime.service.name) return service
+    const newValue = data.selectedServices![selectedService.key].map(service => {
+      if (service.name !== selectedService.name) return service
       return {
         ...service,
         duration: {
-          hours: selectedTime.hours,
-          minutes: selectedTime.minutes
+          hours: selectedService.hours,
+          minutes: selectedService.minutes
         }
       }
     })
@@ -56,7 +54,7 @@ export const StepThree = () => {
       ...data,
       selectedServices: {
         ...data.selectedServices,
-        [selectedTime.service.key]: newValue
+        [selectedService.key]: newValue
       }
     })
 
@@ -92,12 +90,12 @@ export const StepThree = () => {
           openModal === StepThree.name &&
           <Modal className="md:w-1/3! overflow-auto!">
             <ModalHeader>
-              <p className="text-green-700 font-bold text-lg">{selectedTime.service.name}</p>
+              <p className="text-green-700 font-bold text-lg">{selectedService.name}</p>
             </ModalHeader>
             <div className="grid md:grid-cols-2 gap-3">
               <div className="flex flex-col gap-2">
                 <p className="text-green-700 font-bold">Horas</p>
-                <select onChange={(e) => onChangeDuration(e, 'hours')} value={selectedTime.hours} className="border border-green-700 focus:outline-0">
+                <select onChange={(e) => onChangeDuration(e, 'hours')} value={selectedService.hours} className="border border-green-700 focus:outline-0">
                   {Array.from({ length: 13 }).map((_, idx) => (
                     <option key={idx} value={idx}>{idx}</option>
                   ))}
@@ -105,14 +103,14 @@ export const StepThree = () => {
               </div>
               <label className="flex flex-col gap-2">
                 <p className="text-green-700 font-bold">Minutos</p>
-                <select onChange={(e) => onChangeDuration(e, 'minutes')} value={selectedTime.minutes} className="border border-green-700 focus:outline-0">
+                <select onChange={(e) => onChangeDuration(e, 'minutes')} value={selectedService.minutes} className="border border-green-700 focus:outline-0">
                   {Array.from({ length: 12 }).map((_, idx) => (
                     <option key={idx * 5} value={idx * 5}>{idx * 5}</option>
                   ))}
                 </select>
               </label>
             </div>
-            {error && selectedTime.hours + selectedTime.minutes === 0 && <span className="text-red-500 mt-3 block">La duración no puede ser cero</span>}
+            {error && selectedService.hours + selectedService.minutes === 0 && <span className="text-red-500 mt-3 block">La duración no puede ser cero</span>}
             <button onClick={setNewDuration} className="py-0.5 bg-green-700 mt-3 rounded-md text-white w-full font-bold cursor-pointer">
               Enviar
             </button>

@@ -8,11 +8,19 @@ type StepOneData = {
     types: string[]
 }
 
+interface workDays {
+    from: string
+    to: string
+    disabled?: boolean
+    error?: boolean
+}
+
 interface Data {
     stepOne: StepOneData
     selectedServices: {
         [key: string]: ServiceData[]
     } | null
+    workdays: workDays[]
 }
 
 interface Store {
@@ -38,7 +46,37 @@ export const useSteps = create<Store>()(
                     address: null,
                     types: []
                 },
-                selectedServices: null
+                selectedServices: null,
+                workdays: [
+                    {
+                        from: '9:00',
+                        to: '21:00'
+                    },
+                    {
+                        from: '9:00',
+                        to: '21:00'
+                    },
+                    {
+                        from: '9:00',
+                        to: '21:00'
+                    },
+                    {
+                        from: '9:00',
+                        to: '21:00'
+                    },
+                    {
+                        from: '9:00',
+                        to: '21:00'
+                    },
+                    {
+                        from: '9:00',
+                        to: '21:00'
+                    },
+                    {
+                        from: '9:00',
+                        to: '21:00'
+                    }
+                ]
             },
             setStep: (step: number) => set({ step }),
             setShowErrors: (showErrors: boolean) => set({ showErrors }),

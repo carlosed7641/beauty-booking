@@ -1,3 +1,5 @@
+import { DAYS_OF_WEEK, MONTHS_OF_YEAR } from '@/util/const'
+
 const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
@@ -5,9 +7,6 @@ const options: Intl.DateTimeFormatOptions = {
 }
 
 export const generateDatesArray = () => {
-    const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
-    const monthsOfYear = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
-
     const dateArray = Array.from({ length: 30 }, (_, i) => {
         const currentDate = new Date()
         const date = new Date()
@@ -17,8 +16,8 @@ export const generateDatesArray = () => {
             i === 0
                 ? 'Hoy' :
                 i === 1
-                    ? 'Mañana' : daysOfWeek[date.getDay()]
-        const month = (currentDate.getMonth() !== date.getMonth()) && monthsOfYear[date.getMonth()]
+                    ? 'Mañana' : DAYS_OF_WEEK[date.getDay()]
+        const month = (currentDate.getMonth() !== date.getMonth()) && MONTHS_OF_YEAR[date.getMonth()]
         const dateString = date.toLocaleDateString('es-ES', options)
         return {
             dayNumber: date.getDate(),

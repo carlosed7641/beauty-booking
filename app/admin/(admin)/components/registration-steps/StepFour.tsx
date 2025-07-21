@@ -9,15 +9,13 @@ export const StepFour = () => {
   const { data, setData } = useSteps()
   const { openModal, setOpenModal } = useModal()
   const [error, setError] = useState(false)
-  const [selectedService, setSelectedService] = useState({ price: '', service: { key: '', name: '' } })
+  const [selectedService, setSelectedService] = useState({ key: '', name: '', price: '' })
 
   const handleOpenPrice = (name: string, service: ServiceData) => {
     setSelectedService({
       price: service.price.toString(),
-      service: {
-        key: name,
-        name: service.name
-      }
+      key: name,
+      name: service.name
     })
     setOpenModal(StepFour.name)
   }
@@ -40,8 +38,8 @@ export const StepFour = () => {
     }
 
     const formattedPrice = Number(getRawNumber(selectedService.price))
-    const newValue = data.selectedServices![selectedService.service.key].map(service => {
-      if (service.name !== selectedService.service.name) return service
+    const newValue = data.selectedServices![selectedService.key].map(service => {
+      if (service.name !== selectedService.name) return service
       return {
         ...service,
         price: formattedPrice
@@ -52,7 +50,7 @@ export const StepFour = () => {
       ...data,
       selectedServices: {
         ...data.selectedServices,
-        [selectedService.service.key]: newValue
+        [selectedService.key]: newValue
       }
     })
 
@@ -88,7 +86,7 @@ export const StepFour = () => {
           openModal === StepFour.name &&
           <Modal className="md:w-1/3! overflow-auto!">
             <ModalHeader>
-              <p className="text-green-700 font-bold text-lg">{selectedService.service.name}</p>
+              <p className="text-green-700 font-bold text-lg">{selectedService.name}</p>
             </ModalHeader>
             <label className="flex flex-col gap-1">
               <span className="text-green-700">Precio desde</span>

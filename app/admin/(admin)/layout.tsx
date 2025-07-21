@@ -10,7 +10,7 @@ const user = {
   phone: '3004394704',
   indicatorPhone: '+57',
   shopCountry: 'CO',
-  isRegisterCompleted: false
+  isRegisterCompleted: true
 }
 
 export default function AdminLayout({
@@ -33,6 +33,7 @@ export default function AdminLayout({
     return <RegistrationSteps />
   }
 
+  //TODO: Change step one data
   return (
     <div>
       {children}
