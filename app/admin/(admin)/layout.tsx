@@ -35,8 +35,10 @@ export default function AdminLayout({
 
   //TODO: Change step one data
   return (
-    <div>
-      {children}
+    <div className="bg-zinc-100">
+      <div className="min-h-screen max-w-[1200px] my-0 mx-auto py-5 px-2">
+          {children}
+      </div>
     </div>
   )
 }

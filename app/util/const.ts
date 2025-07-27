@@ -21,10 +21,14 @@ import { IconType } from 'react-icons'
 import { FaRegStar } from 'react-icons/fa'
 import { FiMapPin } from 'react-icons/fi'
 import { GiComb } from 'react-icons/gi'
-import { GrFavorite } from 'react-icons/gr'
+import { GoGraph } from 'react-icons/go'
+import { GrFavorite, GrGallery } from 'react-icons/gr'
 import { IoHomeOutline, IoStorefrontOutline, IoCutOutline } from 'react-icons/io5'
-import { LuNotebook } from 'react-icons/lu'
+import { LuCalendarCheck, LuListTodo, LuNotebook } from 'react-icons/lu'
+import { MdOutlineCalendarToday } from 'react-icons/md'
 import { PiMedalLight } from 'react-icons/pi'
+import { TbUsers } from 'react-icons/tb'
+import { VscGraph } from 'react-icons/vsc'
 
 export const SERVICE_INITIAL_STATE = {
     selectedService: null,
@@ -169,3 +173,45 @@ export const SERVICES_LIST = {
 
 export const DAYS_OF_WEEK = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
 export const MONTHS_OF_YEAR = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+
+export const ADMIN_SECTIONS = {
+    "Mi negocio": [
+        {
+            name: 'Agenda',
+            Icon: MdOutlineCalendarToday,
+            url: 'schedule'
+        },
+        {
+            name: 'Servicios',
+            Icon: LuListTodo,
+            url: 'services'
+        },
+        {
+            name: 'Historial de agenda',
+            Icon: LuCalendarCheck,
+            url: 'schedule-history'
+        },
+        {
+            name: 'Informes',
+            Icon: VscGraph,
+            url: 'reports'
+        }
+    ],
+    "Marketing y ventas": [
+        {
+            name: 'Muestras de trabajo',
+            Icon: GrGallery,
+            url: 'work-samples'
+        },
+        {
+            name: 'Clientes',
+            Icon: TbUsers,
+            url: 'customers'
+        },
+        {
+            name: 'Estadísticas',
+            Icon: GoGraph,
+            url: 'statistics'
+        }
+    ]
+}
