@@ -215,3 +215,21 @@ export const ADMIN_SECTIONS = {
         }
     ]
 }
+
+export const AREAS_OF_EXPERIENCIES = [
+    "Estilista",
+    "Manicurista",
+    "Masajista",
+    "Barbero",
+    "Lady Barber",
+    "Maquillador/a",
+    "Tatuador/a"
+]
+
+export const YEARS_OF_EXPERIENCIES = [
+    "0 a 1",
+    "1 a 3",
+    "3 a 5",
+    "5 a 10",
+    "10+"
+]

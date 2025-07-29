@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { FaRegCalendar } from 'react-icons/fa'
 import { GoQuestion } from 'react-icons/go'
 import { HiOutlineUsers } from 'react-icons/hi2'
@@ -11,7 +12,7 @@ export default function HomePage() {
       <div className="bg-white w-full rounded-md p-7">
         <div className="md:flex justify-between">
           <div className="flex md:flex-col md:gap-3 md:w-fit items-center md:items-start justify-between md:justify-start">
-            <div className="flex gap-2">
+            <Link href="/admin/profile" className="flex gap-2">
               <div className="text-xl md:text-3xl rounded-full h-14 w-14 md:h-[80px] md:w-[80px] flex items-center justify-center bg-green-700 text-white">
                 C
               </div>
@@ -26,7 +27,7 @@ export default function HomePage() {
                   <GoQuestion title="Ayuda" className="cursor-pointer" />
                 </div>
               </div>
-            </div>
+            </Link>
             <div className="text-green-700 text-xl md:text-2xl flex gap-4 md:justify-end md:w-full md:hidden">
               <IoShareSocialOutline title="Compartir" className="cursor-pointer" />
               <IoSettingsOutline title="Configuración" className="cursor-pointer" />

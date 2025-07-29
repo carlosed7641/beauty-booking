@@ -8,4 +8,9 @@ interface Session {
     birthDay: string
     gender: string
     shareNumberPhone: boolean
+    role: 'admin' | 'user'
+    artisticName?: string
+    experienceArea?: string
+    experienceYears?: string
+    description?: string
 }

@@ -333,7 +333,8 @@ export const session: Session = {
   phone: '3004394704',
   birthDay: '2000-04-26',
   gender: 'Hombre',
-  shareNumberPhone: true
+  shareNumberPhone: true,
+  role: 'user'
 }
 
 export const categories = ['cortes', 'peinados', 'uñas', 'limpieza facial']

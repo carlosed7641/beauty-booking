@@ -16,7 +16,6 @@ export * from './service-icon/ServiceIcon'
 export * from './service-order/ServiceOrder'
 export * from './star-quantity/StarQuantity'
 export * from './star-quantity/StarQuantity'
-export * from './update-profile/UpdateProfile'
 export * from './user-menu/UserMenu'
 
 export * from './booking-service'

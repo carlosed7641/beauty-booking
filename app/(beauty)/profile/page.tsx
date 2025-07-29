@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { FaToggleOff, FaToggleOn } from 'react-icons/fa6'
-import { RecentServices, UpdateProfile } from '../components'
+import { UpdateProfile } from '@/components'
+import { RecentServices } from '../components'
 import { session } from '@/util/fake-data'
 
 export default function ProfilePage() {
