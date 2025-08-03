@@ -398,3 +398,33 @@ export const favoriteEntities: Entity[] = [
     contactUrl: 'https://www.whatsapp.com/channel/0029Va4PN8hFCCoO00odQi0v'
   }
 ]
+
+export const workExperience = [
+  {
+    id: 'abc',
+    workName: 'Master Barber',
+    position: 'Barbero',
+    startDate: '2024-03-04',
+    endDate: '2024-12-10',
+    place: 'Barranquilla',
+    stillWorkHere: false,
+    experience: "Trabajo haciendo cortes de pelo"
+  },
+  {
+    id: 'def',
+    workName: 'Acicalate Vip',
+    position: 'Barbero',
+    startDate: '2024-12-15',
+    stillWorkHere: true,
+    place: 'Bogotá'
+  },
+  {
+    id: 'ghi',
+    workName: 'Cali VIP',
+    position: 'Barbero',
+    startDate: '2022-05-03',
+    endDate: '2024-02-28',
+    stillWorkHere: false,
+    place: 'Cali'
+  }
+]

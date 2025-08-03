@@ -33,7 +33,6 @@ export default function AdminLayout({
     return <RegistrationSteps />
   }
 
-  //TODO: Change step one data
   return (
     <div className="bg-zinc-100">
       <div className="min-h-screen max-w-[1200px] my-0 mx-auto py-5 px-2">
