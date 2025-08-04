@@ -6,7 +6,7 @@ import { WorkExperience, Skills } from '.'
 export default function ProfilePage() {
     return (
         <>
-            <h1 className="text-lg text-green-700 mb-3 font-bold">Mi pefil</h1>
+            <h1 className="text-lg text-green-700 mb-3 font-bold">Mi perfil</h1>
             <div className="flex flex-col gap-6">
                 <div className="bg-white w-full rounded-md p-7">
                     <div className="flex items-center gap-3">
