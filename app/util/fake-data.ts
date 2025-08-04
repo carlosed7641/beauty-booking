@@ -428,3 +428,18 @@ export const workExperience = [
     place: 'Cali'
   }
 ]
+
+export const skills = [
+  {
+    name: "Adaptación",
+    percentage: 80
+  },
+  {
+    name: "Coloración",
+    percentage: 90
+  },
+  {
+    name: "Pigmentación",
+    percentage: 55
+  }
+]

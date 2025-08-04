@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect } from 'react'
 import { useModal } from '@/store'
 import { Modal, ModalHeader } from '@/components'
