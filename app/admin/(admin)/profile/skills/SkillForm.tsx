@@ -1,5 +1,6 @@
 import { SetStateAction, useEffect } from 'react'
 import { FaRegCircleCheck, FaRegCircleXmark } from 'react-icons/fa6'
+import { INITIAL_SKILL } from '@/util/const'
 
 interface Props {
     currentSkill: Skill
@@ -11,7 +12,6 @@ interface Props {
     setIsAdding: (value: SetStateAction<boolean>) => void
     showLabel?: boolean
 }
-
 
 export const SkillForm = ({
     currentSkill,
@@ -84,14 +84,14 @@ export const SkillForm = ({
             console.log("Create", currentSkill)
         }
 
-        setCurrentSkill({ id: '', name: '', percentage: 0 })
+        setCurrentSkill(INITIAL_SKILL)
         setIsAdding(false)
         setTouched(false)
     }
 
-    const handleToggleSkill = () => {
+    const handleCloseSkill = () => {
         if (!currentSkill.id) setIsAdding(prev => !prev)
-        setCurrentSkill({ id: '', name: '', percentage: 0 })
+        setCurrentSkill(INITIAL_SKILL)
         setTouched(false)
         setError('')
     }
@@ -123,7 +123,7 @@ export const SkillForm = ({
             </div>
             <div className="flex gap-2 items-end justify-end">
                 <FaRegCircleCheck onClick={handleAddSkill} className="text-green-700 cursor-pointer" />
-                <FaRegCircleXmark onClick={handleToggleSkill} className="text-zinc-500 cursor-pointer" />
+                <FaRegCircleXmark onClick={handleCloseSkill} className="text-zinc-500 cursor-pointer" />
             </div>
         </>
     )

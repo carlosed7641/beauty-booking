@@ -233,3 +233,5 @@ export const YEARS_OF_EXPERIENCIES = [
     "5 a 10",
     "10+"
 ]
+
+export const INITIAL_SKILL: Skill = { id: '', name: '', percentage: 0 }
