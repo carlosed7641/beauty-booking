@@ -1,7 +1,6 @@
 import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
-import { PiPlusCircleBold } from 'react-icons/pi'
 import { UpdateProfile } from '@/components'
-import { WorkExperience, Skills } from '.'
+import { WorkExperience, Skills, WorkSamples } from '.'
 
 export default function ProfilePage() {
     return (
@@ -28,19 +27,7 @@ export default function ProfilePage() {
                     </div>
                 </div>
                 <WorkExperience />
-                <div className="bg-white w-full rounded-md p-7">
-                    <div className="flex justify-between md:justify-start md:gap-3 items-center mb-3 text-green-700">
-                        <span className="text-xl md:text-2xl">Mi trabajo</span>
-                        <PiPlusCircleBold className="text-2xl cursor-pointer" />
-                    </div>
-                    <div className="flex flex-col gap-3">
-                        {
-                            true ?
-                                <p>No hay nada acá aún</p>
-                                : <></>
-                        }
-                    </div>
-                </div>
+                <WorkSamples />
                 <Skills />
                 <div className="flex flex-col md:flex-row justify-center md:justify-end gap-3">
                     <button className="md:w-60 py-2 bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-full cursor-pointer">

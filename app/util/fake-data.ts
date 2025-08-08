@@ -149,27 +149,63 @@ export const excludeHours = ['12:00', '12:30', '13:00']
 
 export const workSamples: WorkSample[] = [
   {
+    id: '123',
     category: 'Cortes',
     name: 'Fade',
-    image: 'https://picsum.photos/160/170',
+    images:  [
+      {
+        id: '123',
+        mainImage: true,
+        url: 'https://picsum.photos/160/170'
+      },
+      {
+        id: '124',
+        mainImage: false,
+        url: 'https://picsum.photos/160/170'
+      },
+      {
+        id: '125',
+        mainImage: false,
+        url: 'https://picsum.photos/160/170'
+      }
+    ],
     author: 'Carlos Castro',
+    authorId: 'abc',
+    entityId: '422'
+  },  
+  {
+    id: '124',
+    category: 'Peinados',
+    name: 'Alisado',
+    images:  [
+      {
+        id: '222',
+        mainImage: true,
+        url: 'https://picsum.photos/160/170'
+      }
+    ],
+    author: 'Gregorio Carrena',
     authorId: 'bcf',
     entityId: '422'
   },
   {
+    id: '125',
     category: 'Peinados',
-    name: 'Alisado',
-    image: 'https://picsum.photos/160/170',
-    author: 'Gregorio Carrena',
-    authorId: 'abc',
-    entityId: '422'
-  },
-  {
-    category: 'Cortes',
-    name: 'Siete',
-    image: 'https://picsum.photos/160/170',
-    author: 'Gregorio Carrena',
-    authorId: 'abc',
+    name: 'Trenzas',
+    images:  [
+      {
+        id: '333',
+        mainImage: true,
+        url: 'https://picsum.photos/160/170'
+      },
+      {
+        id: '444',
+        mainImage: false,
+        url: 'https://picsum.photos/160/170'
+      }
+    ],
+    author: 'Pedro Pascal',
+    authorId: 'ggg',
     entityId: '422'
   }
 ]

@@ -4,7 +4,8 @@ import { notFound } from 'next/navigation'
 import { FaWhatsapp } from 'react-icons/fa'
 import { FiMapPin } from 'react-icons/fi'
 import { GoShareAndroid } from 'react-icons/go'
-import { Tabs, ServiceListTab, WorkSamplesTab, Professionals, ReviewsModal } from '../../components'
+import { Tabs, ServiceListTab, Professionals, ReviewsModal } from '../../components'
+import { WorkSamplesTab } from '@/components'
 import {
     entities,
     workSamples as allWorkSamples,
