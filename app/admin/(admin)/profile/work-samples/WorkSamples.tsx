@@ -120,34 +120,34 @@ export const WorkSamples = () => {
                                 </Field>
                                 <Field label="Tipo de servicio" hint="¿Qué tipo de servicio son las fotos de esta muestra de trabajo?">
                                     <select name="category" onChange={handleChange} value={formData.category} className="border border-green-700 p-1 rounded-md focus:outline-0 mt-2">
-                                        <option value="">Categoría</option>
+                                        <option value="" disabled>Categoría</option>
                                         {
                                             Object.keys(SERVICES_LIST).map(category => <option key={category} value={category}>{category}</option>)
                                         }
                                     </select>
                                 </Field>
                                 {formData.images.length > 0 && <span className="text-zinc-500 text-sm">Toca la imagen que quieres que sea la principal</span>}
-                                <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2">
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-2">
                                     {
                                         formData.images.map(image => (
                                             <div onClick={() => onChangeMainImage(image.id)} className="relative cursor-pointer" key={image.id}>
-                                                <Image className="rounded-sm" height={150} width={150} alt={formData.name} src={image.url} />
+                                                <Image className="rounded-sm object-cover w-full" height={150} width={150} alt={formData.name} src={image.url} />
                                                 {
                                                     image.mainImage && <span className="absolute top-3 block px-2 py-1 bg-green-700 text-white text-xs rounded-tr-full rounded-br-full">Principal</span>
                                                 }
                                                 <IoMdCloseCircle onClick={(e) => {
                                                     e.stopPropagation()
                                                     onDeleteImage(image.id)
-                                                }} className="absolute bottom-1 right-1  text-2xl  fill-white" />
+                                                }} className="absolute bottom-1 right-1 text-2xl fill-white" />
                                             </div>
                                         ))
                                     }
-                                    <label className="cursor-pointer">
+                                    <label className="cursor-pointer aspect-square h-full w-full">
                                         <div className={
                                             clsx(
                                                 "flex justify-center items-center bg-zinc-200 rounded-sm border border-zinc-600",
                                                 {
-                                                    "h-full max-h-[160px] max-w-[150px]": formData.images.length > 0,
+                                                    "h-full": formData.images.length > 0,
                                                     "h-[150px] w-[150px]": !formData.images.length
                                                 }
                                             )
@@ -158,7 +158,7 @@ export const WorkSamples = () => {
                                     </label>
                                 </div>
                                 {!formData.images.length && <span className="text-zinc-600 text-sm">Debes agregar por lo menos una foto</span>}
-                                <div className="flex gap-3 items-center justify-end">
+                                <div className="flex flex-col md:flex-row gap-3 items-center justify-end">
                                     <button disabled={!isFormValid} className="bg-green-700 font-bold p-1 rounded justify-center flex self-end text-white cursor-pointer hover:bg-green-800 w-full md:w-36 disabled:opacity-60 disabled:pointer-events-none" type="submit">
                                         {formData.id ? 'Actualizar' : 'Guardar'}
                                     </button>
@@ -178,13 +178,13 @@ export const WorkSamples = () => {
                                 <span className="text-zinc-600 text-sm text-center flex">
                                     Acá puedes crear y ver tus muestras de trabajo. Potenciales clientes podrán apreciarlos y descubrir tu talento
                                 </span>
-                                <ul className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 mt-4 gap-3">
+                                <ul className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 mt-4 gap-3">
                                     {
                                         workSamples.map(sample => {
                                             const mainImage = sample.images.find(image => image.mainImage) || sample.images[0]
                                             return (
                                                 <li className="cursor-pointer" onClick={() => handleClickSample(sample)} key={sample.id}>
-                                                    <Image className="rounded-sm" src={mainImage.url} alt={sample.name} width={160} height={170} />
+                                                    <Image className="rounded-sm object-cover w-full" src={mainImage.url} alt={sample.name} width={160} height={170} />
                                                     <span className="inline-block w-full mt-1 text-green-700 font-bold">{sample.name}</span>
                                                     <span>{sample.category}</span>
                                                 </li>
