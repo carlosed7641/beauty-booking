@@ -1,0 +1,1 @@
+interface SampleForm extends Omit<WorkSample, 'author' | 'authorId' | 'entityId'> {}

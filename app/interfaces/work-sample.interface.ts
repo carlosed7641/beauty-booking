@@ -3,8 +3,6 @@ interface WorkSampleImage {
     mainImage: boolean
     url: string
 }
-
-
 interface WorkSample {
     id: string
     category: string
