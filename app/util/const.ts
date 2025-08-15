@@ -19,15 +19,17 @@ import {
 } from '@/components/flags'
 import { IconType } from 'react-icons'
 import { FaRegStar } from 'react-icons/fa'
-import { FiMapPin } from 'react-icons/fi'
+import { FiMapPin, FiUsers } from 'react-icons/fi'
 import { GiComb } from 'react-icons/gi'
 import { GoGraph } from 'react-icons/go'
 import { GrFavorite, GrGallery } from 'react-icons/gr'
+import { HiOutlineLockClosed } from 'react-icons/hi2'
 import { IoHomeOutline, IoStorefrontOutline, IoCutOutline } from 'react-icons/io5'
 import { LuCalendarCheck, LuListTodo, LuNotebook } from 'react-icons/lu'
 import { MdOutlineCalendarToday } from 'react-icons/md'
 import { PiMedalLight } from 'react-icons/pi'
-import { TbUsers } from 'react-icons/tb'
+import { RiUserSettingsLine } from 'react-icons/ri'
+import { TbClockHour5, TbUsers } from 'react-icons/tb'
 import { VscGraph } from 'react-icons/vsc'
 
 export const SERVICE_INITIAL_STATE = {
@@ -242,3 +244,62 @@ export const INITAL_FORM_DATA: SampleForm = {
     category: '',
     images: []
 }
+
+export const ADDITIONAL_FUNCTIONS_CONFIG = [
+    {
+        id: 'cancelDateTime',
+        title: 'Cancelación de citas',
+        hint: 'Elige el tiempo que un usuario tiene para cancelar una cita antes de la hora de inicio',
+        options: [
+            { value: 5, label: '5m' }, { value: 10, label: '10m' }, { value: 15, label: '15m' }, { value: 20, label: '20m' },
+            { value: 25, label: '25m' }, { value: 30, label: '35m' }, { value: 35, label: '35m' }, { value: 40, label: '40m' },
+            { value: 45, label: '45m' }, { value: 50, label: '50m' }, { value: 55, label: '55m' }, { value: 60, label: '1h' },
+            { value: 90, label: '1h30m' }
+        ]
+    },
+    {
+        id: 'customerInterval',
+        title: 'Intervalo para clientes',
+        hint: 'Escoge el intervalo de tiempo que tus clientes podrán escoger al momento de agendar, ej: si está cada 30m al momento de reservar las horas se verán así: 7:30 - 8:00 - 8:30 etc',
+        options: [{ value: 'recommend', label: 'Recomendado' }, { value: '30', label: '30m' }, { value: '60', label: '1h' }]
+    },
+    {
+        id: 'showAdminAgenda',
+        title: 'Mostrar agenda del adminstrador',
+        hint: 'Habilita esta opción para ver la agenda del administrador'
+    },
+    {
+        id: 'advanceBookingControl',
+        title: 'Control de antelación',
+        hint: 'Ej: si pones 15min los clientes tendrán que agendar mínimo con 15min de antelación',
+        options: [{ value: 0, label: '0m' }, { value: 15, label: '15m' }, { value: '30', label: '30m' }, { value: '60', label: '1h' }]
+    }
+]
+
+export const SECTIONS_SETTINGS = [
+    {
+        title: 'Perfil de negocio',
+        url: '',
+        icon: IoStorefrontOutline
+    },
+    {
+        title: 'Disponibilidad del negocio',
+        url: '',
+        icon: TbClockHour5
+    },
+    {
+        title: 'Vincular profesionales',
+        url: '',
+        icon: FiUsers
+    },
+    {
+        title: 'Configurar profesionales',
+        url: '',
+        icon: RiUserSettingsLine
+    },
+    {
+        title: 'Usuarios bloqueados',
+        url: '',
+        icon: HiOutlineLockClosed
+    },
+]

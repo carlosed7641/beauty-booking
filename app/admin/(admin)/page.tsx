@@ -21,16 +21,13 @@ export default function HomePage() {
                 <span className="text-green-700 text-sm md:text-base pointer-events-none">Carlos Castro</span>
                 <span>Administador</span>
                 <span>Negocio: Master Barber</span>
-                <div className="text-green-700 mt-3 text-2xl gap-4 w-full hidden md:flex">
-                  <IoShareSocialOutline title="Compartir" className="cursor-pointer" />
-                  <IoSettingsOutline title="Configuración" className="cursor-pointer" />
-                  <GoQuestion title="Ayuda" className="cursor-pointer" />
-                </div>
               </div>
             </Link>
-            <div className="text-green-700 text-xl md:text-2xl flex gap-4 md:justify-end md:w-full md:hidden">
+            <div className="text-green-700 text-xl md:text-2xl flex gap-4 md:w-full">
               <IoShareSocialOutline title="Compartir" className="cursor-pointer" />
-              <IoSettingsOutline title="Configuración" className="cursor-pointer" />
+              <Link href="/admin/settings" className="flex gap-2">
+                <IoSettingsOutline title="Configuración" className="cursor-pointer" />
+              </Link>
               <GoQuestion title="Ayuda" className="cursor-pointer" />
             </div>
           </div>
