@@ -1,6 +1,5 @@
 import { useSteps } from '../../store'
-
-const SHOP_TYPES = ['Barbería', 'Cejas & Pesteñas', 'Centro de Maquillaje', 'Cosmetología', 'Peluquería', 'Salón de Belleza', 'Spa Masajes', 'Tatuajes']
+import { SHOP_TYPES } from '@/util/const'
 
 export const StepOne = () => {
 

@@ -279,7 +279,7 @@ export const ADDITIONAL_FUNCTIONS_CONFIG = [
 export const SECTIONS_SETTINGS = [
     {
         title: 'Perfil de negocio',
-        url: '',
+        url: '/admin/shop-profile',
         icon: IoStorefrontOutline
     },
     {
@@ -303,3 +303,5 @@ export const SECTIONS_SETTINGS = [
         icon: HiOutlineLockClosed
     },
 ]
+
+export const SHOP_TYPES = ['Barbería', 'Cejas & Pesteñas', 'Centro de Maquillaje', 'Cosmetología', 'Peluquería', 'Salón de Belleza', 'Spa Masajes', 'Tatuajes']

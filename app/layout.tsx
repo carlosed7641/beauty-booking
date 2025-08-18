@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 // Profile sections container
 // Grid autofill display grids
 // Validate modal widths
+// Create clase button
 
 // Map
 // Metadata

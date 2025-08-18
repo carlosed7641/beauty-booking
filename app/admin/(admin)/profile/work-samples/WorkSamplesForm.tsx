@@ -1,8 +1,7 @@
 import { SetStateAction } from 'react'
 import Image from 'next/image'
 import { IoMdCloseCircle } from 'react-icons/io'
-import { TbPhotoPlus } from 'react-icons/tb'
-import { Field } from '@/components'
+import { Field, UploadImage } from '@/components'
 import { INITAL_FORM_DATA, SERVICES_LIST } from '@/util/const'
 
 interface Props {
@@ -32,7 +31,7 @@ export const WorkSamplesForm = ({ formData, setFormData, setShowForm }: Props) =
 
         setFormData(prev => ({
             ...prev,
-            images: [...prev.images, ...files]
+            [e.target.name]: [...prev.images, ...files]
         }))
     }
 
@@ -114,12 +113,7 @@ export const WorkSamplesForm = ({ formData, setFormData, setShowForm }: Props) =
                         </div>
                     ))
                 }
-                <label className="cursor-pointer aspect-square h-full w-full">
-                    <div className="flex h-full justify-center items-center bg-zinc-200 rounded-sm border border-zinc-600">
-                        <TbPhotoPlus className="text-zinc-400 text-6xl" />
-                    </div>
-                    <input onChange={handleFileChange} className="hidden" type="file" multiple accept="image/png, image/jpeg, image/webp" />
-                </label>
+                <UploadImage name="images" handleChange={handleFileChange} />
             </div>
             {!formData.images.length && <span className="text-zinc-600 text-sm">Debes agregar por lo menos una foto</span>}
             <div className="flex flex-col md:flex-row gap-3 items-center justify-end">
