@@ -44,7 +44,7 @@ export const AdditionalFunctions = ({ values }: Props) => {
             }
             <button
                 onClick={handleSave}
-                className="bg-green-700 font-bold p-1 rounded-full justify-center flex text-white cursor-pointer hover:bg-green-800 w-full md:w-36 disabled:opacity-60 disabled:pointer-events-non">
+                className="bg-green-700 font-bold p-1 rounded-full justify-center flex text-white cursor-pointer hover:bg-green-800 w-full md:w-36 disabled:opacity-60 disabled:pointer-events-none">
                 Guardar
             </button>
         </ul>

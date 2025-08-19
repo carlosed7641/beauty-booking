@@ -482,3 +482,48 @@ export const skills: Skill[] = [
     percentage: 55
   }
 ]
+
+export const professionalsEmployees: ProfessionalSettings[] = [
+    {
+      id: 'abc',
+      name: 'Carlos Castro',
+      entityId: '123',
+
+      // photo: 'https://picsum.photos/200/200',
+      workdays: [
+          [
+              { from: '09:00', to: '13:00' },
+              { from: '15:00', to: '21:00' }
+          ],
+          [
+              { from: '09:00', to: '13:00' },
+              { from: '15:00', to: '21:00' }
+          ],
+          [
+              { from: '09:00', to: '13:00' },
+              { from: '15:00', to: '21:00' }
+          ],
+          [
+              { from: '09:00', to: '13:00' },
+              { from: '15:00', to: '21:00' }
+          ],
+          [
+              { from: '09:00', to: '13:00' },
+              { from: '15:00', to: '21:00' },
+              { from: '22:00', to: '23:00' }
+          ],
+          [
+              { from: '09:00', to: '13:00' },
+              { from: '15:00', to: '21:00' }
+          ],
+          [
+              { from: '09:00', to: '16:00' }
+          ]
+      ],
+      services: {
+          'Cortes': [{ id: 'Corte', name: 'Corte', duration: { hours: 0, minutes: 30}, price: 20_0000 },  { id: 'Corte hombre', name: 'Corte hombre', duration: { hours: 1, minutes: 0}, price: 30_000 }],
+          'Peinados': [{ id: 'Trenzas', name: 'Trenzas', duration: { hours: 1, minutes: 30 }, price: 60_000 }],
+          'Color': []
+      }
+    }
+  ]

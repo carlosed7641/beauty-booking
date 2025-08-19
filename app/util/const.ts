@@ -284,7 +284,7 @@ export const SECTIONS_SETTINGS = [
     },
     {
         title: 'Disponibilidad del negocio',
-        url: '',
+        url: '/admin/business-availability',
         icon: TbClockHour5
     },
     {
@@ -294,7 +294,7 @@ export const SECTIONS_SETTINGS = [
     },
     {
         title: 'Configurar profesionales',
-        url: '',
+        url: '/admin/professional/settings',
         icon: RiUserSettingsLine
     },
     {
@@ -305,3 +305,34 @@ export const SECTIONS_SETTINGS = [
 ]
 
 export const SHOP_TYPES = ['Barbería', 'Cejas & Pesteñas', 'Centro de Maquillaje', 'Cosmetología', 'Peluquería', 'Salón de Belleza', 'Spa Masajes', 'Tatuajes']
+
+export const INITIAL_WORK_DAYS = [
+    {
+        from: '09:00',
+        to: '21:00'
+    },
+    {
+        from: '09:00',
+        to: '21:00'
+    },
+    {
+        from: '09:00',
+        to: '21:00'
+    },
+    {
+        from: '09:00',
+        to: '21:00'
+    },
+    {
+        from: '09:00',
+        to: '21:00'
+    },
+    {
+        from: '09:00',
+        to: '21:00'
+    },
+    {
+        from: '09:00',
+        to: '21:00'
+    }
+]

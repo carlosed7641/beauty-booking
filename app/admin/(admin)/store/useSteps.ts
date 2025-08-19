@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { INITIAL_WORK_DAYS } from '@/util/const'
 
 type StepOneData = {
     name: string | null
@@ -8,19 +9,12 @@ type StepOneData = {
     types: string[]
 }
 
-interface workDays {
-    from: string
-    to: string
-    disabled?: boolean
-    error?: boolean
-}
-
 interface Data {
     stepOne: StepOneData
     selectedServices: {
         [key: string]: ServiceData[]
     } | null
-    workdays: workDays[]
+    workdays: WorkDays[]
 }
 
 interface Store {
@@ -47,36 +41,7 @@ export const useSteps = create<Store>()(
                     types: []
                 },
                 selectedServices: null,
-                workdays: [
-                    {
-                        from: '9:00',
-                        to: '21:00'
-                    },
-                    {
-                        from: '9:00',
-                        to: '21:00'
-                    },
-                    {
-                        from: '9:00',
-                        to: '21:00'
-                    },
-                    {
-                        from: '9:00',
-                        to: '21:00'
-                    },
-                    {
-                        from: '9:00',
-                        to: '21:00'
-                    },
-                    {
-                        from: '9:00',
-                        to: '21:00'
-                    },
-                    {
-                        from: '9:00',
-                        to: '21:00'
-                    }
-                ]
+                workdays: INITIAL_WORK_DAYS
             },
             setStep: (step: number) => set({ step }),
             setShowErrors: (showErrors: boolean) => set({ showErrors }),
