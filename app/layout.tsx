@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 // Grid autofill display grids
 // Validate modal widths
 // Create clase button
+// Back button in sections
 
 // Map
 // Metadata

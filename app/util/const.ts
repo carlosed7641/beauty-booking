@@ -173,7 +173,7 @@ export const SERVICES_LIST = {
     'Maquillajes': ['Sencillo', 'Artístico']
 }
 
-export const DAYS_OF_WEEK = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+export const DAYS_OF_WEEK = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
 export const MONTHS_OF_YEAR = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 
 export const ADMIN_SECTIONS = {
@@ -284,7 +284,7 @@ export const SECTIONS_SETTINGS = [
     },
     {
         title: 'Disponibilidad del negocio',
-        url: '/admin/business-availability',
+        url: '/admin/work-days',
         icon: TbClockHour5
     },
     {

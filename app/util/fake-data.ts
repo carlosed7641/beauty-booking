@@ -521,9 +521,49 @@ export const professionalsEmployees: ProfessionalSettings[] = [
           ]
       ],
       services: {
-          'Cortes': [{ id: 'Corte', name: 'Corte', duration: { hours: 0, minutes: 30}, price: 20_0000 },  { id: 'Corte hombre', name: 'Corte hombre', duration: { hours: 1, minutes: 0}, price: 30_000 }],
-          'Peinados': [{ id: 'Trenzas', name: 'Trenzas', duration: { hours: 1, minutes: 30 }, price: 60_000 }],
-          'Color': []
+          'Cortes': [{ id: 'Corte', name: 'Corte', duration: { hours: 0, minutes: 30}, price: 20_000 },  { id: 'Corte hombre', name: 'Corte hombre', duration: { hours: 1, minutes: 0}, price: 30_000 }],
+          'Peinados': [{ id: 'Trenzas', name: 'Trenzas', duration: { hours: 1, minutes: 30 }, price: 60_000 }]
+      }
+    },
+    {
+      id: 'def',
+      name: 'Andrés Vega',
+      entityId: '123',
+
+      photo: 'https://picsum.photos/200/200',
+      workdays: [
+          [
+              { from: '08:00', to: '12:00' },
+              { from: '14:00', to: '20:00' }
+          ],
+          [
+              { from: '08:00', to: '12:00' },
+              { from: '14:00', to: '20:00' }
+          ],
+          [
+              { from: '08:00', to: '12:00' },
+              { from: '14:00', to: '20:00' }
+          ],
+          [
+              { from: '08:00', to: '12:00' },
+              { from: '14:00', to: '20:00' }
+          ],
+          [
+              { from: '08:00', to: '12:00' },
+              { from: '14:00', to: '20:00' },
+              { from: '22:00', to: '23:00' }
+          ],
+          [
+              { from: '08:00', to: '12:00' },
+              { from: '14:00', to: '20:00' }
+          ],
+          [
+              { from: '08:00', to: '15:00' }
+          ]
+      ],
+      services: {
+          'Cortes': [{ id: 'Corte con barba', name: 'Corte con barba', duration: { hours: 0, minutes: 45}, price: 30_000 }],
+          'Uñas': [{ id: 'Manos', name: 'Manos', duration: { hours: 3, minutes: 15 }, price: 40_000 }]
       }
     }
   ]
