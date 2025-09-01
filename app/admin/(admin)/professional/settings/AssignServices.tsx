@@ -1,20 +1,22 @@
 'use client'
 
 import { Fragment, SetStateAction, useEffect, useState } from 'react'
-import { RxCaretDown } from 'react-icons/rx'
 import clsx from 'clsx'
+import { RxCaretDown } from 'react-icons/rx'
 import { useModal } from '@/store'
 import { SelectHour, SelectPrice } from '../../components'
 import { formatNumber, getRawNumber } from '@/helpers'
 
 interface Props {
+    title: string
+    hint: string
     serviceList?: { [key: string]: ServiceConfig[] }
     selectedProfessional: ProfessionalSettings
     setSelectedProfessional: React.Dispatch<SetStateAction<ProfessionalSettings>>
     type?: 'duration' | 'price'
 }
 
-export const AssignServices = ({ serviceList, selectedProfessional, setSelectedProfessional, type }: Props) => {
+export const AssignServices = ({ title, hint, serviceList, selectedProfessional, setSelectedProfessional, type }: Props) => {
 
     const [closedServices, setClosedServices] = useState<string[]>([])
     const [selectedService, setSelectedService] = useState({ key: '', id: '', name: '', hours: 0, minutes: 0, price: 0 })
@@ -56,39 +58,34 @@ export const AssignServices = ({ serviceList, selectedProfessional, setSelectedP
 
     const handleChangeService = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
         const { name, value } = e.target
-    
+
         setSelectedService(prev => ({
             ...prev,
             [name]: Number(getRawNumber(value))
         }))
     }
 
-    const setNewDuration = () => {
-        const { key, id, hours, minutes } = selectedService
-        if (hours + minutes === 0) return setError('La duración no puede ser cero')
+    const updateService = (field: 'duration' | 'price') => {
+        const { key, id, hours, minutes, price } = selectedService
+
+        if (field === 'duration' && hours + minutes === 0) {
+            return setError('La duración no puede ser cero')
+        }
+        if (field === 'price' && !price) {
+            return setError('Debe ingresar un precio')
+        }
+
+        const value = field === 'duration'
+            ? { hours, minutes }
+            : price
 
         setSelectedProfessional(prev => ({
             ...prev,
             services: {
                 ...prev.services,
-                [key]: prev.services[key]
-                    .map(service => service.id === id ? { ...service, duration: { hours, minutes } } : service)
-            }
-        }))
-
-        setOpenModal(null)
-        //TODO: Save To DB here
-    }
-
-    const setNewPrice = () => {
-        const { key, id, price } = selectedService
-        if (!price) return setError('Debe ingresar un precio')            
-        setSelectedProfessional(prev => ({
-            ...prev,
-            services: {
-                ...prev.services,
-                [key]: prev.services[key]
-                    .map(service => service.id === id ? { ...service, price } : service)
+                [key]: prev.services[key].map(service =>
+                    service.id === id ? { ...service, [field]: value } : service
+                )
             }
         }))
 
@@ -102,6 +99,10 @@ export const AssignServices = ({ serviceList, selectedProfessional, setSelectedP
 
     return (
         <>
+            <div className="flex flex-col items-center justify-center">
+                <h2 className="text-green-700">{title}</h2>
+                <span className="text-center">{hint}</span>
+            </div>
             {
                 Object.entries(serviceList ? serviceList : selectedProfessional.services).map(([key, values]) => (
                     <Fragment key={key}>
@@ -160,7 +161,7 @@ export const AssignServices = ({ serviceList, selectedProfessional, setSelectedP
                     minutes={selectedService.minutes}
                     error={error}
                     handleChange={handleChangeService}
-                    handleSave={setNewDuration}
+                    handleSave={() => updateService('duration')}
                 />
             }
             {
@@ -170,7 +171,7 @@ export const AssignServices = ({ serviceList, selectedProfessional, setSelectedP
                     price={selectedService.price}
                     error={error}
                     handleChange={handleChangeService}
-                    handleSave={setNewPrice}
+                    handleSave={() => updateService('price')}
                 />
             }
         </>

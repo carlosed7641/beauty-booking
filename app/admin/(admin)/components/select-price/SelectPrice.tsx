@@ -17,7 +17,7 @@ export const SelectPrice = ({
     handleSave
 }: Props) => {
     return (
-        <Modal className="md:w-1/3! overflow-auto!">
+        <Modal className="md:w-[450px]! overflow-auto!">
             <ModalHeader>
                 <p className="text-green-700 font-bold text-lg">{serviceName}</p>
             </ModalHeader>

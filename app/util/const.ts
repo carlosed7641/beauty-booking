@@ -18,6 +18,7 @@ import {
     VenezuelaFlag,
 } from '@/components/flags'
 import { IconType } from 'react-icons'
+import { AiOutlineDollar } from 'react-icons/ai'
 import { FaRegStar } from 'react-icons/fa'
 import { FiMapPin, FiUsers } from 'react-icons/fi'
 import { GiComb } from 'react-icons/gi'
@@ -25,11 +26,11 @@ import { GoGraph } from 'react-icons/go'
 import { GrFavorite, GrGallery } from 'react-icons/gr'
 import { HiOutlineLockClosed } from 'react-icons/hi2'
 import { IoHomeOutline, IoStorefrontOutline, IoCutOutline } from 'react-icons/io5'
-import { LuCalendarCheck, LuListTodo, LuNotebook } from 'react-icons/lu'
+import { LuCalendarCheck, LuCopyCheck, LuListTodo, LuNotebook } from 'react-icons/lu'
 import { MdOutlineCalendarToday } from 'react-icons/md'
 import { PiMedalLight } from 'react-icons/pi'
-import { RiUserSettingsLine } from 'react-icons/ri'
-import { TbClockHour5, TbUsers } from 'react-icons/tb'
+import { RiCalendarScheduleLine, RiUserSettingsLine } from 'react-icons/ri'
+import { TbClockHour3, TbClockHour5, TbUsers } from 'react-icons/tb'
 import { VscGraph } from 'react-icons/vsc'
 
 export const SERVICE_INITIAL_STATE = {
@@ -335,4 +336,18 @@ export const INITIAL_WORK_DAYS = [
         from: '09:00',
         to: '21:00'
     }
+]
+
+export const PROFESSIONAL_SETTINGS_ERRORS = {
+    to: 'La hora en la que sales no puede ser más temprano que la hora en la que empiezas',
+    from: 'La hora en la que empiezas no pude ser más tarde que la hora en la que sales',
+    outRange: 'No puedes colocar una hora fuera del horario de tu entidad',
+    inRange: 'No puedes sobreponer horarios dentro de un mismo dia, los horarios deben ir en orden'
+}
+
+export const PROFESSIONAL_SETTINGS_OPTIONS = [
+    { title: 'Disponibilidad', icon: RiCalendarScheduleLine },
+    { title: 'Asignar servicios', icon: LuCopyCheck },
+    { title: 'Asignar duración de servicios', icon: TbClockHour3 },
+    { title: 'Asignar precio de servicios', icon: AiOutlineDollar }
 ]
