@@ -1,14 +1,14 @@
-import { useState } from 'react'
-import { useSteps } from '../../store'
+import { useEffect, useState } from 'react'
 import { useModal } from '@/store'
-import { Modal, ModalHeader } from '@/components'
+import { useSteps } from '../../store'
+import { SelectHour } from '..'
 
 export const StepThree = () => {
 
   const { data, setData } = useSteps()
   const { openModal, setOpenModal } = useModal()
-  const [error, setError] = useState(false)
-  const [selectedService, setSelectedService] = useState({key: '', name: '', hours: 0, minutes: 0 })
+  const [error, setError] = useState('')
+  const [selectedService, setSelectedService] = useState({ key: '', name: '', hours: 0, minutes: 0 })
 
   const handleOpenDuration = (name: string, service: ServiceData) => {
     setSelectedService({
@@ -20,25 +20,17 @@ export const StepThree = () => {
     setOpenModal(StepThree.name)
   }
 
-  const onChangeDuration = (e: React.ChangeEvent<HTMLSelectElement>, type: 'hours' | 'minutes') => {
-    setSelectedService(prev => {
-      if (type === 'hours') {
-        return {
-          ...prev,
-          hours: Number(e.target.value)
-        }
-      }
-      return {
-        ...prev,
-        minutes: Number(e.target.value)
-      }
-    })
-
+  const handleChangeDuration = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setSelectedService(prev => ({
+      ...prev,
+      [name]: Number(value)
+    }))
   }
 
   const setNewDuration = () => {
-    if ((selectedService.hours + selectedService.minutes) === 0) return setError(true)
-      
+    if ((selectedService.hours + selectedService.minutes) === 0) return setError('La duración no puede ser cero')
+
     const newValue = data.selectedServices![selectedService.key].map(service => {
       if (service.name !== selectedService.name) return service
       return {
@@ -59,8 +51,12 @@ export const StepThree = () => {
     })
 
     setOpenModal(null)
-    setError(false)
+    setError('')
   }
+
+  useEffect(() => {
+    setError('')
+  }, [openModal])
 
   return (
     data.selectedServices ?
@@ -76,7 +72,7 @@ export const StepThree = () => {
                       <li key={service.name} className="flex justify-between">
                         <span>{service.name}</span>
                         <button onClick={() => handleOpenDuration(name, service)} className="text-green-700 underline font-bold cursor-pointer">
-                          {service.duration.hours > 0 ? `${service.duration.hours} ${service.duration.hours === 1 ? 'hr' : 'hrs'} ${service.duration.minutes > 0 ? 'y '+ service.duration.minutes+' min' : ''}` : `${service.duration.minutes} min`}
+                          {service.duration.hours > 0 ? `${service.duration.hours} ${service.duration.hours === 1 ? 'hr' : 'hrs'} ${service.duration.minutes > 0 ? 'y ' + service.duration.minutes + ' min' : ''}` : `${service.duration.minutes} min`}
                         </button>
                       </li>
                     ))
@@ -88,33 +84,14 @@ export const StepThree = () => {
         </div>
         {
           openModal === StepThree.name &&
-          <Modal className="md:w-1/3! overflow-auto!">
-            <ModalHeader>
-              <p className="text-green-700 font-bold text-lg">{selectedService.name}</p>
-            </ModalHeader>
-            <div className="grid md:grid-cols-2 gap-3">
-              <div className="flex flex-col gap-2">
-                <p className="text-green-700 font-bold">Horas</p>
-                <select onChange={(e) => onChangeDuration(e, 'hours')} value={selectedService.hours} className="border border-green-700 focus:outline-0">
-                  {Array.from({ length: 13 }).map((_, idx) => (
-                    <option key={idx} value={idx}>{idx}</option>
-                  ))}
-                </select>
-              </div>
-              <label className="flex flex-col gap-2">
-                <p className="text-green-700 font-bold">Minutos</p>
-                <select onChange={(e) => onChangeDuration(e, 'minutes')} value={selectedService.minutes} className="border border-green-700 focus:outline-0">
-                  {Array.from({ length: 12 }).map((_, idx) => (
-                    <option key={idx * 5} value={idx * 5}>{idx * 5}</option>
-                  ))}
-                </select>
-              </label>
-            </div>
-            {error && selectedService.hours + selectedService.minutes === 0 && <span className="text-red-500 mt-3 block">La duración no puede ser cero</span>}
-            <button onClick={setNewDuration} className="py-0.5 bg-green-700 mt-3 rounded-md text-white w-full font-bold cursor-pointer">
-              Enviar
-            </button>
-          </Modal>
+          <SelectHour
+            serviceName={selectedService.name}
+            hours={selectedService.hours}
+            minutes={selectedService.minutes}
+            error={error}
+            handleChange={handleChangeDuration}
+            handleSave={setNewDuration}
+          />
         }
       </>
       :

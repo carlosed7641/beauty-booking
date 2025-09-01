@@ -1,19 +1,19 @@
 import { useState } from 'react'
-import { useSteps } from '../../store'
 import { useModal } from '@/store'
-import { Modal, ModalHeader } from '@/components'
+import { useSteps } from '../../store'
+import { SelectPrice } from '..'
 import { formatNumber, getRawNumber } from '@/helpers'
 
 export const StepFour = () => {
 
   const { data, setData } = useSteps()
   const { openModal, setOpenModal } = useModal()
-  const [error, setError] = useState(false)
-  const [selectedService, setSelectedService] = useState({ key: '', name: '', price: '' })
+  const [error, setError] = useState('')
+  const [selectedService, setSelectedService] = useState({ key: '', name: '', price: 0 })
 
   const handleOpenPrice = (name: string, service: ServiceData) => {
     setSelectedService({
-      price: service.price.toString(),
+      price: service.price,
       key: name,
       name: service.name
     })
@@ -22,7 +22,7 @@ export const StepFour = () => {
 
   const onChangePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-    const formattedPrice = formatNumber(e.target.value)
+    const formattedPrice = Number(getRawNumber(e.target.value))
     setSelectedService(prev => {
       return {
         ...prev,
@@ -33,16 +33,15 @@ export const StepFour = () => {
 
   const setNewPrice = () => {
     if (!selectedService.price) {
-      setError(true)
+      setError('Debe ingresar un precio')
       return
     }
 
-    const formattedPrice = Number(getRawNumber(selectedService.price))
     const newValue = data.selectedServices![selectedService.key].map(service => {
       if (service.name !== selectedService.name) return service
       return {
         ...service,
-        price: formattedPrice
+        price: selectedService.price
       }
     })
 
@@ -55,7 +54,7 @@ export const StepFour = () => {
     })
 
     setOpenModal(null)
-    setError(false)
+    setError('')
   }
 
   return (
@@ -84,22 +83,13 @@ export const StepFour = () => {
         </div>
         {
           openModal === StepFour.name &&
-          <Modal className="md:w-1/3! overflow-auto!">
-            <ModalHeader>
-              <p className="text-green-700 font-bold text-lg">{selectedService.name}</p>
-            </ModalHeader>
-            <label className="flex flex-col gap-1">
-              <span className="text-green-700">Precio desde</span>
-              <div className="flex gap-1 items-center">
-                <span className="text-green-700 font-bold">$</span>
-                <input onChange={onChangePrice} className="flex-1 px-2 rounded-md border border-green-700 focus:outline-0 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" type="text" value={formatNumber(selectedService.price.toString())} />
-              </div>
-            </label>
-            {error && !selectedService.price && <span className="text-red-500 mt-3 block">Debe ingresar un precio</span>}
-            <button onClick={setNewPrice} className="py-0.5 bg-green-700 mt-3 rounded-md text-white w-full font-bold cursor-pointer">
-              Guardar
-            </button>
-          </Modal>
+          <SelectPrice
+            serviceName={selectedService.name}
+            price={selectedService.price}
+            error={error}
+            handleChange={onChangePrice}
+            handleSave={setNewPrice}
+          />
         }
       </>
       :

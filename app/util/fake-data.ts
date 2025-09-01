@@ -493,7 +493,7 @@ export const professionalsEmployees: ProfessionalSettings[] = [
       workdays: [
           [
               { from: '09:00', to: '13:00' },
-              { from: '15:00', to: '21:00' }
+              { from: '15:00', to: '16:00' }
           ],
           [
               { from: '09:00', to: '13:00' },
@@ -509,7 +509,7 @@ export const professionalsEmployees: ProfessionalSettings[] = [
           ],
           [
               { from: '09:00', to: '13:00' },
-              { from: '15:00', to: '21:00' },
+              { from: '15:00', to: '20:30' },
               { from: '22:00', to: '23:00' }
           ],
           [
@@ -566,4 +566,4 @@ export const professionalsEmployees: ProfessionalSettings[] = [
           'Uñas': [{ id: 'Manos', name: 'Manos', duration: { hours: 3, minutes: 15 }, price: 40_000 }]
       }
     }
-  ]
+]

@@ -1,6 +1,7 @@
 'use client'
 
 import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
+import { toMinutes } from '@/helpers'
 import { DAYS_OF_WEEK } from '@/util/const'
 
 interface Props<T> {
@@ -31,11 +32,6 @@ export const WorkDays = <T,>({ data, setData, workdays }: Props<T>) => {
     const handleChangeTime = (e: React.ChangeEvent<HTMLInputElement>, index: number, type: 'from' | 'to') => {
 
         const value = e.target.value
-
-        const toMinutes = (time: string) => {
-            const [h, m] = time.split(':').map(Number)
-            return h * 60 + m
-        }
 
         const updateWorkdays = workdays.map((day, idx) => {
             if (idx !== index) return day

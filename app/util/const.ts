@@ -308,8 +308,8 @@ export const SHOP_TYPES = ['Barbería', 'Cejas & Pesteñas', 'Centro de Maquilla
 
 export const INITIAL_WORK_DAYS = [
     {
-        from: '09:00',
-        to: '21:00'
+        from: '07:00',
+        to: '19:00'
     },
     {
         from: '09:00',
@@ -325,7 +325,7 @@ export const INITIAL_WORK_DAYS = [
     },
     {
         from: '09:00',
-        to: '21:00'
+        to: '23:00'
     },
     {
         from: '09:00',

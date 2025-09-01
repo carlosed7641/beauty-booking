@@ -2,5 +2,5 @@ interface WorkDays {
     from: string
     to: string
     disabled?: boolean
-    error?: boolean
+    error?: boolean | string
 }
