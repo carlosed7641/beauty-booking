@@ -300,7 +300,7 @@ export const SECTIONS_SETTINGS = [
     },
     {
         title: 'Usuarios bloqueados',
-        url: '',
+        url: '/admin/blocked-users',
         icon: HiOutlineLockClosed
     },
 ]
