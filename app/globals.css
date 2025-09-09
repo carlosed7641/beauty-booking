@@ -42,7 +42,26 @@ body {
   font-size: 10px !important;
 }
 
+@media (width <= 48rem) {
+  .rbc-toolbar {
+    gap: 12px;
+  }
+
+  .rbc-header {
+    font-size: 10px !important;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
