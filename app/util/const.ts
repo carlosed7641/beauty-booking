@@ -351,3 +351,9 @@ export const PROFESSIONAL_SETTINGS_OPTIONS = [
     { title: 'Asignar duración de servicios', icon: TbClockHour3 },
     { title: 'Asignar precio de servicios', icon: AiOutlineDollar }
 ]
+
+export const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+}
