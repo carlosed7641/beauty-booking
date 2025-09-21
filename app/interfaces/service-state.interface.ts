@@ -5,4 +5,8 @@ interface ServiceState {
     selectedDate: string | null
     selectedHour: string | null
     isCompleted: boolean
+    customer?: {
+        id: string
+        name: string
+    }
 }

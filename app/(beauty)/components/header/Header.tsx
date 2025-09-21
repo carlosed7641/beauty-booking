@@ -7,7 +7,7 @@ export const Header = () => {
         <>
             <header className="bg-[#E2F5E5] py-4 sticky top-0 z-10">
                 <div className="max-w-[1200px] my-0 mx-auto px-2 flex justify-between items-center gap-3">
-                    <Link href="/" className="hidden md:block"><span className="font-bold">Beauty |</span> Booking</Link>
+                    <Link href="/" className="hidden md:block"><span className="font-bold">Beauty /</span> Booking</Link>
                     <SearchBar />
                     <div className="flex gap-3 text-sm items-center">
                         <UserMenu />

@@ -13,7 +13,6 @@ export const useKeyboardOptions = ({ totalOptions, isOpenOptions }: Props) => {
     const optionRef = useRef<(HTMLElement | null)[]>([])
 
     useEffect(() => {
-        console.log(totalOptions)
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
                 isOpenOptions(false)

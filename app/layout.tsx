@@ -16,6 +16,9 @@ export const metadata: Metadata = {
 // Validate modal widths
 // Create clase button
 // Back button in sections
+// Back button in modasl
+// Tabs refactor (service-list, professionals, etc.)
+
 
 // Map
 // Metadata

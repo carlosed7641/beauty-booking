@@ -1,14 +1,14 @@
 interface Session {
-    id: number
+    id: string
     name: string
     country: string
-    photo: string
-    indicator: string
-    phone: string
+    photo?: string
+    indicator?: string
+    phone?: string
     birthDay: string
     gender: string
-    shareNumberPhone: boolean
-    role: 'admin' | 'user'
+    shareNumberPhone?: boolean
+    role?: 'admin' | 'user'
     artisticName?: string
     experienceArea?: string
     experienceYears?: string

@@ -23,9 +23,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         window.scrollTo(0, 0)
         document.body.classList.toggle('overflow-hidden', Boolean(openModal))
-        if (!openModal) {
-            setServiceState(SERVICE_INITIAL_STATE)
-        }
+        if (!openModal) setServiceState(SERVICE_INITIAL_STATE)
     }, [openModal])
 
     return (

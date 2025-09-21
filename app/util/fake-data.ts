@@ -361,7 +361,7 @@ export const reviews: ReviewList[] = [
 ]
 
 export const session: Session = {
-  id: 57,
+  id: '57',
   name: 'Carlos Castro Reales',
   country: 'Colombia',
   photo: 'https://picsum.photos/180/180',
@@ -370,7 +370,7 @@ export const session: Session = {
   birthDay: '2000-04-26',
   gender: 'Hombre',
   shareNumberPhone: true,
-  role: 'user'
+  role: 'admin'
 }
 
 export const categories = ['cortes', 'peinados', 'uñas', 'limpieza facial']
