@@ -1,8 +1,6 @@
 'use client'
 import clsx from 'clsx'
 import { isGreaterOrEqualThanToday, generateHoursArray } from '@/helpers'
-import { useService } from '@/store'
-import { useEffect } from 'react'
 
 interface Props {
     isAdmin?: boolean
@@ -22,35 +20,18 @@ export const DateList = ({
     onClick
 }: Props) => {
 
-    const { serviceState, setServiceState } = useService()
-
-
     const compareDates = (date1: Date, date2: Date) => {
         const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate())
-        const dToday = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate())
-        return d1.getTime() === dToday.getTime()
+        const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate())
+        return d1.getTime() === d2.getTime()
     }
-
-    useEffect(() => {
-        if (isAdmin) return
-
-        const hasHidden = datesList.some(date => {
-            const shouldShow = !frequencyMintues || generateHoursArray(frequencyMintues, date.date)
-            return !shouldShow
-        })
-
-        if (hasHidden) {
-            const tempDate = new Date(selectedDate as Date)
-            tempDate.setDate(tempDate.getDate() + 1)
-            setServiceState({ ...serviceState, selectedDate: tempDate })
-        }
-    }, [datesList, frequencyMintues])
 
     return (
 
         datesList.map(date => {
 
-            const shouldShow = isAdmin || !frequencyMintues || generateHoursArray(frequencyMintues, date.date)
+            // isAdmin, isToday, hasfrequencyMintues, hasHours
+            const shouldShow = isAdmin || compareDates(date.date, new Date()) || !frequencyMintues || generateHoursArray(frequencyMintues, date.date)
             const isSelectable = noDisabledDays || isGreaterOrEqualThanToday(date.date) 
             const selected = compareDates(selectedDate as Date, date.date)
             //TODO: Deshabilitar hoy si no tiene horas disponibles

@@ -70,7 +70,7 @@ export const SelectDate = ({ isAdmin, dates = availableDates }: { isAdmin?: bool
                     </div>
                 }
             </div>
-            <div className="overflow-x-scroll md:overflow-auto scroll-none flex gap-2 md:grid md:[grid-template-columns:repeat(10,minmax(0,55px))] md:gap-3">
+            <div className="overflow-x-scroll md:overflow-auto scroll-none flex md:flex-wrap gap-2 md:gap-3">
                 <DateList
                     isAdmin={isAdmin}
                     datesList={days}
