@@ -1,37 +1,63 @@
+'use client'
 import clsx from 'clsx'
-import { generateHoursArray } from '@/helpers'
+import { isGreaterOrEqualThanToday, generateHoursArray } from '@/helpers'
+import { useService } from '@/store'
+import { useEffect } from 'react'
 
 interface Props {
+    isAdmin?: boolean
+    noDisabledDays?: boolean
     datesList: DateItem[]
     frequencyMintues?: number
-    selectedDate?: string | null
+    selectedDate?: string | Date | null
     onClick: (dayItem: DateItem) => void
 }
 
 export const DateList = ({
+    isAdmin,
+    noDisabledDays,
     datesList,
     frequencyMintues,
     selectedDate,
     onClick
 }: Props) => {
 
-    const compareWithToday = (date: Date) => {
-        const today = new Date()
-        const d1 = new Date(date.getFullYear(), date.getMonth(), date.getDate())
-        const dToday = new Date(today.getFullYear(), today.getMonth(), today.getDate())
-        return d1.getTime() >= dToday.getTime()
+    const { serviceState, setServiceState } = useService()
+
+
+    const compareDates = (date1: Date, date2: Date) => {
+        const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate())
+        const dToday = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate())
+        return d1.getTime() === dToday.getTime()
     }
+
+    useEffect(() => {
+        if (isAdmin) return
+
+        const hasHidden = datesList.some(date => {
+            const shouldShow = !frequencyMintues || generateHoursArray(frequencyMintues, date.date)
+            return !shouldShow
+        })
+
+        if (hasHidden) {
+            const tempDate = new Date(selectedDate as Date)
+            tempDate.setDate(tempDate.getDate() + 1)
+            setServiceState({ ...serviceState, selectedDate: tempDate })
+        }
+    }, [datesList, frequencyMintues])
 
     return (
 
         datesList.map(date => {
 
-            const shouldShow = !frequencyMintues || generateHoursArray(frequencyMintues, date.dateString)
-            const isSelectable = compareWithToday(date.date)
+            const shouldShow = isAdmin || !frequencyMintues || generateHoursArray(frequencyMintues, date.date)
+            const isSelectable = noDisabledDays || isGreaterOrEqualThanToday(date.date) 
+            const selected = compareDates(selectedDate as Date, date.date)
+            //TODO: Deshabilitar hoy si no tiene horas disponibles
 
             return (
                 shouldShow && (
-                    <button disabled={!compareWithToday(date.date)}  onClick={() => onClick(date)}
+                    <button disabled={!isSelectable} onClick={() => onClick(date)}
                         key={date.dateString}
                         className="cursor-pointer flex flex-col justify-end gap-1 items-center disabled:pointer-events-none">
                         {date.month && <p className="text-[14px] text-green-700">{date.month}</p>}
@@ -41,7 +67,7 @@ export const DateList = ({
                                 {
                                     'border-zinc-300 text-zinc-300 opacity-70': !isSelectable,
                                     'border-green-700 text-green-700 hover:bg-green-700 hover:text-white': isSelectable,
-                                    'bg-green-700 text-white': selectedDate === date.dateString 
+                                    'bg-green-700 text-white': selected
                                 }
                             )
                         }>
@@ -55,7 +81,7 @@ export const DateList = ({
                         }>{date.day}</p>
                     </button>
                 )
-                )
-            })
+            )
+        })
     )
 }

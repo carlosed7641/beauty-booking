@@ -61,8 +61,8 @@ export const BookingServiceModal = ({
                     step === 1 &&
                     <>
                         {professionals && <SelectProfessional professionals={professionals} />}
-                        {serviceState.selectedProfessional && <SelectDate dates={dates} />}
-                        {serviceState.selectedDate &&
+                        {serviceState.selectedProfessional && <SelectDate isAdmin={isAdmin} dates={dates} />}
+                        {serviceState.selectedProfessional && serviceState.selectedDate &&
                             <>
                                 <SelectHour />
                                 <BookingButton setStep={setStep} />

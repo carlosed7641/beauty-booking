@@ -1,9 +1,9 @@
 import { excludeHours, scheduleHours } from '@/util/fake-data'
 
-export const generateHoursArray = (frequencyMinutes: number, dateString: string): string[] | null => {
+export const generateHoursArray = (frequencyMinutes: number, inputDate: Date): string[] | null => {
 
     const now = new Date()
-    const date = new Date(dateString)
+    const date = new Date(inputDate)
 
     const [startHour, startMinute] = scheduleHours[0].split(':').map(Number)
     const [endHour, endMinute] = scheduleHours[1].split(':').map(Number)

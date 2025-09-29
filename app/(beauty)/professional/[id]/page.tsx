@@ -46,7 +46,7 @@ export default async function ProfessionalPage({ params }: Props) {
         <>
             <div className="flex gap-5">
                 <div className="flex flex-col">
-                    <Image className="rounded-full self-start md:mb-8" width={200} height={200} src={professional.photo} alt={professional.name} />
+                    <Image className="rounded-full self-start md:mb-8" width={200} height={200} src={professional.photo ?? ''} alt={professional.name} />
                 </div>
                 <div className="flex flex-col py-2 md:py-6 w-4/5 md:w-auto justify-center md:justify-start">
                     <p className="text-base md:text-3xl text-green-700 font-bold mb-2">{professional.name}</p>

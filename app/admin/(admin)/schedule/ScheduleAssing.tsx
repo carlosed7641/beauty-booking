@@ -40,7 +40,7 @@ const _customers: Session[] = [
     }
 ]
 
-export const ScheduleAssing = () => {
+export const ScheduleAssing = ({ selectedDate }: { selectedDate: Date }) => {
 
     const { setOpenModal } = useModal()
     const [customers, setCustomers] = useState<Session[]>([])
@@ -74,7 +74,7 @@ export const ScheduleAssing = () => {
 
     const handleSelectCustomer = (customer: { id: string, name: string }) => {
         setStep(step => step + 1)
-        setServiceState({ ...serviceState, customer })
+        setServiceState({ ...serviceState, selectedDate, customer })
     }
 
     return (

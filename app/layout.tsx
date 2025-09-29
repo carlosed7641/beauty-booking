@@ -17,8 +17,8 @@ export const metadata: Metadata = {
 // Create clase button
 // Back button in sections
 // Back button in modasl
-// Tabs refactor (service-list, professionals, etc.)
-
+// Tabs refactor (service-list, BookingModal (step, setStep), professionals, etc.)
+// Modal Provider refactor
 
 // Map
 // Metadata

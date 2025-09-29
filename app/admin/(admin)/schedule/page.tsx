@@ -1,9 +1,9 @@
 'use client'
 
-import { Calendar, Event, View } from 'react-big-calendar'
+import { Calendar, Event, SlotInfo, View } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { useModal, useService } from '@/store'
-import { generateMonthDatesArray, getMessagesES, localizer } from '@/helpers'
+import { isGreaterOrEqualThanToday, generateMonthDatesArray, getMessagesES, localizer } from '@/helpers'
 import { useEffect, useState } from 'react'
 import { DateList, Modal, ModalHeader, ProfileForm } from '@/components'
 import { LiaExchangeAltSolid } from 'react-icons/lia'
@@ -34,6 +34,7 @@ export default function SchedulePage() {
     const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
     const [daysOfCurrentMonth, setDaysOfCurrentMonth] = useState(INITIAL_DAYS_OF_MONTH)
     const [date, setDate] = useState(new Date())
+    const [isAvailableDay, setIsAvailableDay] = useState(true)
     const [view, setView] = useState<View>('day')
 
     const [step, setStep] = useState(1)
@@ -62,6 +63,12 @@ export default function SchedulePage() {
         return () => mobileMediaQuery.removeEventListener('change', callback)
     }, [])
 
+    useEffect(()=> { 
+        console.log(date)
+        const isAvailable = isGreaterOrEqualThanToday(date)
+        setIsAvailableDay(isAvailable)   
+    }, [date])
+
     useEffect(() => {
         const newDays = generateMonthDatesArray(date)
         setDaysOfCurrentMonth(newDays)
@@ -71,6 +78,14 @@ export default function SchedulePage() {
         console.log(data)
         //TODO: Save To BD
         setOpenModal(SchedulePage.name + 'schedule')
+    }
+
+    const onSelectSlot = (e: SlotInfo) => {
+        const date = e.start
+        const isAvailable = isGreaterOrEqualThanToday(date)
+        if (!isAvailable) return
+        setOpenModal('ScheduleAssing')
+        setDate(date)
     }
 
     // TODO: Api call
@@ -93,15 +108,16 @@ export default function SchedulePage() {
                     </div>
                     <div className="flex md:hidden overflow-x-scroll md:overflow-auto scroll-none gap-2">
                         <DateList
+                            noDisabledDays
                             datesList={daysOfCurrentMonth}
-                            selectedDate={date.toLocaleDateString('es-ES', DATE_OPTIONS)}
+                            selectedDate={date}
                             onClick={(dayItem) => setDate(dayItem.date)}
                         />
                     </div>
                     <Calendar
                         culture='es'
                         selectable
-                        onSelectSlot={(e) => console.log(e)}
+                        onSelectSlot={onSelectSlot}
                         messages={getMessagesES()}
                         views={['month', 'week', 'day']}
                         onView={setView}
@@ -121,12 +137,15 @@ export default function SchedulePage() {
                         onSelectEvent={onSelect}
                         className="h-screen! md:h-[500px]!"
                     />
-                    <button onClick={() => setOpenModal('ScheduleAssing')} className="bg-green-700 text-white fixed md:absolute bottom-16 right-16 h-12 w-12 rounded-full shadow-md text-xl flex items-center justify-center hover:bg-green-800 cursor-pointer">
-                        <FiCalendar />
-                    </button>
+                    {
+                        isAvailableDay &&
+                        <button onClick={() => setOpenModal('ScheduleAssing')} className="bg-green-700 text-white fixed md:absolute bottom-16 right-16 h-12 w-12 rounded-full shadow-md text-xl flex items-center justify-center hover:bg-green-800 cursor-pointer">
+                            <FiCalendar />
+                        </button>
+                    }
                 </div>
             </div>
-            { openModal ==='ScheduleAssing' && <ScheduleAssing />}
+            { openModal ==='ScheduleAssing' && <ScheduleAssing selectedDate={date} />}
             {
                 openModal === 'UpdateCustomer' &&
                 <Modal>

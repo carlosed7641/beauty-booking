@@ -7,7 +7,6 @@ export const useReservationOptions = () => {
 
     const handleUpdate = (reservation: ServiceState) => {
         setOpenModal('Reservation:Update')
-        console.log(reservation)
         setServiceState(reservation)
     }
 

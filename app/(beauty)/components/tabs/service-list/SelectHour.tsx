@@ -6,7 +6,7 @@ export const SelectHour = () => {
 
     const { serviceState, setServiceState } = useService()
     const frecuencyMintues = getTotalMinutes(serviceState.selectedService?.duration!)
-    const hours = generateHoursArray(frecuencyMintues, serviceState.selectedDate!)
+    const hours = generateHoursArray(frecuencyMintues, serviceState.selectedDate as Date)
 
     return (
         <>

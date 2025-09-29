@@ -19,7 +19,7 @@ const currentReservations = [
             price: 30000
         },
         selectedProfessional: "Carlos Castro",
-        selectedDate: "16 de junio de 2025",
+        selectedDate: new Date(),
         selectedHour: "2:00 PM",
         isCompleted: true
     }
@@ -49,7 +49,7 @@ export const NextReservations = () => {
                                     </div>
                                     <div className="flex items-center gap-1">
                                         <span className="text-green-700">Fecha:</span>
-                                        <p>{r.selectedDate}</p>
+                                        <p>{r.selectedDate.toDateString()}</p>
                                     </div>
                                     <div className="flex items-center gap-1">
                                         <span className="text-green-700">Hora:</span>

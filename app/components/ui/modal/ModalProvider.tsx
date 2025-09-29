@@ -13,11 +13,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
 
 
     useEffect(() => {
-        if (serviceState.selectedService && pathname.includes('entity')) {
-            setOpenModal('ServiceList')
-        } else {
-            setOpenModal(null)
-        }
+        setOpenModal(serviceState.selectedService && pathname.includes('entity') ? 'ServiceList': null)
     }, [pathname])
 
     useEffect(() => {

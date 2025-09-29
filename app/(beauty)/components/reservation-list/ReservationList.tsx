@@ -89,7 +89,7 @@ export const ReservationList = ({ reservations }: Props) => {
 
                             </div>
                         ))}
-                        {<ReservationOptions />}
+                        <ReservationOptions />
                     </>
                     :
                     <div>No hay reservas</div>
