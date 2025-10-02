@@ -37,8 +37,7 @@ export const SERVICE_INITIAL_STATE = {
     selectedService: null,
     selectedProfessional: null,
     selectedDate: null,
-    selectedHour: null,
-    isCompleted: false
+    selectedHour: null
 }
 
 export const SLIDER_SETTINGS = {

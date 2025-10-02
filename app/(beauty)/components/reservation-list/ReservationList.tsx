@@ -36,7 +36,7 @@ export const ReservationList = ({ reservations }: Props) => {
                                     <div className="flex items-center justify-between w-full">
                                         {r.selectedService.name}
                                         <p className="flex flex-col">
-                                            {r.selectedDate.substring(0, 9)} - {r.selectedHour}
+                                            {r.selectedDate.toDateString()} - {r.selectedHour}
                                             {r.status === 'canceled' && <span className="text-red-500 text-right">Cita cancelada</span>}
                                         </p>
                                     </div>
@@ -64,7 +64,7 @@ export const ReservationList = ({ reservations }: Props) => {
                                     </li>
                                     <li className="py-2 flex gap-3">
                                         <span className="w-28 text-green-700 font-bold">Fecha</span>
-                                        <span>{r.selectedDate}</span>
+                                        <span>{r.selectedDate.toDateString()}</span>
                                     </li>
                                     <li className="py-2 flex gap-3">
                                         <span className="w-28 text-green-700 font-bold">Hora</span>

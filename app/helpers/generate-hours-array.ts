@@ -1,6 +1,6 @@
 import { excludeHours, scheduleHours } from '@/util/fake-data'
 
-export const generateHoursArray = (frequencyMinutes: number, inputDate: Date): string[] | null => {
+export const generateHoursArray = (frequencyMinutes: number, inputDate: Date): {label: string, value: string }[] | null => {
 
     const now = new Date()
     const date = new Date(inputDate)
@@ -35,15 +35,8 @@ export const generateHoursArray = (frequencyMinutes: number, inputDate: Date): s
     while (current <= end) {
 
         if (!excludeHours.includes(format24(current))) {
-            const hours = current.getHours()
-            const mins = current.getMinutes()
-
-            const period = hours >= 12 ? 'PM' : 'AM'
-            const displayHour = hours % 12 === 0 ? 12 : hours % 12
-            const displayMinutes = mins.toString().padStart(2, '0')
-
-            result.push(`${displayHour}:${displayMinutes} ${period}`)
-
+            const newValue ={ label: format12(current), value: format24(current) } 
+            result.push(newValue)
         }
 
         current = new Date(current.getTime() + frequencyMinutes * 60000)
@@ -51,6 +44,17 @@ export const generateHoursArray = (frequencyMinutes: number, inputDate: Date): s
     }
 
     return result.length ? result : null
+}
+
+export const format12 = (date: Date) => {
+    const hours = date.getHours()
+    const mins = date.getMinutes()
+
+    const period = hours >= 12 ? 'PM' : 'AM'
+    const displayHour = hours % 12 === 0 ? 12 : hours % 12
+    const displayMinutes = mins.toString().padStart(2, '0')
+
+    return `${displayHour}:${displayMinutes} ${period}`
 }
 
 export const format24 = (date: Date): string => {

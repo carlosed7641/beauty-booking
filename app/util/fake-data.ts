@@ -223,9 +223,8 @@ export const reservations: Reservation[] = [
       price: 30000
     },
     selectedProfessional: "Carlos Castro",
-    selectedDate: "16 de junio de 2025",
+    selectedDate: new Date(2025, 8, 14, 10, 0, 0),
     selectedHour: "2:00 PM",
-    isCompleted: true,
     status: 'pending'
   },
   {
@@ -240,9 +239,8 @@ export const reservations: Reservation[] = [
       price: 30000
     },
     selectedProfessional: "Carlos Castro",
-    selectedDate: "16 de junio de 2025",
+    selectedDate: new Date(2025, 8, 15, 10, 0, 0),
     selectedHour: "2:00 PM",
-    isCompleted: true,
     status: 'completed'
   },
   {
@@ -257,9 +255,8 @@ export const reservations: Reservation[] = [
       price: 30000
     },
     selectedProfessional: "Carlos Castro",
-    selectedDate: "16 de junio de 2025",
+    selectedDate: new Date(2025, 8, 14, 10, 0, 0),
     selectedHour: "2:00 PM",
-    isCompleted: true,
     status: 'canceled'
   },
   {
@@ -274,9 +271,8 @@ export const reservations: Reservation[] = [
       price: 30000
     },
     selectedProfessional: "Carlos Castro",
-    selectedDate: "16 de junio de 2025",
+    selectedDate: new Date(2025, 8, 14, 10, 0, 0),
     selectedHour: "2:00 PM",
-    isCompleted: true,
     status: 'completed'
   }
 ]

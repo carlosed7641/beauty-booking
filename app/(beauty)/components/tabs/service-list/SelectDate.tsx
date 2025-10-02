@@ -61,7 +61,7 @@ export const SelectDate = ({ isAdmin, dates = availableDates }: { isAdmin?: bool
                                 Array.from({ length: years }, (_, idx) => {
                                     const year = CURRENT_YEAR - idx
                                     return (
-                                        <option value={year}>{year}</option>
+                                        <option key={year} value={year}>{year}</option>
                                     )
 
                                 })

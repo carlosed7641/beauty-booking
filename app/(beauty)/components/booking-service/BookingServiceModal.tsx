@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { SelectProfessional, SelectDate, SelectHour, BookingButton, Confirm } from '..'
 import { Modal, ModalHeader } from '@/components/ui/modal'
 import { useModal, useService } from '@/store'

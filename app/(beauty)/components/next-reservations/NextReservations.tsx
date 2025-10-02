@@ -20,8 +20,7 @@ const currentReservations = [
         },
         selectedProfessional: "Carlos Castro",
         selectedDate: new Date(),
-        selectedHour: "2:00 PM",
-        isCompleted: true
+        selectedHour: "2:00 PM"
     }
 ]
 

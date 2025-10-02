@@ -3,17 +3,38 @@
 import { Calendar, Event, SlotInfo, View } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { useModal, useService } from '@/store'
-import { isGreaterOrEqualThanToday, generateMonthDatesArray, getMessagesES, localizer } from '@/helpers'
+import { isGreaterOrEqualThanToday, generateMonthDatesArray, getMessagesES, localizer, format24 } from '@/helpers'
 import { useEffect, useState } from 'react'
 import { DateList, Modal, ModalHeader, ProfileForm } from '@/components'
 import { LiaExchangeAltSolid } from 'react-icons/lia'
-import { DATE_OPTIONS, MONTHS_OF_YEAR } from '@/util/const'
+import { MONTHS_OF_YEAR } from '@/util/const'
 import clsx from 'clsx'
 import { FiCalendar } from 'react-icons/fi'
 import { ScheduleAssing } from './ScheduleAssing'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { BookingServiceModal } from '@/(beauty)/components'
 import { professionals as fakeProfessionals } from '@/util/fake-data'
+
+/** 
+{
+    "selectedService": {
+        "serviceId": "006",
+        "name": "Cepillado",
+        "description": "Cepillado básico",
+        "duration": "45m",
+        "price": 12000,
+        "entityName": "Acicalate Vip",
+        "category": "Peinados"
+    },
+    "selectedProfessional": "Carlos Castro",
+    "selectedDate": "2025-10-03T05:19:45.000Z",
+    "selectedHour": "19:45",
+    "customer": {
+        "id": "125",
+        "name": "David Ortiz"
+    }
+}
+**/
 
 const events = [
     {
@@ -38,7 +59,7 @@ export default function SchedulePage() {
     const [view, setView] = useState<View>('day')
 
     const [step, setStep] = useState(1)
-    const { serviceState } = useService()
+    const { serviceState, setServiceState } = useService()
 
     const onSelect = (event: Event) => {
         setOpenModal(SchedulePage.name)
@@ -64,7 +85,6 @@ export default function SchedulePage() {
     }, [])
 
     useEffect(()=> { 
-        console.log(date)
         const isAvailable = isGreaterOrEqualThanToday(date)
         setIsAvailableDay(isAvailable)   
     }, [date])
@@ -73,6 +93,12 @@ export default function SchedulePage() {
         const newDays = generateMonthDatesArray(date)
         setDaysOfCurrentMonth(newDays)
     }, [date.getMonth(), date.getFullYear()])
+
+    useEffect(() => {
+        if (!openModal) {
+            setStep(1)
+        }
+    }, [openModal])
 
     const onSubmitCustomer = (data: Omit<Session, "id" | "shareNumberPhone">) => {
         console.log(data)
@@ -84,6 +110,10 @@ export default function SchedulePage() {
         const date = e.start
         const isAvailable = isGreaterOrEqualThanToday(date)
         if (!isAvailable) return
+        setServiceState({
+            ...serviceState,
+            selectedHour: format24(date)
+        })
         setOpenModal('ScheduleAssing')
         setDate(date)
     }
