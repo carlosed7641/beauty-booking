@@ -144,8 +144,6 @@ export const professionals: ProfessionalData[] = [
 ]
 
 export const availableDates = generateDatesArray()
-export const scheduleHours = ['10:00', '20:00']
-export const excludeHours = ['12:00', '12:30', '13:00']
 
 export const workSamples: WorkSample[] = [
   {
@@ -222,7 +220,10 @@ export const reservations: Reservation[] = [
       duration: "4h",
       price: 30000
     },
-    selectedProfessional: "Carlos Castro",
+    selectedProfessional: {
+      id: "abc",
+      name: "Carlos Castro"
+    },
     selectedDate: new Date(2025, 8, 14, 10, 0, 0),
     selectedHour: "2:00 PM",
     status: 'pending'
@@ -238,7 +239,10 @@ export const reservations: Reservation[] = [
       duration: "4h",
       price: 30000
     },
-    selectedProfessional: "Carlos Castro",
+    selectedProfessional: {
+      id: "abc",
+      name: "Carlos Castro"
+    },
     selectedDate: new Date(2025, 8, 15, 10, 0, 0),
     selectedHour: "2:00 PM",
     status: 'completed'
@@ -254,7 +258,10 @@ export const reservations: Reservation[] = [
       duration: "4h",
       price: 30000
     },
-    selectedProfessional: "Carlos Castro",
+    selectedProfessional: {
+      id: "abc",
+      name: "Carlos Castro"
+    },
     selectedDate: new Date(2025, 8, 14, 10, 0, 0),
     selectedHour: "2:00 PM",
     status: 'canceled'
@@ -270,7 +277,10 @@ export const reservations: Reservation[] = [
       duration: "4h",
       price: 30000
     },
-    selectedProfessional: "Carlos Castro",
+    selectedProfessional:{
+      id: "abc",
+      name: "Carlos Castro"
+    },
     selectedDate: new Date(2025, 8, 14, 10, 0, 0),
     selectedHour: "2:00 PM",
     status: 'completed'

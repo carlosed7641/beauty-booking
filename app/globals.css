@@ -41,7 +41,9 @@ body {
 .slick-dots li button:before {
   font-size: 10px !important;
 }
-
+.rbc-timeslot-group {
+  min-height: 140px !important;
+}
 
 .rbc-today {
   background-color: #f1fff1 !important;

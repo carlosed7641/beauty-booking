@@ -25,7 +25,10 @@ export const ServiceListTab = ({ serviceList, professionals, professionalId }: P
                 if (professional) {
                     setServiceState({
                         ...serviceState,
-                        selectedProfessional: professional.name
+                        selectedProfessional: {
+                            id: professional.id,
+                            name: professional.name
+                        }
                     })
                 }
             }

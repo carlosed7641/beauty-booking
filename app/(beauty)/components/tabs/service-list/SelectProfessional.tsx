@@ -14,18 +14,21 @@ export const SelectProfessional = ({ professionals }: { professionals: Professio
                     professionals.map(p => (
                         <div onClick={() => setServiceState({
                             ...serviceState,
-                            selectedProfessional: p.name
+                            selectedProfessional: {
+                                id: p.id,
+                                name: p.name
+                            }
                         })} className="flex flex-col w-40 shrink-0 md:w-auto gap-2 items-center cursor-pointer" key={p.name}>
                             <Image
                                 className={
                                     clsx(
                                         "rounded-full",
                                         {
-                                            "border-4 border-green-700": serviceState.selectedProfessional === p.name
+                                            "border-4 border-green-700": serviceState.selectedProfessional?.id === p.id
                                         }
                                     )
                                 }
-                                src={p.photo} alt={p.name} width={150} height={150} />
+                                src={p.photo ?? ''} alt={p.name} width={150} height={150} />
                             <div className="flex flex-col items-center">
                                 <p className="font-bold">{p.name}</p>
                             </div>

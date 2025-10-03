@@ -72,7 +72,7 @@ export const ReservationList = ({ reservations }: Props) => {
                                     </li>
                                     <li className="py-2 flex gap-3">
                                         <span className="w-28 text-green-700 font-bold">Profesional</span>
-                                        <span>{r.selectedProfessional}</span>
+                                        <span>{r.selectedProfessional.name}</span>
                                     </li>
                                     <li className="py-2 flex gap-3">
                                         <span className="w-28 text-green-700 font-bold">Lugar</span>

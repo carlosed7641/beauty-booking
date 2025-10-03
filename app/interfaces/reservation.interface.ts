@@ -1,7 +1,10 @@
 interface Reservation {
     id: string
     selectedService: ServiceItemExtended
-    selectedProfessional: string
+    selectedProfessional: {
+        id: string
+        name: string
+    }
     selectedDate: Date,
     selectedHour: string,
     status: 'pending' | 'canceled' | 'completed'

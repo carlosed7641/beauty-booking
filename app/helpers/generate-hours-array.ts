@@ -1,6 +1,11 @@
-import { excludeHours, scheduleHours } from '@/util/fake-data'
+interface Props {
+    frequencyMinutes: number,
+    inputDate: Date
+    excludeHours: string[]
+    scheduleHours: string[]
+}
 
-export const generateHoursArray = (frequencyMinutes: number, inputDate: Date): {label: string, value: string }[] | null => {
+export const generateHoursArray = ({ frequencyMinutes, inputDate, excludeHours, scheduleHours }: Props): {label: string, value: string }[] | null => {
 
     const now = new Date()
     const date = new Date(inputDate)

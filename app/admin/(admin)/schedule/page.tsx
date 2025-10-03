@@ -14,33 +14,31 @@ import { ScheduleAssing } from './ScheduleAssing'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { BookingServiceModal } from '@/(beauty)/components'
 import { professionals as fakeProfessionals } from '@/util/fake-data'
-
-/** 
-{
-    "selectedService": {
-        "serviceId": "006",
-        "name": "Cepillado",
-        "description": "Cepillado básico",
-        "duration": "45m",
-        "price": 12000,
-        "entityName": "Acicalate Vip",
-        "category": "Peinados"
-    },
-    "selectedProfessional": "Carlos Castro",
-    "selectedDate": "2025-10-03T05:19:45.000Z",
-    "selectedHour": "19:45",
-    "customer": {
-        "id": "125",
-        "name": "David Ortiz"
-    }
-}
-**/
+import { format } from 'date-fns'
 
 const events = [
     {
         title: 'Corte hombre',
-        start: new Date(2025, 8, 14, 10, 0, 0), // 10 de septiembre 2025, 10:00
-        end: new Date(2025, 8, 14, 12, 0, 0),   // 10 de septiembre 2025, 12:00
+        start: new Date(2025, 9, 3, 19, 0, 0),
+        end: new Date(2025, 9, 3, 19, 30, 0),
+        customer: {
+            id: "125",
+            name: "David Ortiz",
+            phone: '+573004394704'
+        },
+        selectedService: {
+            serviceI: "006",
+            name: "Cepillado",
+            duration: "45m",
+            price: 30_000
+        },
+        selectedProfessional: {
+            id: '123',
+            name: "Carlos Castro"
+        },
+        selectedDate: "2025-10-03T05:19:45.000Z",
+        isAdminBooking: false,
+        customerReview: null,
         allDay: false
     }
 ]
@@ -158,6 +156,14 @@ export default function SchedulePage() {
                         events={events}
                         startAccessor="start"
                         endAccessor="end"
+                        components={{
+                            event: ({ event }) => (
+                                <div>
+                                    <p className="font-bold text-lg">{event.customer.name}</p>
+                                    <p className="text-[80%]">{event.title}</p>
+                                </div>
+                            )
+                        }}
                         eventPropGetter={() => ({
                             style: {
                                 backgroundColor: '#008236',
@@ -165,6 +171,13 @@ export default function SchedulePage() {
                             }
                         })}
                         onSelectEvent={onSelect}
+                         formats={{
+                        timeGutterFormat: "h:mm a",
+                        eventTimeRangeFormat: ({ start, end }) =>
+                            `${format(start, 'h:mm a')} - ${format(end, 'h:mm a')}`,
+                        dayRangeHeaderFormat: ({ start, end }) =>
+                            `${format(start, "MMM d")} - ${format(end, "MMM d")}`,
+                        }}
                         className="h-screen! md:h-[500px]!"
                     />
                     {

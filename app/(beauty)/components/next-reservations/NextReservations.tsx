@@ -18,7 +18,10 @@ const currentReservations = [
             duration: "4h",
             price: 30000
         },
-        selectedProfessional: "Carlos Castro",
+        selectedProfessional: {
+            id: "123",
+            name: "Carlos Castro"
+        },
         selectedDate: new Date(),
         selectedHour: "2:00 PM"
     }
