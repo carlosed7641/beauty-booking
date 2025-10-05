@@ -40,7 +40,7 @@ const _customers: Session[] = [
     }
 ]
 
-export const ScheduleAssing = ({ selectedDate }: { selectedDate: Date }) => {
+export const ScheduleAssign = ({ selectedDate }: { selectedDate: Date }) => {
 
     const { setOpenModal } = useModal()
     const [customers, setCustomers] = useState<Session[]>([])
