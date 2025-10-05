@@ -1,92 +1,88 @@
+'use client'
+
 import clsx from 'clsx'
 import { useService } from '@/store'
 import { format24, generateHoursArray, getClosestTime, getTotalMinutes } from '@/helpers'
 import { useEffect, useState } from 'react'
-import { format } from 'date-fns'
+import { isSameDay } from '@/helpers'
 
-const events = [
-    {
-        title: 'Corte hombre',
-        start: new Date(2025, 9, 3, 19, 0, 0),
-        end: new Date(2025, 9, 3, 19, 30, 0),
-        customer: {
-            id: "125",
-            name: "David Ortiz",
-            phone: '+573004394704'
-        },
-        selectedService: {
-            serviceI: "006",
-            name: "Cepillado",
-            duration: "45m",
-            price: 30_000
-        },
-        selectedProfessional: {
-            id: 'bcf',
-            name: "Carlos Castro"
-        },
-        selectedDate: "2025-10-03T05:19:45.000Z",
-        isAdminBooking: false,
-        customerReview: null,
-        allDay: false
-    }
+
+const events: EventDate[] = [
+    // {
+    //     title: 'Corte hombre',
+    //     start: new Date(2025, 9, 4, 17, 30, 0),
+    //     end: new Date(2025, 9, 4, 18, 0, 0),
+    //     customer: {
+    //         id: "125",
+    //         name: "David Ortiz",
+    //         phone: '+573004394704'
+    //     },
+    //     selectedService: {
+    //         serviceI: "006",
+    //         name: "Cepillado",
+    //         duration: "45m",
+    //         price: 30_000
+    //     },
+    //     selectedProfessional: {
+    //         id: 'bcf',
+    //         name: "Carlos Castro"
+    //     },
+    //     selectedDate: "2025-10-03T00:00:00.000Z",
+    //     isAdminBooking: false,
+    //     customerReview: null,
+    //     allDay: false
+    // }
 ]
 
-
-export const SelectHour = () => {
+export const SelectHour = ({ scheduleHours, excludeHours }: { scheduleHours: string[], excludeHours: string[] }) => {
 
     const { serviceState, setServiceState } = useService()
     const frequencyMinutes = getTotalMinutes(serviceState.selectedService?.duration!)
-    const [hours, setHours] = useState<{label: string, value: string}[]>([])
+    const [hours, setHours] = useState<{ label: string, value: string }[]>([])
 
     useEffect(() => {
 
-        const getScheduleHours = () => {
-            return  ['10:00', '20:00']
-        } // TODO: Api
+        const { selectedDate, selectedProfessional } = serviceState
 
-        const getExcludeHours = () => {
-            return ['12:00', '12:30', '13:00']
-        } // TODO: Api
+        const getProfessionalExcludeHoursHours = () => { // Use Memo
 
-        const getProfessionalBusyHours = () => {
-            return events.map(event => {
-                if (event.selectedProfessional.id === serviceState.selectedProfessional?.id) {
-                    const date = new Date(event.selectedDate)
-                    const formattedTime  = format24(date)
-                    return formattedTime
-                }
+            const professionalEvents = events.filter(event => (
+                ((event.selectedProfessional.id === selectedProfessional?.id) && isSameDay(selectedDate!, event.start))
+            ))
+
+            return professionalEvents.map(event => {
+                const date = new Date(event.start)
+                const formattedTime = format24(date)
+                return formattedTime
             })
         } // TODO: Api
 
-        console.log(getProfessionalBusyHours())
+        const professionalExcludeHours = getProfessionalExcludeHoursHours()
+        
+        const hours = generateHoursArray({ frequencyMinutes, inputDate: serviceState.selectedDate!, scheduleHours, 
+            excludeHours: [...excludeHours, ...professionalExcludeHours]}) // TODO: Api call
+        if (!hours || !hours.length) return
+        setHours(hours)
 
-        // const scheduleHours = getScheduleHours()
-        // const excludeHours = getProfessionalBusyHours()
-        // console.log(excludeHours)
+        const isHourSelected = hours.some(hour => hour.value === serviceState.selectedHour)
 
-        // const hours = generateHoursArray({ frequencyMinutes, inputDate: serviceState.selectedDate!, scheduleHours, excludeHours: getExcludeHours() }) // TODO: Api call
-        // if (!hours || !hours.length) return
-        // setHours(hours)
+        if (isHourSelected) return
 
-        // const isHourSelected = hours.some(hour => hour.value === serviceState.selectedHour)
+        if (hours.length === 1) {
+            setServiceState({
+                ...serviceState,
+                selectedHour: hours[0].value
+            })
+            return
+        }
 
-        // if (isHourSelected) return
+        if (serviceState.selectedHour) {
+            const parsedHours = hours.map(hour => hour.value)
+            const closestTime = getClosestTime(parsedHours, serviceState.selectedHour)
+            setServiceState({ ...serviceState, selectedHour: closestTime })
+        }
 
-        // if (hours.length === 1) {
-        //     setServiceState({
-        //         ...serviceState,
-        //         selectedHour: hours[0].value
-        //     })
-        //     return
-        // }
-
-        // if (serviceState.selectedHour) {
-        //     const parsedHours = hours.map(hour => hour.value)
-        //     const closestTime = getClosestTime(parsedHours, serviceState.selectedHour)
-        //     setServiceState({ ...serviceState, selectedHour: closestTime })
-        // }
-
-    }, [serviceState.selectedDate])
+    }, [serviceState.selectedDate, serviceState.selectedProfessional])
 
     return (
         <>

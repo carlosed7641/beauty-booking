@@ -1,7 +1,7 @@
 interface ServiceItem {
   serviceId: string
   name: string
-  description: string
+  description?: string
   price: number
   duration: string
 }

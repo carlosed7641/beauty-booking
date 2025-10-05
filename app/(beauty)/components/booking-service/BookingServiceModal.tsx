@@ -1,4 +1,6 @@
-import { useEffect } from 'react'
+'use client'
+
+import { useEffect, useState } from 'react'
 import { SelectProfessional, SelectDate, SelectHour, BookingButton, Confirm } from '..'
 import { Modal, ModalHeader } from '@/components/ui/modal'
 import { useModal, useService } from '@/store'
@@ -22,19 +24,39 @@ export const BookingServiceModal = ({
 }: Props) => {
 
     const { serviceState, setServiceState } = useService()
-    const  { setOpenModal } = useModal()
+    const { setOpenModal } = useModal()
+    const [hoursData, setHoursData] = useState<{ scheduleHours: string[], excludeHours: string[] }>({
+        scheduleHours: [],
+        excludeHours: []
+    })
 
     const handleBack = () => {
         setServiceState(SERVICE_INITIAL_STATE)
         setOpenModal('ScheduleAssing')
     }
 
+    useEffect(() => {
+        const getScheduleHours = () => {
+            return ['10:00', '20:00']
+        } // TODO: Api  & this is for day
+
+        const getExcludeHours = () => {
+            return ['12:00', '12:30', '13:00']
+        } // TODO: Api & this is for day
+
+        const scheduleHours = getScheduleHours() // await
+        const excludeHours = getExcludeHours() // await
+
+        setHoursData({ scheduleHours, excludeHours })
+
+    }, [])
+
     return (
         <Modal>
             <ModalHeader>
                 {step == 1 &&
                     <div className="flex gap-3">
-                        { isAdmin && <IoMdArrowRoundBack className="cursor-pointer text-xl" onClick={handleBack} />}
+                        {isAdmin && <IoMdArrowRoundBack className="cursor-pointer text-xl" onClick={handleBack} />}
                         <div className="flex flex-col gap-1">
                             <p className="text-xl font-bold">{serviceState.selectedService?.name}</p>
                             {isAdmin && serviceState.customer && <p className="text-zinc-500">Cliente: {serviceState.customer.name}</p>}
@@ -63,9 +85,12 @@ export const BookingServiceModal = ({
                     <>
                         {professionals && <SelectProfessional professionals={professionals} />}
                         {serviceState.selectedProfessional && <SelectDate isAdmin={isAdmin} dates={dates} />}
-                        {serviceState.selectedProfessional && serviceState.selectedDate &&
+                        {serviceState.selectedProfessional && serviceState.selectedDate && hoursData.scheduleHours.length > 0 &&
                             <>
-                                <SelectHour />
+                                <SelectHour
+                                    scheduleHours={hoursData.scheduleHours}
+                                    excludeHours={hoursData.excludeHours}
+                                />
                                 <BookingButton setStep={setStep} />
                             </>
                         }

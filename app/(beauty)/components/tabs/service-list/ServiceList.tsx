@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import { RxCaretDown } from 'react-icons/rx'
 import { useModal, useService } from '@/store'
+import { formatNumber } from '@/helpers'
 
 export const ServiceList = ({ serviceList }: {
     serviceList: Service[]
@@ -57,7 +58,7 @@ export const ServiceList = ({ serviceList }: {
                                             {service.name}
                                         </p>
                                         <p className="text-zinc-500">{service.description}</p>
-                                        <p className="text-green-700 font-bold">${service.price}</p>
+                                        <p className="text-green-700 font-bold">${formatNumber(service.price.toString())}</p>
                                     </div>
                                     <button onClick={() => handleSelectService({ ...service, entityName: s.entityName, category: s.category })} className="rounded-md py-2 px-5 cursor-pointer text-white bg-green-700 hover:bg-green-900">Agendar</button>
                                 </li>

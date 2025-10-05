@@ -10,5 +10,6 @@ interface ServiceState {
     customer?: {
         id: string
         name: string
+        phone?: string
     }
 }

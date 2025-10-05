@@ -31,7 +31,7 @@ export const DateList = ({
         datesList.map(date => {
 
             // isAdmin, isToday, hasfrequencyMintues, hasHours
-            const shouldShow = isAdmin || compareDates(date.date, new Date()) || !frequencyMintues || generateHoursArray(frequencyMintues, date.date)
+            const shouldShow = isAdmin || compareDates(date.date, new Date()) || !frequencyMintues || generateHoursArray({frequencyMinutes: frequencyMintues, inputDate: date.date, excludeHours: [], scheduleHours: [] }) //TODO: Fix 
             const isSelectable = noDisabledDays || isGreaterOrEqualThanToday(date.date) 
             const selected = compareDates(selectedDate as Date, date.date)
             //TODO: Deshabilitar hoy si no tiene horas disponibles
