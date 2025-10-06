@@ -1,12 +1,15 @@
 import { Modal, ModalHeader } from '@/components'
 import { MonthList } from './MonthList'
+import { useSchedule } from '../../store'
 
 interface Props {
-    date: Date
     onChangeDate: (value: number, type: "month" | "year") => void
 }
 
-export const ScheduleMonths = ({ date, onChangeDate }: Props) => {
+export const ScheduleMonths = ({ onChangeDate }: Props) => {
+
+    const { date } = useSchedule(state => state.schedule)
+    
     return (
         <Modal className="overflow-hidden!">
             <ModalHeader>

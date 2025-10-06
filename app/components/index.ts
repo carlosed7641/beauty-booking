@@ -1,5 +1,6 @@
 export * from './date-list/DateList'
 export * from './dialog/Dialog'
+export * from './emotion/Emotion'
 export * from './field/Field'
 export * from './profile/UpdateProfile'
 export * from './profile/ProfileForm'

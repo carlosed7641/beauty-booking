@@ -1,4 +1,4 @@
-import { Emotion } from '../components'
+import { Emotion } from '@/components'
 import { formatedDate } from '@/helpers'
 
 const professionalReviews = [

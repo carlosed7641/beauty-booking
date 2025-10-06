@@ -1,6 +1,5 @@
 export * from './bottom-menu/BottomMenu'
 export * from './categories/Categories'
-export * from './emotion/Emotion'
 export * from './entity/EntityCard'
 export * from './favorite-entities/FavoriteEntites'
 export * from './filter-list/FilterList'

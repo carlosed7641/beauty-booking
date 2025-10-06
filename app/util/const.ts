@@ -17,6 +17,7 @@ import {
     UruguayFlag,
     VenezuelaFlag,
 } from '@/components/flags'
+import { View } from 'react-big-calendar'
 import { IconType } from 'react-icons'
 import { AiOutlineDollar } from 'react-icons/ai'
 import { FaRegStar } from 'react-icons/fa'
@@ -356,3 +357,5 @@ export const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
     month: "long",
     day: "numeric"
 }
+
+export const CALENDAR_VIEWS: View[] = ['month', 'week', 'day']

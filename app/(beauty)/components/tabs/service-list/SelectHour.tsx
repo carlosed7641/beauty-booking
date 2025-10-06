@@ -58,11 +58,13 @@ export const SelectHour = ({ scheduleHours, excludeHours }: { scheduleHours: str
         } // TODO: Api
 
         const professionalExcludeHours = getProfessionalExcludeHoursHours()
-        
-        const hours = generateHoursArray({ frequencyMinutes, inputDate: serviceState.selectedDate!, scheduleHours, 
-            excludeHours: [...excludeHours, ...professionalExcludeHours]}) // TODO: Api call
+
+        const hours = generateHoursArray({
+            frequencyMinutes, inputDate: serviceState.selectedDate!, scheduleHours,
+            excludeHours: [...excludeHours, ...professionalExcludeHours]
+        }) // TODO: Api call
+        setHours(hours ?? [])
         if (!hours || !hours.length) return
-        setHours(hours)
 
         const isHourSelected = hours.some(hour => hour.value === serviceState.selectedHour)
 

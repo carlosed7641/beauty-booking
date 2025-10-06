@@ -5,8 +5,8 @@ const events: EventDate[] = [
     {
         id: 'f445465',
         title: 'Cepillado',
-        start: new Date(2025, 9, 5, 17, 45, 0),
-        end: new Date(2025, 9, 5, 18, 30, 0),
+        start: new Date(2025, 9, 6, 17, 45, 0),
+        end: new Date(2025, 9, 6, 18, 30, 0),
         customer: {
             id: "125",
             name: "David Ortiz",
@@ -30,23 +30,15 @@ const events: EventDate[] = [
 
 const foundationYear = 2020 // TODO: Get from Api
 
-   // TODO: Api call
+// TODO: Api call
 const professionals = fakeProfessionals.filter(sl => sl.entityId === '422')
 
 export default function SchedulePage() {
-
     return (
-        <>
-            <h1 className="text-lg text-green-700 mb-3 font-bold">Agenda</h1>
-            <div className="flex flex-col gap-6">
-                <div className="bg-white w-full rounded-md p-7 relative">
-                    <Schedule
-                        events={events}
-                        foundationYear={foundationYear}
-                        professionals={professionals}
-                    />
-                </div>
-            </div>
-        </>
+        <Schedule
+            events={events}
+            foundationYear={foundationYear}
+            professionals={professionals}
+        />
     )
 }

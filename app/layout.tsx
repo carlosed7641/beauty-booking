@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 // Back button in sections
 // Back button in modasl
 // Tabs refactor (service-list, BookingModal (step, setStep), professionals, etc.)
-// Modal Provider refactor
+// Modal Provider refactor, esc
 // Refactor schedule hours frequency & exclude and schedule hours
 
 // Map

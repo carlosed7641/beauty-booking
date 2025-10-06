@@ -10,7 +10,6 @@ export const getMessagesES = () => {
         date: 'Fecha',
         time: 'Hora',
         event: 'Evento',
-        // showMore: total => `+ Ver más (${total})`
     }
 }
 

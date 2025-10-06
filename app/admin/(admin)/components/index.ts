@@ -1,4 +1,5 @@
 export * from './admin-sections/AdminSections'
+export * from './event-summary/EventSummary'
 export * from './registration-data/RegistrationData'
 export * from './registration-form/RegistrationForm'
 export * from './registration-steps/RegistrationSteps'

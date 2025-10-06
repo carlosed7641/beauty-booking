@@ -1,24 +1,20 @@
 'use client'
 
-import { SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { LiaExchangeAltSolid } from 'react-icons/lia'
 import { useModal } from '@/store'
 import { DateList } from '@/components'
 import { generateMonthDatesArray } from '@/helpers'
+import { useSchedule } from '../../store'
 import { MONTHS_OF_YEAR } from '@/util/const'
-
-
-interface Props {
-    date: Date
-    setDate: React.Dispatch<SetStateAction<Date>>
-}
 
 const INITIAL_DAYS_OF_MONTH = generateMonthDatesArray(new Date())
 
-export const CustomDays = ({ date, setDate }: Props) => {
+export const CustomDays = () => {
 
     const [daysOfCurrentMonth, setDaysOfCurrentMonth] = useState(INITIAL_DAYS_OF_MONTH)
     const { setOpenModal } = useModal()
+    const { schedule, schedule: { date }, setSchedule } = useSchedule()
 
     useEffect(() => {
         const newDays = generateMonthDatesArray(date)
@@ -42,7 +38,7 @@ export const CustomDays = ({ date, setDate }: Props) => {
                     noDisabledDays
                     datesList={daysOfCurrentMonth}
                     selectedDate={date}
-                    onClick={(dayItem) => setDate(dayItem.date)}
+                    onClick={(dayItem) => setSchedule({ ...schedule, date: dayItem.date })}
                 />
             </div>
         </div>

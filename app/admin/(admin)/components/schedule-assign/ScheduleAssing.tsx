@@ -1,14 +1,15 @@
 'use client'
 
-import { Modal, ModalHeader } from '@/components'
-import { ServiceList } from '@/(beauty)/components'
-import { useModal, useService } from '@/store'
-import Image from 'next/image'
 import { useEffect, useMemo, useState } from 'react'
+import Image from 'next/image'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { IoAddCircleOutline } from 'react-icons/io5'
-import { serviceList as fakeServiceList } from '@/util/fake-data'
+import { Modal, ModalHeader } from '@/components'
+import { useModal, useService } from '@/store'
+import { ServiceList } from '@/(beauty)/components'
+import { useSchedule } from '../../store'
 import { SERVICE_INITIAL_STATE } from '@/util/const'
+import { serviceList as fakeServiceList } from '@/util/fake-data'
 
 const _customers: Session[] = [
     {
@@ -40,13 +41,14 @@ const _customers: Session[] = [
     }
 ]
 
-export const ScheduleAssign = ({ selectedDate }: { selectedDate: Date }) => {
+export const ScheduleAssign = () => {
 
     const { setOpenModal } = useModal()
+    const { serviceState, setServiceState } = useService()
+    const { date: selectedDate } = useSchedule(state => state.schedule)
+    const [step, setStep] = useState(1)
     const [customers, setCustomers] = useState<Session[]>([])
     const [searchTerm, setSearchTerm] = useState("")
-    const [step, setStep] = useState(1)
-    const { serviceState, setServiceState } = useService()
 
     // TODO: Api call
     const serviceList = fakeServiceList.filter(sl => sl.entityId === '422')
@@ -78,7 +80,7 @@ export const ScheduleAssign = ({ selectedDate }: { selectedDate: Date }) => {
     }
 
     return (
-         <Modal>
+        <Modal>
             <ModalHeader>
                 <h1 className="text-green-700 font-bold flex items-center gap-2">
                     {
@@ -100,7 +102,7 @@ export const ScheduleAssign = ({ selectedDate }: { selectedDate: Date }) => {
                                 {
                                     filteredCustomers.length > 0 ?
                                         filteredCustomers.map(({ id, photo, name, indicator, phone }) => (
-                                            <li key={id} onClick={()=> handleSelectCustomer({id, name})}
+                                            <li key={id} onClick={() => handleSelectCustomer({ id, name })}
                                                 className="flex gap-2 border-b border-zinc-300 px-0.5 py-1.5 hover:bg-zinc-100 cursor-pointer">
                                                 {
                                                     photo ? <Image className="object-cover h-10 w-10 rounded-full" src={photo} alt={name} width={40} height={40} />
@@ -128,6 +130,6 @@ export const ScheduleAssign = ({ selectedDate }: { selectedDate: Date }) => {
                 </div>
             )
             }
-         </Modal>
+        </Modal>
     )
 }
