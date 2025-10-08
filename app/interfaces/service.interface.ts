@@ -3,7 +3,11 @@ interface ServiceItem {
   name: string
   description?: string
   price: number
-  duration: string
+  duration: {
+    hours: number
+    minutes: number
+  }
+  archived?: boolean
 }
 
 interface Service {
