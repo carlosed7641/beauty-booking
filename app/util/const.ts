@@ -305,7 +305,9 @@ export const SECTIONS_SETTINGS = [
     },
 ]
 
-export const SHOP_TYPES = ['Barbería', 'Cejas & Pesteñas', 'Centro de Maquillaje', 'Cosmetología', 'Peluquería', 'Salón de Belleza', 'Spa Masajes', 'Tatuajes']
+export const SHOP_TYPES = ['Barbería','Cejas & Pesteñas', 'Centro de Maquillaje', 'Cosmetología', 'Peluquería', 'Salón de Belleza', 'Spa Masajes', 'Tatuajes']
+
+export const CATEGORIES = ['Color cabello', 'Cortes', 'Peinados']
 
 export const INITIAL_WORK_DAYS = [
     {

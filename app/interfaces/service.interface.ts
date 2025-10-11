@@ -3,12 +3,15 @@ interface ServiceItem {
   name: string
   description?: string
   price: number
+  gender: Gender
   duration: {
     hours: number
     minutes: number
   }
   archived?: boolean
 }
+
+type Gender = 'Masculino' | 'Femenino' | 'Unisex'
 
 interface Service {
   entityId: string

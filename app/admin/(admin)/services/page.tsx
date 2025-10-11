@@ -5,19 +5,20 @@ import { FaArrowCircleUp, FaTrashRestore } from 'react-icons/fa'
 import clsx from 'clsx'
 import { serviceList } from '@/util/fake-data'
 import { RxCaretDown } from 'react-icons/rx'
-import { formatNumber, getRawNumber } from '@/helpers'
+import { formatNumber } from '@/helpers'
 import { MdEdit } from 'react-icons/md'
 import { useModal } from '@/store'
 import { Field, Modal, ModalHeader } from '@/components'
-import { SHOP_TYPES } from '@/util/const'
+import { CATEGORIES } from '@/util/const'
+import { IoMdAddCircleOutline } from 'react-icons/io'
 
 const entityId = '422'
 
 const INITIAL_STATE = {
-    id: '',
+    serviceId: '',
     name: '',
     category: '',
-    gender: '',
+    gender: '' as Gender,
     description: '',
     hours: 0,
     minutes: 30,
@@ -28,17 +29,20 @@ export default function ServicesPage() {
 
     // TODO: Component my page my reservations
     const [currentTab, setCurrentTab] = useState<'active' | 'archived'>('active')
-    const [formState, setFomrState] = useState(INITIAL_STATE)
+    const [formData, setFormData] = useState(INITIAL_STATE)
+    const [touched, setTouched] = useState<Partial<Record<keyof typeof formData, boolean>>>({})
+    const [errors, setErrors] = useState<Partial<Record<keyof typeof formData | 'duration', string>>>({})
     // TODO: Api
     const services = serviceList.filter(service => service.entityId === entityId)
     const categories = services.map(s => s.category)
     const [openCategories, setOpenCategories] = useState<string[]>(categories)
     const { openModal, setOpenModal } = useModal()
+
     const isFormValid = useMemo(() => {
-        const { name, category, gender, description, hours, minutes, price } = formState 
-        const totalMinutes = Number(hours) * 60 + Number(minutes)
+        const { name, category, gender, hours, minutes, price } = formData
+        const totalMinutes = hours * 60 + minutes
         return Boolean(name && category && gender && totalMinutes > 0 && price)
-    }, [formState])
+    }, [formData])
 
     const handleToggleCategory = (category: string) => {
         setOpenCategories(prev =>
@@ -48,37 +52,92 @@ export default function ServicesPage() {
         )
     }
 
-    const handleChangeField = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        const name = e.target.name
-        const value = e.target.value
-        const numericFields = ['hours', 'minutes']
 
-        setFomrState(prev => ({
-            ...prev,
-            [name]: numericFields.includes(name) ? Number(value) : value
-        }))
-    }
-
-
-    const handleSubmit = (e:  React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         if (!isFormValid) return
 
-        // console.log(Number(getRawNumber(formState.price)))
-       
-        if (formState.id) {
-            // TODO: [PUT]
+        // console.log(Number(getRawNumber(formData.price)))
+
+        if (formData.serviceId) {
+            // TODO: [PUT] & revalidatePath()
         } else {
-            // TODO: [POST]
+            // TODO: [POST] & revalidatePath()
         }
 
-        setFomrState(INITIAL_STATE)
         setOpenModal(null)
     }
 
+    const handleUpdate = ({
+        description, price, duration: { hours, minutes }, ...rest
+    }: ServiceItem & { category: string }) => {
+        setFormData({
+            ...rest,
+            description: description ?? '',
+            price: price.toString(),
+            hours: hours,
+            minutes: minutes
+        })
+        setOpenModal('ServiceForm')
+    }
+
+    const validate = (field: keyof typeof formData | 'duration', value: string) => {
+        let error = ""
+
+        if (field === 'duration') {
+            if (
+                Number(value) * 60 + formData.minutes === 0 ||
+                formData.hours * 60 + Number(value) === 0
+            ) {
+                error = 'La duración no puede ser cero'
+            }
+        } else if (!value) {
+            error = "El campo es obligatorio"
+        }
+
+        setErrors(prev => ({ ...prev, [field]: error }))
+    }
+
+    const handleChangeField = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const name = e.target.name as keyof typeof formData
+        const value = e.target.value
+        const numericFields = ['hours', 'minutes']
+        const isNumericField = numericFields.includes(name)
+
+        setFormData(prev => ({
+            ...prev,
+            [name]: isNumericField ? Number(value) : value
+        }))
+
+        if (touched[name] || isNumericField) {
+            validate(isNumericField ? 'duration' : name, value)
+        }
+    }
+
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        const { name, value } = e.target
+        setTouched(prev => ({ ...prev, [name]: true }))
+        validate(name as keyof typeof formData, value)
+    }
+
+    const handleToggleActive = (service: ServiceItem) => {
+        // TODO: [PUT]
+        const newData = {
+            ...service,
+            archived: !!service.archived
+        } 
+
+        // save(new Data)
+        // revalidatePath()
+    }
+
     useEffect(() => {
-        setFomrState(INITIAL_STATE)
+        if (!openModal) {
+            setFormData(INITIAL_STATE)
+            setErrors({})
+            setTouched({})
+        }
     }, [openModal])
 
     return (
@@ -147,13 +206,15 @@ export default function ServicesPage() {
                                                                             </span>
                                                                         </div>
                                                                         <div className="text-sm flex gap-3 self-end">
-                                                                            <button onClick={() => setOpenModal('UpdateService')} className="flex flex-col text-green-700 gap-1 items-center cursor-pointer">
+                                                                            <button onClick={() => handleUpdate({ ...s, category: service.category })} className="flex flex-col text-green-700 gap-1 items-center cursor-pointer">
                                                                                 <MdEdit />
                                                                                 Editar
                                                                             </button>
-                                                                            <button className="flex flex-col text-zinc-500 gap-1 items-center cursor-pointer">
+                                                                            <button onClick={() => handleToggleActive(s)} className="flex flex-col text-zinc-500 gap-1 items-center cursor-pointer">
                                                                                 <FaTrashRestore />
                                                                                 Archivar
+                                                                                {/* <FaArrowCircleUp />
+                                                                                Activar */}
                                                                             </button>
                                                                         </div>
                                                                     </li>
@@ -192,64 +253,74 @@ export default function ServicesPage() {
                                 }
                             </>
                     }
+                    <div onClick={() => setOpenModal('ServiceForm')} className="fixed bottom-10 right-10 xl:right-[calc(50%-600px+40px)] flex items-center gap-2 px-3 py-2 bg-green-700 rounded-full cursor-pointer hover:bg-green-800 text-white">
+                        <IoMdAddCircleOutline className="text-xl" />
+                        Crear servicio
+                    </div>
                 </div>
             </div>
             {
-                openModal === 'UpdateService' &&
+                openModal === 'ServiceForm' &&
                 <Modal className="md:w-[650px]!">
                     <ModalHeader>
                         <h2 className="font-bold text-green-700">Editor de servicios</h2>
                     </ModalHeader>
                     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-                        <Field label="Nombre *" colorLabel="#008236">
-                            <input onChange={handleChangeField} name="name" autoComplete="off" value={formState.name} className="mt-2 border border-green-700 p-1 rounded-md focus:outline-0" type="text" placeholder="Ej. Corte con barba" />
+                        <Field label="Nombre *" colorLabel={`${errors.name ? '#fb2c36' : '#008236'}`}>
+                            <input onChange={handleChangeField} onBlur={handleBlur} name="name" autoComplete="off" value={formData.name} className={`mt-2 border p-1 rounded-md focus:outline-0 mb-1 ${errors.name ? 'border-red-500' : 'border-green-700'}`} type="text" placeholder="Ej. Corte con barba" />
+                            {errors.name && <span className="text-red-500">{errors.name}</span>}
                         </Field>
-                        <Field label="Categoría *" colorLabel="#008236">
-                            <select onChange={handleChangeField} name="category" value={formState.category} className="mt-2 p-1.5 border border-green-700 rounded-md focus:outline-0 focus:border-green-700">
+                        <Field label="Categoría *" colorLabel={`${errors.category ? '#fb2c36' : '#008236'}`}>
+                            <select onChange={handleChangeField} name="category" value={formData.category} className={`mt-2 p-1.5 border rounded-md focus:outline-0 ${errors.category ? 'border-red-500' : 'border-green-700'}`}>
                                 <option value="" disabled>Elige una categoría</option>
-                                {
-                                    SHOP_TYPES.map(category => <option key={category} value={category}>{category}</option>)
-                                }
+                                {CATEGORIES.map(category => <option key={category} value={category}>{category}</option>)}
                             </select>
+                            {errors.category && <span className="text-red-500">{errors.category}</span>}
                         </Field>
-                        <Field label="Género destinado *" hint="¿Para cuál género está destinado este servicio?" colorLabel="#008236">
-                            <select onChange={handleChangeField} name="gender" value={formState.gender} className="mt-2 p-1.5 border border-green-700 rounded-md focus:outline-0 focus:border-green-700">
+                        <Field label="Género destinado *" hint="¿Para cuál género está destinado este servicio?" colorLabel={`${errors.gender ? '#fb2c36' : '#008236'}`}>
+                            <select onChange={handleChangeField} name="gender" value={formData.gender} className={`mt-2 p-1.5 border rounded-md focus:outline-0 ${errors.gender ? 'border-red-500' : 'border-green-700'}`}>
                                 <option value="" disabled>Elige una género</option>
                                 <option value="Masculino">Masculino</option>
                                 <option value="Femenino">Femenino</option>
                                 <option value="Unisex">Unisex</option>
                             </select>
+                            {errors.gender && <span className="text-red-500">{errors.gender}</span>}
                         </Field>
                         <Field label="Descripción" colorLabel="#008236">
-                            <textarea onChange={handleChangeField} name="description" value={formState.description}  className="mt-2 border border-green-700 p-1 rounded-md focus:outline-0" placeholder="Escribe detalles sobre el servicio" />
+                            <textarea onChange={handleChangeField} name="description" value={formData.description} className="mt-2 border border-green-700 p-1 rounded-md focus:outline-0" placeholder="Escribe detalles sobre el servicio" />
                         </Field>
                         <div className="flex flex-col gap-2">
-                            <span className="text-green-700">Duración del servicio *</span>
+                            <span className={`${errors.duration ? 'text-red-500' : 'text-green-700'}`}>Duración del servicio *</span>
                             <div className="flex gap-2 items-center">
-                                <Field className="w-1/2" label="Horas" colorLabel="#008236">
-                                    <select onChange={handleChangeField} name="hours" value={formState.hours} className="border p-1 border-green-700 rounded-md focus:outline-0">
+                                <Field className="w-1/2" label="Horas" colorLabel={`${errors.duration ? '#fb2c36' : '#008236'}`}>
+                                    <select onChange={handleChangeField} name="hours" value={formData.hours} className={`border p-1 rounded-md focus:outline-0 ${errors.duration ? 'border-red-500' : 'border-green-700'}`}>
                                         {Array.from({ length: 13 }).map((_, idx) => (
                                             <option key={idx} value={idx}>{idx}</option>
                                         ))}
                                     </select>
                                 </Field>
-                                <Field className="w-1/2" label="Minutos" colorLabel="#008236">
-                                    <select onChange={handleChangeField} name="minutes" value={formState.minutes} className="border p-1 border-green-700 rounded-md focus:outline-0">
+                                <Field className="w-1/2" label="Minutos" colorLabel={`${errors.duration ? '#fb2c36' : '#008236'}`}>
+                                    <select onChange={handleChangeField} name="minutes" value={formData.minutes} className={`border p-1 rounded-md focus:outline-0 ${errors.duration ? 'border-red-500' : 'border-green-700'}`}>
                                         {Array.from({ length: 12 }).map((_, idx) => (
                                             <option key={idx * 5} value={idx * 5}>{idx * 5}</option>
                                         ))}
                                     </select>
                                 </Field>
                             </div>
-                            <span>Duración: {formState.hours > 0 ? `${formState.hours} ${formState.hours === 1 ? 'hr' : 'hrs'} ${formState.minutes > 0 ? 'y ' + formState.minutes + ' min' : ''}` : `${formState.minutes} min`}</span>
+                            {
+                                errors.duration ?
+                                    <span className="text-red-500">{errors.duration}</span> :
+                                    <span>Duración: {formData.hours > 0 ? `${formData.hours} ${formData.hours === 1 ? 'hr' : 'hrs'} ${formData.minutes > 0 ? 'y ' + formData.minutes + ' min' : ''}` : `${formData.minutes} min`}</span>
+                            }
                         </div>
-                        <Field label="Precio *" colorLabel="#008236">
+                        <Field label="Precio *" colorLabel={`${errors.price ? '#fb2c36' : '#008236'}`}>
                             <div className="flex items-center gap-1.5 mt-2">
-                                <span className="text-green-700">$</span>
-                                <input onChange={handleChangeField} value={formatNumber(formState.price.toString())} name="price" className="border w-full border-green-700 p-1 rounded-md focus:outline-0" type="text" />
+                                <span className={`${errors.price ? 'text-red-500' : 'text-green-700'}`}>$</span>
+                                <input onChange={handleChangeField} onBlur={handleBlur} value={formatNumber(formData.price.toString())} name="price" className={`border w-full p-1 rounded-md focus:outline-0 ${errors.price ? 'border-red-500' : 'border-green-700'}`} type="text" />
                             </div>
+                            {errors.price && <span className="text-red-500">{errors.price}</span>}
                         </Field>
-                        <button type="submit" className="bg-green-700 rounded-full focus:outline-0 hover:bg-green-800 text-white md:self-end px-4 py-2 w-full md:w-fit cursor-pointer">
+                        <button disabled={!isFormValid} type="submit" className="bg-green-700 rounded-full focus:outline-0 hover:bg-green-800 text-white md:self-end px-4 py-2 w-full md:w-fit cursor-pointer disabled:opacity-65 disabled:pointer-events-none">
                             Guardar cambios
                         </button>
                     </form>

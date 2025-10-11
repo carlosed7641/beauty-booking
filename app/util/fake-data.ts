@@ -85,8 +85,8 @@ export const serviceList: Service[] = [
     entityName: 'Acicalate Vip',
     category: "Color cabello",
     services: [
-      { serviceId: '001', name: "Rayitos platinados", description: "Los mejores rayitos", duration: { hours: 4, minutes: 0 }, price: 30000, archived: true },
-      { serviceId: '002', name: "Tinte", description: "El mejor tinte", duration: { hours: 3, minutes: 30 }, price: 25000 }
+      { serviceId: '001', name: "Rayitos platinados", description: "Los mejores rayitos", duration: { hours: 4, minutes: 0 }, price: 30000, gender: 'Masculino', archived: true },
+      { serviceId: '002', name: "Tinte", description: "El mejor tinte", duration: { hours: 3, minutes: 30 }, gender: 'Masculino', price: 25000 }
     ]
   },
   {
@@ -94,8 +94,8 @@ export const serviceList: Service[] = [
     entityName: 'Acicalate Vip',
     category: "Cortes",
     services: [
-      { serviceId: '003', name: "Sencillo", description: "Corte básico", duration: { hours: 0, minutes: 30 }, price: 15000 },
-      { serviceId: '004', name: "Corte y barba", description: "Corte y barba", duration: { hours: 0, minutes: 45 }, price: 20000 }
+      { serviceId: '003', name: "Sencillo", description: "Corte básico", duration: { hours: 0, minutes: 30 }, gender: 'Masculino', price: 15000 },
+      { serviceId: '004', name: "Corte y barba", description: "Corte y barba", duration: { hours: 0, minutes: 45 }, gender: 'Masculino', price: 20000 }
     ]
   },
   {
@@ -103,8 +103,8 @@ export const serviceList: Service[] = [
     entityName: 'Acicalate Vip',
     category: "Peinados",
     services: [
-      { serviceId: '005', name: "Trenzas", description: "Trenzas básicas", duration: { hours: 1, minutes: 0 }, price: 18000 },
-      { serviceId: '006', name: "Cepillado", description: "Cepillado básico", duration: { hours: 0, minutes: 45 }, price: 12000 }
+      { serviceId: '005', name: "Trenzas", description: "Trenzas básicas", duration: { hours: 1, minutes: 0 }, gender: 'Unisex', price: 18000 },
+      { serviceId: '006', name: "Cepillado", description: "Cepillado básico", duration: { hours: 0, minutes: 45 }, gender: 'Femenino', price: 12000 }
     ]
   },
   {
@@ -112,8 +112,8 @@ export const serviceList: Service[] = [
     entityName: 'Prueba',
     category: "Cortes",
     services: [
-      { serviceId: '007', name: "Especial", description: "Corte especial", duration: { hours: 0, minutes: 30 }, price: 16000 },
-      { serviceId: '008', name: "Barba con pigmentación", description: "Barba con pigmentación", duration: { hours: 0, minutes: 45 }, price: 14000 }
+      { serviceId: '007', name: "Especial", description: "Corte especial", duration: { hours: 0, minutes: 30 }, gender: 'Masculino', price: 16000 },
+      { serviceId: '008', name: "Barba con pigmentación", description: "Barba con pigmentación", duration: { hours: 0, minutes: 45 }, gender: 'Masculino', price: 14000 }
     ]
   }
 ]
@@ -217,8 +217,9 @@ export const reservations: Reservation[] = [
       category: 'Cortes',
       name: "Rayitos platinados",
       description: "Los mejores rayitos",
+      gender: 'Masculino',
       duration: { hours: 4, minutes: 0 },
-      price: 30000
+      price: 30000,
     },
     selectedProfessional: {
       id: "abc",
@@ -236,6 +237,7 @@ export const reservations: Reservation[] = [
       category: 'Cortes',
       name: "Corte hombre",
       description: "Los mejores rayitos",
+      gender: 'Masculino',
       duration: { hours: 1, minutes: 0 },
       price: 30000
     },
@@ -255,6 +257,7 @@ export const reservations: Reservation[] = [
       category: 'Cortes',
       name: "Rayitos básicos",
       description: "Los mejores rayitos",
+      gender: 'Masculino',
       duration: { hours: 4, minutes: 0 },
       price: 30000
     },
@@ -275,6 +278,7 @@ export const reservations: Reservation[] = [
       name: "Rayitos platinados",
       description: "Los mejores rayitos",
       duration: { hours: 4, minutes: 0 },
+      gender: 'Masculino',
       price: 30000
     },
     selectedProfessional:{
