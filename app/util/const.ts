@@ -307,8 +307,6 @@ export const SECTIONS_SETTINGS = [
 
 export const SHOP_TYPES = ['Barbería','Cejas & Pesteñas', 'Centro de Maquillaje', 'Cosmetología', 'Peluquería', 'Salón de Belleza', 'Spa Masajes', 'Tatuajes']
 
-export const CATEGORIES = ['Color cabello', 'Cortes', 'Peinados']
-
 export const INITIAL_WORK_DAYS = [
     {
         from: '07:00',
@@ -361,3 +359,15 @@ export const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
 }
 
 export const CALENDAR_VIEWS: View[] = ['month', 'week', 'day']
+
+
+export const SERVICE_INITIAL_DATA = {
+    serviceId: '',
+    name: '',
+    category: '',
+    gender: '' as Gender,
+    description: '',
+    hours: 0,
+    minutes: 30,
+    price: ''
+}

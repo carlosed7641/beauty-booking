@@ -60,7 +60,7 @@ export const ReservationList = ({ reservations }: Props) => {
                                     </li>
                                     <li className="py-2 flex gap-3">
                                         <span className="w-28 text-green-700 font-bold">Duración</span>
-                                        <span>{r.selectedService.duration}</span>
+                                        <span>{r.selectedService.duration.hours}</span> 
                                     </li>
                                     <li className="py-2 flex gap-3">
                                         <span className="w-28 text-green-700 font-bold">Fecha</span>

@@ -383,7 +383,7 @@ export const session: Session = {
   role: 'admin'
 }
 
-export const categories = ['cortes', 'peinados', 'uñas', 'limpieza facial']
+export const serviceCategories = ['Color cabello', 'Cortes', 'Peinados']
 
 export const favoriteEntities: Entity[] = [
   {
