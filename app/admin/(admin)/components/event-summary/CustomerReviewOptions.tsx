@@ -2,16 +2,7 @@ import React from 'react'
 import { RiEmotionHappyLine, RiEmotionNormalLine, RiEmotionUnhappyLine } from 'react-icons/ri'
 import { useSchedule } from '../../store'
 
-export const CustomerReviewOptions = () => {
-
-    const { selectedEvent } = useSchedule(state => state.schedule)
-
-    const setCustomerReview = (reviewPoints: number) => {
-        //TODO: Api post
-        if (!selectedEvent) return
-        const { id, customerReview } = selectedEvent
-        console.log(id, customerReview)
-    }
+export const CustomerReviewOptions = ({ setCustomerReview }: { setCustomerReview: (reviewPoints: number) => void}) => {
     return (
         <div className="grid grid-cols-3 gap-2 md:w-fit py-2">
             <div onClick={() => setCustomerReview(1)} className="flex flex-col items-center text-green-500 cursor-pointer">

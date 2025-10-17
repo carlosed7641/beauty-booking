@@ -8,11 +8,11 @@ interface Props {
 
 export const MonthList = ({ date, onChangeDate }: Props) => {
     return (
-        <ul className="flex flex-col gap-2">
+        <ul className="flex flex-col md:grid md:grid-cols-6 gap-2">
             {MONTHS_OF_YEAR.map((month, idx) => (
                 <li onClick={() => onChangeDate(idx, 'month')} key={idx} className={
                     clsx(
-                        "w-full text-white rounded-md px-3 py-2",
+                        "w-full text-white rounded-md text-center px-3 py-2 cursor-pointer hover:bg-green-700",
                         {
                             "bg-zinc-400": idx !== date.getMonth(),
                             "bg-green-700": idx === date.getMonth()

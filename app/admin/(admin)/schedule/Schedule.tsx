@@ -86,7 +86,12 @@ export const Schedule = ({ events, foundationYear, professionals }: Props) => {
             <h1 className="text-lg text-green-700 mb-3 font-bold">Agenda</h1>
             <div className="flex flex-col gap-6">
                 <div className="bg-white w-full rounded-md p-7 relative">
-                    <CustomDays />
+                    <CustomDays
+                        onClick={(dayItem) => setSchedule({ ...schedule, date: dayItem.date })}
+                        date={schedule.date}
+                        disabledDays="none"
+                        className="md:hidden"
+                    />
                     <Calendar
                         culture='es'
                         selectable
@@ -122,10 +127,11 @@ export const Schedule = ({ events, foundationYear, professionals }: Props) => {
                 />
             }
             {openModal === 'ScheduleEvent' && <EventSummary />}
-            {openModal === 'ScheduleMonths' && <ScheduleMonths onChangeDate={onChangeDate} />}
+            {openModal === 'ScheduleMonths' && <ScheduleMonths date={date} onChangeDate={onChangeDate} />}
             {openModal === 'ScheduleYears' &&
                 <ScheduleYears
                     foundationYear={foundationYear}
+                    date={date}
                     onChangeDate={onChangeDate}
                 />
             }

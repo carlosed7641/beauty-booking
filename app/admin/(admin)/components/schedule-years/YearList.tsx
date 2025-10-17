@@ -10,14 +10,14 @@ export const YearList = ({ foundationYear, date, onChangeDate }: Props) => {
 
     const years = new Date().getFullYear() - foundationYear + 1
     return (
-        <ul className="flex flex-col gap-2">
+        <ul className="flex flex-col md:grid md:grid-cols-6 gap-2">
             {
                 Array.from({ length: years }, (_, idx) => {
                     const year = foundationYear + idx
                     return (
                         <li onClick={() => onChangeDate(year, 'year')} key={idx} className={
                             clsx(
-                                "w-full text-white rounded-md px-3 py-2",
+                                "w-full md:text-center text-white rounded-md px-3 py-2 cursor-pointer hover:bg-green-700",
                                 {
                                     "bg-zinc-400": year !== date.getFullYear(),
                                     "bg-green-700": year === date.getFullYear()

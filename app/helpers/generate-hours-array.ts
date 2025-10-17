@@ -10,8 +10,8 @@ export const generateHoursArray = ({ frequencyMinutes, inputDate, excludeHours, 
     const now = new Date()
     const date = new Date(inputDate)
 
-    const [startHour, startMinute] = scheduleHours[0].split(':').map(Number)
-    const [endHour, endMinute] = scheduleHours[1].split(':').map(Number)
+    const [startHour, startMinute] = scheduleHours[0]?.split(':').map(Number) ?? ['10', '00'] //TODO
+    const [endHour, endMinute] = scheduleHours[1]?.split(':').map(Number) ?? ['21', '00'] //TODO
 
     const start = new Date()
     start.setHours(startHour, startMinute, 0, 0)

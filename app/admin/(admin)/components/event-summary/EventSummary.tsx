@@ -12,6 +12,13 @@ export const EventSummary = () => {
     const now = new Date().getTime()
     const endDate = selectedEvent?.end.getTime()!
 
+    const setCustomerReview = (reviewPoints: number) => {
+        //TODO: Api post
+        if (!selectedEvent) return
+        const { id, customerReview } = selectedEvent
+        console.log(id, customerReview)
+    }
+
     return (
         <Modal className="overflow-hidden!">
             <ModalHeader>
@@ -30,7 +37,7 @@ export const EventSummary = () => {
                                         <button onClick={() => setSchedule({ ...schedule, isUpdatingReview: true })} className="bg-green-700 text-white rounded-full px-5 py-1 hover:bg-green-800 cursor-pointer">Editar</button>
                                     </div>
                                     :
-                                    <CustomerReviewOptions />
+                                    <CustomerReviewOptions setCustomerReview={setCustomerReview} />
                             }
                         </div>
                         :

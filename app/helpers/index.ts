@@ -1,4 +1,5 @@
 export * from './calendar-localizer'
+export * from './compare-dates'
 export * from './is-greater-or-equal-than-today'
 export * from './format-date'
 export * from './format-number'

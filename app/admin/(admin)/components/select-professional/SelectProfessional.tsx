@@ -2,9 +2,9 @@ import Image from 'next/image'
 import clsx from 'clsx'
 
 interface Props {
-    professionals: ProfessionalSettings[]
-    selectedProfessional: ProfessionalSettings
-    setSelectedProfessional: React.Dispatch<React.SetStateAction<ProfessionalSettings>>
+    professionals: ProfessionalSettings[] | ProfessionalData[]
+    selectedProfessional: ProfessionalSettings | ProfessionalData
+    setSelectedProfessional: React.Dispatch<React.SetStateAction<ProfessionalSettings | ProfessionalData>>
 }
 
 export const SelectProfessional = ({

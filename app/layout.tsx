@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 // Tabs refactor (service-list, BookingModal (step, setStep), professionals, etc.)
 // Modal Provider refactor, esc
 // Refactor schedule hours frequency & exclude and schedule hours
+// Merge ScheduleMonths & ScheduleYears
 
 // Map
 // Metadata

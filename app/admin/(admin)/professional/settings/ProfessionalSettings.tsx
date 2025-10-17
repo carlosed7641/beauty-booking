@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { AssignServices, AssignWorkDays, SelectOption, SelectProfessional } from '.'
+import { SelectProfessional } from '../../components'
+import { AssignServices, AssignWorkDays, SelectOption } from '.'
 
 interface Props {
     professionals: ProfessionalSettings[]
@@ -23,7 +24,7 @@ export const ProfessionalSettings = ({ professionals, serviceList, workDays }: P
             <SelectProfessional
                 professionals={professionals}
                 selectedProfessional={selectedProfessional}
-                setSelectedProfessional={setSelectedProfessional}
+                setSelectedProfessional={setSelectedProfessional as React.Dispatch<React.SetStateAction<ProfessionalSettings | ProfessionalData>>}
             />
             <SelectOption
                 selectedOption={selectedOption}

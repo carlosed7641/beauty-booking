@@ -4,13 +4,11 @@ import { useSchedule } from '../../store'
 
 interface Props {
     foundationYear: number
+    date: Date
     onChangeDate: (value: number, type: "month" | "year") => void
 }
 
-export const ScheduleYears = ({ foundationYear, onChangeDate }: Props) => {
-
-    const { date } = useSchedule(state => state.schedule)
-    
+export const ScheduleYears = ({ foundationYear, date, onChangeDate }: Props) => {
     return (
         <Modal className="overflow-hidden!">
             <ModalHeader>

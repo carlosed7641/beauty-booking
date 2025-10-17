@@ -1,10 +1,10 @@
 'use client'
 import clsx from 'clsx'
-import { isGreaterOrEqualThanToday, generateHoursArray } from '@/helpers'
+import { isGreaterOrEqualThanToday, generateHoursArray, isLessOrEqualThanToday, compareDates } from '@/helpers'
 
 interface Props {
     isAdmin?: boolean
-    noDisabledDays?: boolean
+    disabled?: 'afterToday' | 'none'
     datesList: DateItem[]
     frequencyMintues?: number
     selectedDate?: string | Date | null
@@ -13,18 +13,12 @@ interface Props {
 
 export const DateList = ({
     isAdmin,
-    noDisabledDays,
+    disabled,
     datesList,
     frequencyMintues,
     selectedDate,
     onClick
 }: Props) => {
-
-    const compareDates = (date1: Date, date2: Date) => {
-        const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate())
-        const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate())
-        return d1.getTime() === d2.getTime()
-    }
 
     return (
 
@@ -32,7 +26,11 @@ export const DateList = ({
 
             // isAdmin, isToday, hasfrequencyMintues, hasHours
             const shouldShow = isAdmin || compareDates(date.date, new Date()) || !frequencyMintues || generateHoursArray({frequencyMinutes: frequencyMintues, inputDate: date.date, excludeHours: [], scheduleHours: [] }) //TODO: Fix 
-            const isSelectable = noDisabledDays || isGreaterOrEqualThanToday(date.date) 
+            const isSelectable = (() => {
+                if (!disabled) return isGreaterOrEqualThanToday(date.date)
+                if (disabled === 'afterToday') return isLessOrEqualThanToday(date.date)
+                return true
+            })()
             const selected = compareDates(selectedDate as Date, date.date)
             //TODO: Deshabilitar hoy si no tiene horas disponibles
 
@@ -48,7 +46,7 @@ export const DateList = ({
                                 {
                                     'border-zinc-300 text-zinc-300 opacity-70': !isSelectable,
                                     'border-green-700 text-green-700 hover:bg-green-700 hover:text-white': isSelectable,
-                                    'bg-green-700 text-white': selected
+                                    'bg-green-700 text-white': selected && isSelectable
                                 }
                             )
                         }>
