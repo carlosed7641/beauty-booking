@@ -21,6 +21,7 @@ export const metadata: Metadata = {
 // Modal Provider refactor, esc
 // Refactor schedule hours frequency & exclude and schedule hours
 // Merge ScheduleMonths & ScheduleYears
+// Schule history (user) in schedule
 
 // Map
 // Metadata

@@ -12,7 +12,7 @@ export const MonthList = ({ date, onChangeDate }: Props) => {
             {MONTHS_OF_YEAR.map((month, idx) => (
                 <li onClick={() => onChangeDate(idx, 'month')} key={idx} className={
                     clsx(
-                        "w-full text-white rounded-md text-center px-3 py-2 cursor-pointer hover:bg-green-700",
+                        "w-full text-white rounded-md md:text-center px-3 py-2 cursor-pointer hover:bg-green-700",
                         {
                             "bg-zinc-400": idx !== date.getMonth(),
                             "bg-green-700": idx === date.getMonth()
