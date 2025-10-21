@@ -1,5 +1,4 @@
 import { useModal, useService } from '@/store'
-import { format12 } from '../../../../helpers/generate-hours-array';
 import { formatDate, formatNumber, formatTextHour } from '@/helpers';
 
 export const Confirm = () => {
@@ -25,11 +24,11 @@ export const Confirm = () => {
             </div>
             <div className="flex gap-5">
                 <p className="text-green-700 w-[100px]">Duración</p>
-                <span>{serviceState.selectedService?.duration} aprox</span>
+                {/* <span>{serviceState.selectedService?.duration} aprox</span> */}
             </div>
             <div className="flex gap-5">
                 <p className="text-green-700 w-[100px]">Fecha</p>
-                <span>{formatDate(serviceState.selectedDate!)}</span>
+                <span>{formatDate({ date: serviceState.selectedDate!})}</span>
             </div>
             <div className="flex gap-5">
                 <p className="text-green-700 w-[100px]">Hora</p>

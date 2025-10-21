@@ -12,7 +12,7 @@ export default function ProfilePage() {
   return (
     <>
       <div className="flex flex-col md:flex-row items-center gap-3 mb-12">
-        <Image src={session.photo} alt={session.name} width={180} height={180} />
+        <Image src={session.photo ?? ''} alt={session.name} width={180} height={180} />
         <div className="flex flex-col gap-3">
           <p className="text-2xl text-green-700">{session.name}</p>
           <p className="text-zinc-500">{session.gender} - {birthDate}</p>

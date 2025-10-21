@@ -53,7 +53,7 @@ export const EventHistory = ({
                             >
                                 <span className="text-green-700">{customer.name}</span>
                                 <span>{selectedService.name}</span>
-                                <span>{formatDate(start)}</span>
+                                <span>{formatDate({date: start})}</span>
 
                                 <p className="flex gap-2 items-center">
                                     <span>{duration}</span>
