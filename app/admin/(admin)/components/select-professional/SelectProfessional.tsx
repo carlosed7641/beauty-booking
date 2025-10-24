@@ -5,15 +5,46 @@ interface Props {
     professionals: ProfessionalSettings[] | ProfessionalData[]
     selectedProfessional: ProfessionalSettings | ProfessionalData
     setSelectedProfessional: React.Dispatch<React.SetStateAction<ProfessionalSettings | ProfessionalData>>
+    allOption?: boolean
+}
+
+const defaultValue = {
+    id: '',
+    name: '',
+    entityId: '',
+    resume: '',
+    reviews: {
+        points: 0,
+        count: 0
+    }
 }
 
 export const SelectProfessional = ({
     professionals,
     selectedProfessional,
-    setSelectedProfessional
+    setSelectedProfessional,
+    allOption
 }: Props) => {
     return (
         <div className="flex gap-3 justify-center mb-2">
+            {
+                allOption &&
+                <div onClick={() => setSelectedProfessional(defaultValue)} className="flex flex-col items-center gap-1 cursor-pointer" >
+                    <div className={
+                        clsx(
+                            {
+                                "border-4 border-white rounded-full": selectedProfessional.id !== '',
+                                "border-4 border-green-900 rounded-full": selectedProfessional.id === ''
+                            }
+                        )
+                    }>
+                        <div className="border border-white p-2 h-16 w-16 bg-green-700 text-white rounded-full flex items-center justify-center text-3xl">
+                           T
+                        </div>
+                    </div>
+                    <span className="text-sm">Todos</span>
+                </div>
+            }
             {professionals.map(professional => (
                 <div key={professional.id} onClick={() => setSelectedProfessional(professional)} className="flex flex-col items-center gap-1 cursor-pointer" >
                     <div className={

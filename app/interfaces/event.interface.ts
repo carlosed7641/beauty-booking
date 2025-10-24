@@ -11,7 +11,10 @@ interface EventDate {
     selectedService: {
         serviceId: string
         name: string
-        duration: string
+        duration: string | {
+            hours: number
+            minutes: number
+        }
         price: number
     },
     selectedProfessional: {
@@ -20,5 +23,6 @@ interface EventDate {
     },
     isAdminBooking: boolean
     customerReview: number | null
+    status?: 'completed' | 'pending' | 'cancelled' | 'aborted'
     allDay: boolean
 }
