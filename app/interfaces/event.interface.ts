@@ -11,7 +11,7 @@ interface EventDate {
     selectedService: {
         serviceId: string
         name: string
-        duration: string | {
+        duration: {
             hours: number
             minutes: number
         }
