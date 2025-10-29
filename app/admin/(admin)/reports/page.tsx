@@ -77,7 +77,8 @@ const events: EventDate[] = [
         },
         selectedProfessional: {
             id: 'bcf',
-            name: "Carlos Castro"
+            name: "Carlos Castro",
+            photo: 'https://picsum.photos/64/64'
         },
         isAdminBooking: true,
         customerReview: 2,
@@ -102,7 +103,8 @@ const events: EventDate[] = [
         },
         selectedProfessional: {
             id: 'abc',
-            name: "Gregorio Carrena"
+            name: "Gregorio Carrena",
+            photo: 'https://picsum.photos/64/64'
         },
         isAdminBooking: true,
         customerReview: 1,
@@ -127,7 +129,8 @@ const events: EventDate[] = [
         },
         selectedProfessional: {
             id: 'bcf',
-            name: "Carlos Castro"
+            name: "Carlos Castro",
+            photo: 'https://picsum.photos/64/64'
         },
         isAdminBooking: true,
         customerReview: null,
@@ -152,7 +155,8 @@ const events: EventDate[] = [
         },
         selectedProfessional: {
             id: 'bcf',
-            name: "Carlos Castro"
+            name: "Carlos Castro",
+            photo: 'https://picsum.photos/64/64'
         },
         isAdminBooking: false,
         customerReview: 2,
@@ -177,7 +181,8 @@ const events: EventDate[] = [
         },
         selectedProfessional: {
             id: 'abc',
-            name: 'Gregorio Carrena'
+            name: 'Gregorio Carrena',
+            photo: 'https://picsum.photos/64/64'
         },
         isAdminBooking: false,
         customerReview: 3,
@@ -202,7 +207,8 @@ const events: EventDate[] = [
         },
         selectedProfessional: {
             id: 'bcf',
-            name: "Carlos Castro"
+            name: "Carlos Castro",
+            photo: 'https://picsum.photos/64/64'
         },
         isAdminBooking: false,
         customerReview: 2,
@@ -212,15 +218,14 @@ const events: EventDate[] = [
 ] // TODO: Get from Api
 
 const INITIAL_DATES = [new Date(), new Date()]
-type Selling = {  name: string, count: number }
 interface DataSummary {
     totalSales: number
     averageServiceTime: number
     completedServices: number
     averageServiceValue: number
     bills: number
-    bestSellingProfessional: Selling
-    bestSellingService: Selling
+    bestSellingProfessional: { data: { id: string, name: string, photo?: string }, count: number }
+    bestSellingService: { name: string, count: number }
     manualScheduling: number
     adminScheduling: number
     abortedRate: number
@@ -381,7 +386,7 @@ export default function ReportPage() {
             const customerList = new Set()
 
             const dataSummary = filteredData.reduce((acc, event) => {
-                const { selectedService, selectedProfessional: { id: professionalId, name: professionalName }, status, isAdminBooking, customer } = event
+                const { selectedService, selectedProfessional: { id: professionalId, name: professionalName, photo }, status, isAdminBooking, customer } = event
                 const { serviceId } = selectedService
 
                 if (status === 'completed') {
@@ -397,7 +402,9 @@ export default function ReportPage() {
 
                         if (professionalTotalSelling[professionalId] > acc.bestSellingProfessional.count) {
                             acc.bestSellingProfessional.count = professionalTotalSelling[professionalId]
-                            acc.bestSellingProfessional.name = professionalName
+                            acc.bestSellingProfessional.data.id = professionalId
+                            acc.bestSellingProfessional.data.name = professionalName
+                            acc.bestSellingProfessional.data.photo = photo ?? ''
                         }
                     }
 
@@ -434,7 +441,11 @@ export default function ReportPage() {
                     averageServiceValue: 0,
                     bills: 0,
                     bestSellingProfessional: {
-                        name: '',
+                        data: {
+                            id: '',
+                            name: '',
+                            photo: ''
+                        },
                         count: 0
                     },
                     bestSellingService: {
@@ -526,7 +537,7 @@ export default function ReportPage() {
                                 <li className="flex flex-col gap-1 items-center h-32 justify-center p-3 border border-zinc-200 rounded-md text-center transition-all">
                                     Gastos
                                     <span className="text-green-700 font-bold">
-                                         ${formatNumber(dataSummary?.bills.toString() ?? '')}
+                                        ${formatNumber(dataSummary?.bills.toString() ?? '')}
                                     </span>
                                 </li>
                                 {
@@ -534,21 +545,28 @@ export default function ReportPage() {
                                     <li className="flex flex-col gap-1 items-center h-32 justify-center p-3 border border-zinc-200 rounded-md text-center col-span-2 transition-all">
                                         Profesional con más ventas
                                         <div className="grid grid-cols-2 items-center">
-                                            <div className="flex items-center gap-3 pr-4 border-r border-zinc-200">
-                                                {true ?
-                                                    <Image
-                                                        src="https://picsum.photos/64/64"
-                                                        width={64}
-                                                        height={64}
-                                                        alt="Image"
-                                                        className="rounded-full h-16 w-16 object-cover"
-                                                    /> : <></>}
-                                                <span className="text-green-700 font-bold">
-                                                    {dataSummary?.bestSellingProfessional.name}
-                                                </span>
-                                            </div>
+                                            {
+                                                dataSummary?.bestSellingProfessional.data.id && 
+                                                <div className="flex items-center gap-3 pr-4 border-r border-zinc-200">
+                                                    {dataSummary?.bestSellingProfessional.data.photo ?
+                                                        <Image
+                                                            src="https://picsum.photos/64/64"
+                                                            width={64}
+                                                            height={64}
+                                                            alt="Image"
+                                                            className="rounded-full h-16 w-16 object-cover"
+                                                        /> :
+                                                        <div className="bg-green-700 h-16 w-16 flex items-center justify-center text-white rounded-full text-2xl">
+                                                            {dataSummary?.bestSellingProfessional.data.name[0]}
+                                                        </div>
+                                                    }
+                                                    <span className="text-green-700 font-bold">
+                                                        {dataSummary?.bestSellingProfessional.data.name}
+                                                    </span>
+                                                </div>
+                                            }
                                             <span className="text-green-700 font-bold">
-                                               ${formatNumber(dataSummary?.bestSellingProfessional.count.toString() ?? '')}
+                                                ${formatNumber(dataSummary?.bestSellingProfessional.count.toString() ?? '')}
                                             </span>
                                         </div>
                                     </li>

@@ -20,6 +20,7 @@ interface EventDate {
     selectedProfessional: {
         id: string
         name: string
+        photo?: string
     },
     isAdminBooking: boolean
     customerReview: number | null
