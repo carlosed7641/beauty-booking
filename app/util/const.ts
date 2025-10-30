@@ -305,7 +305,7 @@ export const SECTIONS_SETTINGS = [
     },
 ]
 
-export const SHOP_TYPES = ['Barbería','Cejas & Pesteñas', 'Centro de Maquillaje', 'Cosmetología', 'Peluquería', 'Salón de Belleza', 'Spa Masajes', 'Tatuajes']
+export const SHOP_TYPES = ['Barbería', 'Cejas & Pesteñas', 'Centro de Maquillaje', 'Cosmetología', 'Peluquería', 'Salón de Belleza', 'Spa Masajes', 'Tatuajes']
 
 export const INITIAL_WORK_DAYS = [
     {
@@ -370,4 +370,40 @@ export const SERVICE_INITIAL_DATA = {
     hours: 0,
     minutes: 30,
     price: ''
+}
+
+export const DEFAULT_PROFESSIONAL = {
+    id: '',
+    name: '',
+    entityId: '',
+    resume: '',
+    reviews: {
+        points: 0,
+        count: 0
+    }
+}
+
+export const DEFAULT_REPORT_DATA_SUMMARY: ReportDataSummary = {
+    totalSales: 0,
+    averageServiceTime: 0,
+    completedServices: 0,
+    averageServiceValue: 0,
+    bills: 0,
+    bestSellingProfessional: {
+        data: {
+            id: '',
+            name: '',
+            photo: ''
+        },
+        count: 0
+    },
+    bestSellingService: {
+        name: '',
+        count: 0
+    },
+    manualScheduling: 0,
+    adminScheduling: 0,
+    abortedRate: 0,
+    cancellationRate: 0,
+    totalCustomers: 0
 }
