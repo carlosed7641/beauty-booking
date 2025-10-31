@@ -405,5 +405,6 @@ export const DEFAULT_REPORT_DATA_SUMMARY: ReportDataSummary = {
     adminScheduling: 0,
     abortedRate: 0,
     cancellationRate: 0,
-    totalCustomers: 0
+    totalCustomers: 0,
+    groupSales: []
 }

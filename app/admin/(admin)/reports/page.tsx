@@ -123,7 +123,7 @@ export default function ReportsPage() {
                 serviceId: "006",
                 name: "Rayitos",
                 duration: { hours: 0, minutes: 45 },
-                price: 25_000
+                price: 30_000
             },
             selectedProfessional: {
                 id: 'abc',

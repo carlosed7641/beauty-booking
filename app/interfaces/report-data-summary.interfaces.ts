@@ -1,3 +1,10 @@
+interface GroupSale {
+    id: string
+    name: string 
+    quantity: number
+    total: number 
+}
+
 interface ReportDataSummary {
     totalSales: number
     averageServiceTime: number
@@ -11,4 +18,5 @@ interface ReportDataSummary {
     abortedRate: number
     cancellationRate: number
     totalCustomers: number
+    groupSales: GroupSale[]
 }

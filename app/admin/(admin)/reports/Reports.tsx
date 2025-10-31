@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { OptionsSelector, SimpleTabs } from '@/components'
-import { DateSwitcher, GeneralReportsPanel, SelectProfessional } from '../components'
+import { DateSwitcher, GeneralReportsPanel, SalesReportsPanel, SelectProfessional } from '../components'
 import { DEFAULT_PROFESSIONAL, DEFAULT_REPORT_DATA_SUMMARY } from '@/util/const'
 
 const timeOptions: TimeOptionItem[] = [
@@ -147,6 +147,17 @@ export const Reports = ({ foundationDate, events, professionals }: Props) => {
                             customerSet.add(customer.id)
                         }
 
+                        const existingService = acc.groupSales.find(s => s.id === serviceId)
+
+                        if (existingService) {
+                            existingService.quantity += 1
+                            existingService.total += price
+                        } else {
+                            acc.groupSales.push({ id: serviceId, name: serviceName, quantity: 1, total: price });
+                        }
+
+                        acc.groupSales = acc.groupSales.sort((s1, s2) => s2.total - s1.total)
+
                         break
                     case 'aborted':
                         abortedEvents++
@@ -170,7 +181,7 @@ export const Reports = ({ foundationDate, events, professionals }: Props) => {
             setDataSummary(data)
             setIsLoadingData(false)
         }, 1300) //TODO: Remove this
-     
+
     }, [dateRange, selectedProfessional])
 
     return (
@@ -206,6 +217,15 @@ export const Reports = ({ foundationDate, events, professionals }: Props) => {
                             isLoading={isLoadingData}
                             dataSummary={dataSummary}
                             selectedProfessionalId={selectedProfessional.id}
+                        />
+                    }
+                    {
+                        activeTab === 'sales' &&
+                        <SalesReportsPanel
+                            isLoading={isLoadingData}
+                            totalSales={dataSummary.totalSales}
+                            completedServices={dataSummary.completedServices}
+                            groupSales={dataSummary.groupSales}
                         />
                     }
                 </div>
