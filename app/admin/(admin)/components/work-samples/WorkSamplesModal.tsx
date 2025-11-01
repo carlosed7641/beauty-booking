@@ -5,12 +5,12 @@ import { TbPhotoUp } from 'react-icons/tb'
 import { Modal, ModalHeader } from '@/components'
 import { WorkSamplesForm } from './WorkSamplesForm'
 import { WorkSamplesList } from './WorkSamplesList'
-import { INITAL_FORM_DATA } from '@/util/const'
+import { INITAL_WS_FORM_DATA } from '@/util/const'
 
 export const WorkSamplesModal = ({ workSamples }: { workSamples: WorkSample[] }) => {
 
-    const [formData, setFormData] = useState(INITAL_FORM_DATA)
-    const [showForm, setShowForm] = useState(false)
+    const [formData, setFormData] = useState(INITAL_WS_FORM_DATA)
+    const [showForm, setShowForm] = useState<string | boolean | null>(false)
 
     return (
         <Modal>

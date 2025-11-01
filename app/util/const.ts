@@ -239,7 +239,7 @@ export const YEARS_OF_EXPERIENCIES = [
 
 export const INITIAL_SKILL: Skill = { id: '', name: '', percentage: 0 }
 
-export const INITAL_FORM_DATA: SampleForm = {
+export const INITAL_WS_FORM_DATA: SampleForm = {
     id: '',
     name: '',
     category: '',

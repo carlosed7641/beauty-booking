@@ -44,14 +44,14 @@ export const WorkSamples = ({ workSamples, handleSelectGallery, hideFilters, hid
                     <FilterList handleClick={handleClickFilter} selectedFilters={selectedFilters} items={filters} />
                 </div>
             }
-            <div className="grid grid-cols-3 gap-2 md:grid-cols-7 md:gap-3 mt-4">
+            <div className="flex flex-wrap gap-2 md:gap-3 mt-4">
                 {filterSamples.map(sample => {
                     const mainImage = sample.images.find(image => image.mainImage) || sample.images[0]
                     return (
                         <div
                             onClick={() => handleSelectGallery(sample.id, sample.name)}
                             key={sample.id}
-                            className="flex flex-col bg-zinc-100 cursor-pointer relative rounded-md"
+                            className="flex flex-col bg-zinc-100 cursor-pointer relative rounded-md w-[160px]"
                         >
                             <Image
                                 className="w-auto rounded-t-md"

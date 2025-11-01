@@ -2,15 +2,16 @@ import { SetStateAction } from 'react'
 import Image from 'next/image'
 import { IoMdCloseCircle } from 'react-icons/io'
 import { Field, UploadImage } from '@/components'
-import { INITAL_FORM_DATA, SERVICES_LIST } from '@/util/const'
+import { INITAL_WS_FORM_DATA, SERVICES_LIST } from '@/util/const'
 
 interface Props {
     formData: SampleForm
     setFormData: (value: SetStateAction<SampleForm>) => void
-    setShowForm: (value: SetStateAction<boolean>) => void
+    setShowForm: (value: boolean | string | null) => void
+    hideHint?: boolean
 }
 
-export const WorkSamplesForm = ({ formData, setFormData, setShowForm }: Props) => {
+export const WorkSamplesForm = ({ formData, setFormData, setShowForm, hideHint }: Props) => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -44,7 +45,7 @@ export const WorkSamplesForm = ({ formData, setFormData, setShowForm }: Props) =
 
     const restartForm = () => {
         setShowForm(false)
-        setFormData(INITAL_FORM_DATA)
+        setFormData(INITAL_WS_FORM_DATA)
     }
 
 
@@ -85,7 +86,7 @@ export const WorkSamplesForm = ({ formData, setFormData, setShowForm }: Props) =
 
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <span className="text-zinc-500 text-sm">{formData.id ? 'Editar' : 'Agregar'} Muestra de trabajo</span>
+           {!hideHint && <span className="text-zinc-500 text-sm">{formData.id ? 'Editar' : 'Agregar'} Muestra de trabajo</span>}
             <Field label="Nombre">
                 <input name="name" onChange={handleFieldChange} value={formData.name} placeholder="Ej: Taper medio" className="mt-2 border border-green-700 p-1 rounded-md focus:outline-0" type="text" />
             </Field>
