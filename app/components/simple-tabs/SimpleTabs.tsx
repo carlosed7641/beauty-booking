@@ -29,7 +29,7 @@ export const SimpleTabs = ({
                                 }
                             )
                         }>
-                        {Icon && <Icon />}
+                        {Icon && <Icon className="text-lg" />}
                         {label}
                     </div>
                 ))

@@ -1,13 +1,18 @@
+interface Customer {
+    id: string
+    name: string
+    phone: string
+    birthDay: Date
+    gender: Gender
+    reviewPointsAverage: number
+}
+
 interface EventDate {
     id: string
     title: string
     start: Date
     end: Date
-    customer: {
-        id: string
-        name: string
-        phone: string
-    },
+    customer: Customer
     selectedService: {
         serviceId: string
         name: string
