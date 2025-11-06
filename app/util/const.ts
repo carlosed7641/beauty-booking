@@ -59,24 +59,24 @@ export const SLIDER_SETTINGS = {
 }
 
 export const COUNTRIES: Country[] = [
-    { id: 'AR', name: 'Argentina', indicator: '+54', Flag: ArgentinaFlag },
-    { id: 'BO', name: 'Bolivia', indicator: '+591', Flag: BoliviaFlag },
-    { id: 'CL', name: 'Chile', indicator: '+56', Flag: ChileFlag },
-    { id: 'CO', name: 'Colombia', indicator: '+57', Flag: ColombiaFlag },
-    { id: 'CR', name: 'Costa Rica', indicator: '+506', Flag: CostaRicaFlag },
-    { id: 'CU', name: 'Cuba', indicator: '+53', Flag: CubaFlag },
-    { id: 'EC', name: 'Ecuador', indicator: '+593', Flag: ColombiaFlag },
-    { id: 'SL', name: 'El Salvador', indicator: '+503', Flag: ElSalvadorFlag },
-    { id: 'GT', name: 'Guatemala', indicator: '+502', Flag: GuatemalaFlag },
-    { id: 'HN', name: 'Honduras', indicator: '+504', Flag: HondurasFlag },
-    { id: 'MX', name: 'México', indicator: '+52', Flag: MexicoFlag },
-    { id: 'NC', name: 'Nicaragua', indicator: '+505', Flag: NicaraguaFlag },
-    { id: 'PN', name: 'Panamá', indicator: '+507', Flag: PanamaFlag },
-    { id: 'PY', name: 'Paraguay', indicator: '+595', Flag: ParaguayFlag },
-    { id: 'PE', name: 'Perú', indicator: '+51', Flag: PeruFlag },
-    { id: 'RD', name: 'Rep. Dominicana', indicator: '+1', Flag: DominicanRepublicFlag },
-    { id: 'UY', name: 'Uruguay', indicator: '+598', Flag: UruguayFlag },
-    { id: 'VE', name: 'Venezuela', indicator: '+58', Flag: VenezuelaFlag }
+    { id: 'AR', name: 'Argentina', indicator: '54', Flag: ArgentinaFlag },
+    { id: 'BO', name: 'Bolivia', indicator: '591', Flag: BoliviaFlag },
+    { id: 'CL', name: 'Chile', indicator: '56', Flag: ChileFlag },
+    { id: 'CO', name: 'Colombia', indicator: '57', Flag: ColombiaFlag },
+    { id: 'CR', name: 'Costa Rica', indicator: '506', Flag: CostaRicaFlag },
+    { id: 'CU', name: 'Cuba', indicator: '53', Flag: CubaFlag },
+    { id: 'EC', name: 'Ecuador', indicator: '593', Flag: ColombiaFlag },
+    { id: 'SL', name: 'El Salvador', indicator: '503', Flag: ElSalvadorFlag },
+    { id: 'GT', name: 'Guatemala', indicator: '502', Flag: GuatemalaFlag },
+    { id: 'HN', name: 'Honduras', indicator: '504', Flag: HondurasFlag },
+    { id: 'MX', name: 'México', indicator: '52', Flag: MexicoFlag },
+    { id: 'NC', name: 'Nicaragua', indicator: '505', Flag: NicaraguaFlag },
+    { id: 'PN', name: 'Panamá', indicator: '507', Flag: PanamaFlag },
+    { id: 'PY', name: 'Paraguay', indicator: '595', Flag: ParaguayFlag },
+    { id: 'PE', name: 'Perú', indicator: '51', Flag: PeruFlag },
+    { id: 'RD', name: 'Rep. Dominicana', indicator: '1', Flag: DominicanRepublicFlag },
+    { id: 'UY', name: 'Uruguay', indicator: '598', Flag: UruguayFlag },
+    { id: 'VE', name: 'Venezuela', indicator: '58', Flag: VenezuelaFlag }
 ]
 
 export const GENDERS = [

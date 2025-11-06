@@ -1,7 +1,10 @@
 interface Customer {
     id: string
     name: string
-    phone: string
+    phone: {
+        indicator: string
+        number: string
+    }
     birthDay: Date
     gender: Gender
     reviewPointsAverage: number

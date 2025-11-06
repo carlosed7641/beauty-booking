@@ -79,7 +79,7 @@ export function ScheduleHistory({ professionals, events, foundationYear }: Props
                         events={currentEvents}
                     />
                 </div>
-            </div >
+            </div>
             {openModal === 'ScheduleMonths' && <ScheduleMonths date={date} onChangeDate={onChangeDate} />
             }
             {
