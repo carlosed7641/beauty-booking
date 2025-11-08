@@ -15,4 +15,5 @@ interface UserInfo {
     id: string
     name: string
     photo?: string
+    blocked?: boolean
 }

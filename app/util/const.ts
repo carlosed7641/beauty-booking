@@ -23,7 +23,6 @@ import { AiOutlineDollar } from 'react-icons/ai'
 import { FaRegStar } from 'react-icons/fa'
 import { FiMapPin, FiUsers } from 'react-icons/fi'
 import { GiComb } from 'react-icons/gi'
-import { GoGraph } from 'react-icons/go'
 import { GrFavorite, GrGallery } from 'react-icons/gr'
 import { HiOutlineLockClosed } from 'react-icons/hi2'
 import { IoHomeOutline, IoStorefrontOutline, IoCutOutline } from 'react-icons/io5'
@@ -31,7 +30,7 @@ import { LuCalendarCheck, LuCopyCheck, LuListTodo, LuNotebook } from 'react-icon
 import { MdOutlineCalendarToday } from 'react-icons/md'
 import { PiMedalLight } from 'react-icons/pi'
 import { RiCalendarScheduleLine, RiUserSettingsLine } from 'react-icons/ri'
-import { TbClockHour3, TbClockHour5, TbUsers } from 'react-icons/tb'
+import { TbClockHour3, TbClockHour5, TbUserHeart, TbUsers } from 'react-icons/tb'
 import { VscGraph } from 'react-icons/vsc'
 
 export const SERVICE_INITIAL_STATE = {
@@ -212,9 +211,9 @@ export const ADMIN_SECTIONS = {
             url: 'customers'
         },
         {
-            name: 'Estadísticas',
-            Icon: GoGraph,
-            url: 'statistics'
+            name: 'Seguidores',
+            Icon: TbUserHeart,
+            url: 'followers'
         }
     ]
 }
