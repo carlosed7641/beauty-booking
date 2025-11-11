@@ -5,11 +5,12 @@ import { TbPhotoPlus } from 'react-icons/tb'
 interface Props {
     name: string
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+    className?: string
 }
 
-export const UploadImage = ({ name, handleChange }: Props) => {
+export const UploadImage = ({ name, handleChange, className }: Props) => {
     return (
-        <label className="aspect-square cursor-pointer h-full w-full">
+        <label className={`cursor-pointer h-full ${className}`}>
             <div className="flex h-full justify-center items-center bg-zinc-200 rounded-sm border border-zinc-600">
                 <TbPhotoPlus className="text-zinc-400 text-6xl" />
             </div>

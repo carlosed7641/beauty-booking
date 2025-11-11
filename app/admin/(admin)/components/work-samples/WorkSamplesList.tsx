@@ -26,18 +26,18 @@ export const WorkSamplesList = ({ workSamples, setFormData, setShowForm, hideBut
             </span>
             {
                 workSamples.length > 0 ?
-                    <ul className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 mt-4 gap-3">
+                    <ul className="flex flex-wrap gap-2 mt-2">
                         {
                             workSamples.map(sample => {
                                 const mainImage = sample.images.find(image => image.mainImage) || sample.images[0]
                                 return (
-                                    <li className="cursor-pointer" onClick={() => handleClickSample(sample)} key={sample.id}>
+                                 <li className="cursor-pointer w-[48%] md:w-[19%] shrink-0" onClick={() => handleClickSample(sample)} key={sample.id}>
                                         <Image className="rounded-t-sm object-cover w-full" src={mainImage.url} alt={sample.name} width={160} height={170} />
                                         <div className="bg-zinc-100 p-2 rounded-b-sm">
                                             <span className="inline-block w-full text-green-700 font-bold text-lg">{sample.name}</span>
                                             <span className="text-sm text-zinc-600">{sample.category}</span>
                                         </div>
-                                    </li>
+                                    </li>       
                                 )
                             })
                         }

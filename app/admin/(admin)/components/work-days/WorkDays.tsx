@@ -29,9 +29,10 @@ export const WorkDays = <T,>({ data, setData, workdays }: Props<T>) => {
         })
     }
 
-    const handleChangeTime = (e: React.ChangeEvent<HTMLInputElement>, index: number, type: 'from' | 'to') => {
+    const handleChangeTime = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
 
         const value = e.target.value
+        const type = e.target.name
 
         const updateWorkdays = workdays.map((day, idx) => {
             if (idx !== index) return day
@@ -73,8 +74,8 @@ export const WorkDays = <T,>({ data, setData, workdays }: Props<T>) => {
                                     {DAYS_OF_WEEK[idx]}
                                 </div>
                                 <div className="grid grid-cols-2 md:flex gap-2 items-center">
-                                    <input value={day.disabled ? '' : day.from} disabled={day.disabled} className="cursor-pointer border border-green-700 px-2 rounded-md disabled:opacity-50 disabled:bg-zinc-300 disabled:cursor-auto" type="time" onChange={(e) => handleChangeTime(e, idx, 'from')} />
-                                    <input value={day.disabled ? '' : day.to} disabled={day.disabled} className="cursor-pointer border border-green-700 px-2 rounded-md disabled:opacity-50 disabled:bg-zinc-300 disabled:cursor-auto" type="time" onChange={(e) => handleChangeTime(e, idx, 'to')} />
+                                    <input value={day.disabled ? '' : day.from} disabled={day.disabled} className="cursor-pointer border border-green-700 px-2 rounded-md disabled:opacity-50 disabled:bg-zinc-300 disabled:cursor-auto" type="time" name="from" onChange={(e) => handleChangeTime(e, idx)} />
+                                    <input value={day.disabled ? '' : day.to} disabled={day.disabled} className="cursor-pointer border border-green-700 px-2 rounded-md disabled:opacity-50 disabled:bg-zinc-300 disabled:cursor-auto" type="time" name="to" onChange={(e) => handleChangeTime(e, idx)} />
                                 </div>
                             </div>
                             {day.error && <div className="text-red-500">

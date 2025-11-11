@@ -7,6 +7,7 @@ import { MdOutlineStarPurple500 } from 'react-icons/md'
 import { AdminSections } from './components'
 
 export default function HomePage() {
+  //TODO: Get Data from session
   return (
     <div className="flex flex-col gap-3">
       <div className="bg-white w-full rounded-md p-7">

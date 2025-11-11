@@ -8,10 +8,6 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// Merge step three-four
-// Field component in forms
-// Profile sections container
-// Grid autofill display grids
 // Validate modal widths
 // Create clase button
 // Back button in sections

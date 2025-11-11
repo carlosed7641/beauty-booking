@@ -99,10 +99,10 @@ export const WorkSamplesForm = ({ formData, setFormData, setShowForm, hideHint }
                 </select>
             </Field>
             {formData.images.length > 0 && <span className="text-zinc-500 text-sm">Toca la imagen que quieres que sea la principal</span>}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-2">
+            <div className="flex flex-wrap gap-2">
                 {
                     formData.images.map(image => (
-                        <div onClick={() => onChangeMainImage(image.id)} className="relative cursor-pointer" key={image.id}>
+                        <div onClick={() => onChangeMainImage(image.id)} className="relative cursor-pointer w-1/5" key={image.id}>
                             <Image className="rounded-sm object-cover w-full h-full" height={150} width={150} alt={formData.name} src={image.url} />
                             {
                                 image.mainImage && <span className="absolute top-3 block px-2 py-1 bg-green-700 text-white text-xs rounded-tr-full rounded-br-full">Principal</span>
@@ -114,7 +114,7 @@ export const WorkSamplesForm = ({ formData, setFormData, setShowForm, hideHint }
                         </div>
                     ))
                 }
-                <UploadImage name="images" handleChange={handleFileChange} />
+                <UploadImage className="aspect-[187/199] w-1/5" name="images" handleChange={handleFileChange} />
             </div>
             {!formData.images.length && <span className="text-zinc-600 text-sm">Debes agregar por lo menos una foto</span>}
             <div className="flex flex-col md:flex-row gap-3 items-center justify-end">

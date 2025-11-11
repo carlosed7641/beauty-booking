@@ -8,7 +8,7 @@ export const Professionals = ({ professionals }: { professionals: ProfessionalDa
       {
         professionals.map(p => (
           <Link href={`/professional/${p.id}`} className="flex flex-col gap-2 items-center cursor-pointer" key={p.id}>
-            <Image className="rounded-full" src={p.photo} alt={p.name} width={150} height={150} />
+            <Image className="rounded-full" src={p.photo ?? ''} alt={p.name} width={150} height={150} />
             <div className="flex flex-col items-center">
               <p className="font-bold">{p.name}</p>
               {
