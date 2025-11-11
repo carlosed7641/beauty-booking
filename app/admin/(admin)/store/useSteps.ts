@@ -2,15 +2,11 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { INITIAL_WORK_DAYS } from '@/util/const'
 
-type StepOneData = {
+interface Data {
     name: string | null
     address: string | null,
     reference?: string | null
     types: string[]
-}
-
-interface Data {
-    stepOne: StepOneData
     selectedServices: {
         [key: string]: ServiceData[]
     } | null
@@ -35,11 +31,9 @@ export const useSteps = create<Store>()(
             showErrors: false,
             completedSteps: 0,
             data: {
-                stepOne: {
-                    name: null,
-                    address: null,
-                    types: []
-                },
+                name: null,
+                address: null,
+                types: [],
                 selectedServices: null,
                 workdays: INITIAL_WORK_DAYS
             },

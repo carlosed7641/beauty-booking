@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// Step One change name
 // Merge step three-four
 // Field component in forms
 // Profile sections container
