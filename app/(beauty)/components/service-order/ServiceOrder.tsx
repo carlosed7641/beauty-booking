@@ -29,7 +29,7 @@ export const ServiceOrder = ({ selectedOrder, setSelectedOrder }: Props) => {
             </div>
             {
                 openModal === 'ServiceOrder.name' &&
-                <Modal>
+                <Modal className="md:w-[550px]! overflow-hidden!">
                     <ModalHeader>
                         <p className="text-green-700 text-xl">Ordenar por</p>
                     </ModalHeader>

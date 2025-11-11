@@ -20,9 +20,9 @@ export const EventSummaryInfo = () => {
             {selectedEvent?.customer.phone &&
                 <Link href={`https://wa.me/${selectedEvent.customer.phone}`} className="underline text-zinc-600 flex gap-1 mb-2" target="_blank">
                     <FaWhatsapp className="text-green-500" />
-                    {selectedEvent.customer.phone}
+                    {selectedEvent.customer.phone.number}
                 </Link>}                  <span>Reservado por: <strong>{selectedEvent?.isAdminBooking ? 'Administración' : 'Cliente'}</strong></span>
-            <span>Duración: <strong>{selectedEvent?.selectedService.duration}</strong></span>
+            <span>Duración: <strong>{selectedEvent?.selectedService.duration.hours}</strong></span>
             <span>Profesional: <strong>{selectedEvent?.selectedProfessional.name}</strong></span>
             <span>Valor del servicio: <strong>${formatNumber(selectedEvent?.selectedService.price.toString()!)}</strong></span>
         </>

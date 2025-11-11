@@ -31,7 +31,7 @@ export const WorkSamplesTab = ({ workSamples, hideFilters, hideName }: Props) =>
                 hideName={hideName} />
             {
                 openModal === WorkSamplesTab.name && selectedGallery.id &&
-                <Modal className="overflow-hidden! h-fit! pb-10! pt-5! px-0! md:px-6! md:pt-0! md:pb-6!  md:w-1/3! ">
+                <Modal className="overflow-hidden! h-fit! pb-10! pt-5! px-0! md:px-6! md:pt-0! md:pb-6! md:w-1/3!">
                     <div className="md:max-w-[400px] my-auto mx-auto md:p-2">
                         <Slider {...SLIDER_SETTINGS}>
                             {workSamples.find(sample => sample.id === selectedGallery.id)?.images?.map((image, index) => (

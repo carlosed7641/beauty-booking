@@ -5,7 +5,7 @@ import { LiaFilterSolid } from 'react-icons/lia'
 import { useModal, useSelectedFilters } from '@/store'
 import { Modal, ModalHeader } from '@/components'
 import { FilterList } from '..'
-import { categories } from '@/util/fake-data'
+import { serviceCategories } from '@/util/fake-data'
 
 export const ServiceFilters = () => {
 
@@ -38,11 +38,11 @@ export const ServiceFilters = () => {
             </div>
             {
                 openModal === ServiceFilters.name &&
-                <Modal>
+                <Modal className="md:w-[550px]! overflow-hidden!">
                     <ModalHeader>
                         <p className="text-green-700 text-xl">Filtrar por categoría</p>
                     </ModalHeader>
-                    <FilterList items={categories} handleClick={handleClickCategory} selectedFilters={temporalSelectedFilters} />
+                    <FilterList items={serviceCategories} handleClick={handleClickCategory} selectedFilters={temporalSelectedFilters} />
                     <button onClick={handleClickButton} className="bg-green-700 mt-8 justify-center cursor-pointer rounded-md py-1.5 text-white hover:bg-green-800 flex justify-self-center w-[130px]">Listo</button>
                 </Modal>
             }

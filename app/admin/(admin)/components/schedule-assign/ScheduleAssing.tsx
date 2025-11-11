@@ -80,7 +80,7 @@ export const ScheduleAssign = () => {
     }
 
     return (
-        <Modal>
+        <Modal className="md:w-[800px]!">
             <ModalHeader>
                 <h1 className="text-green-700 font-bold flex items-center gap-2">
                     {

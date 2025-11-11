@@ -1,6 +1,5 @@
 import { Modal, ModalHeader } from '@/components'
 import { MonthList } from './MonthList'
-import { useSchedule } from '../../store'
 
 interface Props {
     date: Date

@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// Validate modal widths
 // Create clase button
 // Back button in sections
 // Back button in modasl

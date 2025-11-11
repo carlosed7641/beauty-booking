@@ -20,7 +20,7 @@ export const EventSummary = () => {
     }
 
     return (
-        <Modal className="overflow-hidden!">
+        <Modal className="overflow-hidden! md:w-[700px]!">
             <ModalHeader>
                 <h1 className="text-green-700 font-bold">{selectedEvent?.title}</h1>
             </ModalHeader>

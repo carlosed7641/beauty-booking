@@ -32,7 +32,7 @@ export const ProfileForm = ({ initialValues, onSubmit }: Props) => {
                     <div className="flex flex-1 gap-2 mt-2">
                         <select className="border border-green-700 p-1 rounded-md focus:outline-0" {...register("indicator", { required: true })}>
                             {
-                                COUNTRIES.map(country => <option key={country.indicator} value={country.indicator}>{country.indicator}</option>)
+                                COUNTRIES.map(country => <option key={country.indicator} value={country.indicator}>+{country.indicator}</option>)
                             }
                         </select>
                         <input {...register("phone", { required: true })} id="phone" className="w-full border border-green-700 p-1 rounded-md focus:outline-0" type="text" />

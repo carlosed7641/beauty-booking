@@ -27,7 +27,7 @@ export const WorkExperienceModal = ({ modalId }: { modalId: string }) => {
 
 
     return (
-        openModal?.includes(modalId) &&
+        typeof openModal === 'string' && openModal.includes(modalId) &&
         <Modal>
             <ModalHeader>
                 <h1 className="text-xl text-green-700">
