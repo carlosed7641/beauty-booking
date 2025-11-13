@@ -44,7 +44,7 @@ export const RegistrationForm = ({ onSubmit }: { onSubmit(data: RegistrationInpu
                             <input id="phone" {...register('phone', { required: true })} className="flex-1 p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" type="text" />
                         </div>
                     </div>
-                    <button className="bg-green-700 text-white rounded-md py-2 font-bold cursor-pointer hover:bg-green-800">Enviar</button>
+                    <button className="btn-primary rounded-md font-bold">Enviar</button>
                 </form>
             </div>
         </div>

@@ -8,7 +8,7 @@ export const StepThree = () => {
     return (
         <>
             <div className="flex flex-col gap-3">
-                <button className="bg-green-700 p-1 rounded-full justify-center items-center flex gap-1 text-white cursor-pointer hover:bg-green-800 w-fit px-4 text-sm disabled:opacity-60 disabled:pointer-events-none focus:outline-0">
+                <button className="btn-primary rounded-full justify-center items-center flex gap-1 w-fit text-sm">
                     <LuMapPin />
                     Usar mi ubicación actual
                 </button>

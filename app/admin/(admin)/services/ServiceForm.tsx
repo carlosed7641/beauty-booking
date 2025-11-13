@@ -137,7 +137,7 @@ export const ServiceForm = ({ categories }: { categories: string[] }) => {
                     </div>
                     {errors.price && <span className="text-red-500">{errors.price}</span>}
                 </Field>
-                <button disabled={!isFormValid} type="submit" className="bg-green-700 rounded-full focus:outline-0 hover:bg-green-800 text-white md:self-end px-4 py-2 w-full md:w-fit cursor-pointer disabled:opacity-65 disabled:pointer-events-none">
+                <button disabled={!isFormValid} type="submit" className="btn-primary rounded-full md:self-end px-4! py-2! w-full md:w-fit">
                     Guardar cambios
                 </button>
             </form>

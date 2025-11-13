@@ -69,7 +69,7 @@ export const EventHistory = ({
                                         <Emotion showLabel averagePoints={customerReview} />
                                         <button
                                             onClick={() => setIsUpdatingReview(prev => !prev)}
-                                            className="bg-green-700 text-sm text-white rounded-full px-5 py-1 hover:bg-green-800 cursor-pointer"
+                                            className="btn-primary text-sm rounded-full"
                                         >
                                             Editar
                                         </button>

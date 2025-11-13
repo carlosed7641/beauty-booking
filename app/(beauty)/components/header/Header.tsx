@@ -11,7 +11,7 @@ export const Header = () => {
                     <SearchBar />
                     <div className="flex gap-3 text-sm items-center">
                         <UserMenu />
-                        <Link href="/my-reservations" className="text-zinc-500 hidden md:block">Mis reservas</Link>
+                        <Link href="/my-reservations" className="text-zinc-500 hidden md:block cursor-pointer">Mis reservas</Link>
                         <IoMdNotificationsOutline className="cursor-pointer h-[25px] w-[25px] md:h-5 md:w-5" />
                     </div>
                 </div>

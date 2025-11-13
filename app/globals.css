@@ -29,6 +29,14 @@ body {
   animation: fadeIn 0.5s ease-in-out forwards;
 }
 
+.btn-primary {
+  @apply px-5 py-1 bg-green-700 text-white cursor-pointer hover:bg-green-800 transition-all disabled:opacity-60 disabled:pointer-events-none focus:outline-0;
+}
+
+.btn-secondary {
+  @apply px-5 py-1 text-green-700 border-green-700 border cursor-pointer transition-all focus:outline-0;
+}
+
 .scroll-none {
   scrollbar-width: none;
 }

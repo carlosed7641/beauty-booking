@@ -45,7 +45,7 @@ export const SelectCountry = () => {
                                 )}
                             </div>
                             <div className="flex justify-center mt-5">
-                                <button onClick={handleSubmit} className="bg-green-700 w-full md:w-1/5 text-white rounded-md py-2 font-bold cursor-pointer hover:bg-green-800 focus:outline-0 disabled:opacity-60 disabled:cursor-not-allowed" disabled={!selectedCountry}>Enviar</button>
+                                <button onClick={handleSubmit} className="btn-primary w-full md:w-1/5 rounded-md font-bold" disabled={!selectedCountry}>Enviar</button>
                             </div>
                         </div>
                     </div>

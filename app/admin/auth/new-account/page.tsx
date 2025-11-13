@@ -48,7 +48,7 @@ export default function NewAccountPage() {
                     Mostrar contraseña
                 </label>
                 {watchPassword !== watchConfirmPassord && isValid && <p className="text-red-500">Las contraseñas no son iguales</p>}
-                <button className="bg-green-700 text-white rounded-md py-2 font-bold cursor-pointer hover:bg-green-800">Registrarte</button>
+                <button className="btn-primary rounded-md font-bold">Registrarte</button>
                 <Link href="/admin/auth/login" className="text-green-700 text-center">¿Ya tienes una cuenta?</Link>
             </form>
         </>

@@ -31,7 +31,7 @@ export const StepButtons = ({ stepsLength, handleFinish }: Props) => {
                 step > 0 &&
                 <button
                     onClick={() => handleClick(step - 1)}
-                    className="bg-white font-bold border border-green-700 p-1 rounded-full justify-center flex text-green-700 cursor-pointer w-full md:w-36 disabled:opacity-60 disabled:pointer-events-none focus:outline-0">
+                    className="btn-secondary font-boldrounded-full justify-center flex w-full md:w-36">
                     Anterior
                 </button>
             }
@@ -39,7 +39,7 @@ export const StepButtons = ({ stepsLength, handleFinish }: Props) => {
                 step < stepsLength - 1 &&
                 <button
                     onClick={() => handleClick(step + 1)}
-                    className="bg-green-700 font-bold p-1 rounded-full justify-center flex text-white cursor-pointer hover:bg-green-800 w-full md:w-36 disabled:opacity-60 disabled:pointer-events-none focus:outline-0">
+                    className="btn-primary font-bold rounded-full justify-center flex w-full md:w-36">
                     Siguiente
                 </button>
             }
@@ -47,7 +47,7 @@ export const StepButtons = ({ stepsLength, handleFinish }: Props) => {
                 step === stepsLength - 1 &&
                 <button
                     onClick={handleFinish}
-                    className="bg-green-700 font-bold p-1 rounded-full justify-center flex text-white cursor-pointer hover:bg-green-800 w-full md:w-36 disabled:opacity-60 disabled:pointer-events-none focus:outline-0">
+                    className="btn-primary font-bold rounded-full justify-center flex w-full md:w-36">
                     Finalizar
                 </button>
             }

@@ -103,7 +103,7 @@ export const NewAccountForm = () => {
                 Contraseña nueva
                 <input {...register('password', { required: true })} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" type="password" placeholder="********" />
             </label>
-            <button className="bg-green-700 text-white rounded-md py-2 font-bold cursor-pointer hover:bg-green-800">Registrarte</button>
+            <button className="btn-primary rounded-md font-bold">Registrarte</button>
             <Link href="/auth/login" className="text-green-700 text-center">¿Ya tienes una cuenta?</Link>
         </form>
     )

@@ -66,7 +66,7 @@ export const ShopCard = ({
                     }>{shopName}</span>
                     {
                         ctaData &&
-                        <button onClick={handleClickCta} className="bg-green-700 rounded-md py-1 text-white font-bold hover:bg-green-900 cursor-pointer transition-all">
+                        <button onClick={handleClickCta} className="btn-primary font-bold rounded-md">
                             {ctaText}
                         </button>
                     }

@@ -32,7 +32,7 @@ export const BlockedUsers = ({ users }: { users: UserInfo[] }) => {
                                 }
                                 <p>{user.name}</p>
                             </div>
-                            <button onClick={()=> handleClick(user.id)} title="Desbloquear" className="bg-green-700 hover:bg-green-800 cursor-pointer rounded-full text-white font-bold focus:outline-0 px-5 py-1 text-sm ml-auto">
+                            <button onClick={()=> handleClick(user.id)} title="Desbloquear" className="btn-primary rounded-full font-bold text-sm ml-auto">
                                 Desbloquear
                             </button>
                         </li>
@@ -45,8 +45,8 @@ export const BlockedUsers = ({ users }: { users: UserInfo[] }) => {
                     <div className="pt-5 flex flex-col gap-3">
                         <span>¿Estás seguro que deseas desbloquear a este usuario?</span>
                         <div className="flex gap-3">
-                            <button onClick={() => setOpenModal(null)} className="border border-bg-green-700 cursor-pointer rounded-full text-green-700 font-bold focus:outline-0 px-5 py-1 text-sm w-1/2">Cancelar</button>
-                            <button onClick={() => { console.log(currentId) }} className="bg-green-700 hover:bg-green-800 cursor-pointer rounded-full text-white font-bold focus:outline-0 px-5 py-1 text-sm w-1/2">Desbloquear</button>
+                            <button onClick={() => setOpenModal(null)} className="btn-secondary rounded-full font-bold text-sm w-1/2">Cancelar</button>
+                            <button onClick={() => { console.log(currentId) }} className="btn-primary rounded-full font-bold text-sm w-1/2">Desbloquear</button>
                         </div>
                     </div>
                 </Modal>

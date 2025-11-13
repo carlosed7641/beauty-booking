@@ -41,7 +41,7 @@ export const SelectHour = ({
                 </label>
             </div>
             {error && <span className="text-red-500 mt-3 block">{error}</span>}
-            <button onClick={handleSave} className="py-0.5 bg-green-700 mt-3 rounded-md text-white w-full font-bold cursor-pointer">
+            <button onClick={handleSave} className="btn-primary py-0.5! mt-3 rounded-md w-full font-bold">
                 Enviar
             </button>
         </Modal>

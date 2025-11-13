@@ -6,8 +6,7 @@ export const BookingButton = ({ setStep }: { setStep: (step: number) => void }) 
 
     return (
         <button onClick={() => setStep(2)}
-            className="w-fit px-5 self-center cursor-pointer rounded-md bg-green-700 hover:bg-green-900 text-white  
-        font-bold py-1 transition-all disabled:opacity-60 disabled:pointer-events-none my-3" disabled={!selectedProfessional || !selectedDate || !selectedHour}>
+            className="btn-primary self-center rounded-md font-bold py-1 transition-all disabled:opacity-60 my-3" disabled={!selectedProfessional || !selectedDate || !selectedHour}>
             {id ? 'Modificar cita' : 'Agendar cita'}
         </button>
     )

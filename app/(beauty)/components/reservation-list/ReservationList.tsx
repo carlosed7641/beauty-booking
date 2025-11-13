@@ -81,8 +81,8 @@ export const ReservationList = ({ reservations }: Props) => {
                                     {
                                         r.status === 'pending' &&
                                         <li className="flex gap-2 mt-4">
-                                            <button onClick={() => handleUpdate(r)} className="px-5 py-1 bg-green-700 text-white rounded-full cursor-pointer hover:bg-green-800">Modificar cita</button>
-                                            <button onClick={() => handleCancel(r.id)} className="px-5 py-1 text-green-700 border-green-700 border rounded-full cursor-pointer">Cancelar cita</button>
+                                            <button onClick={() => handleUpdate(r)} className="btn-primary rounded-full ">Modificar cita</button>
+                                            <button onClick={() => handleCancel(r.id)} className="btn-secondary rounded-full">Cancelar cita</button>
                                         </li>
                                     }
                                 </ul>

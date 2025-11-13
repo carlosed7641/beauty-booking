@@ -118,7 +118,7 @@ export const WorkSamplesForm = ({ formData, setFormData, setShowForm, hideHint }
             </div>
             {!formData.images.length && <span className="text-zinc-600 text-sm">Debes agregar por lo menos una foto</span>}
             <div className="flex flex-col md:flex-row gap-3 items-center justify-end">
-                <button disabled={!isFormValid} className="bg-green-700 font-bold p-1 rounded justify-center flex self-end text-white cursor-pointer hover:bg-green-800 w-full md:w-36 disabled:opacity-60 disabled:pointer-events-none" type="submit">
+                <button disabled={!isFormValid} className="btn-primary font-bold px-1! py-1! rounded justify-center flex self-end w-full md:w-36" type="submit">
                     {formData.id ? 'Actualizar' : 'Guardar'}
                 </button>
                 {

@@ -73,17 +73,17 @@ export const CustomDays = ({
     return (
         <div className={`${className ? className : ''}`}>
             <div className="flex gap-3 justify-center">
-                <button onClick={() => setOpenModal('ScheduleYears')} className="bg-green-700 py-0.5 px-3 rounded-full text-white flex gap-2 items-center cursor-pointer">
+                <button onClick={() => setOpenModal('ScheduleYears')} className="btn-primary rounded-full flex gap-2 items-center">
                     <LiaExchangeAltSolid />
                     {date.getFullYear()}
                 </button>
-                <button onClick={() => setOpenModal('ScheduleMonths')} className="bg-green-700 py-0.5 px-3 rounded-full text-white flex gap-2 items-center cursor-pointer">
+                <button onClick={() => setOpenModal('ScheduleMonths')} className="btn-primary rounded-full flex gap-2 items-center">
                     <LiaExchangeAltSolid />
                     {MONTHS_OF_YEAR[date.getMonth()]}
                 </button>
             </div>
             <div className="flex items-center gap-3">
-                <button disabled={!canScrollLeft} onClick={() => scrollSkip('left')} className="hidden md:block bg-green-700 p-3 rounded-full text-white cursor-pointer hover:bg-green-800 disabled:opacity-70 disabled:pointer-events-none">
+                <button disabled={!canScrollLeft} onClick={() => scrollSkip('left')} className="btn-primary hidden md:block px-3! py-3! rounded-full">
                     <FaArrowLeftLong />
                 </button>
                 <div ref={el} className="flex overflow-x-scroll scroll-none gap-2 md:mt-5">
@@ -95,7 +95,7 @@ export const CustomDays = ({
                         onClick={onClick}
                     />
                 </div>
-                <button disabled={!canScrollRight} onClick={() => scrollSkip('right')} className="hidden md:block bg-green-700 p-3 rounded-full text-white cursor-pointer hover:bg-green-800 disabled:opacity-70 disabled:pointer-events-none">
+                <button disabled={!canScrollRight} onClick={() => scrollSkip('right')} className="btn-primary hidden md:block px-3! py-3! rounded-full">
                     <FaArrowRightLong />
                 </button>
             </div>

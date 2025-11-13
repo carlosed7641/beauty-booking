@@ -60,7 +60,7 @@ export const ServiceList = ({ serviceList }: {
                                         <p className="text-zinc-500">{service.description}</p>
                                         <p className="text-green-700 font-bold">${formatNumber(service.price.toString())}</p>
                                     </div>
-                                    <button onClick={() => handleSelectService({ ...service, entityName: s.entityName, category: s.category })} className="rounded-md py-2 px-5 cursor-pointer text-white bg-green-700 hover:bg-green-900">Agendar</button>
+                                    <button onClick={() => handleSelectService({ ...service, entityName: s.entityName, category: s.category })} className="btn-primary font-bold rounded-md">Agendar</button>
                                 </li>
                             ))}
                         </ul>

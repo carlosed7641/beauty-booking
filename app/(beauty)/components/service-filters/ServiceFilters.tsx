@@ -43,7 +43,7 @@ export const ServiceFilters = () => {
                         <p className="text-green-700 text-xl">Filtrar por categoría</p>
                     </ModalHeader>
                     <FilterList items={serviceCategories} handleClick={handleClickCategory} selectedFilters={temporalSelectedFilters} />
-                    <button onClick={handleClickButton} className="bg-green-700 mt-8 justify-center cursor-pointer rounded-md py-1.5 text-white hover:bg-green-800 flex justify-self-center w-[130px]">Listo</button>
+                    <button onClick={handleClickButton} className="btn-primary mt-8 justify-center rounded-md flex justify-self-center w-[130px]">Listo</button>
                 </Modal>
             }
         </>
