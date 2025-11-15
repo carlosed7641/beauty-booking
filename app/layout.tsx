@@ -8,9 +8,6 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// Back button in modasl
-// Tabs refactor (service-list, BookingModal (step, setStep), professionals, etc.)
-// Modal Provider refactor, esc
 // Refactor schedule hours frequency & exclude and schedule hours
 // Merge ScheduleMonths & ScheduleYears
 // schedule (professional view) & events by month not all, reports (custom date filter)

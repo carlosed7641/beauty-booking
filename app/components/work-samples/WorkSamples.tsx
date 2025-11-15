@@ -1,81 +1,53 @@
 'use client'
-
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
-import { GrGallery } from 'react-icons/gr'
-import { FilterList } from '../../(beauty)/components'
+import Slider from 'react-slick'
+import { useModal } from '@/store'
+import {  WorkSamplesList } from './WorkSamplesList'
+import { Modal } from '@/components'
+import { SLIDER_SETTINGS } from '@/util/const'
+import 'slick-carousel/slick/slick-theme.css'
+import 'slick-carousel/slick/slick.css'
 
 interface Props {
     workSamples: WorkSample[]
-    handleSelectGallery: (id: string, name: string) => void
     hideFilters?: boolean
     hideName?: boolean
 }
 
-export const WorkSamples = ({ workSamples, handleSelectGallery, hideFilters, hideName }: Props) => {
+export const WorkSamples = ({ workSamples, hideFilters, hideName }: Props) => {
 
-    const filters = workSamples.map(({ name }) => name)
+    const [selectedGallery, setSelectedGallery] = useState<{id: string, name: string}>({id: '', name: ''})
+    const { openModal, setOpenModal } = useModal()
 
-    const [filterSamples, setFilterSamples] = useState(workSamples)
-    const [selectedFilters, setSelectedFilters] = useState<string[]>([])
-
-    const handleClickFilter = (filter: string) => {
-
-        const filters = selectedFilters.includes(filter)
-            ? selectedFilters.filter(sf => sf != filter)
-            : [...selectedFilters, filter]
-
-        setSelectedFilters(filters)
+    const handleSelectGallery = (id: string, name: string) => {
+        setSelectedGallery({ id,  name })
+        setOpenModal(WorkSamples.name)
     }
-
-    useEffect(() => {
-        if (!selectedFilters.length) {
-            setFilterSamples(workSamples)
-            return
-        }
-        const newSamples = workSamples.filter(sample => selectedFilters.includes(sample.name))
-        setFilterSamples(newSamples)
-    }, [selectedFilters])
 
     return (
         <>
-            {!hideFilters && workSamples.length > 2 &&
-                <div className="mt-3">
-                    <FilterList handleClick={handleClickFilter} selectedFilters={selectedFilters} items={filters} />
-                </div>
-            }
-            <div className="flex flex-wrap gap-2 mt-4">
-                {filterSamples.map(sample => {
-                    const mainImage = sample.images.find(image => image.mainImage) || sample.images[0]
-                    return (
-                        <div
-                            onClick={() => handleSelectGallery(sample.id, sample.name)}
-                            key={sample.id}
-                            className="flex flex-col bg-zinc-100 cursor-pointer relative rounded-md w-[180px] shrink-0"
-                        >
-                            <Image
-                                className="w-auto rounded-t-md"
-                                title={sample.name}
-                                width={160}
-                                height={170}
-                                src={mainImage.url}
-                                alt={sample.name}
-                            />
-                            {sample.images.length > 1 && (
-                                <div className="absolute top-2 right-2 bg-zinc-100 p-1">
-                                    <GrGallery />
+            <WorkSamplesList workSamples={workSamples} handleSelectGallery={handleSelectGallery} hideFilters={hideFilters} 
+                hideName={hideName} />
+            {
+                openModal === WorkSamples.name && selectedGallery.id &&
+                <Modal className="overflow-hidden! h-fit! pb-10! pt-5! px-0! md:px-6! md:pt-0! md:pb-6! md:w-1/3!">
+                    <div className="md:max-w-[400px] my-auto mx-auto md:p-2">
+                        <Slider {...SLIDER_SETTINGS}>
+                            {workSamples.find(sample => sample.id === selectedGallery.id)?.images?.map((image, index) => (
+                                <div key={index}>
+                                    <Image
+                                        className="w-full"
+                                        src={image.url}
+                                        alt={selectedGallery.name}
+                                        width={160}
+                                        height={170} />
                                 </div>
-                            )}
-                            <div className="p-2">
-                                <p className="font-bold">{sample.name}</p>
-                                {!hideName && <span className="block truncate">{sample.author}</span>}
-                            </div>
-                        </div>
-                    )
-                }
-
-                )}
-            </div>
+                            ))}
+                        </Slider>
+                    </div>
+                </Modal>
+            }
         </>
     )
 }

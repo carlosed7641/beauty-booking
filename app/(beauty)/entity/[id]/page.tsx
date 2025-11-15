@@ -5,7 +5,7 @@ import { FaWhatsapp } from 'react-icons/fa'
 import { FiMapPin } from 'react-icons/fi'
 import { GoShareAndroid } from 'react-icons/go'
 import { Tabs, ServiceListTab, Professionals, ReviewsModal } from '../../components'
-import { WorkSamplesTab } from '@/components'
+import { WorkSamples } from '@/components'
 import {
     entities,
     workSamples as allWorkSamples,
@@ -41,7 +41,7 @@ export default async function EntityPage({ params }: Props) {
         {
             id: 'work-samples',
             label: 'Muestras de trabajo',
-            tab: <WorkSamplesTab workSamples={workSamples} />
+            tab: <WorkSamples workSamples={workSamples} />
         },
         {
             id: 'professionals',

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import { Tabs, ReviewsModal, ServiceListTab } from '../../components'
-import { WorkSamplesTab } from '@/components'
+import { WorkSamples } from '@/components'
 import {
     entities,
     workSamples as allWorkSamples,
@@ -38,7 +38,7 @@ export default async function ProfessionalPage({ params }: Props) {
         {
             id: 'work-samples',
             label: 'Muestras de trabajo',
-            tab: <WorkSamplesTab workSamples={workSamples} hideName />
+            tab: <WorkSamples workSamples={workSamples} hideName />
         }
     ]
 

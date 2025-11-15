@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { useModal, useService } from '@/store'
-import { ServiceList, BookingServiceModal } from '../..'
+import { ServiceList } from '@/components'
+import { BookingServiceModal } from '../..'
 import { professionals as allProfessionals } from '@/util/fake-data'
 
 interface Props {
