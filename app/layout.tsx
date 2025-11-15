@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// Refactor schedule hours frequency & exclude and schedule hours
 // Merge ScheduleMonths & ScheduleYears
 // schedule (professional view) & events by month not all, reports (custom date filter)
 // formatNumber string to number param

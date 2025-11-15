@@ -18,6 +18,8 @@ interface EventDate {
     customer: Customer
     selectedService: {
         serviceId: string
+        category?: string
+        description?: string
         name: string
         duration: {
             hours: number

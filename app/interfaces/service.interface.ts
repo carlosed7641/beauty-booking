@@ -3,7 +3,8 @@ interface ServiceItem {
   name: string
   description?: string
   price: number
-  gender: Gender
+  gender?: Gender
+  category?: string
   duration: {
     hours: number
     minutes: number
