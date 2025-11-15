@@ -8,7 +8,6 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// Back button in sections
 // Back button in modasl
 // Tabs refactor (service-list, BookingModal (step, setStep), professionals, etc.)
 // Modal Provider refactor, esc

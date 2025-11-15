@@ -1,4 +1,6 @@
 
+import Link from 'next/link'
+import { IoMdArrowRoundBack } from 'react-icons/io'
 import { ProfessionalSettings } from './ProfessionalSettings'
 import { INITIAL_WORK_DAYS } from '@/util/const'
 import { professionalsEmployees as professionals } from '@/util/fake-data'
@@ -33,7 +35,12 @@ const workDays = [...INITIAL_WORK_DAYS]
 export default function ProfessionalSettingsPage() {
     return (
         <>
-            <h1 className="text-lg text-green-700 mb-3 font-bold">Configuración</h1>
+            <div className="flex items-center gap-2 mb-3">
+                <Link href="/admin/settings" title="Volver">
+                     <IoMdArrowRoundBack className="cursor-pointer text-xl text-green-700" />
+                </Link>
+                <h1 className="text-lg text-green-700 font-bold">Configuración</h1>
+            </div>
             <div className="flex flex-col gap-6">
                 <div className="bg-white w-full rounded-md p-7">
                     <ProfessionalSettings professionals={professionals} serviceList={serviceList} workDays={workDays} />
