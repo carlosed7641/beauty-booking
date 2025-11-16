@@ -8,7 +8,7 @@ import { IoMdArrowRoundBack } from 'react-icons/io'
 import { useModal, useService } from '@/store'
 import { BookingServiceModal } from '@/(beauty)/components'
 import { useSchedule } from '../store'
-import { EventSummary, ScheduleMonths, ScheduleYears, UpdateCustomer, CustomDays, ScheduleButton, ScheduleAssign } from '../components'
+import { EventSummary, ScheduleSelect, UpdateCustomer, CustomDays, ScheduleButton, ScheduleAssign } from '../components'
 import { isGreaterOrEqualThanToday, generateMonthDatesArray, getMessagesES, localizer, format24 } from '@/helpers'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { CALENDAR_VIEWS } from '@/util/const'
@@ -87,7 +87,7 @@ export const Schedule = ({ events, foundationYear, professionals }: Props) => {
         <>
             <div className="flex items-center gap-2 mb-3">
                 <Link href="/admin" title="Volver">
-                     <IoMdArrowRoundBack className="cursor-pointer text-xl text-green-700" />
+                    <IoMdArrowRoundBack className="cursor-pointer text-xl text-green-700" />
                 </Link>
                 <h1 className="text-lg text-green-700 font-bold">Agenda</h1>
             </div>
@@ -134,12 +134,19 @@ export const Schedule = ({ events, foundationYear, professionals }: Props) => {
                 />
             }
             {openModal === 'ScheduleEvent' && <EventSummary />}
-            {openModal === 'ScheduleMonths' && <ScheduleMonths date={date} onChangeDate={onChangeDate} />}
-            {openModal === 'ScheduleYears' &&
-                <ScheduleYears
-                    foundationYear={foundationYear}
+            {openModal === 'ScheduleMonths' &&
+                <ScheduleSelect
+                    type="month"
                     date={date}
                     onChangeDate={onChangeDate}
+                />
+            }
+            {openModal === 'ScheduleYears' &&
+                <ScheduleSelect
+                    type="year"
+                    date={date}
+                    onChangeDate={onChangeDate}
+                    yearLimit={foundationYear}
                 />
             }
         </>

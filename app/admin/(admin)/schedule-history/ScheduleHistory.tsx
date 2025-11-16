@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { GoQuestion, GoCheck } from 'react-icons/go'
 import { useModal } from '@/store'
 import { SimpleTabs } from '@/components'
-import { CustomDays, ScheduleMonths, ScheduleYears, SelectProfessional, EventHistory } from '../components'
+import { CustomDays, ScheduleSelect, SelectProfessional, EventHistory } from '../components'
 import { compareDates } from '@/helpers'
 import Link from 'next/link'
 import { IoMdArrowRoundBack } from 'react-icons/io'
@@ -60,7 +60,7 @@ export function ScheduleHistory({ professionals, events, foundationYear }: Props
         <>
             <div className="flex items-center gap-2 mb-3">
                 <Link href="/admin" title="Volver">
-                     <IoMdArrowRoundBack className="cursor-pointer text-xl text-green-700" />
+                    <IoMdArrowRoundBack className="cursor-pointer text-xl text-green-700" />
                 </Link>
                 <h1 className="text-lg text-green-700 font-bold">Historial de agenda</h1>
             </div>
@@ -87,14 +87,19 @@ export function ScheduleHistory({ professionals, events, foundationYear }: Props
                     />
                 </div>
             </div>
-            {openModal === 'ScheduleMonths' && <ScheduleMonths date={date} onChangeDate={onChangeDate} />
-            }
-            {
-                openModal === 'ScheduleYears' &&
-                <ScheduleYears
-                    foundationYear={foundationYear}
+            {openModal === 'ScheduleMonths' &&
+                <ScheduleSelect
+                    type="month"
                     date={date}
-                    onChangeDate={onChangeDate}
+                    onChangeDate={onChangeDate} 
+                />
+            }
+            {openModal === 'ScheduleYears' &&
+                <ScheduleSelect
+                    type="year"
+                    date={date}
+                    onChangeDate={onChangeDate} 
+                    yearLimit={foundationYear} 
                 />
             }
         </>
