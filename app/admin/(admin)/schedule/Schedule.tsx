@@ -8,13 +8,12 @@ import { IoMdArrowRoundBack } from 'react-icons/io'
 import { useModal, useService } from '@/store'
 import { BookingServiceModal } from '@/(beauty)/components'
 import { useSchedule } from '../store'
-import { EventSummary, ScheduleSelect, UpdateCustomer, CustomDays, ScheduleButton, ScheduleAssign } from '../components'
-import { isGreaterOrEqualThanToday, generateMonthDatesArray, getMessagesES, localizer, format24 } from '@/helpers'
+import { EventSummary, ScheduleSelect, UpdateCustomer, CustomDays, ScheduleButton, ScheduleAssign, SelectProfessional, EventList } from '../components'
+import { isGreaterOrEqualThanToday, generateMonthDatesArray, getMessagesES, localizer, format24, compareDates } from '@/helpers'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { CALENDAR_VIEWS } from '@/util/const'
+import { CALENDAR_VIEWS, DEFAULT_PROFESSIONAL } from '@/util/const'
 
 interface Props {
-    events: EventDate[]
     foundationYear: number
     professionals: ProfessionalData[]
 }
@@ -34,13 +33,73 @@ const formats: Formats = {
         `${format(start, "MMM d")} - ${format(end, "MMM d")}`,
 }
 
-export const Schedule = ({ events, foundationYear, professionals }: Props) => {
+const bdEvents: EventDate[] = [
+    {
+        id: 'f445465',
+        title: 'Cepillado',
+        start: new Date(2025, 9, 6, 17, 45, 0),
+        end: new Date(2025, 9, 6, 18, 30, 0),
+        customer: {
+            id: "125",
+            name: "David Ortiz",
+            phone: { indicator: '57', number: '3004394704' },
+            birthDay: new Date(),
+            gender: 'Masculino',
+            reviewPointsAverage: 5
+        },
+        selectedService: {
+            serviceId: "006",
+            name: "Cepillado",
+            duration: { hours: 0, minutes: 45 },
+            price: 30_000
+        },
+        selectedProfessional: {
+            id: 'bcf',
+            name: "Carlos Castro"
+        },
+        isAdminBooking: false,
+        customerReview: 2,
+        allDay: false
+    },
+    {
+        id: 'f445466',
+        title: 'Cepillado',
+        start: new Date(2025, 10, 6, 17, 45, 0),
+        end: new Date(2025, 10, 6, 18, 30, 0),
+        customer: {
+            id: "125",
+            name: "David Ortiz",
+            phone: { indicator: '57', number: '3004394704' },
+            birthDay: new Date(),
+            gender: 'Masculino',
+            reviewPointsAverage: 5
+        },
+        selectedService: {
+            serviceId: "006",
+            name: "Cepillado",
+            duration: { hours: 0, minutes: 45 },
+            price: 30_000
+        },
+        selectedProfessional: {
+            id: 'abc',
+            name: "Gregorio Carrena"
+        },
+        isAdminBooking: false,
+        customerReview: 2,
+        allDay: false
+    }
+] // TODO: Get from Api
+
+export const Schedule = ({ foundationYear, professionals }: Props) => {
 
     const { openModal, setOpenModal } = useModal()
     const { serviceState, setServiceState } = useService()
     const { schedule, setSchedule } = useSchedule()
     const { date, view } = useSchedule(state => state.schedule)
     const [step, setStep] = useState(1)
+    const [events, setEvents] = useState<EventDate[]>([])
+    const [profEvents, setProfEvents] = useState<EventDate[]>([])
+    const [selectedProfessional, setSelectedProfessional] = useState(DEFAULT_PROFESSIONAL)
 
     const onSelectEvent = (event: EventDate) => {
         setOpenModal('ScheduleEvent')
@@ -67,12 +126,18 @@ export const Schedule = ({ events, foundationYear, professionals }: Props) => {
         setOpenModal(null)
     }
 
-    useEffect(() => {
-        const mobileMediaQuery = window.matchMedia('(max-width: 768px)')
-        const callback = (event: MediaQueryListEvent) => event.matches && setSchedule({ ...schedule, view: 'day' })
-        mobileMediaQuery.addEventListener('change', callback)
-        return () => mobileMediaQuery.removeEventListener('change', callback)
-    }, [])
+    const onSelectProfessional = (professional: ProfessionalData) => {
+        setSelectedProfessional(p => (
+            p.id === professional.id ?
+                DEFAULT_PROFESSIONAL :
+                professional
+        ))
+    }
+
+    const setCustomerReview = (reviewPoints: number) => {
+        //TODO: Api patch
+        // event.customerReview
+    }
 
     useEffect(() => {
         if (!openModal) {
@@ -80,6 +145,36 @@ export const Schedule = ({ events, foundationYear, professionals }: Props) => {
             setSchedule({ ...schedule, isUpdatingReview: false })
         }
     }, [openModal])
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            const month = date.getMonth()
+            const year = date.getFullYear()
+
+            // TODO: reemplazar por llamada real al backend
+            // Ejemplo:
+            // const res = await api.get(`/events?month=${month + 1}&year=${year}`)
+            // setEvents(res.data)
+
+            const simulated = bdEvents.filter(ev =>
+                ev.start.getMonth() === month &&
+                ev.start.getFullYear() === year
+            )
+
+            setEvents(simulated)
+        }
+
+        fetchEvents()
+
+    }, [date.getMonth(), date.getFullYear()])
+
+    useEffect(() => {
+        const currentEvents = events.filter(e =>
+            e.selectedProfessional.id === selectedProfessional.id
+            && compareDates(date, e.start)
+        )
+        setProfEvents(currentEvents)
+    }, [events, date, selectedProfessional])
 
     const isValidDate = useMemo(() => isGreaterOrEqualThanToday(date), [date])
 
@@ -97,28 +192,48 @@ export const Schedule = ({ events, foundationYear, professionals }: Props) => {
                         onClick={(dayItem) => setSchedule({ ...schedule, date: dayItem.date })}
                         date={schedule.date}
                         disabledDays="none"
-                        className="md:hidden"
                     />
-                    <Calendar
-                        culture='es'
-                        selectable
-                        onSelectSlot={onSelectSlot}
-                        messages={getMessagesES()}
-                        views={CALENDAR_VIEWS}
-                        onView={view => setSchedule({ ...schedule, view })}
-                        view={view as View}
-                        date={date}
-                        onNavigate={date => setSchedule({ ...schedule, date })}
-                        localizer={localizer}
-                        events={events}
-                        startAccessor="start"
-                        endAccessor="end"
-                        components={{ event: ({ event }) => <Event event={event} /> }}
-                        eventPropGetter={eventPropGetter}
-                        onSelectEvent={onSelectEvent}
-                        formats={formats}
-                        className="h-screen! md:h-[500px]!"
+                    <SelectProfessional
+                        professionals={professionals}
+                        selectedProfessional={selectedProfessional}
+                        setSelectedProfessional={onSelectProfessional as () => void}
                     />
+                    {
+                        selectedProfessional.id ?
+                            profEvents.length > 0 ?
+                                <EventList
+                                    events={profEvents}
+                                    setCustomerReview={setCustomerReview}
+                                />
+                                :
+                                <h2 className="text-center text-zinc-600 py-10">
+                                    No se encontraron agendas para este día
+                                </h2>
+                            :
+                            <Calendar
+                                culture='es'
+                                selectable
+                                onSelectSlot={onSelectSlot}
+                                messages={getMessagesES()}
+                                views={CALENDAR_VIEWS}
+                                onView={view => setSchedule({ ...schedule, view })}
+                                view={view as View}
+                                date={date}
+                                onNavigate={date => setSchedule({ ...schedule, date })}
+                                localizer={localizer}
+                                events={events}
+                                startAccessor="start"
+                                endAccessor="end"
+                                components={{
+                                    event: ({ event }) => <Event event={event} />,
+                                    toolbar: () => null
+                                }}
+                                eventPropGetter={eventPropGetter}
+                                onSelectEvent={onSelectEvent}
+                                formats={formats}
+                                className="h-screen! md:h-[500px]!"
+                            />
+                    }
                     {isValidDate && <ScheduleButton />}
                 </div>
             </div>

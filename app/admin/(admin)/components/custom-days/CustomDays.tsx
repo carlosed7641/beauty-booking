@@ -86,7 +86,7 @@ export const CustomDays = ({
                 <button disabled={!canScrollLeft} onClick={() => scrollSkip('left')} className="btn-primary hidden md:block px-3! py-3! rounded-full">
                     <FaArrowLeftLong />
                 </button>
-                <div ref={el} className="flex overflow-x-scroll scroll-none gap-2 md:mt-5">
+                <div ref={el} className="flex overflow-x-scroll scroll-none gap-2 md:mt-3.5 mb-3">
                     <DateList
                         isAdmin
                         disabled={disabledDays}

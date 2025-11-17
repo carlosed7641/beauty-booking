@@ -4,11 +4,11 @@ import clsx from 'clsx'
 interface Props {
     professionals: ProfessionalSettings[] | ProfessionalData[]
     selectedProfessional: ProfessionalSettings | ProfessionalData
-    setSelectedProfessional: React.Dispatch<React.SetStateAction<ProfessionalSettings | ProfessionalData>>
+    setSelectedProfessional: (selectedProfessional: ProfessionalSettings | ProfessionalData) => void
     allOption?: boolean
 }
 
-const defaultValue = {
+const defaultValue: ProfessionalData = {
     id: '',
     name: '',
     entityId: '',

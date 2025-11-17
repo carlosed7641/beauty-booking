@@ -31,7 +31,7 @@ export const DateList = ({
                 if (disabled === 'afterToday') return isLessOrEqualThanToday(date.date)
                 return true
             })()
-            const selected = compareDates(selectedDate as Date, date.date)
+            const selected = selectedDate && compareDates(selectedDate as Date, date.date)
             //TODO: Deshabilitar hoy si no tiene horas disponibles
 
             return (

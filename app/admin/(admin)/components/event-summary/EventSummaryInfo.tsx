@@ -18,7 +18,7 @@ export const EventSummaryInfo = () => {
             </div>
             <span className="text-green-700 my-2">Cita con: <strong>{selectedEvent?.customer.name}</strong></span>
             {selectedEvent?.customer.phone &&
-                <Link href={`https://wa.me/${selectedEvent.customer.phone}`} className="underline text-zinc-600 flex gap-1 mb-2" target="_blank">
+                <Link href={`https://wa.me/${selectedEvent.customer.phone.number}`} className="underline text-zinc-600 flex gap-1 mb-2" target="_blank">
                     <FaWhatsapp className="text-green-500" />
                     {selectedEvent.customer.phone.number}
                 </Link>}                  <span>Reservado por: <strong>{selectedEvent?.isAdminBooking ? 'Administración' : 'Cliente'}</strong></span>

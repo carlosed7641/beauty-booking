@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// schedule (professional view) & events by month not all, reports (custom date filter)
+// reports (custom date filter)
 // formatNumber string to number param
 
 // Map
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body className={`${inter.className} ${mainFont.className} antialiased`}>
         <ModalProvider>
           {children}

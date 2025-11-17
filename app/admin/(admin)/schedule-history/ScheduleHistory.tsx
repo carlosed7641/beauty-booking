@@ -48,11 +48,10 @@ export function ScheduleHistory({ professionals, events, foundationYear }: Props
                 return isSameDay && isSameProfesional
             })
 
-            return filteredEvents
+           setCurrentEvents(filteredEvents)
         }
 
-        const filteredEvents = getEvents()
-        setCurrentEvents(filteredEvents)
+        getEvents()
 
     }, [date, selectedProfessional])
 
