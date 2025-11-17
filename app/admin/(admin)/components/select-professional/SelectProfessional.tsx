@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import clsx from 'clsx'
+import { DEFAULT_PROFESSIONAL } from '@/util/const'
 
 interface Props {
     professionals: ProfessionalSettings[] | ProfessionalData[]
@@ -8,16 +9,6 @@ interface Props {
     allOption?: boolean
 }
 
-const defaultValue: ProfessionalData = {
-    id: '',
-    name: '',
-    entityId: '',
-    resume: '',
-    reviews: {
-        points: 0,
-        count: 0
-    }
-}
 
 export const SelectProfessional = ({
     professionals,
@@ -29,7 +20,7 @@ export const SelectProfessional = ({
         <div className="flex gap-3 justify-center mb-2">
             {
                 allOption &&
-                <div onClick={() => setSelectedProfessional(defaultValue)} className="flex flex-col items-center gap-1 cursor-pointer" >
+                <div onClick={() => setSelectedProfessional(DEFAULT_PROFESSIONAL)} className="flex flex-col items-center gap-1 cursor-pointer" >
                     <div className={
                         clsx(
                             {

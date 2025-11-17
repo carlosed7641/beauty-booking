@@ -3,21 +3,26 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { IoMdArrowRoundBack } from 'react-icons/io'
-import { OptionsSelector, SimpleTabs } from '@/components'
+import { useModal } from '@/store'
+import { Modal, ModalHeader, OptionsSelector, SimpleTabs } from '@/components'
 import { DateSwitcher, GeneralReportsPanel, SalesReportsPanel, SelectProfessional } from '../components'
 import { DEFAULT_PROFESSIONAL, DEFAULT_REPORT_DATA_SUMMARY } from '@/util/const'
+import { formatInputDate, isLessOrEqualThan } from '@/helpers'
 
 const timeOptions: TimeOptionItem[] = [
     { id: 'day', label: 'Día' },
     { id: 'week', label: 'Semana' },
     { id: 'fortnight', label: 'Quincena' },
     { id: 'month', label: 'Mes' },
-    { id: 'year', label: 'Año' }
+    { id: 'year', label: 'Año' },
+    { id: 'range', label: 'Rango' }
 ]
 
 const tabs = [{ id: 'general', label: 'Generales' }, { id: 'sales', label: 'Ventas' }]
 
 const INITIAL_DATES = [new Date(), new Date()]
+
+const todayFormatDate = formatInputDate(new Date())
 
 interface Props { foundationDate: Date, events: EventDate[], professionals: ProfessionalData[] }
 
@@ -29,17 +34,22 @@ export const Reports = ({ foundationDate, events, professionals }: Props) => {
     const [selectedProfessional, setSelectedProfessional] = useState<ProfessionalData>(DEFAULT_PROFESSIONAL)
     const [dataSummary, setDataSummary] = useState<ReportDataSummary>({ ...DEFAULT_REPORT_DATA_SUMMARY })
     const [isLoadingData, setIsLoadingData] = useState(true)
+    const [customRange, setCustomRange] = useState([todayFormatDate, todayFormatDate])
+    const { openModal } = useModal()
 
     const getDateRange = (optionId: TimeOption) => {
         const today = new Date()
 
         switch (optionId) {
             case 'day':
-                return INITIAL_DATES
+                return [today, today]
 
             case 'week': {
                 const startDate = new Date(today)
-                startDate.setDate(today.getDate() - today.getDay() + 1)
+                const day = (today.getDay() + 6) % 7
+
+                startDate.setDate(today.getDate() - day)
+
                 const endDate = new Date(startDate)
                 endDate.setDate(startDate.getDate() + 6)
                 return [startDate, endDate]
@@ -76,6 +86,7 @@ export const Reports = ({ foundationDate, events, professionals }: Props) => {
     }
 
     useEffect(() => {
+        if (activeOptionDate.id === 'range') return
         setDateRange(getDateRange(activeOptionDate.id))
     }, [activeOptionDate])
 
@@ -186,11 +197,28 @@ export const Reports = ({ foundationDate, events, professionals }: Props) => {
 
     }, [dateRange, selectedProfessional])
 
+    const handleCustomRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value, name } = e.target
+        const [year, month, day] = value.split("-").map(Number)
+        const date = new Date(year, month - 1, day)
+
+        const isLimitExceeded = isLessOrEqualThan(date, foundationDate)
+        
+        if (isLimitExceeded) return
+
+        const formatDate = formatInputDate(date)
+
+        setCustomRange(prev => (
+            name === 'initialDate' ? [formatDate, ...prev[1]]
+            : [...prev[0], formatDate]
+        ))
+    }
+
     return (
         <>
             <div className="flex items-center gap-2 mb-3">
                 <Link href="/admin" title="Volver">
-                     <IoMdArrowRoundBack className="cursor-pointer text-xl text-green-700" />
+                    <IoMdArrowRoundBack className="cursor-pointer text-xl text-green-700" />
                 </Link>
                 <h1 className="text-lg text-green-700 font-bold">Informes</h1>
             </div>
@@ -237,6 +265,25 @@ export const Reports = ({ foundationDate, events, professionals }: Props) => {
                     }
                 </div>
             </div>
+            {
+                openModal === 'DateRange' &&
+                <Modal className="overflow-hidden! md:w-[600px]!">
+                    <ModalHeader>
+                        <h1 className="text-green-700 text-lg">Selecciona un rango de fechas</h1>
+                    </ModalHeader>
+                    <div className="flex flex-col gap-3">
+                        <label className="flex flex-col gap-1">
+                            <span className="text-green-700">Fecha inicial</span>
+                            <input name="initialDate" type="date" value={customRange[0]} onChange={handleCustomRangeChange} className="border border-green-700 px-2 rounded-md focus:outline-0" />
+                        </label>
+                        <label className="flex flex-col gap-1">
+                            <span className="text-green-700">Fecha final</span>
+                            <input name="finalDate" type="date" value={customRange[1]} onChange={handleCustomRangeChange} className="border border-green-700 px-2 rounded-md focus:outline-0" />
+                        </label>
+                        <button className="btn-primary rounded-md">Confirmar</button>
+                    </div>
+                </Modal>
+            }
         </>
     )
 }

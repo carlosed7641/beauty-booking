@@ -1,5 +1,7 @@
 import { useCallback, useMemo } from 'react'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+import { VscSettings } from 'react-icons/vsc'
+import { useModal } from '@/store'
 import { formatDate, isGreaterOrEqualThanToday, isLessOrEqualThan } from '@/helpers'
 import { MONTHS_OF_YEAR } from '@/util/const'
 
@@ -67,6 +69,8 @@ export const DateSwitcher = ({
     foundationDate
 }: Props) => {
 
+    const { setOpenModal } = useModal()
+    
     const handleChangeDate = useCallback((value: -1 | 1) => {
         setDateRange(prev => handleDateShift(prev, value, activeOption.id))
     }, [activeOption.id, setDateRange])
@@ -95,13 +99,28 @@ export const DateSwitcher = ({
 
     return (
         <div className="flex items-center gap-3 justify-center py-3">
-            <button disabled={!canGoBack} onClick={() => handleChangeDate(-1)} className="text-2xl text-green-700 cursor-pointer disabled:pointer-events-none disabled:opacity-50">
-                <IoIosArrowBack />
-            </button>
-            <span className="flex-1 md:max-w-[400px] text-center">{activeOption.label}: {label}</span>
-            <button disabled={!canGoForward} onClick={() => handleChangeDate(1)} className="text-2xl text-green-700 cursor-pointer disabled:pointer-events-none disabled:opacity-50">
-                <IoIosArrowForward />
-            </button>
+            {
+                activeOption.id !== 'range' &&
+                <button disabled={!canGoBack} onClick={() => handleChangeDate(-1)} className="text-2xl text-green-700 cursor-pointer disabled:pointer-events-none disabled:opacity-50">
+                    <IoIosArrowBack />
+                </button>
+            }
+            <span className="flex-1 md:max-w-[400px] text-center">
+                {
+                    activeOption.id === 'range' ? 
+                    <div onClick={()=> setOpenModal('DateRange')} className="flex items-center gap-1 justify-center cursor-pointer">
+                        <VscSettings className="text-green-700" />
+                        Selecciona un rango
+                    </div>
+                    : <>{activeOption.label}: {label}</>
+                }
+            </span>
+            {
+                activeOption.id !== 'range' &&
+                <button disabled={!canGoForward} onClick={() => handleChangeDate(1)} className="text-2xl text-green-700 cursor-pointer disabled:pointer-events-none disabled:opacity-50">
+                    <IoIosArrowForward />
+                </button>
+            }
         </div>
     )
 }
