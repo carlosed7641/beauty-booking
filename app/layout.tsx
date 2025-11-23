@@ -8,9 +8,6 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
-// reports (custom date filter)
-// formatNumber string to number param
-
 // Map
 // Metadata
 

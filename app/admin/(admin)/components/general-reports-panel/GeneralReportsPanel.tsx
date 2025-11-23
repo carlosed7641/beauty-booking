@@ -37,7 +37,7 @@ export const GeneralReportsPanel = ({ isLoading, dataSummary, selectedProfession
         <ul className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <Summary
                 title="Ventas generales"
-                value={`$${formatNumber(totalSales.toString())}`}
+                value={`$${formatNumber(totalSales)}`}
                 isLoading={isLoading}
                 isLarge
             />
@@ -53,12 +53,12 @@ export const GeneralReportsPanel = ({ isLoading, dataSummary, selectedProfession
             />
             <Summary
                 title="Valor promedio de servicios completados"
-                value={`$${formatNumber(averageServiceValue.toString())}`}
+                value={`$${formatNumber(averageServiceValue)}`}
                 isLoading={isLoading}
             />
             <Summary
                 title="Gastos"
-                value={`$${formatNumber(bills.toString())}`}
+                value={`$${formatNumber(bills)}`}
                 isLoading={isLoading}
             />
             {
@@ -96,7 +96,7 @@ export const GeneralReportsPanel = ({ isLoading, dataSummary, selectedProfession
                                         </div>
                                     }
                                     <span className="text-green-700 font-bold">
-                                        ${formatNumber(bestSellingProfessional.count.toString() ?? '')}
+                                        ${formatNumber(bestSellingProfessional.count ?? '')}
                                     </span>
                                 </div>
                             </>

@@ -91,7 +91,7 @@ export const CustomerInfoModal = ({ selectedCustomer }: Props) => {
                         <AiOutlineDollarCircle className="text-lg" />
                         Ganancias
                     </p>
-                    <li>Te ha comprado ${formatNumber(total.toString())}</li>
+                    <li>Te ha comprado ${formatNumber(total)}</li>
                 </ul>
                 <ul>
                     <p className="text-green-700 flex items-center gap-1 font-bold mb-2">

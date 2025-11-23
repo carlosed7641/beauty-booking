@@ -58,7 +58,7 @@ export const ServiceList = ({ serviceList }: {
                                             {service.name}
                                         </p>
                                         <p className="text-zinc-500">{service.description}</p>
-                                        <p className="text-green-700 font-bold">${formatNumber(service.price.toString())}</p>
+                                        <p className="text-green-700 font-bold">${formatNumber(service.price)}</p>
                                     </div>
                                     <button onClick={() => handleSelectService({ ...service, entityName: s.entityName, category: s.category })} className="btn-primary font-bold rounded-md">Agendar</button>
                                 </li>

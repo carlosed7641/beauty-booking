@@ -1,4 +1,5 @@
-export const formatNumber = (number: string) => {
+export const formatNumber = (value: number) => {
+    const number = value.toString()
     // Delete everything that is not a number
     let cleanNumber = number.replace(/\D/g, '')
 

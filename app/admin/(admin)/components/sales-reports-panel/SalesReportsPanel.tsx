@@ -23,7 +23,7 @@ export const SalesReportsPanel = ({
                     groupSales.length > 0 ?
                         <>
                             <div className="flex justify-center gap-8 pb-2 border-b border-zinc-300">
-                                <span>Total: <b>{formatNumber(totalSales.toString())}</b></span>
+                                <span>Total: <b>{formatNumber(totalSales)}</b></span>
                                 <span>Cantidad: <b>{completedServices}</b></span>
                             </div>
                             <table className="w-full">
@@ -40,7 +40,7 @@ export const SalesReportsPanel = ({
                                             <tr key={s.id} className="border-b border-zinc-300">
                                                 <td className="text-center py-1">{s.name}</td>
                                                 <td className="text-center py-1">{s.quantity}</td>
-                                                <td className="text-center py-1">${formatNumber(s.total.toString())}</td>
+                                                <td className="text-center py-1">${formatNumber(s.total)}</td>
                                             </tr>
                                         ))
                                     }

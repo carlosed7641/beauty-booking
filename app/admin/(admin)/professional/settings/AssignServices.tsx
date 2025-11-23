@@ -135,7 +135,7 @@ export const AssignServices = ({ title, hint, serviceList, selectedProfessional,
                                                     {
                                                         type === "price" && value.price &&
                                                         <span onClick={() => handleOpenService(key, value)} className="text-green-700 underline font-bold cursor-pointer">
-                                                            ${formatNumber(value.price.toString())}
+                                                            ${formatNumber(value.price)}
                                                         </span>
                                                     }
                                                 </div>

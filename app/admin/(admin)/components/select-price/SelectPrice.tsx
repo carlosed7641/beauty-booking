@@ -25,7 +25,7 @@ export const SelectPrice = ({
                 <span className="text-green-700">Precio desde</span>
                 <div className="flex gap-1 items-center">
                     <span className="text-green-700 font-bold">$</span>
-                    <input onChange={handleChange} name="price" className="flex-1 px-2 rounded-md border border-green-700 focus:outline-0 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" type="text" value={formatNumber(price.toString())} />
+                    <input onChange={handleChange} name="price" className="flex-1 px-2 rounded-md border border-green-700 focus:outline-0 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" type="text" value={formatNumber(price)} />
                 </div>
             </label>
             {error && <span className="text-red-500 mt-3 block">{error}</span>}

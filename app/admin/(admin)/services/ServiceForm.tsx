@@ -133,7 +133,7 @@ export const ServiceForm = ({ categories }: { categories: string[] }) => {
                 <Field label="Precio *" colorLabel={`${errors.price ? '#fb2c36' : '#008236'}`}>
                     <div className="flex items-center gap-1.5 mt-2">
                         <span className={`${errors.price ? 'text-red-500' : 'text-green-700'}`}>$</span>
-                        <input onChange={handleChangeField} onBlur={handleBlur} value={formatNumber(formData.price.toString())} name="price" className={`border w-full p-1 rounded-md focus:outline-0 ${errors.price ? 'border-red-500' : 'border-green-700'}`} type="text" />
+                        <input onChange={handleChangeField} onBlur={handleBlur} value={formatNumber(Number(formData.price))} name="price" className={`border w-full p-1 rounded-md focus:outline-0 ${errors.price ? 'border-red-500' : 'border-green-700'}`} type="text" />
                     </div>
                     {errors.price && <span className="text-red-500">{errors.price}</span>}
                 </Field>

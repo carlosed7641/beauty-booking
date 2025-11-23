@@ -71,7 +71,7 @@ export const StepFour = () => {
                       <li key={service.name} className="flex justify-between">
                         <span>{service.name}</span>
                         <button onClick={() => handleOpenPrice(name, service)} className="text-green-700 underline font-bold cursor-pointer">
-                          ${formatNumber(service.price.toString())}
+                          ${formatNumber(service.price)}
                         </button>
                       </li>
                     ))

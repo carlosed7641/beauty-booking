@@ -66,7 +66,7 @@ export const BookingServiceModal = ({
                                 !isAdmin &&
                                 <div className="flex gap-1">
                                     Desde
-                                    <p className="text-green-700 font-bold">${formatNumber(serviceState.selectedService?.price.toString()!)}</p>
+                                    <p className="text-green-700 font-bold">${formatNumber(serviceState.selectedService?.price!)}</p>
                                 </div>
                             }
                         </div>

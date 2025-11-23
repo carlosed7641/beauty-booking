@@ -45,7 +45,7 @@ export const ServiceItem = ({
         <li key={serviceItem.serviceId} className="p-4 border border-zinc-200 flex flex-col rounded-sm">
             <div className="flex flex-col text-sm md:text-base">
                 <span className="font-bold text-green-700">{serviceItem.name}</span>
-                ${formatNumber(serviceItem.price.toString())}
+                ${formatNumber(serviceItem.price)}
                 <span className="text-zinc-500">Duración:
                     {serviceItem.duration.hours > 0 ? ` ${serviceItem.duration.hours} ${serviceItem.duration.hours === 1 ? 'hr' : 'hrs'} ${serviceItem.duration.minutes > 0 ? 'y ' + serviceItem.duration.minutes + ' min' : ''}` : ` ${serviceItem.duration.minutes} min`}
                 </span>

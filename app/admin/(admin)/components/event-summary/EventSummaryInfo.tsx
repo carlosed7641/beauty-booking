@@ -24,7 +24,7 @@ export const EventSummaryInfo = () => {
                 </Link>}                  <span>Reservado por: <strong>{selectedEvent?.isAdminBooking ? 'Administración' : 'Cliente'}</strong></span>
             <span>Duración: <strong>{selectedEvent?.selectedService.duration.hours}</strong></span>
             <span>Profesional: <strong>{selectedEvent?.selectedProfessional.name}</strong></span>
-            <span>Valor del servicio: <strong>${formatNumber(selectedEvent?.selectedService.price.toString()!)}</strong></span>
+            <span>Valor del servicio: <strong>${formatNumber(selectedEvent?.selectedService.price!)}</strong></span>
         </>
     )
 }

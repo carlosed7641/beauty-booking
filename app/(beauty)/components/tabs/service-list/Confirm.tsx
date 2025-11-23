@@ -20,7 +20,7 @@ export const Confirm = () => {
             </div>
             <div className="flex gap-5">
                 <p className="text-green-700 w-[100px]">Valor</p>
-                <span>Desde ${formatNumber(serviceState.selectedService?.price.toString()!)}</span>
+                <span>Desde ${formatNumber(serviceState.selectedService?.price!)}</span>
             </div>
             <div className="flex gap-5">
                 <p className="text-green-700 w-[100px]">Duración</p>
