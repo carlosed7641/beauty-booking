@@ -4,10 +4,10 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { useModal } from '@/store'
-import { Modal, ModalHeader, OptionsSelector, SimpleTabs } from '@/components'
-import { DateSwitcher, GeneralReportsPanel, SalesReportsPanel, SelectProfessional } from '../components'
+import { OptionsSelector, SimpleTabs } from '@/components'
+import { DateRangeModal, DateSwitcher, GeneralReportsPanel, SalesReportsPanel, SelectProfessional } from '../components'
+import { formatInputDate } from '@/helpers'
 import { DEFAULT_PROFESSIONAL, DEFAULT_REPORT_DATA_SUMMARY } from '@/util/const'
-import { formatInputDate, isLessOrEqualThan } from '@/helpers'
 
 const timeOptions: TimeOptionItem[] = [
     { id: 'day', label: 'Día' },
@@ -34,7 +34,7 @@ export const Reports = ({ foundationDate, events, professionals }: Props) => {
     const [selectedProfessional, setSelectedProfessional] = useState<ProfessionalData>(DEFAULT_PROFESSIONAL)
     const [dataSummary, setDataSummary] = useState<ReportDataSummary>({ ...DEFAULT_REPORT_DATA_SUMMARY })
     const [isLoadingData, setIsLoadingData] = useState(true)
-    const [customRange, setCustomRange] = useState([todayFormatDate, todayFormatDate])
+    const [customRange, setCustomRange] = useState(dateRange)
     const { openModal } = useModal()
 
     const getDateRange = (optionId: TimeOption) => {
@@ -86,8 +86,8 @@ export const Reports = ({ foundationDate, events, professionals }: Props) => {
     }
 
     useEffect(() => {
-        if (activeOptionDate.id === 'range') return
-        setDateRange(getDateRange(activeOptionDate.id))
+        if (activeOptionDate.id === 'range') setCustomRange(dateRange)
+        else setDateRange(getDateRange(activeOptionDate.id))
     }, [activeOptionDate])
 
     useEffect(() => {
@@ -195,24 +195,14 @@ export const Reports = ({ foundationDate, events, professionals }: Props) => {
             setIsLoadingData(false)
         }, 1300) //TODO: Remove this
 
-    }, [dateRange, selectedProfessional])
+    }, [dateRange, activeOptionDate, selectedProfessional])
 
-    const handleCustomRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value, name } = e.target
-        const [year, month, day] = value.split("-").map(Number)
-        const date = new Date(year, month - 1, day)
+    useEffect(() => {
+        if (!openModal) {
+            setCustomRange(dateRange)
+        }
+    }, [openModal])
 
-        const isLimitExceeded = isLessOrEqualThan(date, foundationDate)
-        
-        if (isLimitExceeded) return
-
-        const formatDate = formatInputDate(date)
-
-        setCustomRange(prev => (
-            name === 'initialDate' ? [formatDate, ...prev[1]]
-            : [...prev[0], formatDate]
-        ))
-    }
 
     return (
         <>
@@ -265,24 +255,13 @@ export const Reports = ({ foundationDate, events, professionals }: Props) => {
                     }
                 </div>
             </div>
-            {
-                openModal === 'DateRange' &&
-                <Modal className="overflow-hidden! md:w-[600px]!">
-                    <ModalHeader>
-                        <h1 className="text-green-700 text-lg">Selecciona un rango de fechas</h1>
-                    </ModalHeader>
-                    <div className="flex flex-col gap-3">
-                        <label className="flex flex-col gap-1">
-                            <span className="text-green-700">Fecha inicial</span>
-                            <input name="initialDate" type="date" value={customRange[0]} onChange={handleCustomRangeChange} className="border border-green-700 px-2 rounded-md focus:outline-0" />
-                        </label>
-                        <label className="flex flex-col gap-1">
-                            <span className="text-green-700">Fecha final</span>
-                            <input name="finalDate" type="date" value={customRange[1]} onChange={handleCustomRangeChange} className="border border-green-700 px-2 rounded-md focus:outline-0" />
-                        </label>
-                        <button className="btn-primary rounded-md">Confirmar</button>
-                    </div>
-                </Modal>
+            {openModal === 'DateRange' &&
+                <DateRangeModal
+                    customRange={customRange}
+                    setCustomRange={setCustomRange}
+                    setDateRange={setDateRange}
+                    limitDate={foundationDate}
+                />
             }
         </>
     )

@@ -10,7 +10,7 @@ export const EventSummaryInfo = () => {
 
     return (
         <>
-            <span>{formatDate({ date: selectedEvent?.start!, weekday: true})}</span>
+            <span>{formatDate({ date: selectedEvent?.start!, weekday: 'long'})}</span>
             <div className="flex gap-1">
                 <span>{format12(selectedEvent?.start!)}</span>
                 <span>-</span>

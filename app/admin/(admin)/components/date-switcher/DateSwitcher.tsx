@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { VscSettings } from 'react-icons/vsc'
+import clsx from 'clsx'
 import { useModal } from '@/store'
 import { formatDate, isGreaterOrEqualThanToday, isLessOrEqualThan } from '@/helpers'
 import { MONTHS_OF_YEAR } from '@/util/const'
@@ -80,9 +81,10 @@ export const DateSwitcher = ({
 
         switch (activeOption.id) {
             case 'day':
-                return formatDate({ date: start, weekday: true }).toLowerCase()
+                return formatDate({ date: start, weekday: 'long' }).toLowerCase()
             case 'week':
             case 'fortnight':
+            case 'range':
                 return `${formatDate({ date: start, month: '2-digit', year: '2-digit' })} al ${formatDate({ date: end, month: '2-digit', year: '2-digit' })}`
             case 'month':
                 return `${MONTHS_OF_YEAR[start.getMonth()]} ${start.getFullYear()}`
@@ -96,27 +98,28 @@ export const DateSwitcher = ({
     const label = useMemo(() => getLabelByOption(), [getLabelByOption])
     const canGoForward = useMemo(() => !isGreaterOrEqualThanToday(dateRange[1]), [dateRange])
     const canGoBack = useMemo(() => !isLessOrEqualThan(dateRange[0], foundationDate), [dateRange])
+    const isRange = activeOption.id === 'range'
 
     return (
         <div className="flex items-center gap-3 justify-center py-3">
             {
-                activeOption.id !== 'range' &&
+                !isRange &&
                 <button disabled={!canGoBack} onClick={() => handleChangeDate(-1)} className="text-2xl text-green-700 cursor-pointer disabled:pointer-events-none disabled:opacity-50">
                     <IoIosArrowBack />
                 </button>
             }
-            <span className="flex-1 md:max-w-[400px] text-center">
-                {
-                    activeOption.id === 'range' ? 
-                    <div onClick={()=> setOpenModal('DateRange')} className="flex items-center gap-1 justify-center cursor-pointer">
-                        <VscSettings className="text-green-700" />
-                        Selecciona un rango
-                    </div>
-                    : <>{activeOption.label}: {label}</>
-                }
-            </span>
+            <button className={
+                clsx(
+                    "flex-1 md:max-w-[400px] flex justify-center items-center gap-1" ,
+                    { "cursor-pointer": isRange }
+                )
+            }
+            onClick={()=> isRange && setOpenModal("DateRange")}> 
+                {isRange && <VscSettings className="text-green-700" />}
+                <span>{activeOption.label}: {label}</span>
+            </button>
             {
-                activeOption.id !== 'range' &&
+                !isRange &&
                 <button disabled={!canGoForward} onClick={() => handleChangeDate(1)} className="text-2xl text-green-700 cursor-pointer disabled:pointer-events-none disabled:opacity-50">
                     <IoIosArrowForward />
                 </button>

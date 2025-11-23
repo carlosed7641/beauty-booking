@@ -1,14 +1,14 @@
-import { MONTHS_OF_YEAR } from '@/util/const';
-import { format } from 'date-fns';
+import { MONTHS_OF_YEAR } from '@/util/const'
+
 export const formatDate = ({ date, weekday, day, month, year }: {
      date: Date,
      day?: 'numeric' | '2-digit',
      month?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow',
      year?: 'numeric' | '2-digit',
-     weekday?: boolean
+     weekday?: 'short' | 'long'
 }) => {
     const text =  date.toLocaleDateString('es-ES', {
-        ...(weekday && { weekday: 'long' }),
+        ...(weekday && { weekday }),
         day: day || 'numeric',
         month: month || 'long',
         year: year || 'numeric'

@@ -1,11 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { IoMdArrowRoundBack } from 'react-icons/io'
 import { SelectProfessional, SelectDate, SelectHour, BookingButton, Confirm } from '..'
 import { Modal, ModalHeader } from '@/components/ui/modal'
 import { useModal, useService } from '@/store'
+import { formatNumber } from '@/helpers'
 import { SERVICE_INITIAL_STATE } from '@/util/const'
-import { IoMdArrowRoundBack } from 'react-icons/io'
 
 interface Props {
     step: number
@@ -65,7 +66,7 @@ export const BookingServiceModal = ({
                                 !isAdmin &&
                                 <div className="flex gap-1">
                                     Desde
-                                    <p className="text-green-700 font-bold">${serviceState.selectedService?.price}</p>
+                                    <p className="text-green-700 font-bold">${formatNumber(serviceState.selectedService?.price.toString()!)}</p>
                                 </div>
                             }
                         </div>

@@ -5,6 +5,7 @@ import { IoCloseCircleOutline } from 'react-icons/io5'
 import { Title } from '@/components'
 import { ServiceIcon, ReservationOptions } from '..'
 import { useReservationOptions } from '@/hooks'
+import { format12, formatDate } from '@/helpers'
 
 const currentReservations: EventDate[] = [
     {
@@ -67,11 +68,11 @@ export const NextReservations = () => {
                                     </div>
                                     <div className="flex items-center gap-1">
                                         <span className="text-green-700">Fecha:</span>
-                                        <p>{r.start?.toDateString()}</p>
+                                        <p>{formatDate({date: r.start, weekday: 'short', month: 'short'})}</p>
                                     </div>
                                     <div className="flex items-center gap-1">
                                         <span className="text-green-700">Hora:</span>
-                                        <p>{r.start.getHours()}:{r.start.getMinutes()}</p>
+                                        <p>{format12(r.start)}</p>
                                     </div>
                                 </div>
                                 <div className="flex flex-col flex-1 items-end ml-4 gap-5">
