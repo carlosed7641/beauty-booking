@@ -39,7 +39,7 @@ export const RegistrationForm = ({ onSubmit }: { onSubmit(data: RegistrationInpu
                         <label htmlFor="phone">Número de contacto</label>
                         <div className="flex gap-2">
                             <select className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700">
-                                {COUNTRIES.map(country => <option key={country.indicator} value={country.indicator}>{country.indicator}</option>)}
+                                {COUNTRIES.map(country => <option key={country.indicator} value={country.indicator}>+{country.indicator}</option>)}
                             </select>
                             <input id="phone" {...register('phone', { required: true })} className="flex-1 p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" type="text" />
                         </div>

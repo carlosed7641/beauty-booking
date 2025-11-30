@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
@@ -11,6 +12,7 @@ interface Inputs {
 }
 
 export default function NewAccountPage() {
+    const router = useRouter()
     const { register, handleSubmit, watch, formState: { isValid } } = useForm<Inputs>()
     const watchPassword = watch('password')
     const watchConfirmPassord = watch('confirmPassword')
@@ -25,6 +27,7 @@ export default function NewAccountPage() {
         }
 
         console.log(data)
+        router.push('/admin')
     }
 
     return (

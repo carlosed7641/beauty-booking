@@ -5,23 +5,48 @@ import { HiOutlineUsers } from 'react-icons/hi2'
 import { IoSettingsOutline, IoShareSocialOutline } from 'react-icons/io5'
 import { MdOutlineStarPurple500 } from 'react-icons/md'
 import { AdminSections } from './components'
+import Image from 'next/image'
 
 export default function HomePage() {
   //TODO: Get Data from session
+  const session = {
+    name: 'Carlos Castro',
+    photo: 'https://picsum.photos/64/64',
+    role: 'Administrador',
+    shop: {
+      id: '123',
+      name: 'Master Barber'
+    }
+  }
+
+  const shopData = {
+    followers: 53,
+    scheduling: 256,
+    reviews: {
+      points: 4.6,
+      total: 155
+    }
+  }
+
   return (
     <div className="flex flex-col gap-3">
       <div className="bg-white w-full rounded-md p-7">
         <div className="md:flex justify-between">
           <div className="flex md:flex-col md:gap-3 md:w-fit items-center md:items-start justify-between md:justify-start">
             <Link href="/admin/profile" className="flex gap-2">
-              <div className="text-xl md:text-3xl rounded-full h-14 w-14 md:h-[80px] md:w-[80px] flex items-center justify-center bg-green-700 text-white">
-                C
-              </div>
+              {
+                session.photo ?
+                  <Image className="rounded-full h-14 w-14 md:h-[80px] md:w-[80px]" src={session.photo} width={80} height={80} alt={session.name} />
+                  :
+                  <div className="text-xl md:text-3xl rounded-full h-14 w-14 md:h-[80px] md:w-[80px] flex items-center justify-center bg-green-700 text-white">
+                    {session.name[0]}
+                  </div>
+              }
               <div className="flex flex-col text-xs md:text-sm">
                 <span>Hola</span>
-                <span className="text-green-700 text-sm md:text-base pointer-events-none">Carlos Castro</span>
-                <span>Administador</span>
-                <span>Negocio: Master Barber</span>
+                <span className="text-green-700 text-sm md:text-base pointer-events-none">{session.name}</span>
+                <span>{session.role}</span>
+                <span>Negocio: {session.shop.name}</span>
               </div>
             </Link>
             <div className="text-green-700 text-xl md:text-2xl flex gap-4 md:w-full">
@@ -36,22 +61,22 @@ export default function HomePage() {
             <div className="flex flex-col items-center gap-2">
               <HiOutlineUsers className="text-lg text-green-700" />
               <div className="flex flex-col items-center">
-                <span className="text-sm">0</span>
+                <span className="text-sm">{shopData.followers}</span>
                 <span className="text-xs text-center text-zinc-500">Seguidores del negocio</span>
               </div>
             </div>
             <div className="flex flex-col items-center gap-2">
               <FaRegCalendar className="text-lg text-green-700" />
               <div className="flex flex-col items-center">
-                <span className="text-sm">0</span>
+                <span className="text-sm">{shopData.scheduling}</span>
                 <span className="text-xs text-center text-zinc-500">Agendamientos</span>
               </div>
             </div>
             <div className="flex flex-col items-center gap-2">
               <MdOutlineStarPurple500 className="text-lg text-amber-400" />
               <div className=" flex flex-col items-center ">
-                <span className="text-sm">0.0</span>
-                <span className="text-xs text-center text-zinc-500">(0)</span>
+                <span className="text-sm">{shopData.reviews.points}</span>
+                <span className="text-xs text-center text-zinc-500">({shopData.reviews.total})</span>
               </div>
             </div>
           </div>

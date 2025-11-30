@@ -14,8 +14,8 @@ export const RegistrationData = () => {
     }
 
     return (
-        <div >
+        <>
             {showCountryStep ? <SelectCountry /> : <RegistrationForm onSubmit={onSubmit} />}
-        </div>
+        </>
     )
 }

@@ -58,24 +58,24 @@ export const SLIDER_SETTINGS = {
 }
 
 export const COUNTRIES: Country[] = [
-    { id: 'AR', name: 'Argentina', indicator: '54', Flag: ArgentinaFlag },
-    { id: 'BO', name: 'Bolivia', indicator: '591', Flag: BoliviaFlag },
-    { id: 'CL', name: 'Chile', indicator: '56', Flag: ChileFlag },
-    { id: 'CO', name: 'Colombia', indicator: '57', Flag: ColombiaFlag },
-    { id: 'CR', name: 'Costa Rica', indicator: '506', Flag: CostaRicaFlag },
-    { id: 'CU', name: 'Cuba', indicator: '53', Flag: CubaFlag },
-    { id: 'EC', name: 'Ecuador', indicator: '593', Flag: ColombiaFlag },
-    { id: 'SL', name: 'El Salvador', indicator: '503', Flag: ElSalvadorFlag },
-    { id: 'GT', name: 'Guatemala', indicator: '502', Flag: GuatemalaFlag },
-    { id: 'HN', name: 'Honduras', indicator: '504', Flag: HondurasFlag },
-    { id: 'MX', name: 'México', indicator: '52', Flag: MexicoFlag },
-    { id: 'NC', name: 'Nicaragua', indicator: '505', Flag: NicaraguaFlag },
-    { id: 'PN', name: 'Panamá', indicator: '507', Flag: PanamaFlag },
-    { id: 'PY', name: 'Paraguay', indicator: '595', Flag: ParaguayFlag },
-    { id: 'PE', name: 'Perú', indicator: '51', Flag: PeruFlag },
-    { id: 'RD', name: 'Rep. Dominicana', indicator: '1', Flag: DominicanRepublicFlag },
-    { id: 'UY', name: 'Uruguay', indicator: '598', Flag: UruguayFlag },
-    { id: 'VE', name: 'Venezuela', indicator: '58', Flag: VenezuelaFlag }
+    { id: 'AR', name: 'Argentina', indicator: '54', flag: ArgentinaFlag },
+    { id: 'BO', name: 'Bolivia', indicator: '591', flag: BoliviaFlag },
+    { id: 'CL', name: 'Chile', indicator: '56', flag: ChileFlag },
+    { id: 'CO', name: 'Colombia', indicator: '57', flag: ColombiaFlag },
+    { id: 'CR', name: 'Costa Rica', indicator: '506', flag: CostaRicaFlag },
+    { id: 'CU', name: 'Cuba', indicator: '53', flag: CubaFlag },
+    { id: 'EC', name: 'Ecuador', indicator: '593', flag: ColombiaFlag },
+    { id: 'SL', name: 'El Salvador', indicator: '503', flag: ElSalvadorFlag },
+    { id: 'GT', name: 'Guatemala', indicator: '502', flag: GuatemalaFlag },
+    { id: 'HN', name: 'Honduras', indicator: '504', flag: HondurasFlag },
+    { id: 'MX', name: 'México', indicator: '52', flag: MexicoFlag },
+    { id: 'NC', name: 'Nicaragua', indicator: '505', flag: NicaraguaFlag },
+    { id: 'PN', name: 'Panamá', indicator: '507', flag: PanamaFlag },
+    { id: 'PY', name: 'Paraguay', indicator: '595', flag: ParaguayFlag },
+    { id: 'PE', name: 'Perú', indicator: '51', flag: PeruFlag },
+    { id: 'RD', name: 'Rep. Dominicana', indicator: '1', flag: DominicanRepublicFlag },
+    { id: 'UY', name: 'Uruguay', indicator: '598', flag: UruguayFlag },
+    { id: 'VE', name: 'Venezuela', indicator: '58', flag: VenezuelaFlag }
 ]
 
 export const GENDERS = [
@@ -308,8 +308,8 @@ export const SHOP_TYPES = ['Barbería', 'Cejas & Pesteñas', 'Centro de Maquilla
 
 export const INITIAL_WORK_DAYS = [
     {
-        from: '07:00',
-        to: '19:00'
+        from: '09:00',
+        to: '21:00'
     },
     {
         from: '09:00',

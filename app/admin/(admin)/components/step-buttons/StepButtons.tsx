@@ -29,11 +29,8 @@ export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
             const currentStep = steps[step]
             if (!currentStep) return
 
-            if (currentStep.isValid()) {
-                nextStep()
-            } else {
-                setShowErrors(true)
-            }
+            if (currentStep.isValid()) nextStep()
+            else setShowErrors(true)
         }
     }
 
@@ -41,6 +38,7 @@ export const StepButtons = ({ stepQuantity }: { stepQuantity: number }) => {
         const allStepsValid = steps.every(step => step.isValid())
         if (allStepsValid) {
             // TODO: Save To BD: isRegisterCompleted - true
+            // redirect to /
             // localStorage.removeItem('service-list')
             // localStorage.removeItem('steps-data')
             console.log(data)

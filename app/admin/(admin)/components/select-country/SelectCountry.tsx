@@ -23,8 +23,8 @@ export const SelectCountry = () => {
                         <div className="bg-white p-5 rounded-md shadow-md h-fit">
                             <h1 className="text-green-700 text-2xl text-center mb-5">Selecciona el país donde tienes tu negocio</h1>
                             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6">
-                                {COUNTRIES.map(({ id, name, Flag, ...rest }) =>
-                                    <div onClick={() => setSelectedCountry({ id, name, Flag, ...rest })} className={
+                                {COUNTRIES.map(({ id, name, flag: Flag, indicator }) =>
+                                    <div onClick={() => setSelectedCountry({  id, name, flag: Flag, indicator })} className={
                                         clsx(
                                             "group flex flex-col gap-2 p-2 hover:scale-110 cursor-pointer",
                                             {

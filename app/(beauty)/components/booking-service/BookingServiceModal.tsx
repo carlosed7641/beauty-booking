@@ -61,7 +61,10 @@ export const BookingServiceModal = ({
                         <div className="flex flex-col gap-1">
                             <p className="text-xl font-bold">{serviceState.selectedService?.name}</p>
                             {isAdmin && serviceState.customer && <p className="text-zinc-500">Cliente: {serviceState.customer.name}</p>}
-                            <p className="text-zinc-500">{serviceState.selectedService?.duration.hours} aprox</p> {/** //TODO **/}
+                           {
+                            serviceState.selectedService?.duration &&
+                             <p className="text-zinc-500">{serviceState.selectedService.duration.hours > 0 ? `${serviceState.selectedService.duration.hours} ${serviceState.selectedService.duration.hours === 1 ? 'hr' : 'hrs'} ${serviceState.selectedService?.duration.minutes > 0 ? 'y ' + serviceState.selectedService.duration.minutes + ' min' : ''}` : `${serviceState.selectedService.duration.minutes} min`} aprox</p> 
+                           }
                             {
                                 !isAdmin &&
                                 <div className="flex gap-1">

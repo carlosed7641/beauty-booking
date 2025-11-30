@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation'
 import { RegistrationData, RegistrationSteps, SelectCountry } from './components'
 
 const user = {
@@ -13,6 +14,8 @@ const user = {
   isRegisterCompleted: true
 }
 
+const logged = true
+
 export default function AdminLayout({
   children
 }: {
@@ -20,7 +23,7 @@ export default function AdminLayout({
 }) {
 
   // TODO: validate if logged
-
+  if (!logged) return redirect('/admin/auth/login')
   if (!user.name || !user.country || !user.phone) {
     return <RegistrationData />
   } 

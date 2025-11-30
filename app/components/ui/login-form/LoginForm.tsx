@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 interface Inputs {
@@ -10,11 +11,15 @@ interface Inputs {
 
 export const LoginForm = ({ isAdmin = false }: { isAdmin?: boolean }) => {
 
+    const router = useRouter()
     const { handleSubmit, register } = useForm<Inputs>()
     const [showPassword, setShowPassword] = useState(false)
 
+
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         console.log(data)
+        //TODO: Update logged state
+        router.push(isAdmin ? '/admin' : '/')
     }
 
     const newAccountUrl = isAdmin ? '/admin/auth/new-account' : '/auth/new-account'
