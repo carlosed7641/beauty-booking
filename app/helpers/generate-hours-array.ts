@@ -10,8 +10,15 @@ export const generateHoursArray = ({ frequencyMinutes, inputDate, excludeHours, 
     const now = new Date()
     const date = new Date(inputDate)
 
-    const [startHour, startMinute] = scheduleHours[0]?.split(':').map(Number) ?? ['10', '00'] //TODO
-    const [endHour, endMinute] = scheduleHours[1]?.split(':').map(Number) ?? ['21', '00'] //TODO
+    const [startHour, startMinute] = scheduleHours[0]?.split(':').map(Number)  
+    const [endHour, endMinute] = scheduleHours[1]?.split(':').map(Number)  
+
+    // if (
+    //     typeof startHour !== 'number' ||
+    //     typeof startMinute !== 'number' ||
+    //     typeof endHour !== 'number' ||
+    //     typeof endMinute !== 'number'
+    // ) return null
 
     const start = new Date()
     start.setHours(startHour, startMinute, 0, 0)
@@ -32,18 +39,23 @@ export const generateHoursArray = ({ frequencyMinutes, inputDate, excludeHours, 
     const remainder = minutes % frequencyMinutes
 
     if (remainder !== 0) {
-        current.setMinutes(minutes + (frequencyMinutes - remainder))
+        current.setMinutes(minutes + (Math.min(frequencyMinutes, 60) - remainder), 0, 0)
     }
 
     const result = []
 
-    while (current <= end) {
+    let tempCurrent = new Date(current)
+    tempCurrent.setMinutes(frequencyMinutes, 0, 0)
+
+
+    while (tempCurrent <= end) {
 
         if (!excludeHours.includes(format24(current))) {
             const newValue ={ label: format12(current), value: format24(current) } 
             result.push(newValue)
         }
-
+         
+        tempCurrent = new Date(tempCurrent.getTime() + frequencyMinutes * 60000)
         current = new Date(current.getTime() + frequencyMinutes * 60000)
 
     }

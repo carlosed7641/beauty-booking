@@ -24,11 +24,12 @@ export const Confirm = () => {
             </div>
             <div className="flex gap-5">
                 <p className="text-green-700 w-[100px]">Duración</p>
-                {/* <span>{serviceState.selectedService?.duration} aprox</span> */}
+                {serviceState.selectedService?.duration &&
+                    <span>{serviceState.selectedService.duration.hours > 0 ? `${serviceState.selectedService.duration.hours} ${serviceState.selectedService.duration.hours === 1 ? 'hr' : 'hrs'} ${serviceState.selectedService?.duration.minutes > 0 ? 'y ' + serviceState.selectedService.duration.minutes + ' min' : ''}` : `${serviceState.selectedService.duration.minutes} min`} aprox</span>}
             </div>
             <div className="flex gap-5">
                 <p className="text-green-700 w-[100px]">Fecha</p>
-                <span>{formatDate({ date: serviceState.selectedDate!})}</span>
+                <span>{formatDate({ date: serviceState.selectedDate! })}</span>
             </div>
             <div className="flex gap-5">
                 <p className="text-green-700 w-[100px]">Hora</p>

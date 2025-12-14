@@ -31,7 +31,7 @@ export const StepButtons = ({ stepsLength, handleFinish }: Props) => {
                 step > 0 &&
                 <button
                     onClick={() => handleClick(step - 1)}
-                    className="btn-secondary font-boldrounded-full justify-center flex w-full md:w-36">
+                    className="btn-secondary font-bold rounded-full justify-center flex w-full md:w-36">
                     Anterior
                 </button>
             }
