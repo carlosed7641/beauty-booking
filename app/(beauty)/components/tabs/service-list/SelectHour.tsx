@@ -81,6 +81,7 @@ export const SelectHour = ({ scheduleHours, excludeHours }: { scheduleHours: str
         if (serviceState.selectedHour) {
             const parsedHours = hours.map(hour => hour.value)
             const closestTime = getClosestTime(parsedHours, serviceState.selectedHour)
+            console.log({hr: serviceState.selectedHour, closestTime})
             setServiceState({ ...serviceState, selectedHour: closestTime })
         }
 

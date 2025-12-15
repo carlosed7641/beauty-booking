@@ -4,7 +4,7 @@ import { entities, serviceList } from '@/util/fake-data'
 
 export const RecentServices = () => {
 
-  const recentServicesId = ['001', '004'] //TODO: Get services id by user Id
+  const recentServicesId = ['001', '004'] //TODO: Get services id by user Id from session
   const services = serviceList
     .flatMap(({ services, entityId }) => services.map(s => ({
       ...s,

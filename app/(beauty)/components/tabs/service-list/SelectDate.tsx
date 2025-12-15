@@ -11,7 +11,14 @@ const INITIAL_YEAR = 2020
 const CURRENT_YEAR = new Date().getFullYear()
 const years = CURRENT_YEAR - INITIAL_YEAR + 1
 
-export const SelectDate = ({ isAdmin, dates = availableDates }: { isAdmin?: boolean, dates?: DateItem[] }) => {
+interface Props {
+    isAdmin?: boolean
+    dates?: DateItem[]
+    scheduleHours: string[]
+    excludeHours: string[]
+}
+
+export const SelectDate = ({ isAdmin, scheduleHours, excludeHours, dates = availableDates }: Props) => {
 
     const [date, setDate] = useState(new Date(dates[0].date))
     const [days, setDays] = useState<DateItem[]>(dates)
@@ -75,8 +82,10 @@ export const SelectDate = ({ isAdmin, dates = availableDates }: { isAdmin?: bool
                     isAdmin={isAdmin}
                     datesList={days}
                     onClick={onClickDate}
-                    frequencyMintues={frecuencyMintues}
+                    frequencyMinutes={frecuencyMintues}
                     selectedDate={serviceState.selectedDate}
+                    scheduleHours={scheduleHours} 
+                    excludeHours={excludeHours}
                 />
             </div>
         </>

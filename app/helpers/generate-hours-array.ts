@@ -1,3 +1,5 @@
+'use client'
+
 interface Props {
     frequencyMinutes: number,
     inputDate: Date
@@ -10,15 +12,17 @@ export const generateHoursArray = ({ frequencyMinutes, inputDate, excludeHours, 
     const now = new Date()
     const date = new Date(inputDate)
 
+    if (!scheduleHours.length) return null
+
     const [startHour, startMinute] = scheduleHours[0]?.split(':').map(Number)  
     const [endHour, endMinute] = scheduleHours[1]?.split(':').map(Number)  
 
-    // if (
-    //     typeof startHour !== 'number' ||
-    //     typeof startMinute !== 'number' ||
-    //     typeof endHour !== 'number' ||
-    //     typeof endMinute !== 'number'
-    // ) return null
+    if (
+        typeof startHour !== 'number' ||
+        typeof startMinute !== 'number' ||
+        typeof endHour !== 'number' ||
+        typeof endMinute !== 'number'
+    ) return null
 
     const start = new Date()
     start.setHours(startHour, startMinute, 0, 0)

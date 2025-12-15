@@ -4,9 +4,8 @@ import { useState } from 'react'
 import { useSelectedFilters } from '@/store'
 import { FilterList, ServiceResultList, ServiceFilters, ServiceOrder } from '..'
 import { orderBy, getServiceResults } from '@/helpers'
-import { serviceList } from '@/util/fake-data'
 
-export const ServiceResult = () => {
+export const ServiceResult = ({ serviceList }: { serviceList: Service[]}) => {
 
     const { selectedFilters, setSelectedFilters } = useSelectedFilters()
     const [selectedOrder, setSelectedOrder] = useState<string | null>(null)

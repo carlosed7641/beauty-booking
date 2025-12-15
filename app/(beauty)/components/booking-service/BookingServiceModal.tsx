@@ -88,7 +88,14 @@ export const BookingServiceModal = ({
                     step === 1 &&
                     <>
                         {professionals && <SelectProfessional professionals={professionals} />}
-                        {serviceState.selectedProfessional && <SelectDate isAdmin={isAdmin} dates={dates} />}
+                        {serviceState.selectedProfessional && hoursData.scheduleHours.length > 0 &&
+                            <SelectDate 
+                                isAdmin={isAdmin} 
+                                dates={dates} 
+                                scheduleHours={hoursData.scheduleHours} 
+                                excludeHours={hoursData.excludeHours}
+                            />
+                        }
                         {serviceState.selectedProfessional && serviceState.selectedDate && hoursData.scheduleHours.length > 0 &&
                             <>
                                 <SelectHour

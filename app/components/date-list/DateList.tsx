@@ -6,18 +6,22 @@ interface Props {
     isAdmin?: boolean
     disabled?: 'afterToday' | 'none'
     datesList: DateItem[]
-    frequencyMintues?: number
+    frequencyMinutes?: number
     selectedDate?: string | Date | null
     onClick: (dayItem: DateItem) => void
+    scheduleHours: string[]
+    excludeHours: string[]
 }
 
 export const DateList = ({
     isAdmin,
     disabled,
     datesList,
-    frequencyMintues,
+    frequencyMinutes,
     selectedDate,
-    onClick
+    onClick,
+    scheduleHours,
+    excludeHours
 }: Props) => {
 
     return (
@@ -25,7 +29,7 @@ export const DateList = ({
         datesList.map(date => {
 
             // isAdmin, isToday, hasfrequencyMintues, hasHours
-            const shouldShow = isAdmin || compareDates(date.date, new Date()) || !frequencyMintues || generateHoursArray({frequencyMinutes: frequencyMintues, inputDate: date.date, excludeHours: [], scheduleHours: [] }) //TODO: Fix 
+            const shouldShow = isAdmin || compareDates(date.date, new Date()) || !frequencyMinutes || generateHoursArray({frequencyMinutes, inputDate: date.date, excludeHours, scheduleHours }) //TODO: Fix 
             const isSelectable = (() => {
                 if (!disabled) return isGreaterOrEqualThanToday(date.date)
                 if (disabled === 'afterToday') return isLessOrEqualThanToday(date.date)

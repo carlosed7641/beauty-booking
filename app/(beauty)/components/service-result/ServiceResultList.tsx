@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { StarQuantity, ServiceIcon } from '..'
+import { formatNumber } from '@/helpers'
 
 interface Props {
     services: ServiceResult[]
@@ -26,7 +27,7 @@ export const ServiceResultList = ({ services }: Props) => {
                         <p>A 0.77 km de ti</p> {/** TODO **/}
                     </div>
                     <div className="ml-auto flex flex-col items-center gap-2">
-                        <span>${s.price}</span>
+                        <span>${formatNumber(s.price)}</span>
                         <Link
                             title="Agendar"
                             href={`/entity/${s.entity.id}`}

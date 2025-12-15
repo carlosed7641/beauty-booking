@@ -1,21 +1,38 @@
 import { GrFavorite } from 'react-icons/gr'
-import { WorkSamplesTab } from '@/components'
+import { WorkSamples } from '@/components'
 
 export default function FavoriteWorkSamplesPage() {
 
-  const favoritesWorkSamples = [
+  const favoritesWorkSamples: WorkSample[] = [
     {
+      id: '123',
       category: 'Cortes',
       name: 'Fade',
-      image: 'https://picsum.photos/160/170',
+      images: [
+        {
+          id: '123',
+          mainImage: true,
+          url: 'https://picsum.photos/160/170'
+        },
+        {
+          id: '125',
+          mainImage: true,
+          url: 'https://picsum.photos/160/170'
+        }
+      ],
       author: 'Carlos Castro',
       authorId: 'bcf',
       entityId: '422'
     },
     {
+      id: '124',
       category: 'Cortes',
       name: 'Fade',
-      image: 'https://picsum.photos/160/170',
+       images: [{
+          id: '123',
+          mainImage: true,
+          url: 'https://picsum.photos/160/170'
+      }],
       author: 'Gregorio Carrena',
       authorId: 'abc',
       entityId: '422'
@@ -27,7 +44,7 @@ export default function FavoriteWorkSamplesPage() {
         <GrFavorite />
         Mis favoritos
       </h1>
-      <WorkSamplesTab workSamples={favoritesWorkSamples} />
+      <WorkSamples workSamples={favoritesWorkSamples} />
     </>
   )
 }

@@ -5,9 +5,10 @@ import { RxCaretDown } from 'react-icons/rx'
 import clsx from 'clsx'
 import { ReservationOptions } from '..'
 import { useReservationOptions } from '@/hooks'
+import { format12, formatDate, formatNumber } from '@/helpers'
 
 interface Props {
-    reservations: Reservation[]
+    reservations: EventDate[]
 }
 
 export const ReservationList = ({ reservations }: Props) => {
@@ -36,8 +37,8 @@ export const ReservationList = ({ reservations }: Props) => {
                                     <div className="flex items-center justify-between w-full">
                                         {r.selectedService.name}
                                         <p className="flex flex-col">
-                                            {r.selectedDate.toDateString()} - {r.selectedHour}
-                                            {r.status === 'canceled' && <span className="text-red-500 text-right">Cita cancelada</span>}
+                                            {formatDate({date: r.start, month: 'numeric' })} - {format12(r.start)}
+                                            {r.status === 'cancelled' && <span className="text-red-500 text-right">Cita cancelada</span>}
                                         </p>
                                     </div>
                                 </div>
@@ -56,19 +57,19 @@ export const ReservationList = ({ reservations }: Props) => {
                                     </li>
                                     <li className="py-2 flex gap-3">
                                         <span className="w-28 text-green-700 font-bold">Valor</span>
-                                        <span>Desde ${r.selectedService.price}</span>
+                                        <span>Desde ${formatNumber(r.selectedService.price)}</span>
                                     </li>
                                     <li className="py-2 flex gap-3">
                                         <span className="w-28 text-green-700 font-bold">Duración</span>
-                                        <span>{r.selectedService.duration.hours}</span> 
+                                        <span>{r.selectedService.duration.hours > 0 ? `${r.selectedService.duration.hours} ${r.selectedService.duration.hours === 1 ? 'hr' : 'hrs'} ${r.selectedService.duration.minutes > 0 ? 'y ' + r.selectedService.duration.minutes + ' min' : ''}` : `${r.selectedService.duration.minutes} min`}</span> 
                                     </li>
                                     <li className="py-2 flex gap-3">
                                         <span className="w-28 text-green-700 font-bold">Fecha</span>
-                                        <span>{r.selectedDate.toDateString()}</span>
+                                        <span>{formatDate({date: r.start, month: 'numeric' })}</span>
                                     </li>
                                     <li className="py-2 flex gap-3">
                                         <span className="w-28 text-green-700 font-bold">Hora</span>
-                                        <span>{r.selectedHour}</span>
+                                        <span>{format12(r.start)}</span>
                                     </li>
                                     <li className="py-2 flex gap-3">
                                         <span className="w-28 text-green-700 font-bold">Profesional</span>
@@ -76,7 +77,7 @@ export const ReservationList = ({ reservations }: Props) => {
                                     </li>
                                     <li className="py-2 flex gap-3">
                                         <span className="w-28 text-green-700 font-bold">Lugar</span>
-                                        <span>{r.selectedService.entityName}</span>
+                                        {/* <span>{r.selectedService.entityName}</span> */}
                                     </li>
                                     {
                                         r.status === 'pending' &&

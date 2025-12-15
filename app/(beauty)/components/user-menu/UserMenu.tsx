@@ -47,7 +47,7 @@ export const UserMenu = () => {
                         {
                             options.map(opt => (
                                 <li key={opt.href}>
-                                    <Link onClick={() => setIsOpenDialog(false)} className="flex py-1.5 px-5 text-zinc-600 hover:bg-zinc-100" href={opt.href}>
+                                    <Link onClick={() => setIsOpenDialog(false)} className="flex py-1.5 px-5 text-zinc-600 hover:bg-zinc-100 cursor-pointer" href={opt.href}>
                                         {opt.label}
                                     </Link>
                                 </li>

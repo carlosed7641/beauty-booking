@@ -150,7 +150,7 @@ export const workSamples: WorkSample[] = [
     id: '123',
     category: 'Cortes',
     name: 'Fade',
-    images:  [
+    images: [
       {
         id: '123',
         mainImage: true,
@@ -170,12 +170,12 @@ export const workSamples: WorkSample[] = [
     author: 'Carlos Castro',
     authorId: 'abc',
     entityId: '422'
-  },  
+  },
   {
     id: '124',
     category: 'Peinados',
     name: 'Alisado',
-    images:  [
+    images: [
       {
         id: '222',
         mainImage: true,
@@ -190,7 +190,7 @@ export const workSamples: WorkSample[] = [
     id: '125',
     category: 'Peinados',
     name: 'Trenzas',
-    images:  [
+    images: [
       {
         id: '333',
         mainImage: true,
@@ -208,16 +208,28 @@ export const workSamples: WorkSample[] = [
   }
 ]
 
-export const reservations: Reservation[] = [
+export const reservations: EventDate[] = [
   {
     id: 'abc',
+    start: new Date(2025, 11, 20, 10, 0, 0),
+    end: new Date(2025, 11, 20, 12, 0, 0),
+    title: 'Rayitos platinado',
+    customer: {
+      id: "125",
+      name: "David Ortiz",
+      phone: {
+        indicator: '57',
+        number: '3004394704'
+      },
+      birthDay: new Date(),
+      gender: 'Masculino',
+      reviewPointsAverage: 4
+    },
     selectedService: {
       serviceId: "001",
-      entityName: 'Acicalate Vip',
       category: 'Cortes',
       name: "Rayitos platinados",
       description: "Los mejores rayitos",
-      gender: 'Masculino',
       duration: { hours: 4, minutes: 0 },
       price: 30000,
     },
@@ -225,68 +237,75 @@ export const reservations: Reservation[] = [
       id: "abc",
       name: "Carlos Castro"
     },
-    selectedDate: new Date(2025, 8, 14, 10, 0, 0),
-    selectedHour: "2:00 PM",
+    isAdminBooking: false,
+    customerReview: 4.5,
+    allDay: false,
     status: 'pending'
   },
   {
-    id: 'abd',
-    selectedService: {
-      serviceId: "001",
-      entityName: 'Acicalate Vip',
-      category: 'Cortes',
-      name: "Corte hombre",
-      description: "Los mejores rayitos",
+    id: 'eee',
+    start: new Date(2025, 11, 20, 10, 0, 0),
+    end: new Date(2025, 11, 20, 12, 0, 0),
+    title: 'Rayitos platinado',
+    customer: {
+      id: "125",
+      name: "David Ortiz",
+      phone: {
+        indicator: '57',
+        number: '3004394704'
+      },
+      birthDay: new Date(),
       gender: 'Masculino',
-      duration: { hours: 1, minutes: 0 },
-      price: 30000
+      reviewPointsAverage: 4
     },
-    selectedProfessional: {
-      id: "abc",
-      name: "Carlos Castro"
-    },
-    selectedDate: new Date(2025, 8, 15, 10, 0, 0),
-    selectedHour: "2:00 PM",
-    status: 'completed'
-  },
-  {
-    id: 'abe',
     selectedService: {
       serviceId: "001",
-      entityName: 'Acicalate Vip',
-      category: 'Cortes',
-      name: "Rayitos básicos",
-      description: "Los mejores rayitos",
-      gender: 'Masculino',
-      duration: { hours: 4, minutes: 0 },
-      price: 30000
-    },
-    selectedProfessional: {
-      id: "abc",
-      name: "Carlos Castro"
-    },
-    selectedDate: new Date(2025, 8, 14, 10, 0, 0),
-    selectedHour: "2:00 PM",
-    status: 'canceled'
-  },
-  {
-    id: 'abc',
-    selectedService: {
-      serviceId: "001",
-      entityName: 'Acicalate Vip',
       category: 'Cortes',
       name: "Rayitos platinados",
       description: "Los mejores rayitos",
       duration: { hours: 4, minutes: 0 },
-      gender: 'Masculino',
-      price: 30000
+      price: 30000,
     },
-    selectedProfessional:{
+    selectedProfessional: {
       id: "abc",
       name: "Carlos Castro"
     },
-    selectedDate: new Date(2025, 8, 14, 10, 0, 0),
-    selectedHour: "2:00 PM",
+    isAdminBooking: false,
+    customerReview: 4.5,
+    allDay: false,
+    status: 'cancelled'
+  },
+  {
+    id: 'fff',
+    start: new Date(2025, 11, 20, 10, 0, 0),
+    end: new Date(2025, 11, 20, 12, 0, 0),
+    title: 'Rayitos platinado',
+    customer: {
+      id: "125",
+      name: "David Ortiz",
+      phone: {
+        indicator: '57',
+        number: '3004394704'
+      },
+      birthDay: new Date(),
+      gender: 'Masculino',
+      reviewPointsAverage: 4
+    },
+    selectedService: {
+      serviceId: "001",
+      category: 'Cortes',
+      name: "Rayitos platinados",
+      description: "Los mejores rayitos",
+      duration: { hours: 4, minutes: 0 },
+      price: 30000,
+    },
+    selectedProfessional: {
+      id: "abc",
+      name: "Carlos Castro"
+    },
+    isAdminBooking: false,
+    customerReview: 4.5,
+    allDay: false,
     status: 'completed'
   }
 ]
@@ -494,86 +513,86 @@ export const skills: Skill[] = [
 ]
 
 export const professionalsEmployees: ProfessionalSettings[] = [
-    {
-      id: 'abc',
-      name: 'Carlos Castro',
-      entityId: '123',
+  {
+    id: 'abc',
+    name: 'Carlos Castro',
+    entityId: '123',
 
-      // photo: 'https://picsum.photos/200/200',
-      workdays: [
-          [
-              { from: '09:00', to: '13:00' },
-              { from: '15:00', to: '16:00' }
-          ],
-          [
-              { from: '09:00', to: '13:00' },
-              { from: '15:00', to: '21:00' }
-          ],
-          [
-              { from: '09:00', to: '13:00' },
-              { from: '15:00', to: '21:00' }
-          ],
-          [
-              { from: '09:00', to: '13:00' },
-              { from: '15:00', to: '21:00' }
-          ],
-          [
-              { from: '09:00', to: '13:00' },
-              { from: '15:00', to: '20:30' },
-              { from: '22:00', to: '23:00' }
-          ],
-          [
-              { from: '09:00', to: '13:00' },
-              { from: '15:00', to: '21:00' }
-          ],
-          [
-              { from: '09:00', to: '16:00' }
-          ]
+    // photo: 'https://picsum.photos/200/200',
+    workdays: [
+      [
+        { from: '09:00', to: '13:00' },
+        { from: '15:00', to: '16:00' }
       ],
-      services: {
-          'Cortes': [{ id: 'Corte', name: 'Corte', duration: { hours: 0, minutes: 30}, price: 20_000 },  { id: 'Corte hombre', name: 'Corte hombre', duration: { hours: 1, minutes: 0}, price: 30_000 }],
-          'Peinados': [{ id: 'Trenzas', name: 'Trenzas', duration: { hours: 1, minutes: 30 }, price: 60_000 }]
-      }
-    },
-    {
-      id: 'def',
-      name: 'Andrés Vega',
-      entityId: '123',
-
-      photo: 'https://picsum.photos/200/200',
-      workdays: [
-          [
-              { from: '08:00', to: '12:00' },
-              { from: '14:00', to: '20:00' }
-          ],
-          [
-              { from: '08:00', to: '12:00' },
-              { from: '14:00', to: '20:00' }
-          ],
-          [
-              { from: '08:00', to: '12:00' },
-              { from: '14:00', to: '20:00' }
-          ],
-          [
-              { from: '08:00', to: '12:00' },
-              { from: '14:00', to: '20:00' }
-          ],
-          [
-              { from: '08:00', to: '12:00' },
-              { from: '14:00', to: '20:00' },
-              { from: '22:00', to: '23:00' }
-          ],
-          [
-              { from: '08:00', to: '12:00' },
-              { from: '14:00', to: '20:00' }
-          ],
-          [
-              { from: '08:00', to: '15:00' }
-          ]
+      [
+        { from: '09:00', to: '13:00' },
+        { from: '15:00', to: '21:00' }
       ],
-      services: {
-          'Cortes': [{ id: 'Corte con barba', name: 'Corte con barba', duration: { hours: 0, minutes: 45}, price: 30_000 }],
-          'Uñas': [{ id: 'Manos', name: 'Manos', duration: { hours: 3, minutes: 15 }, price: 40_000 }]
-      }
+      [
+        { from: '09:00', to: '13:00' },
+        { from: '15:00', to: '21:00' }
+      ],
+      [
+        { from: '09:00', to: '13:00' },
+        { from: '15:00', to: '21:00' }
+      ],
+      [
+        { from: '09:00', to: '13:00' },
+        { from: '15:00', to: '20:30' },
+        { from: '22:00', to: '23:00' }
+      ],
+      [
+        { from: '09:00', to: '13:00' },
+        { from: '15:00', to: '21:00' }
+      ],
+      [
+        { from: '09:00', to: '16:00' }
+      ]
+    ],
+    services: {
+      'Cortes': [{ id: 'Corte', name: 'Corte', duration: { hours: 0, minutes: 30 }, price: 20_000 }, { id: 'Corte hombre', name: 'Corte hombre', duration: { hours: 1, minutes: 0 }, price: 30_000 }],
+      'Peinados': [{ id: 'Trenzas', name: 'Trenzas', duration: { hours: 1, minutes: 30 }, price: 60_000 }]
     }
+  },
+  {
+    id: 'def',
+    name: 'Andrés Vega',
+    entityId: '123',
+
+    photo: 'https://picsum.photos/200/200',
+    workdays: [
+      [
+        { from: '08:00', to: '12:00' },
+        { from: '14:00', to: '20:00' }
+      ],
+      [
+        { from: '08:00', to: '12:00' },
+        { from: '14:00', to: '20:00' }
+      ],
+      [
+        { from: '08:00', to: '12:00' },
+        { from: '14:00', to: '20:00' }
+      ],
+      [
+        { from: '08:00', to: '12:00' },
+        { from: '14:00', to: '20:00' }
+      ],
+      [
+        { from: '08:00', to: '12:00' },
+        { from: '14:00', to: '20:00' },
+        { from: '22:00', to: '23:00' }
+      ],
+      [
+        { from: '08:00', to: '12:00' },
+        { from: '14:00', to: '20:00' }
+      ],
+      [
+        { from: '08:00', to: '15:00' }
+      ]
+    ],
+    services: {
+      'Cortes': [{ id: 'Corte con barba', name: 'Corte con barba', duration: { hours: 0, minutes: 45 }, price: 30_000 }],
+      'Uñas': [{ id: 'Manos', name: 'Manos', duration: { hours: 3, minutes: 15 }, price: 40_000 }]
+    }
+  }
 ]
