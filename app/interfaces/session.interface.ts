@@ -8,7 +8,7 @@ interface Session {
     birthDay: string
     gender: string
     shareNumberPhone?: boolean
-    role?: 'admin' | 'user'
+    role?: 'admin' | 'user' | 'employee'
     artisticName?: string
     experienceArea?: string
     experienceYears?: string
