@@ -6,8 +6,9 @@ import { IoSettingsOutline, IoShareSocialOutline } from 'react-icons/io5'
 import { MdOutlineStarPurple500 } from 'react-icons/md'
 import { AdminSections } from './components'
 import Image from 'next/image'
+import { auth } from '@/auth.config'
 
-export default function HomePage() {
+export default async function HomePage() {
   //TODO: Get Data from session
   const session = {
     name: 'Carlos Castro',
@@ -18,6 +19,10 @@ export default function HomePage() {
       name: 'Master Barber'
     }
   }
+
+  const sessionDB = await auth()
+
+  console.log(sessionDB)
 
   const shopData = {
     followers: 53,

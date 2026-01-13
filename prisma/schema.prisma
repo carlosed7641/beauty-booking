@@ -1,3 +1,11 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
 
 enum Gender {
   men
@@ -18,157 +26,166 @@ enum EventStatus {
 }
 
 model Entity {
-    id String @id @default(uuid())
-    image String
-    name String
-    address Address
-    review Review[]
-    followers Int
-    scheduling Int
-    contactUrl String
-    workdays WorkDay[]
-}
+  id         String @id @default(uuid())
+  image      String
+  name       String
+  contactUrl String
+  followers  Int
+  scheduling Int
 
-model Event {
-    id String @id @default(uuid())
-    title String
-    start DateTime
-    end DateTime
-    customer User
-    selectedService Service
-    selectedProfessional User
-    isAdminBooking Boolean
-    customerReview Review
-    status EventStatus?
-}
-
-model Review {
-    id String @id @default(uuid())
-
-    // Usuario que deja la reseña
-    user User @relation("UserReviews", fields: [userId], references: [id])
-    userId String
-
-    // Profesional que recibe la reseña
-    professional User @relation("ProfessionalReviews", fields: [professionalId], references: [id])
-    professionalId String
-
-    entity Entity @relation(fields: [entityId], references: [id])
-    entityId String @unique
-    date DateTime
-    points Float
-}
-
-model Service {
-  id String @id @default(uuid())
-  name String
-  description String?
-  price Int
-  gender Gender?
-  category ServiceCategory
-  durationHours Int
-  durationMinutes Int
-  
-  archived Boolean?
-  entity Entity @relation(fields: [entityId], references: [id])
-  entityId String @unique
-
-}
-
-model ServiceCategory {
-  id String @id @default(uuid())
-  entity Entity @relation(fields: [entityId], references: [id])
-  entityId String @unique
-  category String
-}
-
-model WorkExperience {
-  id String @id @default(uuid())
-  workName String
-  position String
-  startDate DateTime
-  endDate DateTime?
-  stillWorkHere Boolean @default(false)
-  place String
-  experience String
-
-  user User @relation(fields: [userId], references: [id])
-  userId String @unique
-}
-
-model WorkSampleImage {
-    id String @id @default(uuid())
-    mainImage Boolean
-    url String
-}
-
-model WorkSample {
-    id String @id @default(uuid())
-    category String
-    name String
-    images WorkSampleImage[]
-    author User
-    entity Entity @relation(fields: [entityId], references: [id])
-    entityId String @unique
-}
-
-model WorkSkill {
-  id String @id @default(uuid())
-  name String
-  percentage Float
-}
-
-
-model WorkDay {
-  id String @id @default(uuid())
-  from String
-  to String
-  disabled Boolean @default(false)
-}
-
-model Country {
-  id String @id @default(uuid())
-  name String
-  shortName String
-}
-
-model User {
-    id String @id @default(uuid())
-    name String
-    country Country @relation(fields: [countryId], references: [id])
-    countryId String? @unique
-    photo String?
-    indicator String?
-    phone String?
-    birthDay DateTime
-    gender Gender
-    shareNumberPhone Boolean?
-    role Role @default(user)
-    review Review[]
-    // employee & admin
-    entity Entity @relation(fields: [entityId], references: [id])
-    entityId String? @unique
-    services Service[]
-    workdays WorkDay[]
-
-     // Reviews que el usuario escribió
-    reviewsWritten Review[] @relation("UserReviews")
-
-    // Reviews que el usuario recibió como profesional
-    reviewsReceived Review[] @relation("ProfessionalReviews")
-    description String?
-    artisticName String?
-    experienceArea String?
-    experienceYears String?
+  address    Address?
+  reviews    Review[]
+  services   Service[]
+  workdays   WorkDay[]
+  categories ServiceCategory[]
+  users      User[]
+  samples    WorkSample[]
 }
 
 model Address {
-    street String
-    city String
-    state String
-    country String
-    reference String?
+  id        String  @id @default(uuid())
+  street    String
+  city      String
+  state     String
+  country   String
+  reference String?
 
-    entity Entity @relation(fields: [entityId], references: [id])
-    entityId String @unique
+  entityId String @unique
+  entity   Entity @relation(fields: [entityId], references: [id])
+}
+
+model User {
+  id       String   @id @default(uuid())
+  name     String?
+  lastName String?
+
+  birthDay DateTime?
+  gender   Gender?
+  role     Role     @default(user)
+
+  email            String @unique
+  password         String
+  photo            String?
+  indicator        String?
+  phone            String?
+  shareNumberPhone Boolean?
+
+  description     String?
+  artisticName    String?
+  experienceArea  String?
+  experienceYears String?
+
+  countryId String?
+  country   Country? @relation(fields: [countryId], references: [id])
+
+  entityId String?
+  entity   Entity? @relation(fields: [entityId], references: [id])
+
+  reviewsWritten  Review[] @relation("UserReviews")
+  reviewsReceived Review[] @relation("ProfessionalReviews")
+
+  customerEvents     Event[] @relation("EventCustomer")
+  professionalEvents Event[] @relation("EventProfessional")
+
+  samples WorkSample[]
+}
+
+model Event {
+  id             String       @id @default(uuid())
+  title          String
+  start          DateTime
+  end            DateTime
+  isAdminBooking Boolean
+  status         EventStatus?
+
+  customerId     String
+  professionalId String
+  serviceId      String
+
+  customer     User    @relation("EventCustomer", fields: [customerId], references: [id])
+  professional User    @relation("EventProfessional", fields: [professionalId], references: [id])
+  service      Service @relation(fields: [serviceId], references: [id])
+
+  review Review?
+}
+
+model Review {
+  id String @id @default(uuid())
+
+  userId         String
+  professionalId String
+  entityId       String
+  eventId        String @unique
+
+  user         User   @relation("UserReviews", fields: [userId], references: [id])
+  professional User   @relation("ProfessionalReviews", fields: [professionalId], references: [id])
+  entity       Entity @relation(fields: [entityId], references: [id])
+  event        Event  @relation(fields: [eventId], references: [id])
+
+  date   DateTime
+  points Float
+}
+
+model Service {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  price           Int
+  gender          Gender?
+  durationHours   Int
+  durationMinutes Int
+  archived        Boolean?
+
+  entityId String
+  entity   Entity @relation(fields: [entityId], references: [id])
+
+  events Event[]
+}
+
+model ServiceCategory {
+  id       String @id @default(uuid())
+  category String
+
+  entityId String
+  entity   Entity @relation(fields: [entityId], references: [id])
+}
+
+model WorkDay {
+  id       String  @id @default(uuid())
+  from     String
+  to       String
+  disabled Boolean @default(false)
+
+  entityId String
+  entity   Entity @relation(fields: [entityId], references: [id])
+}
+
+model WorkSample {
+  id       String @id @default(uuid())
+  category String
+  name     String
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  entityId String
+  entity   Entity @relation(fields: [entityId], references: [id])
+
+  images WorkSampleImage[]
+}
+
+model WorkSampleImage {
+  id        String  @id @default(uuid())
+  url       String
+  mainImage Boolean
+
+  sampleId String
+  sample   WorkSample @relation(fields: [sampleId], references: [id])
+}
+
+model Country {
+  id        String @id @default(uuid())
+  name      String
+  shortName String
+  users     User[]
 }

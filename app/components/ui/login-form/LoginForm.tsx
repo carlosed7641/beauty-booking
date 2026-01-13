@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { login } from '@/actions'
 
 interface Inputs {
     email: string
@@ -16,9 +17,16 @@ export const LoginForm = ({ isAdmin = false }: { isAdmin?: boolean }) => {
     const [showPassword, setShowPassword] = useState(false)
 
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
         console.log(data)
         //TODO: Update logged state
+        const response = await login(data.email, data.password)
+
+        if (!response.ok) {
+            console.error(response.message)
+            return
+        }
+
         router.push(isAdmin ? '/admin' : '/')
     }
 

@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { registerUser } from '@/actions'
+import { Role } from '@prisma/client'
 
 interface Inputs {
     email: string
@@ -19,15 +21,22 @@ export default function NewAccountPage() {
     const [showPassword, setShowPassword] = useState(false)
 
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
         const { password, confirmPassword } = data
 
         if (password !== confirmPassword) {
             return
         }
 
-        console.log(data)
-        router.push('/admin')
+        const response = await registerUser(data.email, data.password, Role.admin)
+
+        if (!response.ok) {
+            console.error(response.message)
+            return
+        }
+
+        console.log(response)
+        // router.push('/admin')
     }
 
     return (

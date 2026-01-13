@@ -1,3 +1,9 @@
+enum Role {
+ admin = 'admin',
+ user = 'user',
+ employee = 'employee'
+}
+
 interface Session {
     id: string
     name: string
@@ -8,7 +14,7 @@ interface Session {
     birthDay: string
     gender: string
     shareNumberPhone?: boolean
-    role?: 'admin' | 'user' | 'employee'
+    role?: Role
     artisticName?: string
     experienceArea?: string
     experienceYears?: string

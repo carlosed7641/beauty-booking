@@ -1,6 +1,6 @@
 import { Categories, FavoriteEntites, NearMe, NextReservations, RecentServices } from './components'
 
-export default function HomePage() {
+export default async function HomePage() {
   return (
     <>
       <NextReservations />
