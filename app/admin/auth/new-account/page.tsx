@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { registerUser } from '@/actions'
-import { Role } from '@prisma/client'
+import { Role } from '@/generated/prisma/client'
 
 interface Inputs {
     email: string
@@ -56,7 +56,7 @@ export default function NewAccountPage() {
                     <input {...register('confirmPassword', { required: true })} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" type={showPassword ? 'text' : 'password'} placeholder="********" />
                 </label>
                 <label className="flex items-center gap-2">
-                    <input className="w-[14px] h-[14px]" type="checkbox" onChange={() => setShowPassword(!showPassword)} />
+                    <input className="w-3.5 h-3.5" type="checkbox" onChange={() => setShowPassword(!showPassword)} />
                     Mostrar contraseña
                 </label>
                 {watchPassword !== watchConfirmPassord && isValid && <p className="text-red-500">Las contraseñas no son iguales</p>}

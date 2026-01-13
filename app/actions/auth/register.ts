@@ -1,8 +1,8 @@
 'use server'
 
-import { Role } from '@prisma/client'
-import prisma from '@/lib/prisma'
 import bcryptjs from 'bcryptjs'
+import prisma from '@/lib/prisma'
+import { Role } from '@/generated/prisma/client'
 
 
 export const registerUser = async (email: string, password: string, role: Role = Role.user) => {
