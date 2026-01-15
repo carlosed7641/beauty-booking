@@ -34,7 +34,7 @@ const steps = [
   }
 ]
 
-export const RegistrationSteps = () => {
+export const RegistrationSteps = ({ entityId }: { entityId: string }) => {
 
   const [isLoading, setIsLoading] = useState(true)
   const { step } = useSteps()
@@ -51,7 +51,7 @@ export const RegistrationSteps = () => {
       </div>
       :
       <div className="bg-zinc-100">
-        <div className="min-h-screen max-w-[1200px] my-0 mx-auto">
+        <div className="min-h-screen max-w-300 my-0 mx-auto">
           <Stepper />
           <div className="flex flex-col gap-3 px-2">
             <h2 className="text-xl text-green-700 text-center">{title}</h2>
@@ -60,7 +60,7 @@ export const RegistrationSteps = () => {
               {content}
             </div>
           </div>
-          <StepButtons stepQuantity={steps.length} />
+          <StepButtons entityId={entityId} stepQuantity={steps.length} />
         </div>
       </div>
   )

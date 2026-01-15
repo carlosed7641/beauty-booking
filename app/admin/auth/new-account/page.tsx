@@ -4,8 +4,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { registerUser } from '@/actions'
-import { Role } from '@/generated/prisma/client'
+import { login, registerUser } from '@/actions'
+import { Role } from '@/interfaces/session.interface'
+import clsx from 'clsx'
+import { CgSpinner } from 'react-icons/cg'
 
 interface Inputs {
     email: string
@@ -19,24 +21,31 @@ export default function NewAccountPage() {
     const watchPassword = watch('password')
     const watchConfirmPassord = watch('confirmPassword')
     const [showPassword, setShowPassword] = useState(false)
+    const [formState, setFormState] = useState({ error: '', loading: false })
 
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
-        const { password, confirmPassword } = data
+        const { email, password, confirmPassword } = data
+
+        setFormState({loading: true, error: ''})
 
         if (password !== confirmPassword) {
+            setFormState({loading: false, error: 'Ocurrió un error inesperado'})
             return
         }
 
-        const response = await registerUser(data.email, data.password, Role.admin)
+        const response = await registerUser(email, password, Role.admin)
 
         if (!response.ok) {
             console.error(response.message)
+            setFormState({loading: false, error: 'Ocurrió un error inesperado'})
             return
         }
 
-        console.log(response)
-        // router.push('/admin')
+       
+        await login(email, password)
+
+        router.push('/admin')
     }
 
     return (
@@ -59,8 +68,18 @@ export default function NewAccountPage() {
                     <input className="w-3.5 h-3.5" type="checkbox" onChange={() => setShowPassword(!showPassword)} />
                     Mostrar contraseña
                 </label>
-                {watchPassword !== watchConfirmPassord && isValid && <p className="text-red-500">Las contraseñas no son iguales</p>}
-                <button className="btn-primary rounded-md font-bold">Registrarte</button>
+                {formState.error ? <p className="text-red-500">{formState.error}</p>  
+                : watchPassword !== watchConfirmPassord && isValid && <p className="text-red-500">Las contraseñas no son iguales</p>}
+                <button className={
+                    clsx(
+                        "btn-primary rounded-md font-bold flex justify-center",
+                        {
+                            "opacity-50 pointer-events-none": watchPassword !== watchConfirmPassord || formState.loading || !isValid
+                        }
+                    )
+                }>
+                     {formState.loading ? <CgSpinner className="text-white animate-spin text-2xl" /> : 'Registrarte'}
+                </button>
                 <Link href="/admin/auth/login" className="text-green-700 text-center">¿Ya tienes una cuenta?</Link>
             </form>
         </>

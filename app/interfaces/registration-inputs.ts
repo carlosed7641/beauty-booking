@@ -1,7 +1,6 @@
 interface RegistrationInputs {
     name: string
-    photo?: FileList
-    country: string
+    countryId: string
     phone: string
-    indicatorPhone: string
+    indicator: string
 }

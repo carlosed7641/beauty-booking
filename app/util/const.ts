@@ -57,26 +57,27 @@ export const SLIDER_SETTINGS = {
     ]
 }
 
-export const COUNTRIES: Country[] = [
-    { id: 'AR', name: 'Argentina', indicator: '54', flag: ArgentinaFlag },
-    { id: 'BO', name: 'Bolivia', indicator: '591', flag: BoliviaFlag },
-    { id: 'CL', name: 'Chile', indicator: '56', flag: ChileFlag },
-    { id: 'CO', name: 'Colombia', indicator: '57', flag: ColombiaFlag },
-    { id: 'CR', name: 'Costa Rica', indicator: '506', flag: CostaRicaFlag },
-    { id: 'CU', name: 'Cuba', indicator: '53', flag: CubaFlag },
-    { id: 'EC', name: 'Ecuador', indicator: '593', flag: ColombiaFlag },
-    { id: 'SL', name: 'El Salvador', indicator: '503', flag: ElSalvadorFlag },
-    { id: 'GT', name: 'Guatemala', indicator: '502', flag: GuatemalaFlag },
-    { id: 'HN', name: 'Honduras', indicator: '504', flag: HondurasFlag },
-    { id: 'MX', name: 'México', indicator: '52', flag: MexicoFlag },
-    { id: 'NC', name: 'Nicaragua', indicator: '505', flag: NicaraguaFlag },
-    { id: 'PN', name: 'Panamá', indicator: '507', flag: PanamaFlag },
-    { id: 'PY', name: 'Paraguay', indicator: '595', flag: ParaguayFlag },
-    { id: 'PE', name: 'Perú', indicator: '51', flag: PeruFlag },
-    { id: 'RD', name: 'Rep. Dominicana', indicator: '1', flag: DominicanRepublicFlag },
-    { id: 'UY', name: 'Uruguay', indicator: '598', flag: UruguayFlag },
-    { id: 'VE', name: 'Venezuela', indicator: '58', flag: VenezuelaFlag }
-]
+export const FLAGS: Record<string, ()=> React.JSX.Element> = {
+  AR: ArgentinaFlag,
+  BO: BoliviaFlag,
+  CL: ChileFlag,
+  CO: ColombiaFlag,
+  CR: CostaRicaFlag,
+  CU: CubaFlag,
+  EC: ColombiaFlag,
+  SL: ElSalvadorFlag,
+  GT: GuatemalaFlag,
+  HN: HondurasFlag,
+  MX: MexicoFlag,
+  NC: NicaraguaFlag,
+  PN: PanamaFlag,
+  PY: ParaguayFlag,
+  PE: PeruFlag,
+  RD: DominicanRepublicFlag,
+  UY: UruguayFlag,
+  VE: VenezuelaFlag,
+};
+
 
 export const GENDERS = [
     "Hombre",
@@ -162,7 +163,7 @@ export const SERVICE_ICONS: { [key: string]: IconType } = {
     // uñas, impieza facial
 }
 
-export const SERVICES_LIST = {
+export const DEFAULT_SERVICES_LIST = {
     'Cortes': ['Corte', 'Corte hombre', 'Corte con barba', 'Corte niño'],
     'Peinados': ['Peinados', 'Trenzas'],
     'Color': ['Diseño color', 'Mechas', 'Efecto raíz'],
@@ -308,30 +309,37 @@ export const SHOP_TYPES = ['Barbería', 'Cejas & Pesteñas', 'Centro de Maquilla
 
 export const INITIAL_WORK_DAYS = [
     {
+        name: 'Lunes',
         from: '09:00',
         to: '21:00'
     },
     {
+        name: 'Martes',
         from: '09:00',
         to: '21:00'
     },
     {
+        name: 'Miércoles',
         from: '09:00',
         to: '21:00'
     },
     {
+        name: 'Jueves',
         from: '09:00',
         to: '21:00'
     },
     {
+        name: 'Viernes',
         from: '09:00',
         to: '23:00'
     },
     {
+        name: 'Sábado',
         from: '09:00',
         to: '21:00'
     },
     {
+        name: 'Domingo',
         from: '09:00',
         to: '21:00'
     }
@@ -406,4 +414,10 @@ export const DEFAULT_REPORT_DATA_SUMMARY: ReportDataSummary = {
     cancellationRate: 0,
     totalCustomers: 0,
     groupSales: []
+}
+
+export const ROLES = {
+    admin: 'Administrador',
+    user: 'Ususario',
+    employee: 'Empleado'
 }

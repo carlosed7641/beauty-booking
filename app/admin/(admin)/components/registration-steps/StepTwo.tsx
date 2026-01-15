@@ -4,13 +4,13 @@ import { MdAddCircleOutline } from 'react-icons/md'
 import { FaRegCircleCheck } from 'react-icons/fa6'
 import { CgCloseO } from 'react-icons/cg'
 import { useSteps } from '../../store'
-import { SERVICES_LIST } from '@/util/const'
+import { DEFAULT_SERVICES_LIST } from '@/util/const'
 
 export const StepTwo = () => {
 
   const { data, setData, showErrors } = useSteps()
   const [customFields, setCustomFields] = useState<{ [key: string]: string[] }>({})
-  const [serviceList, setServiceList] = useState<{ [key: string]: string[] }>(SERVICES_LIST)
+  const [serviceList, setServiceList] = useState<{ [key: string]: string[] }>(DEFAULT_SERVICES_LIST)
 
   const handleAddService = (key: string, value: string) => {
 

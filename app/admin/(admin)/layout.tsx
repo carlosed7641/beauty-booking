@@ -1,11 +1,13 @@
 import { redirect } from 'next/navigation'
 import { RegistrationData, RegistrationSteps, SelectCountry } from './components'
+import { getCountries } from '@/actions'
+import { auth } from '@/auth.config'
+import prisma from '@/lib/prisma'
 
 const user = {
   id: 1,
   email: 'carlos@gmail.com',
   role: 'admin',
-  name: 'Carlos Castro Reales',
   photo: null,
   country: 'CO',
   phone: '3004394704',
@@ -14,31 +16,46 @@ const user = {
   isRegisterCompleted: true
 }
 
-const logged = true
-
-export default function AdminLayout({
+export default async function AdminLayout({
   children
 }: {
   children: React.ReactNode
 }) {
 
-  // TODO: validate if logged
-  if (!logged) return redirect('/admin/auth/login')
-  if (!user.name || !user.country || !user.phone) {
-    return <RegistrationData />
+  const session = await auth()
+  
+  if (!session?.user || session.user.role !== 'admin') return redirect('/admin/auth/login')
+
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: {
+      name: true,
+      countryId: true,
+      phone: true,
+      entityId: true,
+      isRegisterCompleted: true,
+    },
+  })
+
+  if (!user) return redirect('/admin/auth/login')
+  
+  if (!user?.name || !user?.countryId || !user?.phone) {
+    const countries = await getCountries() 
+    return <RegistrationData countries={countries} />
   } 
 
-  if (!user.shopCountry) {
-    return <SelectCountry />  
+  if (!user.entityId) {
+     const countries = await getCountries() 
+    return <SelectCountry countries={countries} />  
   }
   
   if (!user.isRegisterCompleted) {
-    return <RegistrationSteps />
+    return <RegistrationSteps entityId={user.entityId} />
   }
 
   return (
     <div className="bg-zinc-100">
-      <div className="min-h-screen max-w-[1200px] my-0 mx-auto py-5 px-2">
+      <div className="min-h-screen max-w-300 my-0 mx-auto py-5 px-2">
           {children}
       </div>
     </div>

@@ -1,0 +1,21 @@
+'use server'
+
+import prisma from "@/lib/prisma"
+
+export const getUserById = async (id: string) => {
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id },
+            include: {
+                entity: true,
+            }
+        })
+
+        return user
+
+    } catch (error) {
+        console.error(error)
+        return null
+    }
+}

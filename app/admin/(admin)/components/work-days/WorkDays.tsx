@@ -69,9 +69,9 @@ export const WorkDays = <T,>({ data, setData, workdays }: Props<T>) => {
                     workdays.map((day, idx) => (
                         <li className="flex flex-col gap-2" key={idx} >
                             <div className="flex gap-3 flex-col md:flex-row md:items-center">
-                                <div className="flex gap-2 items-center w-[100px] cursor-pointer" onClick={() => handleToggleDay(idx)}>
+                                <div className="flex gap-2 items-center w-25 cursor-pointer" onClick={() => handleToggleDay(idx)}>
                                     {day.disabled ? <FaToggleOff className="text-green-700 text-xl opacity-50" /> : <FaToggleOn className="text-green-700 text-xl" />}
-                                    {DAYS_OF_WEEK[idx]}
+                                    {day.name}
                                 </div>
                                 <div className="grid grid-cols-2 md:flex gap-2 items-center">
                                     <input value={day.disabled ? '' : day.from} disabled={day.disabled} className="cursor-pointer border border-green-700 px-2 rounded-md disabled:opacity-50 disabled:bg-zinc-300 disabled:cursor-auto" type="time" name="from" onChange={(e) => handleChangeTime(e, idx)} />
@@ -79,7 +79,7 @@ export const WorkDays = <T,>({ data, setData, workdays }: Props<T>) => {
                                 </div>
                             </div>
                             {day.error && <div className="text-red-500">
-                                <span className="font-bold">{DAYS_OF_WEEK[idx]}: </span>
+                                <span className="font-bold">{day.name}: </span>
                                 La hora de inicio no debe ser igual o después de la hora de cierre.
                             </div>}
                         </li>

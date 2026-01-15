@@ -12,7 +12,7 @@ interface ServiceItem {
   archived?: boolean
 }
 
-type Gender = 'Masculino' | 'Femenino' | 'Unisex'
+type Gender = 'men' | 'women' | 'other'
 
 interface Service {
   entityId: string

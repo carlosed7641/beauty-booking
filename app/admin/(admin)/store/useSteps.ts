@@ -3,9 +3,9 @@ import { persist } from 'zustand/middleware'
 import { INITIAL_WORK_DAYS } from '@/util/const'
 
 interface Data {
-    name: string | null
-    address: string | null,
-    reference?: string | null
+    name: string | undefined
+    address: string | undefined,
+    reference?: string | undefined
     types: string[]
     selectedServices: {
         [key: string]: ServiceData[]
@@ -31,8 +31,8 @@ export const useSteps = create<Store>()(
             showErrors: false,
             completedSteps: 0,
             data: {
-                name: null,
-                address: null,
+                name: undefined,
+                address: undefined,
                 types: [],
                 selectedServices: null,
                 workdays: INITIAL_WORK_DAYS

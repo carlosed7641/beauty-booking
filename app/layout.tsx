@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { SessionProvider } from 'next-auth/react'
 import { ModalProvider } from '@/components'
 import { inter, mainFont } from './config/fonts'
 import './globals.css'
@@ -19,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${inter.className} ${mainFont.className} antialiased`}>
-        <ModalProvider>
-          {children}
-        </ModalProvider>
+        <SessionProvider>
+          <ModalProvider>
+            {children}
+          </ModalProvider>
+        </SessionProvider>
       </body>
     </html>
   )
