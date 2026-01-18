@@ -7,10 +7,9 @@ import { IoSettingsOutline, IoShareSocialOutline } from 'react-icons/io5'
 import { MdOutlineStarPurple500 } from 'react-icons/md'
 import { AdminSections } from './components'
 import Image from 'next/image'
-import { getUserById, logout } from '@/actions'
+import { getEntityById, getUserById, logout } from '@/actions'
 import { auth } from '@/auth.config'
 import { ROLES } from '@/util/const'
-import { Test } from './test'
 
 export default async function HomePage() {
 
@@ -20,19 +19,9 @@ export default async function HomePage() {
 
   const user = await getUserById(session?.user?.id)
 
-  if (!user) {
-    logout()
-    window.location.reload()
-  }
-
-  const shopData = {
-    followers: 53,
-    scheduling: 256,
-    reviews: {
-      points: 4.6,
-      total: 155
-    }
-  }
+  if (!user) throw new Error('Ocurrió un error con el usuario')
+    
+  const shopData = await getEntityById(user.entityId!)
 
   return (
     <div className="flex flex-col gap-3">
@@ -69,22 +58,22 @@ export default async function HomePage() {
             <div className="flex flex-col items-center gap-2">
               <HiOutlineUsers className="text-lg text-green-700" />
               <div className="flex flex-col items-center">
-                <span className="text-sm">{shopData.followers}</span>
+                <span className="text-sm">{shopData?.followers}</span>
                 <span className="text-xs text-center text-zinc-500">Seguidores del negocio</span>
               </div>
             </div>
             <div className="flex flex-col items-center gap-2">
               <FaRegCalendar className="text-lg text-green-700" />
               <div className="flex flex-col items-center">
-                <span className="text-sm">{shopData.scheduling}</span>
+                <span className="text-sm">{shopData?.scheduling}</span>
                 <span className="text-xs text-center text-zinc-500">Agendamientos</span>
               </div>
             </div>
             <div className="flex flex-col items-center gap-2">
               <MdOutlineStarPurple500 className="text-lg text-amber-400" />
               <div className=" flex flex-col items-center ">
-                <span className="text-sm">{shopData.reviews.points}</span>
-                <span className="text-xs text-center text-zinc-500">({shopData.reviews.total})</span>
+                <span className="text-sm">0</span>
+                <span className="text-xs text-center text-zinc-500">(0)</span>
               </div>
             </div>
           </div>

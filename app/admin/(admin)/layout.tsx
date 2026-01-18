@@ -4,18 +4,6 @@ import { getCountries } from '@/actions'
 import { auth } from '@/auth.config'
 import prisma from '@/lib/prisma'
 
-const user = {
-  id: 1,
-  email: 'carlos@gmail.com',
-  role: 'admin',
-  photo: null,
-  country: 'CO',
-  phone: '3004394704',
-  indicatorPhone: '+57',
-  shopCountry: 'CO',
-  isRegisterCompleted: true
-}
-
 export default async function AdminLayout({
   children
 }: {
@@ -37,7 +25,7 @@ export default async function AdminLayout({
     },
   })
 
-  if (!user) return redirect('/admin/auth/login')
+  if (!user) throw new Error('Ocurrió un error con el usuario')
   
   if (!user?.name || !user?.countryId || !user?.phone) {
     const countries = await getCountries() 

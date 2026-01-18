@@ -2,7 +2,7 @@
 
 import { PiPlusCircleBold } from 'react-icons/pi'
 import { useModal } from '@/store'
-import { WorkSamplesTab } from '@/components'
+import { WorkSamples as WorkSamplesWrapper } from '@/components'
 import { WorkSamplesModal } from './WorkSamplesModal'
 import { workSamples as allWorkSamples } from '@/util/fake-data'
 
@@ -23,7 +23,7 @@ export const WorkSamples = () => {
                 <div className="flex flex-col gap-3">
                     {
                         workSamples.length > 0 ?
-                            <WorkSamplesTab workSamples={workSamples} hideFilters hideName />
+                            <WorkSamplesWrapper workSamples={workSamples} hideFilters hideName />
                             : <p>No hay nada acá aún</p>
                     }
                 </div>

@@ -3,10 +3,9 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import clsx from 'clsx'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { login, registerUser } from '@/actions'
-import { Role } from '@/interfaces/session.interface'
-import clsx from 'clsx'
 import { CgSpinner } from 'react-icons/cg'
 
 interface Inputs {
@@ -34,7 +33,7 @@ export default function NewAccountPage() {
             return
         }
 
-        const response = await registerUser(email, password, Role.admin)
+        const response = await registerUser(email, password, 'admin')
 
         if (!response.ok) {
             console.error(response.message)

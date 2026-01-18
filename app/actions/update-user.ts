@@ -1,18 +1,11 @@
 'use server'
 
 import { auth } from '@/auth.config'
+import { UserDTO } from '@/interfaces/user.interface'
 import prisma from '@/lib/prisma'
 
-interface UpdateUserDTO {
-  name?: string
-  phone?: string
-  indicator?: string
-  countryId?: string
-  entityId?: string
-  isRegisterCompleted?: boolean
-}
 
-export const updateUser = async (data: UpdateUserDTO) => {
+export const updateUser = async (data: UserDTO) => {
     try {
         const session = await auth()
         if (!session?.user?.id) throw new Error('Unauthorized')

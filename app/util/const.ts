@@ -32,6 +32,7 @@ import { PiMedalLight } from 'react-icons/pi'
 import { RiCalendarScheduleLine, RiUserSettingsLine } from 'react-icons/ri'
 import { TbClockHour3, TbClockHour5, TbUserHeart, TbUsers } from 'react-icons/tb'
 import { VscGraph } from 'react-icons/vsc'
+import { Gender } from '@/generated/prisma/enums'
 
 export const SERVICE_INITIAL_STATE = {
     selectedService: null,
@@ -79,11 +80,11 @@ export const FLAGS: Record<string, ()=> React.JSX.Element> = {
 };
 
 
-export const GENDERS = [
-    "Hombre",
-    "Mujer",
-    "Otro"
-]
+export const GENDERS: Record<Gender, string> = {
+  men: 'Hombre',
+  women: 'Mujer',
+  other: 'Otro'
+}
 
 export const ORDER_OPTIONS = ['Precio mayor', 'Precio menor', 'Predeterminado'] //TODO: Más cerca de ti
 
@@ -230,10 +231,10 @@ export const AREAS_OF_EXPERIENCIES = [
 ]
 
 export const YEARS_OF_EXPERIENCIES = [
-    "0 a 1",
-    "1 a 3",
-    "3 a 5",
-    "5 a 10",
+    "0-1",
+    "1-3",
+    "3-5",
+    "5-10",
     "10+"
 ]
 

@@ -1,29 +1,56 @@
 'use client'
 
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useState } from 'react'
 import { FaEdit } from 'react-icons/fa'
 import { useModal } from '@/store'
 import { Modal, ModalHeader, ProfileForm } from '@/components'
-import { session } from '@/util/fake-data'
+import { updateUser } from '@/actions'
+import { UserDTO, UserWithEntity } from '@/interfaces/user.interface'
 
-export const UpdateProfile = () => {
+export const UpdateProfile = ({ userData, countries }: { userData: UserWithEntity, countries: Country[] }) => {
 
-    const initialValues = {
-        name: session.name,
-        country: session.country,
-        photo: session.photo,
-        indicator: session.indicator,
-        phone: session.phone,
-        birthDay: session.birthDay,
-        gender: session.gender,
-        role: session.role
+    const [profileFormState, setProfileFormState] = useState({ loading: false, error: '' })
+
+    const initialValues: UserDTO = {
+        artisticName: userData.artisticName,
+        birthDay: userData.birthDay,
+        countryId: userData.countryId,
+        description: userData.description,
+        experienceArea: userData.experienceArea,
+        experienceYears: userData.experienceYears,
+        gender: userData.gender,
+        indicator: userData.indicator,
+        name: userData.name,
+        phone: userData.phone,
+        role: userData.role,
     }
 
     const { openModal, setOpenModal } = useModal()
 
-    const onSubmit = (data: Omit<Session, "id" | "shareNumberPhone">) => {
-        //TODO: Save to BD
-        console.log(data)
+    const onSubmit = async (data: UserDTO) => {
+
+        setProfileFormState({ loading: true, error: ''})
+        
+        const userData = {
+            ...data,
+            birthDay: new Date(data.birthDay as Date)
+        } as UserDTO
+
+        for (const [key, value] of Object.entries(userData)) {
+
+            userData[key as keyof UserDTO] = typeof value === 'string' && value.trim() === ''
+                ? null
+                : value
+        }
+
+        const { ok } = await updateUser(userData)
+
+        if (!ok) {
+            setProfileFormState({ loading: false, error: 'Ocurrió un error inesperado'})
+            return
+        }
+
+        setProfileFormState({ loading: false, error: ''})
         setOpenModal(null)
     }
 
@@ -41,6 +68,9 @@ export const UpdateProfile = () => {
                     </ModalHeader>
                     <ProfileForm
                         initialValues={initialValues}
+                        isLoading={profileFormState.loading}
+                        error={profileFormState.error}
+                        countries={countries}
                         onSubmit={onSubmit}
                     />
                 </Modal>

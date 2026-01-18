@@ -106,7 +106,7 @@ export const StepButtons = ({ stepQuantity, entityId }: { stepQuantity: number, 
                 }
                 {
                     step === stepQuantity - 1 &&
-                    <button onClick={() => handleSaveData()}
+                    <button disabled={isLoading} onClick={() => handleSaveData()}
                         className={
                             clsx(
                                 "flex w-31.5 justify-center gap-2 items-center border bg-green-700 text-white border-green-700 hover:bg-green-800 rounded-full px-5 cursor-pointer",
