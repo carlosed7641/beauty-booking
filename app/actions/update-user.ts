@@ -3,6 +3,7 @@
 import { auth } from '@/auth.config'
 import { UserDTO } from '@/interfaces/user.interface'
 import prisma from '@/lib/prisma'
+import { revalidatePath } from 'next/cache'
 
 
 export const updateUser = async (data: UserDTO) => {
@@ -14,6 +15,8 @@ export const updateUser = async (data: UserDTO) => {
             where: { id: session?.user?.id },
             data
         })
+
+        revalidatePath('/admin/profile')
 
         return { ok: true }
     } catch (e) {

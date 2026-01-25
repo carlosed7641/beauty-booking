@@ -20,11 +20,9 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${inter.className} ${mainFont.className} antialiased`}>
-        <SessionProvider>
           <ModalProvider>
             {children}
           </ModalProvider>
-        </SessionProvider>
       </body>
     </html>
   )

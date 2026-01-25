@@ -6,12 +6,12 @@ import { Modal, ModalHeader } from '@/components'
 import { WorkExperienceForm } from './WorkExperienceForm'
 import { useFormContext } from 'react-hook-form'
 
-const initialForm: Omit<WorkExperience, 'id' | 'experience'> = {
-    workName: '',
+const initialForm = {
+    company: '',
     position: '',
     startDate: '',
-    place: '',
-    stillWorkHere: false
+    endDate: '',
+    city: ''
 }
 
 export const WorkExperienceModal = ({ modalId }: { modalId: string }) => {

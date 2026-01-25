@@ -51,7 +51,7 @@ export const UpdateProfile = ({ userData, countries }: { userData: UserWithEntit
         }
 
         setProfileFormState({ loading: false, error: ''})
-        setOpenModal(null)
+        setOpenModal('SuccessUpdate')
     }
 
     return (
@@ -73,6 +73,15 @@ export const UpdateProfile = ({ userData, countries }: { userData: UserWithEntit
                         countries={countries}
                         onSubmit={onSubmit}
                     />
+                </Modal>
+            }
+            {
+                openModal === 'SuccessUpdate'  && 
+                <Modal className="overflow-hidden! w-87.5!">
+                    <ModalHeader>
+                        <p className="text-green-700 text-lg">Actualización</p>
+                    </ModalHeader>
+                    <span>Registro actualizado correctamente</span>
                 </Modal>
             }
         </>

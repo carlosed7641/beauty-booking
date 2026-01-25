@@ -11,6 +11,9 @@ export const getUserById = async (id: string) => {
             where: { id },
             include: {
                 entity: true,
+                workExperiences: {
+                    orderBy: { startDate: 'desc' }
+                }
             }
         })
 

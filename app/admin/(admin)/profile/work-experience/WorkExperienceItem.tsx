@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form'
 import { PiSuitcaseSimpleDuotone } from 'react-icons/pi'
 import { FiEdit, FiTrash } from 'react-icons/fi'
 import { useModal } from '@/store'
-import { getAbbreviatedDate, getTotalTime } from '@/helpers'
+import { formatInputDate, getAbbreviatedDate, getTotalTime } from '@/helpers'
 
 interface Props {
   modalId: string
@@ -15,7 +15,12 @@ export const WorkExperienceItem = ({ modalId, item }: Props) => {
     const { reset } = useFormContext()
 
     const handleUpdate = (data: WorkExperience) => {
-        reset(data)
+        reset({
+            ...data, 
+            startDate: 
+            formatInputDate(data.startDate), 
+            endDate: data.endDate ? formatInputDate(data.endDate) : null
+        })
         setOpenModal(modalId + 'Update')
     }
 
@@ -27,14 +32,14 @@ export const WorkExperienceItem = ({ modalId, item }: Props) => {
             <div className="flex justify-between flex-1">
                 <div className="flex flex-col text-xs">
                     <span className="font-bold text-sm">{item.position}</span>
-                    <span className="font-bold text-sm text-green-700">{item.workName}</span>
-                    <span className="text-zinc-500">{item.place}</span>
+                    <span className="font-bold text-sm text-green-700">{item.company}</span>
+                    <span className="text-zinc-500">{item.city}</span>
                     <div className="flex text-zinc-500">
                         <span>{getAbbreviatedDate(item.startDate)}</span>
                         <span className="mx-0.5">-</span>
                         <span>{item.endDate ? getAbbreviatedDate(item.endDate) : 'Actualidad'}</span>
                         <span className="mx-0.5">·</span>
-                        <span>{getTotalTime(item.startDate, item.endDate ?? new Date().toDateString())}</span>
+                        <span>{getTotalTime(item.startDate, item.endDate ?? new Date())}</span>
                     </div>
                 </div>
                 <div className="flex gap-2 items-center">

@@ -1,4 +1,4 @@
-export const getTotalTime = (startDate: string, endDate: string) => {
+export const getTotalTime = (startDate: Date, endDate: Date) => {
     const start = new Date(startDate)
     const end = new Date(endDate)
 

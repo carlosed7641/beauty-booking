@@ -7,6 +7,8 @@ export * from './get-user-by-id'
 export * from './get-entity-by-id'
 
 export * from './update-user'
+export * from './update-work-experience'
 export * from './create-entity'
+export * from './create-work-experience'
 export * from './complete-registration'
 

@@ -16,6 +16,7 @@ export interface UserDTO {
     indicator?: string | null
     name?: string | null
     phone?: string | null
+    isPublicProfile?: boolean
     role?: Role
 }
 

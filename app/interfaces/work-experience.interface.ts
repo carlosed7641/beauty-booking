@@ -1,10 +1,8 @@
 interface WorkExperience {
-    id?: string
-    workName: string
+    id: string 
+    company: string
     position: string
-    startDate: string
-    endDate?: string
-    stillWorkHere: boolean,
-    place: string
-    experience?: string
+    startDate: Date
+    endDate: Date | null
+    city: string
 }

@@ -29,32 +29,34 @@ model Entity {
 }
 
 model User {
-  id                  String       @id @default(uuid())
+  id                  String           @id @default(uuid())
   name                String?
   birthDay            DateTime?
   gender              Gender?
-  role                Role         @default(user)
+  role                Role             @default(user)
   photo               String?
   indicator           String?
   phone               String?
-  shareNumberPhone    Boolean      @default(false)
+  shareNumberPhone    Boolean          @default(false)
   description         String?
   artisticName        String?
   experienceArea      String?
   experienceYears     String?
   countryId           String?
   entityId            String?
-  email               String       @unique
+  email               String           @unique
   password            String
-  isRegisterCompleted Boolean      @default(false)
-  entityOwner         Entity?      @relation("EntityOwner")
-  customerEvents      Event[]      @relation("EventCustomer")
-  professionalEvents  Event[]      @relation("EventProfessional")
-  reviewsReceived     Review[]     @relation("ProfessionalReviews")
-  reviewsWritten      Review[]     @relation("UserReviews")
-  country             Country?     @relation(fields: [countryId], references: [id])
-  entity              Entity?      @relation(fields: [entityId], references: [id])
+  isPublicProfile     Boolean          @default(true)
+  isRegisterCompleted Boolean          @default(false)
+  entityOwner         Entity?          @relation("EntityOwner")
+  customerEvents      Event[]          @relation("EventCustomer")
+  professionalEvents  Event[]          @relation("EventProfessional")
+  reviewsReceived     Review[]         @relation("ProfessionalReviews")
+  reviewsWritten      Review[]         @relation("UserReviews")
+  country             Country?         @relation(fields: [countryId], references: [id])
+  entity              Entity?          @relation(fields: [entityId], references: [id])
   samples             WorkSample[]
+  workExperiences     WorkExperience[]
 }
 
 model Event {
@@ -102,6 +104,17 @@ model Service {
 
   entity Entity? @relation(fields: [entityId], references: [id])
   events Event[]
+}
+
+model WorkExperience {
+  id        String    @id @default(uuid())
+  company   String
+  position  String
+  startDate DateTime
+  endDate   DateTime?
+  city      String
+  userId    String?
+  user      User?     @relation(fields: [userId], references: [id])
 }
 
 model WorkDay {

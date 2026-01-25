@@ -3,6 +3,7 @@ import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { UpdateProfile } from '@/components'
 import { WorkExperience, Skills, WorkSamples } from '.'
+import { ProfileVisibility } from './profile-visibility/ProfileVisibility'
 import { getCountries, getUserById } from '@/actions'
 import { auth } from '@/auth.config'
 
@@ -33,18 +34,11 @@ export default async function ProfilePage() {
                         <div className="flex flex-col gap-2">
                             <p className="text-2xl text-green-700">Carlos Castro</p>
                             <UpdateProfile userData={userData} countries={countries} />
-                            <div className="flex items-center gap-1 cursor-pointer">
-                                {
-                                    true ?
-                                        <FaToggleOn className="text-green-700 text-xl" /> :
-                                        <FaToggleOff className="text-green-700 text-xl" />
-                                }
-                                <span>¿Perfil público?</span>
-                            </div>
+                            <ProfileVisibility isPublic={userData.isPublicProfile} />  
                         </div>
                     </div>
                 </div>
-                <WorkExperience />
+                <WorkExperience workExperiences={userData.workExperiences} />
                 <WorkSamples />
                 <Skills />
                 <div className="flex flex-col md:flex-row justify-center md:justify-end gap-3">

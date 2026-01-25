@@ -1,25 +1,14 @@
 'use client'
 
-import { useMemo } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { PiPlusCircleBold } from 'react-icons/pi'
 import { useModal } from '@/store'
 import { WorkExperienceItem, WorkExperienceModal } from '..'
-import { workExperience as experienceData } from '@/util/fake-data'
 
-const getSortedExperience = (data: typeof experienceData) => {
-    return [...data].sort((a, b) => {
-        const dateA = new Date(a.endDate ?? new Date()).getTime()
-        const dateB = new Date(b.endDate ?? new Date()).getTime()
-        return dateB - dateA
-    })
-}
-
-export const WorkExperience = () => {
+export const WorkExperience = ({ workExperiences }: { workExperiences: WorkExperience[]}) => {
 
     const methods = useForm()
     const { setOpenModal } = useModal()
-    const sortedExperience = useMemo(() => getSortedExperience(experienceData), [])
 
     return (
         <FormProvider {...methods}>
@@ -30,9 +19,9 @@ export const WorkExperience = () => {
                 </div>
                 <div className="flex flex-col gap-3 mt-2">
                     {
-                        sortedExperience.length > 0 ?
+                        workExperiences.length > 0 ?
                             <ul className="flex flex-col gap-3">
-                                {sortedExperience.map(item =>
+                                {workExperiences.map(item =>
                                     <WorkExperienceItem
                                         key={item.id}
                                         modalId={WorkExperience.name}
