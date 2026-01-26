@@ -1,7 +1,10 @@
-import { SetStateAction, useEffect } from 'react'
+import { SetStateAction, TransitionStartFunction, useEffect, useState } from 'react'
 import { FaRegCircleCheck, FaRegCircleXmark } from 'react-icons/fa6'
 import { INITIAL_SKILL } from '@/util/const'
+import { createSkill, updateSkill } from '@/actions'
+import { CgSpinner } from 'react-icons/cg'
 
+type OptimisticAction = { type: 'delete', id: string } | { type: 'update', skill: Skill }
 interface Props {
     currentSkill: Skill
     setCurrentSkill: (value: SetStateAction<Skill>) => void
@@ -10,6 +13,9 @@ interface Props {
     error: string
     setError: (value: SetStateAction<string>) => void
     setIsAdding: (value: SetStateAction<boolean>) => void
+    setSkills:(action: OptimisticAction) => void
+    isPending: boolean
+    startTransition: TransitionStartFunction
     showLabel?: boolean
 }
 
@@ -21,8 +27,13 @@ export const SkillForm = ({
     error,
     setError,
     setIsAdding,
-    showLabel
+    showLabel,
+    setSkills,
+    startTransition,
+    isPending,
 }: Props) => {
+
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleChangePercentage = (e: React.ChangeEvent<HTMLInputElement>) => {
         const input = e.target.value
@@ -74,14 +85,20 @@ export const SkillForm = ({
         }))
     }
 
-    const handleAddSkill = () => {
+    const handleAddSkill = async () => {
         if (error || !currentSkill.name) return setError('Este campo no debe estar vacío')
-
-        //TODO: BD logic
+            
+        setIsLoading(true)
         if (currentSkill.id) {
-            console.log("Update", currentSkill)
+            //Update
+            startTransition(async () => {
+                setSkills({ type: 'update', skill: currentSkill })
+                await updateSkill(currentSkill)
+                setIsLoading(false)
+            })
         } else {
-            console.log("Create", currentSkill)
+            await createSkill({ name: currentSkill.name, percentage: currentSkill.percentage })
+            setIsLoading(false)
         }
 
         setCurrentSkill(INITIAL_SKILL)
@@ -122,8 +139,19 @@ export const SkillForm = ({
                 </div>
             </div>
             <div className="flex gap-2 items-end justify-end">
-                <FaRegCircleCheck onClick={handleAddSkill} className="text-green-700 cursor-pointer" />
-                <FaRegCircleXmark onClick={handleCloseSkill} className="text-zinc-500 cursor-pointer" />
+                {
+                    isLoading ?
+                        <CgSpinner className="text-green-700 animate-spin text-2xl" />
+                        :
+                        <>
+                            <button disabled={isPending}>
+                                <FaRegCircleCheck onClick={handleAddSkill} className="text-green-700 cursor-pointer" />
+                            </button>
+                            <button >
+                                <FaRegCircleXmark onClick={handleCloseSkill} className="text-zinc-500 cursor-pointer" />
+                            </button>
+                        </>
+                }
             </div>
         </>
     )

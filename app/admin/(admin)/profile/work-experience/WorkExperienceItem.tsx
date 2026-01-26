@@ -5,20 +5,21 @@ import { useModal } from '@/store'
 import { formatInputDate, getAbbreviatedDate, getTotalTime } from '@/helpers'
 
 interface Props {
-  modalId: string
-  item: WorkExperience
+    modalId: string
+    item: WorkExperience
+    setSelectedId: (id: string) => void
 }
 
-export const WorkExperienceItem = ({ modalId, item }: Props) => {
+export const WorkExperienceItem = ({ modalId, item, setSelectedId }: Props) => {
 
     const { setOpenModal } = useModal()
     const { reset } = useFormContext()
 
     const handleUpdate = (data: WorkExperience) => {
         reset({
-            ...data, 
-            startDate: 
-            formatInputDate(data.startDate), 
+            ...data,
+            startDate:
+                formatInputDate(data.startDate),
             endDate: data.endDate ? formatInputDate(data.endDate) : null
         })
         setOpenModal(modalId + 'Update')
@@ -44,7 +45,10 @@ export const WorkExperienceItem = ({ modalId, item }: Props) => {
                 </div>
                 <div className="flex gap-2 items-center">
                     <FiEdit onClick={() => handleUpdate(item)} className="text-green-700 cursor-pointer" />
-                    <FiTrash className="text-zinc-500 cursor-pointer" />
+                    <FiTrash onClick={() => {
+                        setOpenModal('DeleteWE')
+                        setSelectedId(item.id)
+                    }} className="text-zinc-500 cursor-pointer" />
                 </div>
             </div>
         </li>

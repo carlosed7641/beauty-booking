@@ -1,12 +1,15 @@
+import { CgSpinner } from 'react-icons/cg'
 import { FiEdit, FiTrash } from 'react-icons/fi'
 
 interface Props {
     skill: Skill
+    isLoading: boolean
+    isPending: boolean
     onEdit: () => void
     onDelete: () => void
 }
 
-export const SkillItem = ({ skill, onEdit, onDelete }: Props) => {
+export const SkillItem = ({ skill, isLoading, isPending, onEdit, onDelete }: Props) => {
     return (
         <>
             <div className="flex flex-col gap-2 flex-1">
@@ -19,8 +22,20 @@ export const SkillItem = ({ skill, onEdit, onDelete }: Props) => {
                 </div>
             </div>
             <div className="flex gap-2 items-center justify-end">
-                <FiEdit onClick={onEdit} className="text-green-700 cursor-pointer" />
-                <FiTrash onClick={onDelete} className="text-zinc-500 cursor-pointer" />
+                {
+                    isLoading ?
+
+                        <CgSpinner className="text-green-700 animate-spin text-2xl" />
+                        :
+                        <>
+                            <button disabled={isPending}>
+                                <FiEdit onClick={onEdit} className="text-green-700 cursor-pointer" />
+                            </button>
+                            <button disabled={isPending}>    
+                                <FiTrash onClick={onDelete} className="text-zinc-500 cursor-pointer" />
+                            </button>
+                        </>
+                }
             </div>
         </>
     )

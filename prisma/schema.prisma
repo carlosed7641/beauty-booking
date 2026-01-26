@@ -57,6 +57,7 @@ model User {
   entity              Entity?          @relation(fields: [entityId], references: [id])
   samples             WorkSample[]
   workExperiences     WorkExperience[]
+  skills              Skill[]
 }
 
 model Event {
@@ -104,6 +105,14 @@ model Service {
 
   entity Entity? @relation(fields: [entityId], references: [id])
   events Event[]
+}
+
+model Skill {
+  id         String  @id @default(uuid())
+  name       String
+  percentage Float
+  userId     String?
+  user       User?   @relation(fields: [userId], references: [id])
 }
 
 model WorkExperience {

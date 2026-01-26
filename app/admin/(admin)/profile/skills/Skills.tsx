@@ -1,18 +1,38 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useOptimistic, useState, useTransition } from 'react'
 import { PiPlusCircleBold } from 'react-icons/pi'
 import { SkillForm } from './SkillForm'
 import { SkillItem } from './SkillItem'
 import { INITIAL_SKILL } from '@/util/const'
-import { skills } from '@/util/fake-data'
+import { deleteSkill } from '@/actions'
 
-export const Skills = () => {
+type OptimisticAction = { type: 'delete', id: string } | { type: 'update', skill: Skill }
+ 
+export const Skills = ({ skills }: { skills: Skill[] }) => {
 
     const [isAdding, setIsAdding] = useState(false)
     const [error, setError] = useState('')
     const [touched, setTouched] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [currentSkill, setCurrentSkill] = useState(INITIAL_SKILL)
+    const [isPending, startTransition] = useTransition()
+    const [optimisticSkills, setOptimisticSkills] = useOptimistic(
+        skills,
+        (state, action: OptimisticAction) => {
+            switch (action.type) {
+                case 'delete':
+                    return state.filter(skill => skill.id !== action.id)
+
+                case 'update':
+                    return state.map(skill =>
+                        skill.id === action.skill.id ? action.skill : skill
+                    )
+                default:
+                    return state
+            }
+        }
+    )
 
     const handleUpdateSkill = (skill: Skill) => {
         setIsAdding(false)
@@ -20,7 +40,12 @@ export const Skills = () => {
     }
 
     const handleDeleteSkill = (id: string) => {
-        //TODO: Delete Skill
+        startTransition(async () => {
+            setIsLoading(true)
+            setOptimisticSkills({type: 'delete', id })
+            await deleteSkill(id)
+            setIsLoading(false)
+        })
     }
 
     useEffect(() => {
@@ -39,51 +64,59 @@ export const Skills = () => {
             </div>
             <div className="flex flex-col gap-3">
                 {
-                    skills.length > 0 ?
+                    optimisticSkills.length > 0 ?
                         <ul className="flex flex-col gap-3">
                             {
-                                skills.map(skill => (
+                                optimisticSkills.map(skill => (
                                     <li key={skill.id} className="flex flex-col md:flex-row gap-3">
                                         {
                                             skill.id === currentSkill.id ?
                                                 <SkillForm
                                                     currentSkill={currentSkill}
                                                     setCurrentSkill={setCurrentSkill}
+                                                    setSkills={setOptimisticSkills}
                                                     touched={touched}
                                                     setTouched={setTouched}
                                                     error={error}
                                                     setError={setError}
+                                                    startTransition={startTransition}
+                                                    isPending={isPending}
                                                     setIsAdding={setIsAdding}
                                                 />
                                                 :
                                                 <SkillItem
                                                     key={skill.id}
                                                     skill={skill}
+                                                    isLoading={isLoading}
+                                                    isPending={isPending}
                                                     onEdit={() => handleUpdateSkill(skill)}
-                                                    onDelete={() => handleDeleteSkill(skill.id)}
+                                                    onDelete={() => handleDeleteSkill(skill.id ?? '')}
                                                 />
                                         }
                                     </li>
                                 ))
                             }
-                            {
-                                isAdding && !currentSkill.id &&
-                                <li className="flex flex-col md:flex-row md:items-end gap-3">
-                                    <SkillForm
-                                        currentSkill={currentSkill}
-                                        setCurrentSkill={setCurrentSkill}
-                                        touched={touched}
-                                        setTouched={setTouched}
-                                        error={error}
-                                        setError={setError}
-                                        setIsAdding={setIsAdding}
-                                        showLabel
-                                    />
-                                </li>
-                            }
                         </ul>
                         :
-                        <p>No hay nada acá aún</p>
+                        !isAdding && <p>No hay nada acá aún</p>
+                }
+                {
+                    isAdding && !currentSkill.id &&
+                    <li className="flex flex-col md:flex-row md:items-end gap-3">
+                        <SkillForm
+                            currentSkill={currentSkill}
+                            setCurrentSkill={setCurrentSkill}
+                            touched={touched}
+                            setTouched={setTouched}
+                            error={error}
+                            setError={setError}
+                            setSkills={setOptimisticSkills}
+                            setIsAdding={setIsAdding}
+                            startTransition={startTransition}
+                            isPending={isPending}
+                            showLabel
+                        />
+                    </li>
                 }
             </div>
         </div>

@@ -8,8 +8,8 @@ export const ProfileVisibility = ({ isPublic }: { isPublic: boolean }) => {
 
     const [isPending, startTransition] = useTransition()
     const [optimisticVisibility, setOptimisticVisibility] =
-        useOptimistic<boolean, boolean>(isPublic,
-            (_, newVisibility) => newVisibility
+        useOptimistic(isPublic,
+            (_, newVisibility: boolean) => newVisibility
         )
 
 
@@ -18,14 +18,8 @@ export const ProfileVisibility = ({ isPublic }: { isPublic: boolean }) => {
         const nextValue = !optimisticVisibility
 
         startTransition(async () => {
-
             setOptimisticVisibility(nextValue)
-            
-            try {
-                await updateUser({ isPublicProfile: nextValue })
-            } catch {
-                setOptimisticVisibility(!nextValue)
-            }
+            await updateUser({ isPublicProfile: nextValue })
         })
 
     }

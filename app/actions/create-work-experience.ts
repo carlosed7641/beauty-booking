@@ -7,7 +7,7 @@ import { revalidatePath } from 'next/cache'
 export const createWorkExperience = async (data: WorkExperience) => {
     try {
         const session = await auth()
-        if (!session?.user?.id) throw new Error()
+        if (!session?.user?.id) throw new Error('Unauthorized')
 
         await prisma.workExperience.create({
             data: {

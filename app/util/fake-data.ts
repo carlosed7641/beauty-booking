@@ -464,23 +464,6 @@ export const favoriteEntities: Entity[] = [
   }
 ]
 
-export const skills: Skill[] = [
-  {
-    id: '123',
-    name: "Adaptación",
-    percentage: 80
-  },
-  {
-    id: '124',
-    name: "Coloración",
-    percentage: 90
-  },
-  {
-    id: '125',
-    name: "Pigmentación",
-    percentage: 55
-  }
-]
 
 export const professionalsEmployees: ProfessionalSettings[] = [
   {

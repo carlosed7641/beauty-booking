@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { UpdateProfile } from '@/components'
 import { WorkExperience, Skills, WorkSamples } from '.'
@@ -40,7 +39,7 @@ export default async function ProfilePage() {
                 </div>
                 <WorkExperience workExperiences={userData.workExperiences} />
                 <WorkSamples />
-                <Skills />
+                <Skills skills={userData.skills} />
                 <div className="flex flex-col md:flex-row justify-center md:justify-end gap-3">
                     <button className="md:w-60 py-2 bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-full cursor-pointer">
                         Desvincularse del negocio
