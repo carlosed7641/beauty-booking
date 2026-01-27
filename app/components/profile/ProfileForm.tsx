@@ -16,7 +16,10 @@ interface Props {
 
 export const ProfileForm = ({ initialValues, onSubmit, countries, isLoading, error }: Props) => {
 
-    const defaultValues = initialValues ? { ...initialValues, birthDay: formatInputDate(initialValues.birthDay as Date) } : {}
+    const defaultValues = initialValues ? { 
+        ...initialValues, 
+        birthDay: initialValues.birthDay ? formatInputDate(initialValues.birthDay as Date) : null
+    } : {}
 
     const { register, handleSubmit, formState, watch } = useForm<UserDTO>({ defaultValues })
     const watchRole = watch('role')

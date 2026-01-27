@@ -39,7 +39,7 @@ export const WorkExperienceItem = ({ modalId, item, setSelectedId }: Props) => {
                         <span>{getAbbreviatedDate(item.startDate)}</span>
                         <span className="mx-0.5">-</span>
                         <span>{item.endDate ? getAbbreviatedDate(item.endDate) : 'Actualidad'}</span>
-                        <span className="mx-0.5">·</span>
+                        <span className="mx-1">·</span>
                         <span>{getTotalTime(item.startDate, item.endDate ?? new Date())}</span>
                     </div>
                 </div>

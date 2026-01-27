@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { PiUserFocusThin } from 'react-icons/pi'
 import { CgSpinner } from 'react-icons/cg'
@@ -15,29 +15,30 @@ interface Props {
 
 export const RegistrationForm = ({ onSubmit, countries, isLoading }: Props) => {
 
-    const { register, handleSubmit, formState: { isValid } } = useForm<RegistrationInputs>()
-    const [image, setImage] = useState('')
+    const { register, handleSubmit, formState: { isValid }, watch } = useForm<RegistrationInputs>()
+    const [tempPhoto, setTempPhoto] = useState('')
 
-    const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files?.length) return
-        const url = URL.createObjectURL(e.target.files[0])
-        console.log(url)
-        setImage(url)
-    }
+    const watchPhoto = watch('photo')
+
+    useEffect(() => {
+        if (!watchPhoto?.length) return
+        const photo =  URL.createObjectURL(watchPhoto[0])
+        setTempPhoto(photo)
+    }, [watchPhoto])
 
     return (
-        <div className="bg-[#eaf1eb] flex justify-center pt-24 md:items-center px-4 md:pt-0 h-screen">
+        <div className="flex justify-center pt-24 md:items-center px-4 md:pt-0 h-screen">
             <div className="bg-white p-5 rounded-md shadow-md sm:w-100 w-full h-fit">
                 <h1 className="text-2xl text-green-700 mb-4 text-center">Completa tu información</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
                     <label className="flex flex-col gap-1 justify-center items-center cursor-pointer">
                         {
-                            image ?
-                                <Image height={150} width={150} alt="Imagen" src={image} />
+                            tempPhoto ?
+                                <Image className="w-37.5 h-37-5 object-contain" height={150} width={150} alt="Imagen" src={tempPhoto} />
                                 : <PiUserFocusThin className="text-green-700" size={180} />
                         }
                         <span>Toca para cambiar foto</span>
-                        <input onChange={handleChangeImage} className="hidden" type="file" accept="image/png, image/jpeg, image/webp" />
+                        <input {...register('photo')}  className="hidden" type="file" accept="image/png, image/jpeg, image/webp" />
                     </label>
                     <label className="flex flex-col gap-2">
                         Nombre

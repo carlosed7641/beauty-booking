@@ -1,27 +1,21 @@
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+
+import Image from 'next/image'
 import { FaRegCalendar } from 'react-icons/fa'
 import { GoQuestion } from 'react-icons/go'
 import { HiOutlineUsers } from 'react-icons/hi2'
 import { IoSettingsOutline, IoShareSocialOutline } from 'react-icons/io5'
 import { MdOutlineStarPurple500 } from 'react-icons/md'
 import { AdminSections } from './components'
-import Image from 'next/image'
-import { getEntityById, getUserById, logout } from '@/actions'
+import { getEntityById, getUserById } from '@/actions'
 import { auth } from '@/auth.config'
 import { ROLES } from '@/util/const'
 
 export default async function HomePage() {
 
   const session = await auth()
-
-  if (!session?.user?.id) return redirect('/admin/login')
-
-  const user = await getUserById(session?.user?.id)
-
-  if (!user) throw new Error('Ocurrió un error con el usuario')
-    
-  const shopData = await getEntityById(user.entityId!)
+  const user = await getUserById(session?.user?.id ?? ' ')
+  const shopData = await getEntityById(user?.entityId ?? '')
 
   return (
     <div className="flex flex-col gap-3">
@@ -31,7 +25,7 @@ export default async function HomePage() {
             <Link href="/admin/profile" className="flex gap-2">
               {
                 user?.photo ?
-                  <Image className="rounded-full h-14 w-14 md:h-20 md:w-20" src={user.photo} width={80} height={80} alt={user.name ?? ''} />
+                  <Image className="rounded-full h-14 w-14 md:h-20 md:w-20 object-contain" src={user.photo} width={80} height={80} alt={user.name ?? ''} />
                   :
                   <div className="text-xl md:text-3xl rounded-full h-14 w-14 md:h-20 md:w-20 flex items-center justify-center bg-green-700 text-white">
                     {user?.name?.[0]}
@@ -45,7 +39,6 @@ export default async function HomePage() {
                 <span>Negocio: {user?.entity?.name}</span>
               </div>
             </Link>
-            {/* <Test /> */}
             <div className="text-green-700 text-xl md:text-2xl flex gap-4 md:w-full">
               <IoShareSocialOutline title="Compartir" className="cursor-pointer" />
               <Link href="/admin/settings" className="flex gap-2">
