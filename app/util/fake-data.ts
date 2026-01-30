@@ -153,21 +153,21 @@ export const workSamples: WorkSample[] = [
     images: [
       {
         id: '123',
-        mainImage: true,
+        main: true,
         url: 'https://picsum.photos/160/170'
       },
       {
         id: '124',
-        mainImage: false,
+        main: false,
         url: 'https://picsum.photos/160/170'
       },
       {
         id: '125',
-        mainImage: false,
+        main: false,
         url: 'https://picsum.photos/160/170'
       }
     ],
-    author: 'Carlos Castro',
+    // author: 'Carlos Castro',
     authorId: 'abc',
     entityId: '422'
   },

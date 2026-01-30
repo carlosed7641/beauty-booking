@@ -1,14 +1,16 @@
 interface WorkSampleImage {
     id: string
-    mainImage: boolean
+    main: boolean | null
     url: string
+    file?: File
 }
 interface WorkSample {
     id: string
     category: string
     name: string
     images: WorkSampleImage[]
-    author: string
+    // author: string
+    updatedAt: Date
     authorId: string
     entityId: string
 }

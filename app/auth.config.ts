@@ -37,7 +37,7 @@ export const authConfig: NextAuthConfig = {
 
                 const { email, password } = parsedCredentials.data
 
-                const user = await prisma.user.findFirst({ where: { email: email.toLowerCase() } })
+                const user = await prisma.user.findFirst({ where: { email: email.toLowerCase(), isActive: true } })
                 if (!user) return null
 
                 if (!bcryptjs.compareSync(password, user.password)) return null

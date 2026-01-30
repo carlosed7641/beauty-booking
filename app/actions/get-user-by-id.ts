@@ -16,6 +16,12 @@ export const getUserById = async (id: string) => {
                 },
                 workExperiences: {
                     orderBy: { startDate: 'desc' }
+                },
+                samples: {
+                    orderBy: { name: 'asc' },
+                    include: {
+                        images: true
+                    }
                 }
             }
         })

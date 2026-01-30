@@ -1,16 +1,21 @@
 import Link from 'next/link'
-import { IoIosCamera, IoMdArrowRoundBack } from 'react-icons/io'
+import { IoMdArrowRoundBack } from 'react-icons/io'
 import { UpdateProfile } from '@/components'
-import { WorkExperience, Skills, WorkSamples } from '.'
-import { ProfileVisibility } from './profile-visibility/ProfileVisibility'
+import { 
+    DangerButtons,
+    ProfilePhoto,
+    ProfileVisibility,
+    ProfileWorkSamples ,
+    Skills, 
+    WorkExperience, 
+} from '.'
 import { SignOut } from './sign-out/SignOut'
 import { getCountries, getUserById } from '@/actions'
 import { auth } from '@/auth.config'
-import Image from 'next/image'
-import { ProfilePhoto } from './profile-photo/ProfilePhoto'
 
 
 export default async function ProfilePage() {
+
     const session = await auth()
 
     const userData = await getUserById(session?.user?.id ?? '')
@@ -41,16 +46,13 @@ export default async function ProfilePage() {
                     </div>
                 </div>
                 <WorkExperience workExperiences={userData.workExperiences} />
-                <WorkSamples />
+                <ProfileWorkSamples 
+                    samples={userData.samples} 
+                    entityId={userData.entityId ?? ''}
+                    authorId={userData.id} 
+                />
                 <Skills skills={userData.skills} />
-                <div className="flex flex-col md:flex-row justify-center md:justify-end gap-3">
-                    <button className="md:w-60 py-2 bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-full cursor-pointer">
-                        Desvincularse del negocio
-                    </button>
-                    <button className="md:w-60 py-2  bg-red-500 hover:bg-red-600 text-white font-bold rounded-full cursor-pointer">
-                        Eliminar cuenta
-                    </button>
-                </div>
+                <DangerButtons />
             </div>
 
         </>

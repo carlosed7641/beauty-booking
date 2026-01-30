@@ -9,7 +9,7 @@ import { Modal, ModalHeader } from '@/components'
 import { WorkSamplesForm, WorkSamplesList } from '../components'
 import { INITAL_WS_FORM_DATA } from '@/util/const'
 
-export const WorkSample = ({ workSamples }: { workSamples: WorkSample[] }) => {
+export const WorkSamples = ({ workSamples }: { workSamples: WorkSample[] }) => {
 
     const [formData, setFormData] = useState(INITAL_WS_FORM_DATA)
     const { openModal, setOpenModal } = useModal()

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Slider from 'react-slick'
 import { useModal } from '@/store'
-import {  WorkSamplesList } from './WorkSamplesList'
+import { WorkSamplesList } from './WorkSamplesList'
 import { Modal } from '@/components'
 import { SLIDER_SETTINGS } from '@/util/const'
 import 'slick-carousel/slick/slick-theme.css'
@@ -22,7 +22,7 @@ export const WorkSamples = ({ workSamples, hideFilters, hideName }: Props) => {
 
     const handleSelectGallery = (id: string, name: string) => {
         setSelectedGallery({ id,  name })
-        setOpenModal(WorkSamples.name)
+        setOpenModal('WorkSampleGallery')
     }
 
     return (
@@ -30,9 +30,9 @@ export const WorkSamples = ({ workSamples, hideFilters, hideName }: Props) => {
             <WorkSamplesList workSamples={workSamples} handleSelectGallery={handleSelectGallery} hideFilters={hideFilters} 
                 hideName={hideName} />
             {
-                openModal === WorkSamples.name && selectedGallery.id &&
+                openModal === 'WorkSampleGallery' && selectedGallery.id &&
                 <Modal className="overflow-hidden! h-fit! pb-10! pt-5! px-0! md:px-6! md:pt-0! md:pb-6! md:w-1/3!">
-                    <div className="md:max-w-[400px] my-auto mx-auto md:p-2">
+                    <div className="md:max-w-100 my-auto mx-auto md:p-2">
                         <Slider {...SLIDER_SETTINGS}>
                             {workSamples.find(sample => sample.id === selectedGallery.id)?.images?.map((image, index) => (
                                 <div key={index}>

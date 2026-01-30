@@ -6,7 +6,7 @@ import { IoMdAdd } from 'react-icons/io'
 
 interface Props {
     workSamples: WorkSample[]
-    setFormData: (value: SetStateAction<SampleForm>) => void
+    setFormData: (value: SetStateAction<WorkSample>) => void
     setShowForm: (value: boolean | string | null) => void
     hideButton?: boolean
 }
@@ -14,8 +14,7 @@ interface Props {
 export const WorkSamplesList = ({ workSamples, setFormData, setShowForm, hideButton }: Props) => {
 
     const handleClickSample = (sample: WorkSample) => {
-        const { author, authorId, entityId, ...data } = sample
-        setFormData(data)
+        setFormData(sample)
         setShowForm(true)
     }
 
@@ -29,10 +28,10 @@ export const WorkSamplesList = ({ workSamples, setFormData, setShowForm, hideBut
                     <ul className="flex flex-wrap gap-2 mt-2">
                         {
                             workSamples.map(sample => {
-                                const mainImage = sample.images.find(image => image.mainImage) || sample.images[0]
+                                const mainImage = sample.images.find(image => image.main) || sample.images[0]
                                 return (
                                  <li className="cursor-pointer w-[48%] md:w-[19%] shrink-0" onClick={() => handleClickSample(sample)} key={sample.id}>
-                                        <Image className="rounded-t-sm object-cover w-full" src={mainImage.url} alt={sample.name} width={160} height={170} />
+                                        <Image className="rounded-t-sm h-42.5 w-full object-cover" src={mainImage.url} alt={sample.name} width={160} height={170} />
                                         <div className="bg-zinc-100 p-2 rounded-b-sm">
                                             <span className="inline-block w-full text-green-700 font-bold text-lg">{sample.name}</span>
                                             <span className="text-sm text-zinc-600">{sample.category}</span>
@@ -43,7 +42,7 @@ export const WorkSamplesList = ({ workSamples, setFormData, setShowForm, hideBut
                         }
                     </ul>
                     :
-                    <div className="h-[300px] md:h-[400px] flex items-center justify-center">
+                    <div className="h-75 md:h-100 flex items-center justify-center">
                         <h3>No has creado ninguna muestra de trabajo</h3>
                     </div>
             }

@@ -46,15 +46,15 @@ export const WorkSamplesList = ({ workSamples, handleSelectGallery, hideFilters,
             }
             <div className="flex flex-wrap gap-2 mt-4">
                 {filterSamples.map(sample => {
-                    const mainImage = sample.images.find(image => image.mainImage) || sample.images[0]
+                    const mainImage = sample.images.find(image => image.main) || sample.images[0]
                     return (
                         <div
                             onClick={() => handleSelectGallery(sample.id, sample.name)}
                             key={sample.id}
-                            className="flex flex-col bg-zinc-100 cursor-pointer relative rounded-md w-[180px] shrink-0"
+                            className="flex flex-col bg-zinc-100 cursor-pointer relative rounded-md w-45 shrink-0"
                         >
                             <Image
-                                className="w-auto rounded-t-md"
+                                className=" h-44 w-full object-cover rounded-t-md"
                                 title={sample.name}
                                 width={160}
                                 height={170}
@@ -68,7 +68,7 @@ export const WorkSamplesList = ({ workSamples, handleSelectGallery, hideFilters,
                             )}
                             <div className="p-2">
                                 <p className="font-bold">{sample.name}</p>
-                                {!hideName && <span className="block truncate">{sample.author}</span>}
+                                {/* {!hideName && <span className="block truncate">{sample.author}</span>} */}
                             </div>
                         </div>
                     )

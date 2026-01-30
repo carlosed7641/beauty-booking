@@ -48,6 +48,7 @@ model User {
   password            String
   isPublicProfile     Boolean          @default(true)
   isRegisterCompleted Boolean          @default(false)
+  isActive            Boolean          @default(true)
   entityOwner         Entity?          @relation("EntityOwner")
   customerEvents      Event[]          @relation("EventCustomer")
   professionalEvents  Event[]          @relation("EventProfessional")
@@ -137,22 +138,23 @@ model WorkDay {
 }
 
 model WorkSample {
-  id       String            @id @default(uuid())
-  category String
-  name     String
-  authorId String
-  entityId String
-  author   User              @relation(fields: [authorId], references: [id])
-  entity   Entity            @relation(fields: [entityId], references: [id])
-  images   WorkSampleImage[]
+  id        String            @id @default(uuid())
+  category  String
+  name      String
+  authorId  String
+  entityId  String
+  updatedAt DateTime          @default(now()) @updatedAt
+  author    User              @relation(fields: [authorId], references: [id])
+  entity    Entity            @relation(fields: [entityId], references: [id])
+  images    WorkSampleImage[]
 }
 
 model WorkSampleImage {
-  id        String     @id @default(uuid())
-  url       String
-  mainImage Boolean
-  sampleId  String
-  sample    WorkSample @relation(fields: [sampleId], references: [id])
+  id       String     @id @default(uuid())
+  url      String
+  main     Boolean?
+  sampleId String
+  sample   WorkSample @relation(fields: [sampleId], references: [id], onDelete: Cascade)
 }
 
 model Country {

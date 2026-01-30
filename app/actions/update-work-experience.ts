@@ -19,6 +19,6 @@ export const updateWorkExpererience = async (data: WorkExperience) => {
         return { ok: true }
     } catch (e) {
         console.error(e)
-        return { ok: false, message: e }
+        throw new Error()
     }
 }

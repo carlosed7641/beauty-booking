@@ -12,17 +12,20 @@ export const SelectCountry = ({ countries }: { countries: Country[] }) => {
     const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null)
     const [showSteps, setShowSteps] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const [entityId, setentityId] = useState('')
+    const [entityId, setEntityId] = useState('')
 
     const handleSubmit = async () => {
         if (!selectedCountryId) return
         setIsLoading(true)
-        const { ok: entityOk, id: entityId } = await createEntity(selectedCountryId)
-        const { ok } = await updateUser({ entityId })
-        setIsLoading(false)
-        
-        if (!ok || !entityOk) return
-        setentityId(entityId!)
+
+        try {
+            const { id } = await createEntity(selectedCountryId)
+            setEntityId(id)
+        } catch (e) {
+            console.log(e)
+        } finally {
+            setIsLoading(false)
+        }
 
         setShowSteps(true)
     }

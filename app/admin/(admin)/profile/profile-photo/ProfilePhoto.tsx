@@ -60,7 +60,7 @@ export const ProfilePhoto = ({ name, photo }: Props) => {
                             alt={name}
                         />
                         :
-                        <div className="text-3xl md:text-5xl C h-21.25 w-21.25 md:h-25 md:w-25 flex items-center justify-center bg-green-700 text-white">
+                        <div className="rounded-full text-3xl md:text-5xl C h-21.25 w-21.25 md:h-25 md:w-25 flex items-center justify-center bg-green-700 text-white">
                             {name[0]}
                         </div>
                 }
