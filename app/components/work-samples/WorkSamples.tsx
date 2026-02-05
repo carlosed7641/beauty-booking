@@ -17,31 +17,36 @@ interface Props {
 
 export const WorkSamples = ({ workSamples, hideFilters, hideName }: Props) => {
 
-    const [selectedGallery, setSelectedGallery] = useState<{id: string, name: string}>({id: '', name: ''})
+    const [selectedGallery, setSelectedGallery] = useState<{ id: string, name: string }>({ id: '', name: '' })
     const { openModal, setOpenModal } = useModal()
 
     const handleSelectGallery = (id: string, name: string) => {
-        setSelectedGallery({ id,  name })
+        setSelectedGallery({ id, name })
         setOpenModal('WorkSampleGallery')
     }
 
+    const wsOrderedByMainImage = workSamples.map(ws => ({
+        ...ws,
+        images: [...ws.images].sort((a, b) => Number(b.main) - Number(a.main))
+    }))
+    
     return (
         <>
-            <WorkSamplesList workSamples={workSamples} handleSelectGallery={handleSelectGallery} hideFilters={hideFilters} 
+            <WorkSamplesList workSamples={wsOrderedByMainImage} handleSelectGallery={handleSelectGallery} hideFilters={hideFilters}
                 hideName={hideName} />
             {
                 openModal === 'WorkSampleGallery' && selectedGallery.id &&
-                <Modal className="overflow-hidden! h-fit! pb-10! pt-5! px-0! md:px-6! md:pt-0! md:pb-6! md:w-1/3!">
+                <Modal className="overflow-hidden! h-fit! pb-10! pt-5! px-0! md:px-6! md:pt-0! md:pb-6! md:w-fit!">
                     <div className="md:max-w-100 my-auto mx-auto md:p-2">
                         <Slider {...SLIDER_SETTINGS}>
-                            {workSamples.find(sample => sample.id === selectedGallery.id)?.images?.map((image, index) => (
+                            {wsOrderedByMainImage.find(sample => sample.id === selectedGallery.id)?.images?.map((image, index) => (
                                 <div key={index}>
                                     <Image
-                                        className="w-full"
+                                        className="w-full aspect-square object-contain focus:outline-0"
                                         src={image.url}
                                         alt={selectedGallery.name}
                                         width={160}
-                                        height={170} />
+                                        height={160} />
                                 </div>
                             ))}
                         </Slider>
