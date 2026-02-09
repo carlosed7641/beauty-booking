@@ -3,17 +3,39 @@
 import { useState } from 'react'
 import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
 import { ADDITIONAL_FUNCTIONS_CONFIG } from '@/util/const'
+import { updateEntity } from '@/actions'
 
 interface Props {
     values: AddtionalFunctions
+    entityId: string
 }
 
-export const AdditionalFunctions = ({ values }: Props) => {
+export const AdditionalFunctions = ({ values, entityId }: Props) => {
 
     const [functions, setFunctions] = useState<AddtionalFunctions>(values)
+    const [savedFunctions, setSavedFunctions] = useState<AddtionalFunctions>(values)
+    const [isLoading, setIsLoading] = useState(false)
 
-    const handleSave = () => {
-        console.log(functions)
+    const handleSave = async () => {
+        if (!entityId) throw new Error('Ocurrió un error inesperado')
+
+        const previousSaved = { ...savedFunctions }
+        const payload = { 
+            cancelDateTime: Number(functions.cancelDateTime),
+            showAdminAgenda: functions.showAdminAgenda as boolean,
+            advanceBookingControl: Number(functions.advanceBookingControl)
+        }
+
+        setIsLoading(true)
+
+        try {
+            await updateEntity({ entityId, ...payload })
+            setSavedFunctions(payload)
+        } catch {
+            setFunctions(previousSaved)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -36,16 +58,17 @@ export const AdditionalFunctions = ({ values }: Props) => {
                             :
                             <div className="flex items-center gap-1 cursor-pointer"
                                 onClick={() => setFunctions(prev => ({ ...prev, [id]: !prev[id] }))}>
-                                { functions[id] ? <FaToggleOn className="text-green-700 text-xl" /> : <FaToggleOff className="text-green-700 text-xl" /> }
+                                {functions[id] ? <FaToggleOn className="text-green-700 text-xl" /> : <FaToggleOff className="text-green-700 text-xl" />}
                             </div>
                         }
                     </li>
                 ))
             }
             <button
+                disabled={isLoading}
                 onClick={handleSave}
-                className="btn-primary font-bold rounded-full justify-center flex w-full md:w-36">
-                Guardar
+                className="btn-primary font-bold rounded-full justify-center flex w-full md:w-36 disabled:opacity-55 disabled:pointer-events-none">
+                { isLoading ? 'Procesando...' : 'Guardar'}
             </button>
         </ul>
     )

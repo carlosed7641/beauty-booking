@@ -21,7 +21,7 @@ export const StepOne = () => {
         const file = e.target.files[0]
         const url = URL.createObjectURL(file)
         const name = e.target.name
-        setData({ ...data, images: { ...data.images, [name]: url } })
+        setData({ ...data, images: { ...data.images, [name]: { url, file: e.target.files } } })
     }
 
     return (
@@ -36,12 +36,12 @@ export const StepOne = () => {
                             <div className="relative">
                                 <Image
                                     className="rounded-sm object-cover"
-                                    src={data.images[key]}
+                                    src={data.images[key].url}
                                     alt={label}
                                     width={600}
                                     height={600}
                                 />
-                                <IoMdCloseCircle onClick={() => setData({ ...data, images: { ...data.images, [key]: null } })} className="absolute cursor-pointer bottom-1 right-1 text-2xl fill-white" />
+                                <IoMdCloseCircle onClick={() => setData({ ...data, images: { ...data.images, [key]: null } })} className="absolute cursor-pointer bottom-1 right-1 text-2xl fill-zinc-300" />
                             </div>
                             : <UploadImage name={key} handleChange={handleChangeImage} />
                         }

@@ -11,6 +11,7 @@ export * from './get-countries'
 export * from './get-user-by-id'
 export * from './get-entity-by-id'
 
+export * from './update-entity'
 export * from './update-user'
 export * from './update-skill'
 export * from './update-work-experience'

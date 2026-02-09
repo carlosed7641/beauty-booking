@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
+// Imágenes Cloduinary 
+// Optimizar estados zustand
 // Map
 // Metadata
 

@@ -22,10 +22,10 @@ export const StepThree = () => {
                     Mantén presionado el pin y arrástralo hasta la ubicación del negocio. También puedes tocar en el mapa para cambiar la ubicación del pin.
                 </span>
                 { /* TODO: Map here */}
-                <div id="map" className="bg-zinc-300 h-[300px] rounded-md w-full"></div>
+                <div id="map" className="bg-zinc-300 h-75 rounded-md w-full"></div>
                 <label className="flex flex-col gap-2">
                     <span className="text-green-700">Detalles adicionales de dirección</span>
-                    <input onChange={(e) => setData({ ...data, addressDetail: e.target.value })} value={data.addressDetail} className="border rounded-md focus:outline-0 focus:border-green-700 border-zinc-300 px-2 py-1 " type="text" placeholder="Ej: A una calle del centro" />
+                    <input onChange={(e) => setData({ ...data, addressReference: e.target.value })} value={data.addressReference} className="border rounded-md focus:outline-0 focus:border-green-700 border-zinc-300 px-2 py-1 " type="text" placeholder="Ej: A una calle del centro" />
                 </label>
             </div>
         </>

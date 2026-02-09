@@ -2,15 +2,19 @@ import Link from 'next/link'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { AdditionalFunctions } from './additional-functions/AdditionalFunctions'
 import { Sections } from './sections/Sections'
+import { getEntityById, getUserById } from '@/actions'
+import { auth } from '@/auth.config'
 
-export default function SettingsPage() {
+export default  async function SettingsPage() {
 
-    // TODO: Get from DB
+    const session = await auth()
+    const user = await getUserById(session?.user?.id ?? ' ')
+    const shopData = await getEntityById(user?.entityId ?? '')
+
     const values = {
-        cancelDateTime: 20,
-        customerInterval: 'recommended',
-        showAdminAgenda: true,
-        advanceBookingControl: 30
+        cancelDateTime: shopData?.cancelDateTime ?? 20,
+        showAdminAgenda: shopData?.showAdminAgenda ?? true,
+        advanceBookingControl: shopData?.advanceBookingControl ?? 30
     }
 
     return (
@@ -25,7 +29,7 @@ export default function SettingsPage() {
                 <div className="bg-white w-full rounded-md p-7">
                     <div className="grid md:grid-cols-[1fr_2fr] gap-5">
                         <Sections />
-                        <AdditionalFunctions values={values} />
+                        <AdditionalFunctions values={values} entityId={user?.entityId ?? ''} />
                     </div>
                 </div>
             </div>

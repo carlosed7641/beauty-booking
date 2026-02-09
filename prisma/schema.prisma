@@ -8,24 +8,28 @@ datasource db {
 }
 
 model Entity {
-  id               String       @id @default(uuid())
-  image            String?
-  name             String?
-  contactUrl       String?
-  followers        Int          @default(0)
-  scheduling       Int          @default(0)
-  countryId        String
-  ownerId          String       @unique
-  address          String?
-  addressReference String?
-  shopType         String?
-  country          Country      @relation(fields: [countryId], references: [id])
-  owner            User         @relation("EntityOwner", fields: [ownerId], references: [id])
-  reviews          Review[]
-  services         Service[]
-  users            User[]
-  workdays         WorkDay[]
-  samples          WorkSample[]
+  id                    String       @id @default(uuid())
+  logo                  String?
+  cover                 String?
+  name                  String?
+  contactUrl            String?
+  followers             Int          @default(0)
+  scheduling            Int          @default(0)
+  countryId             String
+  ownerId               String       @unique
+  address               String?
+  addressReference      String?
+  shopType              String?
+  cancelDateTime        Int          @default(20)
+  advanceBookingControl Int          @default(30)
+  showAdminAgenda       Boolean      @default(true)
+  country               Country      @relation(fields: [countryId], references: [id])
+  owner                 User         @relation("EntityOwner", fields: [ownerId], references: [id])
+  reviews               Review[]
+  services              Service[]
+  users                 User[]
+  workdays              WorkDay[]
+  samples               WorkSample[]
 }
 
 model User {

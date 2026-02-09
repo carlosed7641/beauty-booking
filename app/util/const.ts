@@ -246,6 +246,7 @@ export const INITAL_WS_FORM_DATA: WorkSample = {
     category: '',
     entityId: '',
     authorId: '',
+    updatedAt: new Date(),
     images: []
 }
 
@@ -256,16 +257,10 @@ export const ADDITIONAL_FUNCTIONS_CONFIG = [
         hint: 'Elige el tiempo que un usuario tiene para cancelar una cita antes de la hora de inicio',
         options: [
             { value: 5, label: '5m' }, { value: 10, label: '10m' }, { value: 15, label: '15m' }, { value: 20, label: '20m' },
-            { value: 25, label: '25m' }, { value: 30, label: '35m' }, { value: 35, label: '35m' }, { value: 40, label: '40m' },
+            { value: 25, label: '25m' }, { value: 30, label: '30m' }, { value: 35, label: '35m' }, { value: 40, label: '40m' },
             { value: 45, label: '45m' }, { value: 50, label: '50m' }, { value: 55, label: '55m' }, { value: 60, label: '1h' },
             { value: 90, label: '1h30m' }
         ]
-    },
-    {
-        id: 'customerInterval',
-        title: 'Intervalo para clientes',
-        hint: 'Escoge el intervalo de tiempo que tus clientes podrán escoger al momento de agendar, ej: si está cada 30m al momento de reservar las horas se verán así: 7:30 - 8:00 - 8:30 etc',
-        options: [{ value: 'recommend', label: 'Recomendado' }, { value: '30', label: '30m' }, { value: '60', label: '1h' }]
     },
     {
         id: 'showAdminAgenda',
