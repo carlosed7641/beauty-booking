@@ -14,6 +14,7 @@ export * from './get-entity-by-id'
 export * from './update-entity'
 export * from './update-user'
 export * from './update-skill'
+export * from './update-work-day'
 export * from './update-work-experience'
 export * from './update-work-sample'
 

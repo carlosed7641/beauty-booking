@@ -6,7 +6,10 @@ export const getEntityById = async (id: string) => {
 
     try {
         const user = await prisma.entity.findUnique({
-            where: { id }
+            where: { id },
+            include: { 
+                workdays: true
+            }
         })
 
         return user

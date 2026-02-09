@@ -1,10 +1,15 @@
 import Link from 'next/link'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { WorkDaysWrapper } from './WorkDaysWrapper'
-import { INITIAL_WORK_DAYS } from '@/util/const'
+import { auth } from '@/auth.config'
+import { getEntityById, getUserById } from '@/actions'
 
-export default function WorkDaysPage() {
-    //TODO: WorkDays from BD
+export default async function WorkDaysPage() {
+    
+    const session = await auth()
+    const user = await getUserById(session?.user?.id ?? '')
+    const shopData = await getEntityById(user?.entityId ?? '')
+
     return (
         <>
             <div className="flex items-center gap-2 mb-3">
@@ -15,7 +20,7 @@ export default function WorkDaysPage() {
             </div>
             <div className="flex flex-col gap-6">
                 <div className="bg-white w-full rounded-md p-7">
-                    <WorkDaysWrapper workdays={INITIAL_WORK_DAYS} />
+                    <WorkDaysWrapper workdays={shopData?.workdays ?? []} />
                 </div>
             </div>
         </>

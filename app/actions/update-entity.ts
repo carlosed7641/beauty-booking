@@ -51,8 +51,6 @@ export const updateEntity = async (payload: EntityDTO) => {
             data.cover = coverUrl ?? null
         }
 
-        console.log(data)
-
         await prisma.entity.update({
             where: { id: entityId },
             data

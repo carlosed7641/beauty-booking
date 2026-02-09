@@ -2,7 +2,6 @@
 
 import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
 import { toMinutes } from '@/helpers'
-import { DAYS_OF_WEEK } from '@/util/const'
 
 interface Props<T> {
     data: T
