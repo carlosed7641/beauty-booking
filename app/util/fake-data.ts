@@ -470,37 +470,15 @@ export const professionalsEmployees: ProfessionalSettings[] = [
     id: 'abc',
     name: 'Carlos Castro',
     entityId: '123',
-
     // photo: 'https://picsum.photos/200/200',
     workdays: [
-      [
-        { from: '09:00', to: '13:00' },
-        { from: '15:00', to: '16:00' }
-      ],
-      [
-        { from: '09:00', to: '13:00' },
-        { from: '15:00', to: '21:00' }
-      ],
-      [
-        { from: '09:00', to: '13:00' },
-        { from: '15:00', to: '21:00' }
-      ],
-      [
-        { from: '09:00', to: '13:00' },
-        { from: '15:00', to: '21:00' }
-      ],
-      [
-        { from: '09:00', to: '13:00' },
-        { from: '15:00', to: '20:30' },
-        { from: '22:00', to: '23:00' }
-      ],
-      [
-        { from: '09:00', to: '13:00' },
-        { from: '15:00', to: '21:00' }
-      ],
-      [
-        { from: '09:00', to: '16:00' }
-      ]
+        { order: 1, name: 'Lunes', from: '09:00', to:'19:00', disabled: true },
+        { order: 2, name: 'Martes', from: '09:00', to: '19:00' },
+        { order: 3, name: 'Miércoles', from: '09:00', to: '19:00' },
+        { order: 4, name: 'Jueves', from: '09:00', to: '19:00' },
+        { order: 5, name: 'Viernes', from: '09:00', to: '19:00' },
+        { order: 6, name: 'Sábado', from: '09:00', to: '19:00' },
+        { order: 7, name: 'Domingo', from: '09:00', to: '19:00' }
     ],
     services: {
       'Cortes': [{ id: 'Corte', name: 'Corte', duration: { hours: 0, minutes: 30 }, price: 20_000 }, { id: 'Corte hombre', name: 'Corte hombre', duration: { hours: 1, minutes: 0 }, price: 30_000 }],
@@ -514,34 +492,13 @@ export const professionalsEmployees: ProfessionalSettings[] = [
 
     photo: 'https://picsum.photos/200/200',
     workdays: [
-      [
-        { from: '08:00', to: '12:00' },
-        { from: '14:00', to: '20:00' }
-      ],
-      [
-        { from: '08:00', to: '12:00' },
-        { from: '14:00', to: '20:00' }
-      ],
-      [
-        { from: '08:00', to: '12:00' },
-        { from: '14:00', to: '20:00' }
-      ],
-      [
-        { from: '08:00', to: '12:00' },
-        { from: '14:00', to: '20:00' }
-      ],
-      [
-        { from: '08:00', to: '12:00' },
-        { from: '14:00', to: '20:00' },
-        { from: '22:00', to: '23:00' }
-      ],
-      [
-        { from: '08:00', to: '12:00' },
-        { from: '14:00', to: '20:00' }
-      ],
-      [
-        { from: '08:00', to: '15:00' }
-      ]
+        { order: 1, name: 'Lunes', from: '09:00', to:'20:00' },
+        { order: 2, name: 'Martes', from: '09:00', to: '20:00' },
+        { order: 3, name: 'Miércoles', from: '09:00', to: '20:00' },
+        { order: 4, name: 'Jueves', from: '09:00', to: '20:00' },
+        { order: 5, name: 'Viernes', from: '09:00', to: '20:00' },
+        { order: 6, name: 'Sábado', from: '09:00', to: '20:00' },
+        { order: 7, name: 'Domingo', from: '09:00', to: '20:00' }
     ],
     services: {
       'Cortes': [{ id: 'Corte con barba', name: 'Corte con barba', duration: { hours: 0, minutes: 45 }, price: 30_000 }],

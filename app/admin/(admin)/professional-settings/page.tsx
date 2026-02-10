@@ -2,8 +2,8 @@
 import Link from 'next/link'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { ProfessionalSettings } from './ProfessionalSettings'
-import { INITIAL_WORK_DAYS } from '@/util/const'
-import { professionalsEmployees as professionals } from '@/util/fake-data'
+import { auth } from '@/auth.config'
+import { getEntityById } from '@/actions'
 
 //TODO: Get serviceList from entity
 const serviceList = {
@@ -29,10 +29,14 @@ const serviceList = {
     ]
 }
 
-// TODO: Get workDays from DB
-const workDays = [...INITIAL_WORK_DAYS]
+export default async function ProfessionalSettingsPage() {
 
-export default function ProfessionalSettingsPage() {
+    const session = await auth()
+    const entity = await getEntityById(session?.user?.entityId ?? '')
+
+    const professionals = entity?.users.map(({ id, name, entityId, photo, workDays }) => 
+        ({ id, name: name ?? '', entityId, photo, workdays: workDays.length > 0 ? workDays : entity.workdays })) ?? []
+
     return (
         <>
             <div className="flex items-center gap-2 mb-3">
@@ -43,7 +47,7 @@ export default function ProfessionalSettingsPage() {
             </div>
             <div className="flex flex-col gap-6">
                 <div className="bg-white w-full rounded-md p-7">
-                    <ProfessionalSettings professionals={professionals} serviceList={serviceList} workDays={workDays} />
+                    <ProfessionalSettings professionals={professionals} serviceList={serviceList} workDays={entity?.workdays ?? []} />
                 </div>
             </div>
         </>

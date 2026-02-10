@@ -16,14 +16,10 @@ export const WorkDays = <T,>({ data, setData, workdays }: Props<T>) => {
             workdays: workdays.map((day, idx) => {
                 if (idx !== index) return day
 
-                const newData = { ...day }
-
-                if ('disabled' in newData) {
-                    delete newData.disabled
-                } else {
-                    newData.disabled = true
+                return { 
+                    ...day,
+                    disabled: !day.disabled
                 }
-                return newData
             })
         })
     }

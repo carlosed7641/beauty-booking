@@ -4,7 +4,7 @@ import { Fragment, SetStateAction, useEffect, useState } from 'react'
 import clsx from 'clsx'
 import { RxCaretDown } from 'react-icons/rx'
 import { useModal } from '@/store'
-import { SelectHour, SelectPrice } from '../../components'
+import { SelectHour, SelectPrice } from '../components'
 import { formatNumber, getRawNumber } from '@/helpers'
 
 interface Props {
@@ -93,9 +93,15 @@ export const AssignServices = ({ title, hint, serviceList, selectedProfessional,
         //TODO: Save To DB here
     }
 
+    
+
     useEffect(() => {
         setError('')
     }, [openModal])
+
+    useEffect(() => {
+        console.log(selectedProfessional)
+    }, [])
 
     return (
         <>
@@ -141,7 +147,7 @@ export const AssignServices = ({ title, hint, serviceList, selectedProfessional,
                                                 </div>
                                                 :
                                                 <label className="cursor-pointer flex gap-1  py-1 text-zinc-600 items-center">
-                                                    <input defaultChecked={selectedProfessional.services[key]?.some(service => service.id === value.id)
+                                                    <input checked={!!selectedProfessional.services[key]?.some(service => service.id === value.id)
                                                     } onChange={() => handleSelectService(key, value)} className="cursor-pointer h-4 w-4 md:h-3.5 md:w-3.5 accent-green-700" type="checkbox" />
                                                     {value.name}
                                                 </label>

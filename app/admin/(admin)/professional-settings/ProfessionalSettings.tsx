@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { SelectProfessional } from '../../components'
+import { useState } from 'react'
+import { SelectProfessional } from '../components'
 import { AssignServices, AssignWorkDays, SelectOption } from '.'
 
 interface Props {
@@ -14,10 +14,6 @@ export const ProfessionalSettings = ({ professionals, serviceList, workDays }: P
 
     const [selectedProfessional, setSelectedProfessional] = useState(professionals[0])
     const [selectedOption, setSelectedOption] = useState(0)
-
-    useEffect(() => {
-        setSelectedOption(0)
-    }, [selectedProfessional.id])
 
     return (
         <>

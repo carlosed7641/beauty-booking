@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "WorkDay" ALTER COLUMN "order" DROP DEFAULT;

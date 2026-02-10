@@ -23,6 +23,7 @@ export const updateWorkDay = async (data: WorkDays[]) => {
         )
 
         revalidatePath('/admin/work-days')
+        revalidatePath('/admin/professional-settings')
 
     } catch (e) {
         console.error(e)

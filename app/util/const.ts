@@ -308,36 +308,43 @@ export const SHOP_TYPES = ['Barbería', 'Cejas & Pesteñas', 'Centro de Maquilla
 export const INITIAL_WORK_DAYS = [
     {
         name: 'Lunes',
+        order: 1,
         from: '09:00',
         to: '21:00'
     },
     {
         name: 'Martes',
+        order: 2,
         from: '09:00',
         to: '21:00'
     },
     {
         name: 'Miércoles',
+        order: 3,
         from: '09:00',
         to: '21:00'
     },
     {
         name: 'Jueves',
+        order: 4,
         from: '09:00',
         to: '21:00'
     },
     {
         name: 'Viernes',
+        order: 5,
         from: '09:00',
         to: '23:00'
     },
     {
         name: 'Sábado',
+        order: 6,
         from: '09:00',
         to: '21:00'
     },
     {
         name: 'Domingo',
+        order: 7,
         from: '09:00',
         to: '21:00'
     }
@@ -347,14 +354,13 @@ export const PROFESSIONAL_SETTINGS_ERRORS = {
     to: 'La hora en la que sales no puede ser más temprano que la hora en la que empiezas',
     from: 'La hora en la que empiezas no pude ser más tarde que la hora en la que sales',
     outRange: 'No puedes colocar una hora fuera del horario de tu entidad',
-    inRange: 'No puedes sobreponer horarios dentro de un mismo dia, los horarios deben ir en orden'
 }
 
 export const PROFESSIONAL_SETTINGS_OPTIONS = [
     { title: 'Disponibilidad', icon: RiCalendarScheduleLine },
-    { title: 'Asignar servicios', icon: LuCopyCheck },
-    { title: 'Asignar duración de servicios', icon: TbClockHour3 },
-    { title: 'Asignar precio de servicios', icon: AiOutlineDollar }
+    // { title: 'Asignar servicios', icon: LuCopyCheck },
+    // { title: 'Asignar duración de servicios', icon: TbClockHour3 },
+    // { title: 'Asignar precio de servicios', icon: AiOutlineDollar }
 ]
 
 export const DATE_OPTIONS: Intl.DateTimeFormatOptions = {

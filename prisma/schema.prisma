@@ -63,6 +63,7 @@ model User {
   samples             WorkSample[]
   workExperiences     WorkExperience[]
   skills              Skill[]
+  workDays            WorkDay[]
 }
 
 model Event {
@@ -132,13 +133,16 @@ model WorkExperience {
 }
 
 model WorkDay {
-  id       String  @id @default(uuid())
-  from     String
-  to       String
-  name     String
-  disabled Boolean @default(false)
-  entityId String
-  entity   Entity  @relation(fields: [entityId], references: [id])
+  id             String  @id @default(uuid())
+  from           String
+  to             String
+  name           String
+  order          Int     
+  disabled       Boolean @default(false)
+  entityId       String?
+  professionalId String?
+  entity         Entity? @relation(fields: [entityId], references: [id])
+  user           User?   @relation(fields: [professionalId], references: [id])
 }
 
 model WorkSample {

@@ -4,12 +4,14 @@ export * from './auth/logout'
 
 export * from './create-entity'
 export * from './create-skill'
+export * from './create-work-day'
 export * from './create-work-experience'
 export * from './create-work-sample'
 
 export * from './get-countries'
 export * from './get-user-by-id'
 export * from './get-entity-by-id'
+export * from './get-workdays-by-id'
 
 export * from './update-entity'
 export * from './update-user'
