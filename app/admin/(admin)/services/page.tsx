@@ -7,5 +7,7 @@ export default function ServicesPage() {
     // TODO: Api call
     const services = serviceList.filter(service => service.entityId === entityId)
     const categories = serviceCategories
-    return <Services services={services} categories={categories} />
+    return (
+        <Services services={services} categories={categories} />
+    )
 }
