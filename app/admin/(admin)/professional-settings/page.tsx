@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { ProfessionalSettings } from './ProfessionalSettings'
 import { auth } from '@/auth.config'
-import { getEntityById } from '@/actions'
+import { getEntityById, getUserById } from '@/actions'
 import { minutesToTime, toMinutes } from '@/helpers'
 
 //TODO: Get serviceList from entity
@@ -33,7 +33,8 @@ const serviceList = {
 export default async function ProfessionalSettingsPage() {
 
     const session = await auth()
-    const entity = await getEntityById(session?.user?.entityId ?? '')
+    const user = await getUserById(session?.user?.id ?? '')
+    const entity = await getEntityById(user?.entityId ?? '')
 
     const professionals = entity?.users.map(({ id, name, entityId, photo, workDays }) =>
         ({

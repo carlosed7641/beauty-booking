@@ -1,9 +1,9 @@
 interface ServiceItem {
   serviceId: string
   name: string
-  description?: string
+  description?: string | null
   price: number
-  gender?: Gender
+  gender?: Gender | null
   category?: string
   duration: {
     hours: number
@@ -12,11 +12,17 @@ interface ServiceItem {
   archived?: boolean
 }
 
-type Gender = 'men' | 'women' | 'other'
+const Gender = {
+  men: 'men',
+  women: 'women',
+  other: 'other'
+}
+
+type Gender = keyof typeof Gender
 
 interface Service {
-  entityId: string
-  entityName: string
+  entityId: string 
+  entityName?: string
   category: string
   services: ServiceItem[]
 }

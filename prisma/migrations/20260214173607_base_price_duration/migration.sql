@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Service" ADD COLUMN     "baseDurationHours" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "baseDurationMinutes" INTEGER NOT NULL DEFAULT 30,
+ADD COLUMN     "basePrice" INTEGER NOT NULL DEFAULT 0;

@@ -2,7 +2,8 @@ interface Entity {
     id: string
     name: string | null
     countryId: string
-    image: string | null
+    logo?: string | null
+    cover?: string | null
     contactUrl: string | null
     followers: number
     scheduling: number

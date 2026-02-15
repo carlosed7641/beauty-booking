@@ -120,7 +120,7 @@ export const AssignWorkDays = ({
         <>
             <div className="grid md:grid-cols-3 gap-3">
                 {
-                    selectedProfessional.workdays.map((workday, dayIndex) => {
+                    selectedProfessional?.workdays.map((workday, dayIndex) => {
                         if (workDays[dayIndex]?.disabled) return null
                         return (
                             <div key={dayIndex} className="flex flex-col">
@@ -155,7 +155,7 @@ export const AssignWorkDays = ({
             { status.error && <span className="block mt-5 text-red-500">Ocurrió un error inesperado, inténtelo de nuevo</span>}
             <button onClick={handleSave} 
             className="fixed md:relative bottom-8 md:bottom-auto right-8 md:right-auto bg-green-700 p-1 rounded-full justify-center items-center flex gap-1 text-white cursor-pointer hover:bg-green-800 w-12 h-12 md:w-fit md:h-auto text-sm disabled:opacity-60 disabled:pointer-events-none focus:outline-0 md:px-8 md:justify-self-end mt-2" 
-            disabled={selectedProfessional.workdays.some(({ from, to, error, professionalId }) => !from || !to || !professionalId || error) || status.isLoading}>
+            disabled={selectedProfessional?.workdays.some(({ from, to, error, professionalId }) => !from || !to || !professionalId || error) || status.isLoading}>
                 <LiaSave className="text-2xl" />
                 <span className="hidden md:flex text-lg leading-[initial]">{status.isLoading ? 'Procesando...' : 'Guardar'}</span>
             </button>

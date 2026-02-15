@@ -33,37 +33,38 @@ model Entity {
 }
 
 model User {
-  id                  String           @id @default(uuid())
+  id                  String            @id @default(uuid())
   name                String?
   birthDay            DateTime?
   gender              Gender?
-  role                Role             @default(user)
+  role                Role              @default(user)
   photo               String?
   indicator           String?
   phone               String?
-  shareNumberPhone    Boolean          @default(false)
+  shareNumberPhone    Boolean           @default(false)
   description         String?
   artisticName        String?
   experienceArea      String?
   experienceYears     String?
   countryId           String?
   entityId            String?
-  email               String           @unique
+  email               String            @unique
   password            String
-  isPublicProfile     Boolean          @default(true)
-  isRegisterCompleted Boolean          @default(false)
-  isActive            Boolean          @default(true)
-  entityOwner         Entity?          @relation("EntityOwner")
-  customerEvents      Event[]          @relation("EventCustomer")
-  professionalEvents  Event[]          @relation("EventProfessional")
-  reviewsReceived     Review[]         @relation("ProfessionalReviews")
-  reviewsWritten      Review[]         @relation("UserReviews")
-  country             Country?         @relation(fields: [countryId], references: [id])
-  entity              Entity?          @relation(fields: [entityId], references: [id])
+  isPublicProfile     Boolean           @default(true)
+  isRegisterCompleted Boolean           @default(false)
+  isActive            Boolean           @default(true)
+  entityOwner         Entity?           @relation("EntityOwner")
+  customerEvents      Event[]           @relation("EventCustomer")
+  professionalEvents  Event[]           @relation("EventProfessional")
+  reviewsReceived     Review[]          @relation("ProfessionalReviews")
+  reviewsWritten      Review[]          @relation("UserReviews")
+  country             Country?          @relation(fields: [countryId], references: [id])
+  entity              Entity?           @relation(fields: [entityId], references: [id])
   samples             WorkSample[]
   workExperiences     WorkExperience[]
   skills              Skill[]
   workDays            WorkDay[]
+  serviceOverrides    ServiceOverride[]
 }
 
 model Event {
@@ -97,20 +98,39 @@ model Review {
 }
 
 model Service {
-  id              String  @id @default(uuid())
-  name            String
-  category        String
-  description     String?
-  price           Int     @default(0)
-  gender          Gender?
-  durationHours   Int     @default(0)
-  durationMinutes Int     @default(30)
-  archived        Boolean @default(false)
+  id          String  @id @default(uuid())
+  name        String
+  category    String
+  description String?
 
-  entityId String?
+  basePrice           Int @default(0)
+  baseDurationHours   Int @default(0)
+  baseDurationMinutes Int @default(30)
 
-  entity Entity? @relation(fields: [entityId], references: [id])
-  events Event[]
+  gender   Gender?
+  archived Boolean @default(false)
+
+  entityId String
+
+  entity           Entity           @relation(fields: [entityId], references: [id])
+  events           Event[]
+  serviceOverrides ServiceOverride[]
+}
+
+model ServiceOverride {
+  id String @id @default(uuid())
+
+  serviceId      String
+  professionalId String
+
+  price    Int
+  duration Int
+
+  enabled      Boolean @default(true)
+  service      Service @relation(fields: [serviceId], references: [id])
+  professional User    @relation(fields: [professionalId], references: [id])
+
+  @@unique([serviceId, professionalId])
 }
 
 model Skill {
@@ -137,7 +157,7 @@ model WorkDay {
   from           String
   to             String
   name           String
-  order          Int     
+  order          Int
   disabled       Boolean @default(false)
   entityId       String?
   professionalId String?

@@ -55,20 +55,7 @@ const defaultServices: Record<string, string[]> = {
 
 
 export async function main() {
-  const categories = await prisma.serviceCategory.findMany()
-  for (const c of categories) {
-    for (const s of defaultServices[c.categoryName]) {
-      await prisma.service.create({
-        data: {
-          name: s,
-          category: {
-            connect: { id: c.id }
-          }
-        }
-      })
-      // await prisma.serviceCategory.create({ data: c });
-    }
-  }
+
 }
 
 main();

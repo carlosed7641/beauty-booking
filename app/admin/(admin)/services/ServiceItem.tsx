@@ -2,7 +2,9 @@ import { FaArrowCircleUp, FaTrashRestore } from 'react-icons/fa'
 import { MdEdit } from 'react-icons/md'
 import { useModal } from '@/store'
 import { useServiceFormData } from '../store'
-import { formatNumber } from '@/helpers'
+import { formatDisplayNumber, formatNumber } from '@/helpers'
+import { updateService } from '@/actions'
+import { useState } from 'react'
 
 interface Props {
     serviceItem: ServiceItem
@@ -14,8 +16,9 @@ export const ServiceItem = ({
     category
 }: Props) => {
 
-    const { setOpenModal } = useModal()
-    const { setServiceFormData } = useServiceFormData()
+    const setOpenModal = useModal(state => state.setOpenModal)
+    const setServiceFormData = useServiceFormData(state => state.setServiceFormData)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleUpdate = ({
         description, price, duration: { hours, minutes }, ...rest
@@ -30,46 +33,39 @@ export const ServiceItem = ({
         setOpenModal('ServiceForm')
     }
 
-    const handleToggleActive = (service: ServiceItem) => {
-        // TODO: [PUT] || server action
-        const newData = {
-            ...service,
-            archived: !!service.archived
-        }
-
-        // save(new Data)
-        // revalidatePath()
+    const handleToggleActive = async (serviceId: string, archived: boolean) => {
+        setIsLoading(true)
+        await updateService({ serviceId, archived })
+        setIsLoading(false)
     }
+
+    const isArchived = serviceItem.archived
+    const Icon = isArchived ? FaArrowCircleUp : FaTrashRestore
+    const label = isArchived ? 'Activar' : 'Archivar'
 
     return (
         <li key={serviceItem.serviceId} className="p-4 border border-zinc-200 flex flex-col rounded-sm">
             <div className="flex flex-col text-sm md:text-base">
                 <span className="font-bold text-green-700">{serviceItem.name}</span>
-                ${formatNumber(serviceItem.price)}
+                ${formatDisplayNumber(serviceItem.price)}
                 <span className="text-zinc-500">Duración:
                     {serviceItem.duration.hours > 0 ? ` ${serviceItem.duration.hours} ${serviceItem.duration.hours === 1 ? 'hr' : 'hrs'} ${serviceItem.duration.minutes > 0 ? 'y ' + serviceItem.duration.minutes + ' min' : ''}` : ` ${serviceItem.duration.minutes} min`}
                 </span>
             </div>
-            <div className="text-sm flex gap-3 self-end">
-                <button onClick={() => handleUpdate({ ...serviceItem, category })} className="flex flex-col text-green-700 gap-1 items-center cursor-pointer">
-                    <MdEdit />
-                    Editar
-                </button>
-                <button onClick={() => handleToggleActive(serviceItem)} className="flex flex-col text-zinc-500 gap-1 items-center cursor-pointer">
-                    {
-                        serviceItem.archived ?
-                            <>
-                                <FaArrowCircleUp />
-                                Activar
-                            </>
-                            :
-                            <>
-                                <FaTrashRestore />
-                                Archivar
-                            </>
-                    }
-                </button>
-            </div>
+            {isLoading ?
+                <p className="flex gap-3 self-end">Procesando...</p>
+                :
+                <div className="text-sm flex gap-3 self-end">
+                    <button onClick={() => handleUpdate({ ...serviceItem, category })} className="flex flex-col text-green-700 gap-1 items-center cursor-pointer">
+                        <MdEdit />
+                        Editar
+                    </button>
+                    <button onClick={() => handleToggleActive(serviceItem.serviceId, !serviceItem.archived)} className="flex flex-col text-zinc-500 gap-1 items-center cursor-pointer">
+                        <Icon />
+                        {label}
+                    </button>
+                </div>
+            }
         </li>
     )
 }

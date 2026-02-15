@@ -38,9 +38,9 @@ export const completeRegistration = async (payload: CompleteRegistrationPayload)
                 list.map(s => ({
                     name: s.name,
                     category,
-                    price: s.price,
-                    durationHours: s.duration.hours,
-                    durationMinutes: s.duration.minutes,
+                    basePrice: s.price,
+                    baseDurationHours: s.duration.hours,
+                    baseDurationMinutes: s.duration.minutes,
                     entityId
                 }))
         )

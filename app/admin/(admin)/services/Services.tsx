@@ -14,6 +14,7 @@ import { ServiceForm } from './ServiceForm'
 interface Props {
     services: Service[]
     categories: string[]
+    entityId: string
 }
 
 const tabs = [
@@ -23,12 +24,16 @@ const tabs = [
 
 export const Services = ({
     services,
-    categories
+    categories,
+    entityId
 }: Props) => {
 
     const [currentTab, setCurrentTab] = useState('active')
-    const { setServiceFormData: setFormData, setErrors, setTouched } = useServiceFormData()
-    const { openModal, setOpenModal } = useModal()
+    const setFormData =  useServiceFormData(state => state.setServiceFormData)
+    const setErrors =  useServiceFormData(state => state.setErrors)
+    const setTouched =  useServiceFormData(state => state.setTouched)
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal  = useModal(state => state.setOpenModal)
 
     useEffect(() => {
         if (!openModal) {
@@ -65,7 +70,7 @@ export const Services = ({
                     </button>
                 </div>
             </div >
-            {openModal === 'ServiceForm' && <ServiceForm categories={categories} />}
+            {openModal === 'ServiceForm' && <ServiceForm entityId={entityId} categories={categories} />}
         </>
     )
 }

@@ -1,40 +1,78 @@
-import { useMemo } from 'react'
+'use client'
+
+import { useShallow } from 'zustand/shallow'
+import { useMemo, useState } from 'react'
 import { useModal } from '@/store'
 import { Field, Modal, ModalHeader } from '@/components'
 import { useServiceFormData } from '../store'
 import { formatNumber } from '@/helpers'
+import { createService, updateService } from '@/actions'
 
-export const ServiceForm = ({ categories }: { categories: string[] }) => {
+export const ServiceForm = ({ categories, entityId }: { categories: string[], entityId: string }) => {
 
-    const { 
-        serviceFormData: formData, 
-        setServiceFormData: setFormData,
+    const [status, setStatus] = useState({ isLoading: false, error: false })
+
+    const {
+        formData,
+        setFormData,
         touched,
         setTouched,
         errors,
         setErrors
-    } = useServiceFormData()
-    const { setOpenModal } = useModal()
+    } = useServiceFormData(
+        useShallow(state => ({
+            formData: state.serviceFormData,
+            setFormData: state.setServiceFormData,
+            touched: state.touched,
+            setTouched: state.setTouched,
+            errors: state.errors,
+            setErrors: state.setErrors
+        }))
+    )
+    const setOpenModal = useModal(state => state.setOpenModal)
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         if (!isFormValid) return
 
-        // console.log(Number(getRawNumber(formData.price)))
+        const { price, hours, minutes, ...values } = formData
 
-        if (formData.serviceId) {
-            // TODO: [PUT] & revalidatePath()
-        } else {
-            // TODO: [POST] & revalidatePath()
+        const data = {
+            ...values,
+            basePrice: Number(price),
+            baseDurationHours: hours,
+            baseDurationMinutes: minutes,
         }
 
-        setOpenModal(null)
+        for (const [key, value] of Object.entries(data)) {
+
+            (data as any)[key] = typeof value === 'string' && value.trim() === ''
+                ? null
+                : value
+        }
+
+        try {
+            setStatus({ isLoading: true, error: false })
+
+            if (formData.serviceId) {
+                await updateService(data)
+            } else {
+                const { serviceId, ...values } = data
+                await createService({entityId, ...values})
+            }
+
+            setStatus({ isLoading: false, error: false })
+            setOpenModal(null)
+        } catch {
+            setStatus({ isLoading: false, error: true })
+        }
+
     }
 
     const handleChangeField = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const name = e.target.name as keyof typeof formData
-        const value = e.target.value
+        const value = name === 'price' ? e.target.value.replace(/\D/g, '') : e.target.value
         const numericFields = ['hours', 'minutes']
         const isNumericField = numericFields.includes(name)
 
@@ -74,11 +112,11 @@ export const ServiceForm = ({ categories }: { categories: string[] }) => {
     const isFormValid = useMemo(() => {
         const { name, category, gender, hours, minutes, price } = formData
         const totalMinutes = hours * 60 + minutes
-        return Boolean(name && category && gender && totalMinutes > 0 && price)
+        return Boolean(name.trim() && category && gender && totalMinutes > 0 && price.trim())
     }, [formData])
 
     return (
-        <Modal className="md:w-[650px]!">
+        <Modal className="md:w-162.5!">
             <ModalHeader>
                 <h2 className="font-bold text-green-700">Editor de servicios</h2>
             </ModalHeader>
@@ -95,11 +133,11 @@ export const ServiceForm = ({ categories }: { categories: string[] }) => {
                     {errors.category && <span className="text-red-500">{errors.category}</span>}
                 </Field>
                 <Field label="Género destinado *" hint="¿Para cuál género está destinado este servicio?" colorLabel={`${errors.gender ? '#fb2c36' : '#008236'}`}>
-                    <select onChange={handleChangeField} name="gender" value={formData.gender} className={`mt-2 p-1.5 border rounded-md focus:outline-0 ${errors.gender ? 'border-red-500' : 'border-green-700'}`}>
+                    <select onChange={handleChangeField} name="gender" value={formData.gender ?? ''} className={`mt-2 p-1.5 border rounded-md focus:outline-0 ${errors.gender ? 'border-red-500' : 'border-green-700'}`}>
                         <option value="" disabled>Elige una género</option>
-                        <option value="Masculino">Masculino</option>
-                        <option value="Femenino">Femenino</option>
-                        <option value="Unisex">Unisex</option>
+                        <option value="men">Masculino</option>
+                        <option value="women">Femenino</option>
+                        <option value="other">Unisex</option>
                     </select>
                     {errors.gender && <span className="text-red-500">{errors.gender}</span>}
                 </Field>
@@ -133,12 +171,13 @@ export const ServiceForm = ({ categories }: { categories: string[] }) => {
                 <Field label="Precio *" colorLabel={`${errors.price ? '#fb2c36' : '#008236'}`}>
                     <div className="flex items-center gap-1.5 mt-2">
                         <span className={`${errors.price ? 'text-red-500' : 'text-green-700'}`}>$</span>
-                        <input onChange={handleChangeField} onBlur={handleBlur} value={formatNumber(Number(formData.price))} name="price" className={`border w-full p-1 rounded-md focus:outline-0 ${errors.price ? 'border-red-500' : 'border-green-700'}`} type="text" />
+                        <input onChange={handleChangeField} onBlur={handleBlur} value={formatNumber(formData.price)} name="price" className={`border w-full p-1 rounded-md focus:outline-0 ${errors.price ? 'border-red-500' : 'border-green-700'}`} type="text" />
                     </div>
                     {errors.price && <span className="text-red-500">{errors.price}</span>}
                 </Field>
-                <button disabled={!isFormValid} type="submit" className="btn-primary rounded-full md:self-end px-4! py-2! w-full md:w-fit">
-                    Guardar cambios
+                { status.error && <span className="text-red-500">Ocurrió un error al guardar, inténtelo más tarde.</span> }
+                <button disabled={!isFormValid || status.isLoading} type="submit" className="btn-primary rounded-full md:self-end px-4! py-2! w-full md:w-fit">
+                   { status.isLoading ? 'Guardando...' : ' Guardar cambios' }
                 </button>
             </form>
         </Modal>
