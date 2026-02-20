@@ -11,7 +11,8 @@ export const getServiceByEntityId = async (entityId: string) => {
         })
 
         return services
-    } catch {
+    } catch (e) {
+        console.error(e)
         throw new Error('Ocurrió un error cargando los sevicios')
     }
 

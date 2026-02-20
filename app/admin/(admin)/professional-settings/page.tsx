@@ -68,7 +68,11 @@ export default async function ProfessionalSettingsPage() {
             </div>
             <div className="flex flex-col gap-6">
                 <div className="bg-white w-full rounded-md p-7">
-                    <ProfessionalSettings professionals={professionals} serviceList={serviceList} workDays={entity?.workdays ?? []} />
+                    <ProfessionalSettings 
+                        professionals={professionals} 
+                        serviceList={serviceList} 
+                        workDays={entity?.workdays ?? []} 
+                    />
                 </div>
             </div>
         </>
