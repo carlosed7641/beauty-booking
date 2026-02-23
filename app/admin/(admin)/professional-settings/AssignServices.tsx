@@ -58,29 +58,29 @@ export const AssignServices = ({ title, hint, selectedProfessional, setSelectedP
         setSelectedProfessional(newValue)
 
         startTransition(async () => {
-            const services = 
+            const services =
                 Object.values(newValue.services)
-                .flat()
-                .map(service => ({
-                    serviceId: service.serviceId!,
-                    enabled: service.enabled!,
-                    price: service.price,
-                    durationHours: service.duration.hours,
-                    durationMinutes: service.duration.minutes
-                }))
+                    .flat()
+                    .map(service => ({
+                        serviceId: service.serviceId!,
+                        enabled: service.enabled!,
+                        price: service.price,
+                        durationHours: service.duration.hours,
+                        durationMinutes: service.duration.minutes
+                    }))
 
             try {
                 await upsertProfessionalService(selectedProfessional.id, services)
-            } catch (error) {   
+            } catch (error) {
                 setSelectedProfessional(prev => {
                     return {
                         ...prev,
-                         services: {
+                        services: {
                             ...prev.services,
                             [key]: (prev?.services?.[key] ?? []).map(s =>
                                 s.serviceId === serviceId ? service : s
                             )
-                         }
+                        }
                     }
                 })
             }
@@ -146,57 +146,64 @@ export const AssignServices = ({ title, hint, selectedProfessional, setSelectedP
                 <span className="text-center">{hint}</span>
             </div>
             {
-                Object.entries(selectedProfessional.services ?? []).map(([key, values], index) => (
-                    <Fragment key={key}>
-                        <div onClick={() => handleToggleService(key)} className=" border-b border-zinc-300 p-2 flex items-center gap-1 list-none cursor-pointer text-green-700 font-bold">
-                            <RxCaretDown className="text-2xl" />
-                            {key}
-                        </div>
-                        <div className={
-                            clsx(
-                                "flex flex-col px-8 transition-all duration-300",
+                Object.entries(selectedProfessional.services ?? []).map(([key, values]) => {
+
+                    const filteredValues = values.filter(value => !value.archived)
+
+                    if (!filteredValues.length) return null
+
+                    return (
+                        <Fragment key={key}>
+                            <div onClick={() => handleToggleService(key)} className="select-none border-b border-zinc-300 p-2 flex items-center gap-1 list-none cursor-pointer text-green-700 font-bold">
+                                <RxCaretDown className="text-2xl" />
+                                {key}
+                            </div>
+                            <div className={
+                                clsx(
+                                    "flex flex-col px-8 transition-all duration-300",
+                                    {
+                                        "max-h-screen opacity-100": !closedServices.includes(key),
+                                        "max-h-0 overflow-hidden opacity-0": closedServices.includes(key)
+                                    }
+                                )
+                            }>
                                 {
-                                    "max-h-screen opacity-100": !closedServices.includes(key),
-                                    "max-h-0 overflow-hidden opacity-0": closedServices.includes(key)
+                                    filteredValues.map(value => (
+                                        <Fragment key={key + value.id}>
+                                            {
+                                                type ?
+                                                    <div className="flex items-center justify-between">
+                                                        <span className="py-1 text-zinc-600">{value.name}</span>
+                                                        {
+                                                            type === "duration" && value.duration &&
+                                                            <span onClick={() => handleOpenService(key, value)} className="text-green-700 underline font-bold cursor-pointer">
+                                                                {value.duration.hours > 0 ? `${value.duration.hours} ${value.duration.hours === 1 ? 'hr' : 'hrs'} ${value.duration.minutes > 0 ? 'y ' + value.duration.minutes + ' min' : ''}` : `${value.duration.minutes} min`}
+                                                            </span>
+                                                        }
+                                                        {
+                                                            type === "price" && value.price &&
+                                                            <span onClick={() => handleOpenService(key, value)} className="text-green-700 underline font-bold cursor-pointer">
+                                                                ${formatDisplayNumber(value.price)}
+                                                            </span>
+                                                        }
+                                                    </div>
+                                                    :
+                                                    <label className="cursor-pointer flex gap-1  py-1 text-zinc-600 items-center">
+                                                        <input
+                                                            checked={value.enabled}
+                                                            onChange={() => handleSelectService(key, value.serviceId ?? '')} className="cursor-pointer h-4 w-4 md:h-3.5 md:w-3.5 accent-green-700" type="checkbox"
+                                                            disabled={isPending}
+                                                        />
+                                                        {value.name}
+                                                    </label>
+                                            }
+                                        </Fragment>
+                                    ))
                                 }
-                            )
-                        }>
-                            {
-                                values.map(value => (
-                                    <Fragment key={key + value.id}>
-                                        {
-                                            type ?
-                                                <div className="flex items-center justify-between">
-                                                    <span className="py-1 text-zinc-600">{value.name}</span>
-                                                    {
-                                                        type === "duration" && value.duration &&
-                                                        <span onClick={() => handleOpenService(key, value)} className="text-green-700 underline font-bold cursor-pointer">
-                                                            {value.duration.hours > 0 ? `${value.duration.hours} ${value.duration.hours === 1 ? 'hr' : 'hrs'} ${value.duration.minutes > 0 ? 'y ' + value.duration.minutes + ' min' : ''}` : `${value.duration.minutes} min`}
-                                                        </span>
-                                                    }
-                                                    {
-                                                        type === "price" && value.price &&
-                                                        <span onClick={() => handleOpenService(key, value)} className="text-green-700 underline font-bold cursor-pointer">
-                                                            ${formatDisplayNumber(value.price)}
-                                                        </span>
-                                                    }
-                                                </div>
-                                                :
-                                                <label className="cursor-pointer flex gap-1  py-1 text-zinc-600 items-center">
-                                                    <input
-                                                        checked={value.enabled}
-                                                        onChange={() => handleSelectService(key, value.serviceId ?? '')} className="cursor-pointer h-4 w-4 md:h-3.5 md:w-3.5 accent-green-700" type="checkbox"
-                                                        disabled={isPending}
-                                                    />
-                                                    {value.name}
-                                                </label>
-                                        }
-                                    </Fragment>
-                                ))
-                            }
-                        </div>
-                    </Fragment>
-                ))
+                            </div>
+                        </Fragment>
+                    )
+                })
             }
             {
                 openModal === AssignServices.name + 'duration' &&

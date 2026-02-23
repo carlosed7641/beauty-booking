@@ -1,24 +1,38 @@
 'use server'
 
-import { auth } from '@/auth.config'
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 
 export const createService = async (data: ServiceItemDTO) => {
 
-    try {
-        const session = await auth()
-        if (!session?.user?.id) throw new Error('Unauthorized')
+    await prisma.$transaction(async tx => {
 
-        await prisma.service.create({ data })
+        const service = await tx.service.create({ data })
 
-        revalidatePath('/admin/services')
+        const professionals = await tx.user.findMany({
+            where: {
+                entityId: data.entityId,
+                serviceOverrides: {
+                    some: {}
+                }
+            },
+            select: { id: true }
+        })
 
-    } catch (e) {
-        console.log(e)
-        throw new Error('Ocurrió un error al crear el servicio')
-    }
+        if (professionals.length > 0) {
+            await tx.serviceOverride.createMany({
+                data: professionals.map(p => ({
+                    professionalId: p.id,
+                    serviceId: service.id,
+                    price: service.basePrice,
+                    durationHours: service.baseDurationHours,
+                    durationMinutes: service.baseDurationMinutes
+                }))
+            })
+        }
 
+    })
 
-
+    revalidatePath('/admin/services')
+    revalidatePath('/admin/professional-settings')
 }

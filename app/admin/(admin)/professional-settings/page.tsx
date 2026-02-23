@@ -15,6 +15,7 @@ interface ServiceProps {
     durationMinutes: number
     serviceId?: string
     enabled?: boolean
+    archived?: boolean
 }
 
 const getServiceList = (services: ServiceProps[]) => {
@@ -33,7 +34,8 @@ const getServiceList = (services: ServiceProps[]) => {
             },
             serviceId: value.serviceId,
             price: value.price,
-            enabled: value.enabled
+            enabled: value.enabled,
+            archived: value.archived
         })
 
         return acc
@@ -79,7 +81,8 @@ export default async function ProfessionalSettingsPage() {
                         category: s.service.category,
                         durationHours: s.durationHours,
                         durationMinutes: s.durationMinutes,
-                        enabled: s.enabled
+                        enabled: s.enabled,
+                        archived: s.service.archived
                     }))
                 )
                 :
