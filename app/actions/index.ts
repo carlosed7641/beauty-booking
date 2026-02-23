@@ -16,6 +16,7 @@ export * from './get-user-by-id'
 export * from './get-workdays-by-id'
 
 export * from './update-entity'
+export * from './update-professional-service'
 export * from './update-user'
 export * from './update-service'
 export * from './update-skill'

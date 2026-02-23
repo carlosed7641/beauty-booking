@@ -16,7 +16,7 @@ const WORKDAY_FIELDS = {
 export const getEntityById = async (id: string) => {
 
     try {
-        const user = await prisma.entity.findUnique({
+        const entity = await prisma.entity.findUnique({
             where: { id },
             include: {
                 workdays: {
@@ -27,13 +27,26 @@ export const getEntityById = async (id: string) => {
                     include: {
                         workDays: {
                             select: WORKDAY_FIELDS
+                        },
+                        serviceOverrides: {
+                            include: {
+                                service: true
+                            },
+                            orderBy: {
+                                service: {
+                                    name: 'asc'
+                                }
+                            }
                         }
                     }
+                },
+                services: {
+                    orderBy: { name: 'asc' }
                 }
             }
         })
 
-        return user
+        return entity
 
     } catch (error) {
         console.error(error)

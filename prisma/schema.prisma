@@ -112,7 +112,7 @@ model Service {
 
   entityId String
 
-  entity           Entity           @relation(fields: [entityId], references: [id])
+  entity           Entity            @relation(fields: [entityId], references: [id])
   events           Event[]
   serviceOverrides ServiceOverride[]
 }
@@ -123,8 +123,9 @@ model ServiceOverride {
   serviceId      String
   professionalId String
 
-  price    Int
-  duration Int
+  price           Int
+  durationHours   Int
+  durationMinutes Int
 
   enabled      Boolean @default(true)
   service      Service @relation(fields: [serviceId], references: [id])

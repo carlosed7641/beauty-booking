@@ -1,11 +1,12 @@
 'use client'
 
-import { Fragment, SetStateAction, useEffect, useState } from 'react'
+import { Fragment, SetStateAction, useEffect, useState, useTransition } from 'react'
 import clsx from 'clsx'
 import { RxCaretDown } from 'react-icons/rx'
 import { useModal } from '@/store'
 import { SelectHour, SelectPrice } from '../components'
-import { formatNumber, getRawNumber } from '@/helpers'
+import { formatDisplayNumber, formatNumber, getRawNumber } from '@/helpers'
+import { updateProfessionalService } from '@/actions'
 
 interface Props {
     title: string
@@ -16,12 +17,14 @@ interface Props {
     type?: 'duration' | 'price'
 }
 
-export const AssignServices = ({ title, hint, serviceList, selectedProfessional, setSelectedProfessional, type }: Props) => {
+export const AssignServices = ({ title, hint, selectedProfessional, setSelectedProfessional, type }: Props) => {
 
     const [closedServices, setClosedServices] = useState<string[]>([])
     const [selectedService, setSelectedService] = useState({ key: '', id: '', name: '', hours: 0, minutes: 0, price: 0 })
     const [error, setError] = useState('')
-    const { openModal, setOpenModal } = useModal()
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
+    const [isPending, startTransition] = useTransition()
 
     const handleToggleService = (serviceName: string) => {
         setClosedServices(prev =>
@@ -31,23 +34,58 @@ export const AssignServices = ({ title, hint, serviceList, selectedProfessional,
         )
     }
 
-    const handleSelectService = (key: string, value: ServiceConfig) => {
-        setSelectedProfessional(prev => {
+    const handleSelectService = (key: string, serviceId: string) => {
 
-            const currentServices = prev.services[key] ?? []
-            const exists = currentServices.some(({ id }) => id === value.id)
+        const currentServices = selectedProfessional.services?.[key] ?? []
 
-            const updatedServices = exists
-                ? currentServices.filter(({ id }) => id !== value.id)
-                : [...currentServices, value]
+        const service = currentServices.find(s => s.serviceId === serviceId)
 
-            return { ...prev, services: { ...prev.services, [key]: updatedServices } }
+        if (!service) return
 
-            // TODO: Make async and save to DB
-            // saveToBD()
+        const updatedServices = currentServices.map(service => {
+            if (service.id === serviceId) {
+                return { ...service, enabled: !service.enabled }
+            }
+
+            return service
         })
 
+        const newValue = {
+            ...selectedProfessional,
+            services: { ...selectedProfessional.services, [key]: updatedServices }
+        }
 
+        setSelectedProfessional(newValue)
+
+        startTransition(async () => {
+            const services = 
+                Object.values(newValue.services)
+                .flat()
+                .map(service => ({
+                    serviceId: service.serviceId!,
+                    enabled: service.enabled!,
+                    price: service.price,
+                    durationHours: service.duration.hours,
+                    durationMinutes: service.duration.minutes
+                }))
+
+            try {
+                await updateProfessionalService(selectedProfessional.id, services)
+            } catch (error) {   
+                setSelectedProfessional(prev => {
+                    return {
+                        ...prev,
+                         services: {
+                            ...prev.services,
+                            [key]: (prev?.services?.[key] ?? []).map(s =>
+                                s.id === serviceId ? service : s
+                            )
+                         }
+                    }
+
+                })
+            }
+        })
     }
 
     const handleOpenService = (key: string, value: ServiceConfig) => {
@@ -83,9 +121,9 @@ export const AssignServices = ({ title, hint, serviceList, selectedProfessional,
             ...prev,
             services: {
                 ...prev.services,
-                [key]: prev.services[key].map(service =>
+                [key]: prev.services?.[key].map(service =>
                     service.id === id ? { ...service, [field]: value } : service
-                )
+                ) ?? []
             }
         }))
 
@@ -93,15 +131,14 @@ export const AssignServices = ({ title, hint, serviceList, selectedProfessional,
         //TODO: Save To DB here
     }
 
-    
 
     useEffect(() => {
         setError('')
     }, [openModal])
 
     useEffect(() => {
-        console.log(selectedProfessional)
-    }, [])
+
+    }, [selectedProfessional])
 
     return (
         <>
@@ -110,7 +147,7 @@ export const AssignServices = ({ title, hint, serviceList, selectedProfessional,
                 <span className="text-center">{hint}</span>
             </div>
             {
-                Object.entries(serviceList ? serviceList : selectedProfessional.services).map(([key, values]) => (
+                Object.entries(selectedProfessional.services ?? []).map(([key, values], index) => (
                     <Fragment key={key}>
                         <div onClick={() => handleToggleService(key)} className=" border-b border-zinc-300 p-2 flex items-center gap-1 list-none cursor-pointer text-green-700 font-bold">
                             <RxCaretDown className="text-2xl" />
@@ -141,14 +178,17 @@ export const AssignServices = ({ title, hint, serviceList, selectedProfessional,
                                                     {
                                                         type === "price" && value.price &&
                                                         <span onClick={() => handleOpenService(key, value)} className="text-green-700 underline font-bold cursor-pointer">
-                                                            ${formatNumber(value.price)}
+                                                            ${formatDisplayNumber(value.price)}
                                                         </span>
                                                     }
                                                 </div>
                                                 :
                                                 <label className="cursor-pointer flex gap-1  py-1 text-zinc-600 items-center">
-                                                    <input checked={!!selectedProfessional.services[key]?.some(service => service.id === value.id)
-                                                    } onChange={() => handleSelectService(key, value)} className="cursor-pointer h-4 w-4 md:h-3.5 md:w-3.5 accent-green-700" type="checkbox" />
+                                                    <input
+                                                        checked={value.enabled}
+                                                        onChange={() => handleSelectService(key, value.serviceId ?? '')} className="cursor-pointer h-4 w-4 md:h-3.5 md:w-3.5 accent-green-700" type="checkbox"
+                                                        disabled={isPending}
+                                                    />
                                                     {value.name}
                                                 </label>
                                         }

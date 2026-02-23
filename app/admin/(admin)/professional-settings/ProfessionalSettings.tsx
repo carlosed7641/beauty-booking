@@ -6,11 +6,10 @@ import { AssignServices, AssignWorkDays, SelectOption } from '.'
 
 interface Props {
     professionals: ProfessionalSettings[]
-    serviceList: { [key: string]: ServiceConfig[] }
     workDays: WorkDays[]
 }
 
-export const ProfessionalSettings = ({ professionals, serviceList, workDays }: Props) => {
+export const ProfessionalSettings = ({ professionals, workDays }: Props) => {
 
     const [selectedProfessional, setSelectedProfessional] = useState(professionals[0])
     const [selectedOption, setSelectedOption] = useState(0)
@@ -39,9 +38,7 @@ export const ProfessionalSettings = ({ professionals, serviceList, workDays }: P
                     hint="Elige qué servicios asignar al profesional"
                     selectedProfessional={selectedProfessional}
                     setSelectedProfessional={setSelectedProfessional}
-                    serviceList={serviceList}
                 />
-
             }
             {selectedOption === 2 &&
                 <AssignServices

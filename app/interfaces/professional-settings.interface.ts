@@ -1,5 +1,7 @@
 interface ServiceConfig extends ServiceData {
     id: string
+    serviceId?: string
+    enabled?: boolean
 }
 
 interface ProfessionalSettings {
