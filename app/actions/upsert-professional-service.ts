@@ -2,7 +2,7 @@
 
 import prisma from '@/lib/prisma'
 
-export const updateProfessionalService = async (
+export const upsertProfessionalService = async (
     professionalId: string,
     services: {
         serviceId: string   

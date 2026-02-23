@@ -6,7 +6,7 @@ import { RxCaretDown } from 'react-icons/rx'
 import { useModal } from '@/store'
 import { SelectHour, SelectPrice } from '../components'
 import { formatDisplayNumber, formatNumber, getRawNumber } from '@/helpers'
-import { updateProfessionalService } from '@/actions'
+import { upsertProfessionalService } from '@/actions'
 
 interface Props {
     title: string
@@ -43,7 +43,7 @@ export const AssignServices = ({ title, hint, selectedProfessional, setSelectedP
         if (!service) return
 
         const updatedServices = currentServices.map(service => {
-            if (service.id === serviceId) {
+            if (service.serviceId === serviceId) {
                 return { ...service, enabled: !service.enabled }
             }
 
@@ -70,7 +70,7 @@ export const AssignServices = ({ title, hint, selectedProfessional, setSelectedP
                 }))
 
             try {
-                await updateProfessionalService(selectedProfessional.id, services)
+                await upsertProfessionalService(selectedProfessional.id, services)
             } catch (error) {   
                 setSelectedProfessional(prev => {
                     return {
@@ -78,11 +78,10 @@ export const AssignServices = ({ title, hint, selectedProfessional, setSelectedP
                          services: {
                             ...prev.services,
                             [key]: (prev?.services?.[key] ?? []).map(s =>
-                                s.id === serviceId ? service : s
+                                s.serviceId === serviceId ? service : s
                             )
                          }
                     }
-
                 })
             }
         })

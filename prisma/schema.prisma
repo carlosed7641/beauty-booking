@@ -164,6 +164,8 @@ model WorkDay {
   professionalId String?
   entity         Entity? @relation(fields: [entityId], references: [id])
   user           User?   @relation(fields: [professionalId], references: [id])
+
+  @@unique([professionalId, name])
 }
 
 model WorkSample {

@@ -4,7 +4,7 @@ import { FaToggleOff, FaToggleOn } from 'react-icons/fa'
 import { useModal } from '@/store'
 import { toMinutes } from '@/helpers'
 import { PROFESSIONAL_SETTINGS_ERRORS } from '@/util/const'
-import { createWorkDay, getWorkDaysById, updateWorkDay } from '@/actions'
+import { upsertWorkDay } from '@/actions'
 import { Modal, ModalHeader } from '@/components'
 
 interface Props {
@@ -19,7 +19,7 @@ export const AssignWorkDays = ({
     workDays
 }: Props) => {
 
-    const [status, setStauts] = useState({isLoading: false, error: false })
+    const [status, setStatus] = useState({isLoading: false, error: false })
     const openModal = useModal(state => state.openModal)
     const setOpenModal = useModal(state => state.setOpenModal)
 
@@ -93,26 +93,14 @@ export const AssignWorkDays = ({
 
     const handleSave = async () => {
 
-        const hasProfessionalWorkdays = selectedProfessional.workdays.some(w => w.professionalId != null)
-        if (!hasProfessionalWorkdays) return
-
-        setStauts({error: false, isLoading: true })
+        setStatus({error: false, isLoading: true }) 
 
         try {
-            const workdays = await getWorkDaysById(selectedProfessional.id) ?? []
-
-            if (workdays.length > 0) {
-                await updateWorkDay(selectedProfessional.workdays)
-                setOpenModal('AssignWorkDayUpdated')
-            } else {
-                const data = selectedProfessional.workdays.map(({ id, ...workday }) => workday)
-                await createWorkDay(data)
-                setOpenModal('AssignWorkDayCreated')
-            }
-
-            setStauts({ error: false, isLoading: false })
+            await upsertWorkDay(selectedProfessional.workdays)
+            setStatus({ error: false, isLoading: false })
+            setOpenModal('AssignWorkDaySuccess')
         } catch {
-            setStauts({ error: true, isLoading: false })
+            setStatus({ error: true, isLoading: false })
         } 
     }
 

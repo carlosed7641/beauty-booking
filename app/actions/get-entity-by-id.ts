@@ -26,7 +26,8 @@ export const getEntityById = async (id: string) => {
                 users: {
                     include: {
                         workDays: {
-                            select: WORKDAY_FIELDS
+                            select: WORKDAY_FIELDS,
+                            orderBy: { order: 'asc' }
                         },
                         serviceOverrides: {
                             include: {
