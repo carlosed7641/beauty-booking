@@ -5,6 +5,7 @@ interface Props {
     serviceName: string
     price: number
     error?: string
+    isPending: boolean
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     handleSave: () => void
 }
@@ -13,11 +14,12 @@ export const SelectPrice = ({
     serviceName,
     price,
     error,
+    isPending,
     handleChange,
     handleSave
 }: Props) => {
     return (
-        <Modal className="md:w-[450px]! overflow-auto!">
+        <Modal className="md:w-112.5! overflow-auto!">
             <ModalHeader>
                 <p className="text-green-700 font-bold text-lg">{serviceName}</p>
             </ModalHeader>
@@ -25,12 +27,12 @@ export const SelectPrice = ({
                 <span className="text-green-700">Precio desde</span>
                 <div className="flex gap-1 items-center">
                     <span className="text-green-700 font-bold">$</span>
-                    <input onChange={handleChange} name="price" className="flex-1 px-2 rounded-md border border-green-700 focus:outline-0 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" type="text" value={formatNumber(price)} />
+                    <input onChange={handleChange} name="price" className="flex-1 px-2 rounded-md border border-green-700 focus:outline-0 appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" type="text" value={formatNumber(price.toString())} />
                 </div>
             </label>
             {error && <span className="text-red-500 mt-3 block">{error}</span>}
-            <button onClick={handleSave} className="btn-primary py-0.5! mt-3 rounded-md  w-full font-bold">
-                Guardar
+            <button disabled={isPending} onClick={handleSave} className="btn-primary py-0.5! mt-3 rounded-md  w-full font-bold">
+                { isPending ? 'Procesando...' : 'Guardar' }
             </button>
         </Modal>
     )

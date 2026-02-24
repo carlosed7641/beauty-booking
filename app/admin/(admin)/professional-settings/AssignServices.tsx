@@ -20,7 +20,7 @@ interface Props {
 export const AssignServices = ({ title, hint, selectedProfessional, setSelectedProfessional, type }: Props) => {
 
     const [closedServices, setClosedServices] = useState<string[]>([])
-    const [selectedService, setSelectedService] = useState({ key: '', id: '', name: '', hours: 0, minutes: 0, price: 0 })
+    const [selectedService, setSelectedService] = useState({ key: '', serviceId: '', name: '', hours: 0, minutes: 0, price: 0 })
     const [error, setError] = useState('')
     const openModal = useModal(state => state.openModal)
     const setOpenModal = useModal(state => state.setOpenModal)
@@ -88,8 +88,8 @@ export const AssignServices = ({ title, hint, selectedProfessional, setSelectedP
     }
 
     const handleOpenService = (key: string, value: ServiceConfig) => {
-        const { name, id, duration: { hours, minutes }, price } = value
-        setSelectedService({ key, id, name, hours, minutes, price })
+        const { name, serviceId, duration: { hours, minutes }, price } = value
+        setSelectedService({ key, serviceId: serviceId!, name, hours, minutes, price })
         setOpenModal(AssignServices.name + type)
     }
 
@@ -103,7 +103,7 @@ export const AssignServices = ({ title, hint, selectedProfessional, setSelectedP
     }
 
     const updateService = (field: 'duration' | 'price') => {
-        const { key, id, hours, minutes, price } = selectedService
+        const { key, serviceId, hours, minutes, price } = selectedService
 
         if (field === 'duration' && hours + minutes === 0) {
             return setError('La duración no puede ser cero')
@@ -111,33 +111,62 @@ export const AssignServices = ({ title, hint, selectedProfessional, setSelectedP
         if (field === 'price' && !price) {
             return setError('Debe ingresar un precio')
         }
+        
+        const serviceFallback = selectedProfessional.services?.[key].find(s => s.serviceId === serviceId)
+
+        if (!serviceFallback) return
 
         const value = field === 'duration'
             ? { hours, minutes }
             : price
 
-        setSelectedProfessional(prev => ({
-            ...prev,
+
+        const newValue = {
+            ...selectedProfessional,
             services: {
-                ...prev.services,
-                [key]: prev.services?.[key].map(service =>
-                    service.id === id ? { ...service, [field]: value } : service
+                ...selectedProfessional.services,
+                [key]: selectedProfessional.services?.[key].map(service =>
+                    service.serviceId === serviceId ? { ...service, [field]: value } : service
                 ) ?? []
             }
-        }))
+        }
 
-        setOpenModal(null)
-        //TODO: Save To DB here
+        setSelectedProfessional(newValue)
+
+        startTransition(async () => {
+            try {
+                const services =
+                Object
+                    .values(newValue.services)
+                    .flat()
+                    .map(service => ({
+                        serviceId: service.serviceId!,
+                        enabled: service.enabled!,
+                        price: service.price,
+                        durationHours: service.duration.hours,
+                        durationMinutes: service.duration.minutes
+                    }))
+
+                await upsertProfessionalService(selectedProfessional.id, services)
+            } catch {
+                setSelectedProfessional(prev => ({
+                    ...prev,
+                    services: {
+                        ...prev.services,
+                        [key]: prev.services?.[key].map(service =>
+                            service.serviceId === serviceId ? serviceFallback : service
+                        ) ?? []
+                    }
+                }))
+            } finally {
+                setOpenModal(null)
+            }
+        })
     }
-
 
     useEffect(() => {
         setError('')
     }, [openModal])
-
-    useEffect(() => {
-
-    }, [selectedProfessional])
 
     return (
         <>
@@ -148,7 +177,7 @@ export const AssignServices = ({ title, hint, selectedProfessional, setSelectedP
             {
                 Object.entries(selectedProfessional.services ?? []).map(([key, values]) => {
 
-                    const filteredValues = values.filter(value => !value.archived)
+                    const filteredValues = values.filter(value => type ? !value.archived && value.enabled : !value.archived)
 
                     if (!filteredValues.length) return null
 
@@ -212,6 +241,7 @@ export const AssignServices = ({ title, hint, selectedProfessional, setSelectedP
                     hours={selectedService.hours}
                     minutes={selectedService.minutes}
                     error={error}
+                    isPending={isPending}
                     handleChange={handleChangeService}
                     handleSave={() => updateService('duration')}
                 />
@@ -222,6 +252,7 @@ export const AssignServices = ({ title, hint, selectedProfessional, setSelectedP
                     serviceName={selectedService.name}
                     price={selectedService.price}
                     error={error}
+                    isPending={isPending}
                     handleChange={handleChangeService}
                     handleSave={() => updateService('price')}
                 />

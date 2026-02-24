@@ -4,16 +4,43 @@ import { revalidatePath } from 'next/cache'
 import prisma from '@/lib/prisma'
 
 export const updateService = async (data: Partial<ServiceItemDTO>) => {
-    try {
-        const { serviceId, ...values } = data
-        await prisma.service.update({
+
+    const { serviceId, ...values } = data
+
+    prisma.$transaction(async tx => {
+
+        const currentService = await tx.service.findUnique({
+            where: { id: serviceId }
+        })
+
+        await tx.service.update({
             where: { id: serviceId },
             data: values
         })
 
-        revalidatePath('/admin/services')
-    } catch (e) {
-        console.log(e)
-        throw new Error('Ocurrión un error actualizando el servicio')
-    }
+        const overrideValues: any = {}
+
+        if (values.basePrice !== currentService?.basePrice) {
+            overrideValues.price = values.basePrice
+        }
+
+        if (values.baseDurationHours !== currentService?.baseDurationHours) {
+            overrideValues.durationHours = values.baseDurationHours
+        }
+
+        if (values.baseDurationMinutes !== currentService?.baseDurationMinutes) {
+            overrideValues.durationMinutes = values.baseDurationMinutes
+        }
+
+        if (Object.keys(overrideValues).length > 0) {
+            await tx.serviceOverride.updateMany({
+                where: { serviceId },
+                data: overrideValues
+            })
+        }
+    })
+
+    revalidatePath('/admin/services')
+    revalidatePath('/admin/professional-settings')
+
 }

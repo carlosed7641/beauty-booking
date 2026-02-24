@@ -359,8 +359,8 @@ export const PROFESSIONAL_SETTINGS_ERRORS = {
 export const PROFESSIONAL_SETTINGS_OPTIONS = [
     { title: 'Disponibilidad', icon: RiCalendarScheduleLine },
     { title: 'Asignar servicios', icon: LuCopyCheck },
-    // { title: 'Asignar duración de servicios', icon: TbClockHour3 },
-    // { title: 'Asignar precio de servicios', icon: AiOutlineDollar }
+    { title: 'Asignar duración de servicios', icon: TbClockHour3 },
+    { title: 'Asignar precio de servicios', icon: AiOutlineDollar }
 ]
 
 export const DATE_OPTIONS: Intl.DateTimeFormatOptions = {

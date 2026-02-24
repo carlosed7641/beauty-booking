@@ -5,6 +5,7 @@ interface Props {
     hours: number
     minutes: number
     error?: string
+    isPending: boolean
     handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
     handleSave: () => void
 }
@@ -15,10 +16,11 @@ export const SelectHour = ({
     minutes,
     error,
     handleChange,
-    handleSave
+    handleSave,
+    isPending
 }: Props) => {
     return (
-        <Modal className="md:w-[450px]! overflow-auto!">
+        <Modal className="md:w-112.5! overflow-auto!">
             <ModalHeader>
                 <p className="text-green-700 font-bold text-lg">{serviceName}</p>
             </ModalHeader>
@@ -41,8 +43,8 @@ export const SelectHour = ({
                 </label>
             </div>
             {error && <span className="text-red-500 mt-3 block">{error}</span>}
-            <button onClick={handleSave} className="btn-primary py-0.5! mt-3 rounded-md w-full font-bold">
-                Enviar
+            <button disabled={isPending} onClick={handleSave} className="btn-primary py-0.5! mt-3 rounded-md w-full font-bold">
+                { isPending ? 'Procesando...' : 'Enviar'}
             </button>
         </Modal>
     )
