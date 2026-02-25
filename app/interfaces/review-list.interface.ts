@@ -13,7 +13,8 @@ interface ReviewList {
 
 interface UserInfo {
     id: string
-    name: string
-    photo?: string
+    name: string | null 
+    photo?: string | null
+    entityId?: string | null
     blocked?: boolean
 }

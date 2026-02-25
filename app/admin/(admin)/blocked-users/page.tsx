@@ -1,27 +1,15 @@
 import Link from 'next/link'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { BlockedUsers } from './BlockedUsers'
+import { auth } from '@/auth.config'
+import { getBlockedUsers, getEntityById, getUserById } from '@/actions'
 
-export default function BlockedUsersPage() {
+export default async function BlockedUsersPage() {
 
-  //TODO: Get from DB
-  const users: UserInfo[] = [
-    {
-      id: '123',
-      name: 'Camilo Suárez',
-      photo: 'https://picsum.photos/150/150'
-    },
-    {
-      id: '124',
-      name: 'Juan Castellanos',
-    },
-    {
-      id: '125',
-      name: 'Alan Britos',
-      photo: 'https://picsum.photos/150/150'
-    }
-  ]
-
+  const session = await auth()
+  const user = await getUserById(session?.user?.id ?? '')
+  const users = await getBlockedUsers(user?.entityId ?? '')
+  
   return (
     <>
       <div className="flex items-center gap-2 mb-3">
@@ -33,7 +21,7 @@ export default function BlockedUsersPage() {
       <div className="flex flex-col gap-6">
         <div className="bg-white w-full rounded-md p-7">
           {
-            users.length > 0 ? <BlockedUsers users={users} />
+            users && users?.length > 0 ? <BlockedUsers users={users} entityId={user?.entityId ?? ''} />
               : <p>Aún no has bloqueado a ningún usuario. Puedes bloquear usuarios para que no agenden en este negocio</p>
           }
         </div>

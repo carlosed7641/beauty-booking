@@ -8,28 +8,29 @@ datasource db {
 }
 
 model Entity {
-  id                    String       @id @default(uuid())
+  id                    String        @id @default(uuid())
   logo                  String?
   cover                 String?
   name                  String?
   contactUrl            String?
-  followers             Int          @default(0)
-  scheduling            Int          @default(0)
+  followers             Int           @default(0)
+  scheduling            Int           @default(0)
   countryId             String
-  ownerId               String       @unique
+  ownerId               String        @unique
   address               String?
   addressReference      String?
   shopType              String?
-  cancelDateTime        Int          @default(20)
-  advanceBookingControl Int          @default(30)
-  showAdminAgenda       Boolean      @default(true)
-  country               Country      @relation(fields: [countryId], references: [id])
-  owner                 User         @relation("EntityOwner", fields: [ownerId], references: [id])
+  cancelDateTime        Int           @default(20)
+  advanceBookingControl Int           @default(30)
+  showAdminAgenda       Boolean       @default(true)
+  country               Country       @relation(fields: [countryId], references: [id])
+  owner                 User          @relation("EntityOwner", fields: [ownerId], references: [id])
   reviews               Review[]
   services              Service[]
   users                 User[]
   workdays              WorkDay[]
   samples               WorkSample[]
+  blockedUsers          BlockedUser[]
 }
 
 model User {
@@ -65,6 +66,18 @@ model User {
   skills              Skill[]
   workDays            WorkDay[]
   serviceOverrides    ServiceOverride[]
+  blockedUsers        BlockedUser[]
+}
+
+model BlockedUser {
+  id       String @id @default(uuid())
+  userId   String
+  entityId String
+
+  entity Entity @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, entityId])
 }
 
 model Event {
