@@ -4,3 +4,11 @@ interface CustomerData extends Customer {
     total: number
     services: { id: string, name: string }[]
 }
+
+interface CustomerInfo {
+    id: string
+    name: string
+    indicator?: string
+    phone?: string
+    photo?: string
+}

@@ -20,6 +20,7 @@ model Entity {
   address               String?
   addressReference      String?
   shopType              String?
+  createdAt             DateTime      @default(now())
   cancelDateTime        Int           @default(20)
   advanceBookingControl Int           @default(30)
   showAdminAgenda       Boolean       @default(true)
@@ -31,6 +32,7 @@ model Entity {
   workdays              WorkDay[]
   samples               WorkSample[]
   blockedUsers          BlockedUser[]
+  customers             Customer[]
 }
 
 model User {
@@ -67,6 +69,23 @@ model User {
   workDays            WorkDay[]
   serviceOverrides    ServiceOverride[]
   blockedUsers        BlockedUser[]
+  customers           Customer[]
+}
+
+model Customer {
+  id       String  @id @default(uuid())
+  userId   String?
+  entityId String
+
+  name      String?
+  indicator String?
+  phone     String?
+  birthDay  DateTime?
+  gender    Gender?
+
+  createdAt DateTime @default(now())
+  entity    Entity   @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id])
 }
 
 model BlockedUser {

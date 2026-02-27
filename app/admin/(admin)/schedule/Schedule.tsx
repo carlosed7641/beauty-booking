@@ -16,6 +16,7 @@ import { CALENDAR_VIEWS, DEFAULT_PROFESSIONAL } from '@/util/const'
 interface Props {
     foundationYear: number
     professionals: ProfessionalData[]
+    customers: CustomerInfo[]
 }
 
 const eventPropGetter = () => ({
@@ -44,7 +45,7 @@ const bdEvents: EventDate[] = [
             name: "David Ortiz",
             phone: { indicator: '57', number: '3004394704' },
             birthDay: new Date(),
-            gender: 'Masculino',
+            gender: 'men',
             reviewPointsAverage: 5
         },
         selectedService: {
@@ -71,7 +72,7 @@ const bdEvents: EventDate[] = [
             name: "David Ortiz",
             phone: { indicator: '57', number: '3004394704' },
             birthDay: new Date(),
-            gender: 'Masculino',
+            gender: 'men',
             reviewPointsAverage: 5
         },
         selectedService: {
@@ -90,7 +91,7 @@ const bdEvents: EventDate[] = [
     }
 ] // TODO: Get from Api
 
-export const Schedule = ({ foundationYear, professionals }: Props) => {
+export const Schedule = ({ foundationYear, professionals,  customers }: Props) => {
 
     const { openModal, setOpenModal } = useModal()
     const { serviceState, setServiceState } = useService()
@@ -231,13 +232,13 @@ export const Schedule = ({ foundationYear, professionals }: Props) => {
                                 eventPropGetter={eventPropGetter}
                                 onSelectEvent={onSelectEvent}
                                 formats={formats}
-                                className="h-screen! md:h-[500px]!"
+                                className="h-screen! md:h-125!"
                             />
                     }
                     {isValidDate && <ScheduleButton />}
                 </div>
             </div>
-            {openModal === 'ScheduleAssing' && <ScheduleAssign />}
+            {openModal === 'ScheduleAssing' && <ScheduleAssign customers={customers} />}
             {openModal === 'UpdateCustomer' && <UpdateCustomer />}
             {openModal === 'ServiceList' && serviceState.selectedService &&
                 <BookingServiceModal

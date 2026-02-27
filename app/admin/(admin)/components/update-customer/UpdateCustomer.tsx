@@ -13,7 +13,7 @@ export const UpdateCustomer = () => {
     }
 
     return (
-        <Modal className="md:w-[700px]! md:overflow-hidden!">
+        <Modal className="md:w-175! md:overflow-hidden!">
             <ModalHeader>
                 <h1 className="text-green-700 font-bold flex items-center gap-2">
                     <IoMdArrowRoundBack className="cursor-pointer text-xl" onClick={() => setOpenModal('ScheduleAssing')} />

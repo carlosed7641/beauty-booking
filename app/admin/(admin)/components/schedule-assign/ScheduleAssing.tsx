@@ -11,52 +11,41 @@ import { useSchedule } from '../../store'
 import { SERVICE_INITIAL_STATE } from '@/util/const'
 import { serviceList as fakeServiceList } from '@/util/fake-data'
 
-const _customers: Session[] = [
+const _customers: CustomerInfo[] = [
     {
         id: '123',
         name: 'Pedro Perez',
-        birthDay: '2000-04-26',
-        gender: 'male',
         phone: '3004365676',
-        country: 'CO',
-        indicator: '+57'
+        indicator: '57'
     },
     {
         id: '124',
         name: 'Juan Carlos',
-        birthDay: '2000-04-26',
-        gender: 'male',
         photo: 'https://picsum.photos/50/50',
-        country: 'CO'
     },
     {
         id: '125',
         name: 'David Ortiz',
-        birthDay: '2000-04-26',
-        gender: 'male',
         phone: '3009097876',
         photo: 'https://picsum.photos/50/50',
-        country: 'CO',
-        indicator: '+57'
+        indicator: '57'
     }
 ]
 
-export const ScheduleAssign = () => {
+interface Props {
+    customers: CustomerInfo[]
+}
+
+export const ScheduleAssign = ({ customers }: Props) => {
 
     const { setOpenModal } = useModal()
     const { serviceState, setServiceState } = useService()
     const { date: selectedDate } = useSchedule(state => state.schedule)
     const [step, setStep] = useState(1)
-    const [customers, setCustomers] = useState<Session[]>([])
     const [searchTerm, setSearchTerm] = useState("")
 
     // TODO: Api call
     const serviceList = fakeServiceList.filter(sl => sl.entityId === '422')
-
-    useEffect(() => {
-        // TODO: Api call
-        setCustomers(_customers)
-    }, [])
 
     const filteredCustomers = useMemo(() => {
         const term = searchTerm.toLowerCase().trim()
@@ -80,7 +69,7 @@ export const ScheduleAssign = () => {
     }
 
     return (
-        <Modal className="md:w-[800px]!">
+        <Modal className="md:w-200!">
             <ModalHeader>
                 <h1 className="text-green-700 font-bold flex items-center gap-2">
                     {
@@ -110,7 +99,7 @@ export const ScheduleAssign = () => {
                                                 }
                                                 <div className="flex flex-col gap-0.5">
                                                     <p className="text-sm">{name}</p>
-                                                    <span className="text-xs text-zinc-500">{phone ? indicator! + ' ' + phone : 'N/A'}</span>
+                                                    <span className="text-xs text-zinc-500">{phone ? `+${indicator} ${phone}` : 'N/A'}</span>
                                                 </div>
                                             </li>
                                         ))
