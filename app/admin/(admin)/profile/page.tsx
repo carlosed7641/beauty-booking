@@ -21,8 +21,6 @@ export default async function ProfilePage() {
     const userData = await getUserById(session?.user?.id ?? '')
     if (!userData) throw new Error('Ocurrió un error al cargar la información del usuario')
 
-    const countries = await getCountries()
-
     return (
         <>
             <div className="flex items-center justify-between mb-3">
@@ -40,7 +38,7 @@ export default async function ProfilePage() {
                         <ProfilePhoto name={userData.name ?? ''} photo={userData.photo} />
                         <div className="flex flex-col gap-2">
                             <p className="text-2xl text-green-700">{userData.name}</p>
-                            <UpdateProfile userData={userData} countries={countries} />
+                            <UpdateProfile userData={userData} />
                             <ProfileVisibility isPublic={userData.isPublicProfile} />
                         </div>
                     </div>

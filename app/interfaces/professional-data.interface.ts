@@ -1,10 +1,10 @@
 interface ProfessionalData {
     id: string
     name: string
-    photo?: string
+    photo?: string | null
     entityId: string
-    resume: string
-    reviews: {
+    resume?: string
+    reviews?: {
         points: number
         count: number
     }

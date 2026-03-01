@@ -7,7 +7,7 @@ import { Modal, ModalHeader, ProfileForm } from '@/components'
 import { updateUser } from '@/actions'
 import { UserDTO, UserWithEntity } from '@/interfaces/user.interface'
 
-export const UpdateProfile = ({ userData, countries }: { userData: UserWithEntity, countries: Country[] }) => {
+export const UpdateProfile = ({ userData }: { userData: UserWithEntity }) => {
 
     const [profileFormState, setProfileFormState] = useState({ loading: false, error: '' })
 
@@ -70,7 +70,6 @@ export const UpdateProfile = ({ userData, countries }: { userData: UserWithEntit
                         initialValues={initialValues}
                         isLoading={profileFormState.loading}
                         error={profileFormState.error}
-                        countries={countries}
                         onSubmit={onSubmit}
                     />
                 </Modal>

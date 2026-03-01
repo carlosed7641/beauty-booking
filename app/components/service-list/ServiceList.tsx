@@ -4,17 +4,18 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import { RxCaretDown } from 'react-icons/rx'
 import { useModal, useService } from '@/store'
-import { formatNumber } from '@/helpers'
+import { formatDisplayNumber } from '@/helpers'
 
 export const ServiceList = ({ serviceList }: {
     serviceList: Service[]
 }) => {
 
     const [currentOpenCategory, setCurrentOpenCategory] = useState<string | null>(null)
-    const { serviceState, setServiceState } = useService()
-    const { setOpenModal } = useModal()
+    const serviceState = useService(state => state.serviceState)
+    const setServiceState = useService(state => state.setServiceState)
+    const setOpenModal= useModal(state => state.setOpenModal)
 
-    const handleSelectService = (serviceItem: ServiceItemExtended) => {
+    const handleSelectService = (serviceItem: ServiceItem) => {
         setServiceState({
             ...serviceState,
             selectedService: serviceItem
@@ -22,8 +23,6 @@ export const ServiceList = ({ serviceList }: {
 
         setOpenModal('ServiceList')
     }
-
-    //TODO: Serivce list by professional
 
     return (
         <>
@@ -57,10 +56,10 @@ export const ServiceList = ({ serviceList }: {
                                         <p className="flex gap-2 items-center">
                                             {service.name}
                                         </p>
-                                        <p className="text-zinc-500">{service.description}</p>
-                                        <p className="text-green-700 font-bold">${formatNumber(service.price)}</p>
+                                        {service.description && <p className="text-zinc-500">{service.description}</p>}
+                                        <p className="text-green-700 font-bold">${formatDisplayNumber(service.price)}</p>
                                     </div>
-                                    <button onClick={() => handleSelectService({ ...service, entityName: s.entityName, category: s.category })} className="btn-primary font-bold rounded-md">Agendar</button>
+                                    <button onClick={() => handleSelectService({ ...service, category: s.category })} className="btn-primary font-bold rounded-md">Agendar</button>
                                 </li>
                             ))}
                         </ul>

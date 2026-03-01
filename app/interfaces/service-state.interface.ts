@@ -5,7 +5,7 @@ interface ServiceState {
         id: string
         name: string
     } | null
-    selectedDate: Date | null // TODO: fix
+    selectedDate: Date | null
     selectedHour: string | null
     customer?: {
         id: string

@@ -4,7 +4,8 @@ import { useService } from '@/store'
 
 export const SelectProfessional = ({ professionals }: { professionals: ProfessionalData[] }) => {
 
-    const { serviceState, setServiceState } = useService()
+    const serviceState = useService(state => state.serviceState)
+    const setServiceState = useService(state => state.setServiceState)
 
     return (
         <>

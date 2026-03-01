@@ -8,7 +8,7 @@ import { professionals as allProfessionals } from '@/util/fake-data'
 
 interface Props {
     serviceList: Service[],
-    professionals?: ProfessionalData[]
+    professionals?: ProfessionalSchedule[]
     professionalId?: string
 }
 

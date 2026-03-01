@@ -2,6 +2,7 @@ export * from './auth/register'
 export * from './auth/login'
 export * from './auth/logout'
 
+export * from './create-customer'
 export * from './create-entity'
 export * from './create-service'
 export * from './create-skill'

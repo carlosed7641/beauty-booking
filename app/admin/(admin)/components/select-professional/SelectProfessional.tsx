@@ -4,8 +4,8 @@ import { DEFAULT_PROFESSIONAL } from '@/util/const'
 
 interface Props {
     professionals: ProfessionalSettings[] | ProfessionalData[]
-    selectedProfessional: ProfessionalSettings | ProfessionalData
-    setSelectedProfessional: (selectedProfessional: ProfessionalSettings | ProfessionalData) => void
+    selectedProfessional: ProfessionalSettings | ProfessionalData | null
+    setSelectedProfessional: (selectedProfessional: ProfessionalSettings | ProfessionalData | null) => void
     allOption?: boolean
 }
 
@@ -20,12 +20,12 @@ export const SelectProfessional = ({
         <div className="flex gap-3 justify-center mb-2">
             {
                 allOption &&
-                <div onClick={() => setSelectedProfessional(DEFAULT_PROFESSIONAL)} className="flex flex-col items-center gap-1 cursor-pointer" >
+                <div onClick={() => setSelectedProfessional(null)} className="flex flex-col items-center gap-1 cursor-pointer" >
                     <div className={
                         clsx(
                             {
-                                "border-4 border-white rounded-full": selectedProfessional.id !== '',
-                                "border-4 border-green-900 rounded-full": selectedProfessional.id === ''
+                                "border-4 border-white rounded-full": selectedProfessional?.id !== null,
+                                "border-4 border-green-900 rounded-full": selectedProfessional?.id === null
                             }
                         )
                     }>
@@ -41,8 +41,8 @@ export const SelectProfessional = ({
                     <div className={
                         clsx(
                             {
-                                "border-4 border-white rounded-full": selectedProfessional.id !== professional.id,
-                                "border-4 border-green-900 rounded-full": selectedProfessional.id === professional.id
+                                "border-4 border-white rounded-full": selectedProfessional?.id !== professional.id,
+                                "border-4 border-green-900 rounded-full": selectedProfessional?.id === professional.id
                             }
                         )
                     }>

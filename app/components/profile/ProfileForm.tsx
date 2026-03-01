@@ -5,24 +5,37 @@ import { CgSpinner } from 'react-icons/cg'
 import { formatInputDate } from '@/helpers'
 import { AREAS_OF_EXPERIENCIES, GENDERS, YEARS_OF_EXPERIENCIES } from '@/util/const'
 import { UserDTO } from '@/interfaces/user.interface'
+import { getCountries } from '@/actions'
+import { useEffect, useState } from 'react'
 
 interface Props {
     initialValues?: UserDTO
-    countries: Country[]
     isLoading: boolean
     error: string
     onSubmit: (data: UserDTO) => void
 }
 
-export const ProfileForm = ({ initialValues, onSubmit, countries, isLoading, error }: Props) => {
+export const ProfileForm = ({ initialValues, onSubmit, isLoading, error }: Props) => {
 
-    const defaultValues = initialValues ? { 
-        ...initialValues, 
+    const defaultValues = initialValues ? {
+        ...initialValues,
         birthDay: initialValues.birthDay ? formatInputDate(initialValues.birthDay as Date) : null
     } : {}
+    const [countries, setCountries] = useState<Country[]>([])
 
     const { register, handleSubmit, formState, watch } = useForm<UserDTO>({ defaultValues })
     const watchRole = watch('role')
+
+
+
+    useEffect(() => {
+        const fetchCountries = async () => {
+            const dBCountries = await getCountries()
+            setCountries(dBCountries)
+        }
+
+        fetchCountries()
+    }, [])
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
@@ -30,7 +43,7 @@ export const ProfileForm = ({ initialValues, onSubmit, countries, isLoading, err
                 <div className="flex flex-col">
                     <label htmlFor="phone">Celular*</label>
                     <div className="flex flex-1 gap-2 mt-2">
-                        <select className="border border-green-700 p-1 rounded-md focus:outline-0" {...register("indicator", { required: true })}>
+                        <select disabled={countries.length === 0} className="min-w-18 border border-green-700 p-1 rounded-md focus:outline-0 disabled:opacity-55" {...register("indicator", { required: true })}>
                             {
                                 countries.map(country => <option key={country.indicator} value={country.indicator}>+{country.indicator}</option>)
                             }
@@ -85,7 +98,7 @@ export const ProfileForm = ({ initialValues, onSubmit, countries, isLoading, err
                 }
                 <label className="flex flex-col">
                     País*
-                    <select {...register("countryId", { required: true })} className="mt-2 border border-green-700 p-1 rounded-md focus:outline-0">
+                    <select disabled={countries.length === 0}  {...register("countryId", { required: true })} className="mt-2 border border-green-700 p-1 rounded-md focus:outline-0 disabled:opacity-55">
                         {
                             countries.map(country => <option key={country.id} value={country.id}>{country.name}</option>)
                         }
@@ -110,7 +123,7 @@ export const ProfileForm = ({ initialValues, onSubmit, countries, isLoading, err
                 </label>
             }
             {formState.isSubmitted && Object.keys(formState.errors).length > 0 && <span className="text-red-500">Completa todos los campos requeridos (*)</span>}
-            { error && <span className="text-red-500">{error}</span>}
+            {error && <span className="text-red-500">{error}</span>}
 
             <button disabled={isLoading} type="submit" className="bg-green-700 font-bold mt-2 p-1 rounded justify-center flex self-end text-white cursor-pointer hover:bg-green-800 w-full md:w-36 disabled:pointer-events-none disabled:opacity-50">
                 {isLoading ? <CgSpinner className="text-white animate-spin text-2xl" /> : 'Guardar'}

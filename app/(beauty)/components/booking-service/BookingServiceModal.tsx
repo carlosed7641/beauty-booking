@@ -5,13 +5,13 @@ import { IoMdArrowRoundBack } from 'react-icons/io'
 import { SelectProfessional, SelectDate, SelectHour, BookingButton, Confirm } from '..'
 import { Modal, ModalHeader } from '@/components/ui/modal'
 import { useModal, useService } from '@/store'
-import { formatNumber } from '@/helpers'
+import { formatDisplayNumber } from '@/helpers'
 import { SERVICE_INITIAL_STATE } from '@/util/const'
 
 interface Props {
     step: number
     setStep: (step: number) => void
-    professionals?: ProfessionalData[]
+    professionals?: ProfessionalSchedule[]
     isAdmin?: boolean
     dates?: DateItem[]
 }
@@ -24,8 +24,9 @@ export const BookingServiceModal = ({
     dates
 }: Props) => {
 
-    const { serviceState, setServiceState } = useService()
-    const { setOpenModal } = useModal()
+    const serviceState = useService(state => state.serviceState)
+    const setServiceState = useService(state => state.setServiceState)
+    const setOpenModal = useModal(state => state.setOpenModal)
     const [hoursData, setHoursData] = useState<{ scheduleHours: string[], excludeHours: string[] }>({
         scheduleHours: [],
         excludeHours: []
@@ -52,6 +53,13 @@ export const BookingServiceModal = ({
 
     }, [])
 
+
+    const currentProfessionalService =
+        professionals?.
+            find(p => p.id === serviceState.selectedProfessional?.id)
+            ?.services.find(s => s.id === serviceState.selectedService?.serviceId)
+
+
     return (
         <Modal>
             <ModalHeader>
@@ -61,15 +69,18 @@ export const BookingServiceModal = ({
                         <div className="flex flex-col gap-1">
                             <p className="text-xl font-bold">{serviceState.selectedService?.name}</p>
                             {isAdmin && serviceState.customer && <p className="text-zinc-500">Cliente: {serviceState.customer.name}</p>}
-                           {
-                            serviceState.selectedService?.duration &&
-                             <p className="text-zinc-500">{serviceState.selectedService.duration.hours > 0 ? `${serviceState.selectedService.duration.hours} ${serviceState.selectedService.duration.hours === 1 ? 'hr' : 'hrs'} ${serviceState.selectedService?.duration.minutes > 0 ? 'y ' + serviceState.selectedService.duration.minutes + ' min' : ''}` : `${serviceState.selectedService.duration.minutes} min`} aprox</p> 
-                           }
+                            {
+                                currentProfessionalService
+                                    ? <ServiceDuration {...currentProfessionalService.duration} />
+                                    : (serviceState?.selectedService?.duration &&
+                                        <ServiceDuration {...serviceState.selectedService.duration} />
+                                    )
+                            }
                             {
                                 !isAdmin &&
                                 <div className="flex gap-1">
                                     Desde
-                                    <p className="text-green-700 font-bold">${formatNumber(serviceState.selectedService?.price!)}</p>
+                                    <p className="text-green-700 font-bold">${formatDisplayNumber(serviceState.selectedService?.price!)}</p>
                                 </div>
                             }
                         </div>
@@ -87,12 +98,16 @@ export const BookingServiceModal = ({
                 {
                     step === 1 &&
                     <>
-                        {professionals && <SelectProfessional professionals={professionals} />}
+                        {
+                            professionals && professionals.length > 0
+                                ? <SelectProfessional professionals={professionals} />
+                                : <p className="text-center ">No hay profesionales que se hayan asignado al servicio elegido</p>
+                        }
                         {serviceState.selectedProfessional && hoursData.scheduleHours.length > 0 &&
-                            <SelectDate 
-                                isAdmin={isAdmin} 
-                                dates={dates} 
-                                scheduleHours={hoursData.scheduleHours} 
+                            <SelectDate
+                                isAdmin={isAdmin}
+                                dates={dates}
+                                scheduleHours={hoursData.scheduleHours}
                                 excludeHours={hoursData.excludeHours}
                             />
                         }
@@ -110,5 +125,12 @@ export const BookingServiceModal = ({
                 {step === 2 && <Confirm />}
             </div>
         </Modal>
+    )
+}
+
+
+const ServiceDuration = (duration: { hours: number, minutes: number }) => {
+    return (
+        <p className="text-zinc-500">{duration.hours > 0 ? `${duration.hours} ${duration.hours === 1 ? 'hr' : 'hrs'} ${duration.minutes > 0 ? 'y ' + duration.minutes + ' min' : ''}` : `${duration.minutes} min`} aprox</p>
     )
 }

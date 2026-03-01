@@ -15,8 +15,10 @@ import { CALENDAR_VIEWS, DEFAULT_PROFESSIONAL } from '@/util/const'
 
 interface Props {
     foundationYear: number
-    professionals: ProfessionalData[]
+    professionals: ProfessionalSchedule[]
     customers: CustomerInfo[]
+    entityId: string
+    services: Service[]
 }
 
 const eventPropGetter = () => ({
@@ -38,8 +40,8 @@ const bdEvents: EventDate[] = [
     {
         id: 'f445465',
         title: 'Cepillado',
-        start: new Date(2025, 9, 6, 17, 45, 0),
-        end: new Date(2025, 9, 6, 18, 30, 0),
+        start: new Date(2026, 2, 1, 17, 45, 0),
+        end: new Date(2026, 2, 1, 18, 30, 0),
         customer: {
             id: "125",
             name: "David Ortiz",
@@ -65,8 +67,8 @@ const bdEvents: EventDate[] = [
     {
         id: 'f445466',
         title: 'Cepillado',
-        start: new Date(2025, 10, 6, 17, 45, 0),
-        end: new Date(2025, 10, 6, 18, 30, 0),
+        start: new Date(2026, 2, 1, 17, 45, 0),
+        end: new Date(2026, 2, 1, 18, 30, 0),
         customer: {
             id: "125",
             name: "David Ortiz",
@@ -91,16 +93,20 @@ const bdEvents: EventDate[] = [
     }
 ] // TODO: Get from Api
 
-export const Schedule = ({ foundationYear, professionals,  customers }: Props) => {
+export const Schedule = ({ foundationYear, professionals, customers, entityId, services }: Props) => {
 
-    const { openModal, setOpenModal } = useModal()
-    const { serviceState, setServiceState } = useService()
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
+    const serviceState = useService(state => state.serviceState)
+    const setServiceState = useService(state => state.setServiceState)
+
     const { schedule, setSchedule } = useSchedule()
     const { date, view } = useSchedule(state => state.schedule)
     const [step, setStep] = useState(1)
     const [events, setEvents] = useState<EventDate[]>([])
     const [profEvents, setProfEvents] = useState<EventDate[]>([])
-    const [selectedProfessional, setSelectedProfessional] = useState(DEFAULT_PROFESSIONAL)
+    const [selectedProfessional, setSelectedProfessional] = useState<ProfessionalData | null>(null)
+    const [filteredProfessionals, setFilteredProfessional] = useState(professionals)
 
     const onSelectEvent = (event: EventDate) => {
         setOpenModal('ScheduleEvent')
@@ -129,8 +135,8 @@ export const Schedule = ({ foundationYear, professionals,  customers }: Props) =
 
     const onSelectProfessional = (professional: ProfessionalData) => {
         setSelectedProfessional(p => (
-            p.id === professional.id ?
-                DEFAULT_PROFESSIONAL :
+            p?.id === professional.id ?
+                null :
                 professional
         ))
     }
@@ -171,11 +177,18 @@ export const Schedule = ({ foundationYear, professionals,  customers }: Props) =
 
     useEffect(() => {
         const currentEvents = events.filter(e =>
-            e.selectedProfessional.id === selectedProfessional.id
+            e.selectedProfessional.id === selectedProfessional?.id
             && compareDates(date, e.start)
         )
         setProfEvents(currentEvents)
     }, [events, date, selectedProfessional])
+
+    useEffect(() => {
+        const professionalsByService = professionals.filter(({ services }) =>
+            services.some(s => s.id === serviceState.selectedService?.serviceId)
+        )
+        setFilteredProfessional(professionalsByService)
+    }, [serviceState.selectedService?.serviceId])
 
     const isValidDate = useMemo(() => isGreaterOrEqualThanToday(date), [date])
 
@@ -200,7 +213,7 @@ export const Schedule = ({ foundationYear, professionals,  customers }: Props) =
                         setSelectedProfessional={onSelectProfessional as () => void}
                     />
                     {
-                        selectedProfessional.id ?
+                        selectedProfessional?.id ?
                             profEvents.length > 0 ?
                                 <EventList
                                     events={profEvents}
@@ -238,14 +251,19 @@ export const Schedule = ({ foundationYear, professionals,  customers }: Props) =
                     {isValidDate && <ScheduleButton />}
                 </div>
             </div>
-            {openModal === 'ScheduleAssing' && <ScheduleAssign customers={customers} />}
-            {openModal === 'UpdateCustomer' && <UpdateCustomer />}
+            {openModal === 'ScheduleAssing' && (
+                <ScheduleAssign
+                    serviceList={services}
+                    customers={customers}
+                />
+            )}
+            {openModal === 'UpdateCustomer' && <UpdateCustomer entityId={entityId} />}
             {openModal === 'ServiceList' && serviceState.selectedService &&
                 <BookingServiceModal
                     setStep={setStep}
                     step={step}
                     dates={generateMonthDatesArray(date)}
-                    professionals={professionals}
+                    professionals={filteredProfessionals}
                     isAdmin
                 />
             }

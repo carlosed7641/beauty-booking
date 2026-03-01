@@ -9,43 +9,19 @@ import { useModal, useService } from '@/store'
 import { ServiceList } from '@/components'
 import { useSchedule } from '../../store'
 import { SERVICE_INITIAL_STATE } from '@/util/const'
-import { serviceList as fakeServiceList } from '@/util/fake-data'
-
-const _customers: CustomerInfo[] = [
-    {
-        id: '123',
-        name: 'Pedro Perez',
-        phone: '3004365676',
-        indicator: '57'
-    },
-    {
-        id: '124',
-        name: 'Juan Carlos',
-        photo: 'https://picsum.photos/50/50',
-    },
-    {
-        id: '125',
-        name: 'David Ortiz',
-        phone: '3009097876',
-        photo: 'https://picsum.photos/50/50',
-        indicator: '57'
-    }
-]
 
 interface Props {
     customers: CustomerInfo[]
+    serviceList: Service[]
 }
 
-export const ScheduleAssign = ({ customers }: Props) => {
+export const ScheduleAssign = ({ customers, serviceList }: Props) => {
 
     const { setOpenModal } = useModal()
     const { serviceState, setServiceState } = useService()
     const { date: selectedDate } = useSchedule(state => state.schedule)
     const [step, setStep] = useState(1)
     const [searchTerm, setSearchTerm] = useState("")
-
-    // TODO: Api call
-    const serviceList = fakeServiceList.filter(sl => sl.entityId === '422')
 
     const filteredCustomers = useMemo(() => {
         const term = searchTerm.toLowerCase().trim()

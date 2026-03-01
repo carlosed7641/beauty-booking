@@ -3,6 +3,7 @@ interface ServiceConfig extends ServiceData {
     serviceId?: string
     enabled?: boolean
     archived?: boolean
+    description?: string | null
 }
 
 interface ProfessionalSettings {

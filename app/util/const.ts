@@ -387,11 +387,11 @@ export const DEFAULT_PROFESSIONAL = {
     id: '',
     name: '',
     entityId: '',
-    resume: '',
-    reviews: {
-        points: 0,
-        count: 0
-    }
+    // resume: '',
+    // reviews: {
+    //     points: 0,
+    //     count: 0
+    // }
 }
 
 export const DEFAULT_REPORT_DATA_SUMMARY: ReportDataSummary = {
