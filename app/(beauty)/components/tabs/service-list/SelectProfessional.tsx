@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import Image from 'next/image'
 import { useService } from '@/store'
 
-export const SelectProfessional = ({ professionals }: { professionals: ProfessionalData[] }) => {
+export const SelectProfessional = ({ professionals }: { professionals: ProfessionalSchedule[] }) => {
 
     const serviceState = useService(state => state.serviceState)
     const setServiceState = useService(state => state.setServiceState)
@@ -17,7 +17,8 @@ export const SelectProfessional = ({ professionals }: { professionals: Professio
                             ...serviceState,
                             selectedProfessional: {
                                 id: p.id,
-                                name: p.name
+                                name: p.name,
+                                workdays: p.workdays
                             }
                         })} className="flex flex-col w-40 shrink-0 md:w-auto gap-2 items-center cursor-pointer" key={p.name}>
                             <Image

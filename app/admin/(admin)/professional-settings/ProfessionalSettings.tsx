@@ -19,7 +19,7 @@ export const ProfessionalSettings = ({ professionals, workDays }: Props) => {
             <SelectProfessional
                 professionals={professionals}
                 selectedProfessional={selectedProfessional}
-                setSelectedProfessional={setSelectedProfessional as React.Dispatch<React.SetStateAction<ProfessionalSettings | ProfessionalData>>}
+                setSelectedProfessional={setSelectedProfessional as () => void}
             />
             <SelectOption
                 selectedOption={selectedOption}

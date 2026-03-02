@@ -11,7 +11,7 @@ import { useSchedule } from '../store'
 import { EventSummary, ScheduleSelect, UpdateCustomer, CustomDays, ScheduleButton, ScheduleAssign, SelectProfessional, EventList } from '../components'
 import { isGreaterOrEqualThanToday, generateMonthDatesArray, getMessagesES, localizer, format24, compareDates } from '@/helpers'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { CALENDAR_VIEWS, DEFAULT_PROFESSIONAL } from '@/util/const'
+import { CALENDAR_VIEWS } from '@/util/const'
 
 interface Props {
     foundationYear: number
@@ -188,6 +188,8 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
             services.some(s => s.id === serviceState.selectedService?.serviceId)
         )
         setFilteredProfessional(professionalsByService)
+
+
     }, [serviceState.selectedService?.serviceId])
 
     const isValidDate = useMemo(() => isGreaterOrEqualThanToday(date), [date])
@@ -262,6 +264,7 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
                 <BookingServiceModal
                     setStep={setStep}
                     step={step}
+                    initialYear={foundationYear}
                     dates={generateMonthDatesArray(date)}
                     professionals={filteredProfessionals}
                     isAdmin

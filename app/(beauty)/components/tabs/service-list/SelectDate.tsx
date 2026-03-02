@@ -3,27 +3,24 @@
 import React, { useEffect, useState } from 'react'
 import { useService } from '@/store'
 import { DateList } from '@/components'
-import { generateMonthDatesArray, getTotalMinutes } from '@/helpers'
-import { availableDates } from '@/util/fake-data'
+import { generateDatesArray, generateMonthDatesArray } from '@/helpers'
 import { MONTHS_OF_YEAR } from '@/util/const'
 
-const INITIAL_YEAR = 2020
 const CURRENT_YEAR = new Date().getFullYear()
-const years = CURRENT_YEAR - INITIAL_YEAR + 1
+const availableDates = generateDatesArray()
 
 interface Props {
     isAdmin?: boolean
     dates?: DateItem[]
-    scheduleHours: string[]
-    excludeHours: string[]
+    openYear?: number
 }
 
-export const SelectDate = ({ isAdmin, scheduleHours, excludeHours, dates = availableDates }: Props) => {
+export const SelectDate = ({ isAdmin, openYear = CURRENT_YEAR, dates = availableDates }: Props) => {
 
     const [date, setDate] = useState(new Date(dates[0].date))
     const [days, setDays] = useState<DateItem[]>(dates)
-    const { serviceState, setServiceState } = useService()
-    const frecuencyMintues = getTotalMinutes(serviceState.selectedService?.duration!)
+    const serviceState = useService(state => state.serviceState)
+    const setServiceState = useService(state => state.setServiceState)
 
     const onClickDate = (date: DateItem) => {
         setServiceState({
@@ -49,13 +46,18 @@ export const SelectDate = ({ isAdmin, scheduleHours, excludeHours, dates = avail
         setDays(newDays)
     }, [date.getMonth(), date.getFullYear()])
 
+    const years = CURRENT_YEAR - openYear + 1
+
+    const professionalWorkdays = 
+            serviceState.selectedProfessional?.workdays
+                .map(day => day.order) ?? []
 
     return (
         <>
             <div className="flex justify-between">
                 <p className="text-xl">Selecciona la fecha</p>
                 {
-                    isAdmin && 
+                    isAdmin &&
                     <div className="flex items-center gap-2">
                         <select name="month" onChange={onChangeDate} value={days[0].date.getMonth()} className="text-zinc-600 underline cursor-pointer focus:outline-0">
                             {MONTHS_OF_YEAR.map((month, idx) => (
@@ -79,13 +81,10 @@ export const SelectDate = ({ isAdmin, scheduleHours, excludeHours, dates = avail
             </div>
             <div className="overflow-x-scroll md:overflow-auto scroll-none flex md:flex-wrap gap-2 md:gap-3">
                 <DateList
-                    isAdmin={isAdmin}
                     datesList={days}
                     onClick={onClickDate}
-                    frequencyMinutes={frecuencyMintues}
+                    workdays={professionalWorkdays}
                     selectedDate={serviceState.selectedDate}
-                    scheduleHours={scheduleHours} 
-                    excludeHours={excludeHours}
                 />
             </div>
         </>

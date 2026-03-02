@@ -101,7 +101,7 @@ export const SelectHour = ({ scheduleHours, excludeHours }: { scheduleHours: str
                                 })}
                                     className={
                                         clsx(
-                                            "w-[110px] shrink-0 text-center cursor-pointer text-sm p-2 rounded-md border border-green-700 transition-all hover:bg-green-700 hover:text-white",
+                                            "w-27.5 shrink-0 text-center cursor-pointer text-sm p-2 rounded-md border border-green-700 transition-all hover:bg-green-700 hover:text-white",
                                             {
                                                 "bg-green-700 text-white": serviceState.selectedHour === hour.value
                                             }

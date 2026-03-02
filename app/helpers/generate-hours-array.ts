@@ -3,11 +3,10 @@
 interface Props {
     frequencyMinutes: number,
     inputDate: Date
-    excludeHours: string[]
     scheduleHours: string[]
 }
 
-export const generateHoursArray = ({ frequencyMinutes, inputDate, excludeHours, scheduleHours }: Props): {label: string, value: string }[] | null => {
+export const generateHoursArray = ({ frequencyMinutes, inputDate, scheduleHours }: Props): {label: string, value: string }[] | null => {
 
     const now = new Date()
     const date = new Date(inputDate)
@@ -54,11 +53,9 @@ export const generateHoursArray = ({ frequencyMinutes, inputDate, excludeHours, 
 
     while (tempCurrent <= end) {
 
-        if (!excludeHours.includes(format24(current))) {
-            const newValue ={ label: format12(current), value: format24(current) } 
-            result.push(newValue)
-        }
-         
+        const newValue ={ label: format12(current), value: format24(current) } 
+        result.push(newValue)
+        
         tempCurrent = new Date(tempCurrent.getTime() + frequencyMinutes * 60000)
         current = new Date(current.getTime() + frequencyMinutes * 60000)
 

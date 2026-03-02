@@ -17,6 +17,7 @@ export const generateDatesArray = () => {
             dayNumber: date.getDate(),
             date,
             day,
+            dayIndex: ((date.getDay() + 6) % 7) + 1,
             month,
             dateString
         }
@@ -54,6 +55,7 @@ export const generateMonthDatesArray = (inputDate: Date) => {
             dayNumber: date.getDate(),
             date,
             day,
+            dayIndex: ((date.getDay() + 6) % 7) + 1,
             month: monthLabel,
             dateString,
         }

@@ -1,7 +1,7 @@
 import { auth } from '@/auth.config'
 import { Schedule } from './Schedule'
 import { getCustomersByEntityId, getEntityById, getUserById } from '@/actions'
-import { getServiceList } from '@/helpers'
+import { getServiceList, minutesToTime, toMinutes } from '@/helpers'
 
 export default async function SchedulePage() {
 
@@ -43,24 +43,27 @@ export default async function SchedulePage() {
                             minutes: s.baseDurationMinutes
                         },
                         price: s.basePrice
-                    }))
-        // workdays: workDays.length > 0
-        //     ? workDays.map((w, idx) => ({
-        //         ...w,
-        //         from: minutesToTime(
-        //             Math.max(
-        //                 toMinutes(w.from),
-        //                 toMinutes(entity.workdays[idx].from)
-        //             )
-        //         ),
-        //         to: minutesToTime(
-        //             Math.min(
-        //                 toMinutes(w.to),
-        //                 toMinutes(entity.workdays[idx].to)
-        //             )
-        //         )
-        //     }))
-        //     : entity.workdays
+                    })),
+        workdays: 
+            workDays.length > 0
+            ? workDays
+                .filter((w, idx) => !entity.workdays[idx].disabled && !w.disabled)
+                .map((w, idx) => ({
+                ...w,
+                from: minutesToTime(
+                    Math.max(
+                        toMinutes(w.from),
+                        toMinutes(entity.workdays[idx].from)
+                    )
+                ),
+                to: minutesToTime(
+                    Math.min(
+                        toMinutes(w.to),
+                        toMinutes(entity.workdays[idx].to)
+                    )
+                )
+            }))
+            : entity.workdays
     })) ?? []
 
     return (

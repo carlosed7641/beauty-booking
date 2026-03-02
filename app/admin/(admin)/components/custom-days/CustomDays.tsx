@@ -88,7 +88,6 @@ export const CustomDays = ({
                 </button>
                 <div ref={el} className="flex overflow-x-scroll scroll-none gap-2 md:mt-3.5 mb-3">
                     <DateList
-                        isAdmin
                         disabled={disabledDays}
                         datesList={daysOfCurrentMonth}
                         selectedDate={date}

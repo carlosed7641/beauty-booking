@@ -4,6 +4,7 @@ interface ServiceState {
     selectedProfessional: {
         id: string
         name: string
+        workdays: WorkDays[]
     } | null
     selectedDate: Date | null
     selectedHour: string | null

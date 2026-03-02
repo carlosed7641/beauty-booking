@@ -10,5 +10,6 @@ interface ProfessionalSchedule {
             minutes: number
         }
         price: number
-    }[]
+    }[],
+    workdays: WorkDays[]
 }

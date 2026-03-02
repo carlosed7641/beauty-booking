@@ -143,8 +143,6 @@ export const professionals: ProfessionalData[] = [
   }
 ]
 
-export const availableDates = generateDatesArray()
-
 export const workSamples: WorkSample[] = [
   {
     id: '123',

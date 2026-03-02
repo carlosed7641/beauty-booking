@@ -14,6 +14,7 @@ interface Props {
     professionals?: ProfessionalSchedule[]
     isAdmin?: boolean
     dates?: DateItem[]
+    initialYear?: number
 }
 
 export const BookingServiceModal = ({
@@ -21,7 +22,8 @@ export const BookingServiceModal = ({
     setStep,
     professionals,
     isAdmin,
-    dates
+    dates,
+    initialYear
 }: Props) => {
 
     const serviceState = useService(state => state.serviceState)
@@ -38,18 +40,14 @@ export const BookingServiceModal = ({
     }
 
     useEffect(() => {
+
         const getScheduleHours = () => {
             return ['10:00', '20:00']
         } // TODO: Api  & this is for day
 
-        const getExcludeHours = () => {
-            return ['12:00', '12:30', '13:00']
-        } // TODO: Api & this is for day
-
         const scheduleHours = getScheduleHours() // await
-        const excludeHours = getExcludeHours() // await
 
-        setHoursData({ scheduleHours, excludeHours })
+        setHoursData({ scheduleHours, excludeHours: [] })
 
     }, [])
 
@@ -107,8 +105,7 @@ export const BookingServiceModal = ({
                             <SelectDate
                                 isAdmin={isAdmin}
                                 dates={dates}
-                                scheduleHours={hoursData.scheduleHours}
-                                excludeHours={hoursData.excludeHours}
+                                openYear={initialYear}
                             />
                         }
                         {serviceState.selectedProfessional && serviceState.selectedDate && hoursData.scheduleHours.length > 0 &&
