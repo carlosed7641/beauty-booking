@@ -3,7 +3,7 @@
 import clsx from 'clsx'
 import { useService } from '@/store'
 import { format24, generateHoursArray, getClosestTime, getTotalMinutes } from '@/helpers'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { isSameDay } from '@/helpers'
 
 
@@ -34,36 +34,47 @@ const events: EventDate[] = [
     // }
 ]
 
-export const SelectHour = ({ scheduleHours, excludeHours }: { scheduleHours: string[], excludeHours: string[] }) => {
+export const SelectHour = ({ duration }: { duration: { hours: number, minutes: number }}) => {
 
-    const { serviceState, setServiceState } = useService()
-    const frequencyMinutes = getTotalMinutes(serviceState.selectedService?.duration!)
+    const serviceState = useService(state => state.serviceState)
+    const setServiceState = useService(state => state.setServiceState)
     const [hours, setHours] = useState<{ label: string, value: string }[]>([])
+    const frequencyMinutes = getTotalMinutes(duration)
 
     useEffect(() => {
 
         const { selectedDate, selectedProfessional } = serviceState
+        const workdays = selectedProfessional?.workdays ?? []
+        const currentWorkday = 
+                    workdays
+                        .find(w => w.order === ((selectedDate!.getDay() + 6) % 7) + 1)
 
-        const getProfessionalExcludeHoursHours = () => { // Use Memo
+        if (!currentWorkday) return
+        
+        const scheduleHours: [string, string] = [currentWorkday.from, currentWorkday.to]
 
-            const professionalEvents = events.filter(event => (
-                ((event.selectedProfessional.id === selectedProfessional?.id) && isSameDay(selectedDate!, event.start))
-            ))
+        // const getProfessionalExcludeHoursHours = () => { // Use Memo
 
-            return professionalEvents.map(event => {
-                const date = new Date(event.start)
-                const formattedTime = format24(date)
-                return formattedTime
-            })
-        } // TODO: Api
+        //     const professionalEvents = events.filter(event => (
+        //         ((event.selectedProfessional.id === selectedProfessional?.id) && isSameDay(selectedDate!, event.start))
+        //     ))
 
-        const professionalExcludeHours = getProfessionalExcludeHoursHours()
+        //     return professionalEvents.map(event => {
+        //         const date = new Date(event.start)
+        //         const formattedTime = format24(date)
+        //         return formattedTime
+        //     })
+        // } // TODO: Api
+
+        // const professionalExcludeHours = getProfessionalExcludeHoursHours()
 
         const hours = generateHoursArray({
             frequencyMinutes, inputDate: serviceState.selectedDate!, scheduleHours,
-            excludeHours: [...excludeHours, ...professionalExcludeHours]
-        }) // TODO: Api call
+            // excludeHours: [...excludeHours, ...professionalExcludeHours]
+        })
+
         setHours(hours ?? [])
+
         if (!hours || !hours.length) return
 
         const isHourSelected = hours.some(hour => hour.value === serviceState.selectedHour)

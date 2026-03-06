@@ -18,7 +18,8 @@ interface Props {
 export const ScheduleAssign = ({ customers, serviceList }: Props) => {
 
     const { setOpenModal } = useModal()
-    const { serviceState, setServiceState } = useService()
+    const serviceState = useService(state => state.serviceState)
+    const setServiceState = useService(state => state.setServiceState)
     const { date: selectedDate } = useSchedule(state => state.schedule)
     const [step, setStep] = useState(1)
     const [searchTerm, setSearchTerm] = useState("")

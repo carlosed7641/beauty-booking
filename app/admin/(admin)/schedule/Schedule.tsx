@@ -19,6 +19,7 @@ interface Props {
     customers: CustomerInfo[]
     entityId: string
     services: Service[]
+    workdays: number[]
 }
 
 const eventPropGetter = () => ({
@@ -93,7 +94,7 @@ const bdEvents: EventDate[] = [
     }
 ] // TODO: Get from Api
 
-export const Schedule = ({ foundationYear, professionals, customers, entityId, services }: Props) => {
+export const Schedule = ({ foundationYear, professionals, customers, entityId, services, workdays }: Props) => {
 
     const openModal = useModal(state => state.openModal)
     const setOpenModal = useModal(state => state.setOpenModal)
@@ -106,7 +107,6 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
     const [events, setEvents] = useState<EventDate[]>([])
     const [profEvents, setProfEvents] = useState<EventDate[]>([])
     const [selectedProfessional, setSelectedProfessional] = useState<ProfessionalData | null>(null)
-    const [filteredProfessionals, setFilteredProfessional] = useState(professionals)
 
     const onSelectEvent = (event: EventDate) => {
         setOpenModal('ScheduleEvent')
@@ -183,16 +183,13 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
         setProfEvents(currentEvents)
     }, [events, date, selectedProfessional])
 
-    useEffect(() => {
-        const professionalsByService = professionals.filter(({ services }) =>
-            services.some(s => s.id === serviceState.selectedService?.serviceId)
-        )
-        setFilteredProfessional(professionalsByService)
+    const professionalsByService = professionals.filter(({ services }) =>
+        services.some(s => s.id === serviceState.selectedService?.serviceId)
+    )
 
-
-    }, [serviceState.selectedService?.serviceId])
-
-    const isValidDate = useMemo(() => isGreaterOrEqualThanToday(date), [date])
+    const isValidDate = useMemo(() => {
+        return isGreaterOrEqualThanToday(date) && workdays.includes(((date.getDay() + 6) % 7) + 1)
+    }, [date])
 
     return (
         <>
@@ -266,7 +263,7 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
                     step={step}
                     initialYear={foundationYear}
                     dates={generateMonthDatesArray(date)}
-                    professionals={filteredProfessionals}
+                    professionals={professionalsByService}
                     isAdmin
                 />
             }

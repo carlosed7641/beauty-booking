@@ -44,7 +44,7 @@ export const DateList = ({
                             {
                                 'border-zinc-300 text-zinc-300 opacity-70': !isSelectable,
                                 'border-green-700 text-green-700 hover:bg-green-700 hover:text-white': isSelectable,
-                                'bg-green-700 text-white': selected && isSelectable
+                                'bg-green-700 text-white': selected
                             }
                         )
                     }>

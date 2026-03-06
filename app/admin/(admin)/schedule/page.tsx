@@ -5,6 +5,8 @@ import { getServiceList, minutesToTime, toMinutes } from '@/helpers'
 
 export default async function SchedulePage() {
 
+    // TODO: Cargar eventos del profesional, y armar exclude hours
+
     const session = await auth()
     const user = await getUserById(session?.user?.id ?? '')
     const customers = await getCustomersByEntityId(user?.entityId ?? '')
@@ -44,27 +46,33 @@ export default async function SchedulePage() {
                         },
                         price: s.basePrice
                     })),
-        workdays: 
+        workdays:
             workDays.length > 0
-            ? workDays
-                .filter((w, idx) => !entity.workdays[idx].disabled && !w.disabled)
-                .map((w, idx) => ({
-                ...w,
-                from: minutesToTime(
-                    Math.max(
-                        toMinutes(w.from),
-                        toMinutes(entity.workdays[idx].from)
-                    )
-                ),
-                to: minutesToTime(
-                    Math.min(
-                        toMinutes(w.to),
-                        toMinutes(entity.workdays[idx].to)
-                    )
-                )
-            }))
-            : entity.workdays
+                ?
+                workDays
+                    .map((w, idx) => ({
+                        ...w,
+                        from: minutesToTime(
+                            Math.max(
+                                toMinutes(w.from),
+                                toMinutes(entity.workdays[idx].from)
+                            )
+                        ),
+                        to: minutesToTime(
+                            Math.min(
+                                toMinutes(w.to),
+                                toMinutes(entity.workdays[idx].to)
+                            )
+                        )
+                    }))
+                    .filter((w, idx) => !entity.workdays[idx].disabled && !w.disabled)
+                :
+                entity.workdays.filter(w => !w.disabled)
     })) ?? []
+
+
+    const workdays = entity?.workdays.filter(w => !w.disabled)
+        .map(w => w.order) ?? []
 
     return (
         <Schedule
@@ -73,6 +81,7 @@ export default async function SchedulePage() {
             customers={customers}
             entityId={user?.entityId ?? ''}
             services={services}
+            workdays={workdays}
         />
     )
 }

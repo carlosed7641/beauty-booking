@@ -29,34 +29,15 @@ export const BookingServiceModal = ({
     const serviceState = useService(state => state.serviceState)
     const setServiceState = useService(state => state.setServiceState)
     const setOpenModal = useModal(state => state.setOpenModal)
-    const [hoursData, setHoursData] = useState<{ scheduleHours: string[], excludeHours: string[] }>({
-        scheduleHours: [],
-        excludeHours: []
-    })
 
     const handleBack = () => {
         setServiceState(SERVICE_INITIAL_STATE)
         setOpenModal('ScheduleAssing')
     }
 
-    useEffect(() => {
-
-        const getScheduleHours = () => {
-            return ['10:00', '20:00']
-        } // TODO: Api  & this is for day
-
-        const scheduleHours = getScheduleHours() // await
-
-        setHoursData({ scheduleHours, excludeHours: [] })
-
-    }, [])
-
-
-    const currentProfessionalService =
-        professionals?.
-            find(p => p.id === serviceState.selectedProfessional?.id)
-            ?.services.find(s => s.id === serviceState.selectedService?.serviceId)
-
+    const currentProfessionalService = professionals
+        ?.find(p => p.id === serviceState.selectedProfessional?.id)
+        ?.services.find(s => s.id === serviceState.selectedService?.serviceId) ?? serviceState?.selectedService
 
     return (
         <Modal>
@@ -68,11 +49,8 @@ export const BookingServiceModal = ({
                             <p className="text-xl font-bold">{serviceState.selectedService?.name}</p>
                             {isAdmin && serviceState.customer && <p className="text-zinc-500">Cliente: {serviceState.customer.name}</p>}
                             {
-                                currentProfessionalService
-                                    ? <ServiceDuration {...currentProfessionalService.duration} />
-                                    : (serviceState?.selectedService?.duration &&
-                                        <ServiceDuration {...serviceState.selectedService.duration} />
-                                    )
+                                currentProfessionalService &&
+                                <ServiceDuration {...currentProfessionalService.duration} />
                             }
                             {
                                 !isAdmin &&
@@ -101,19 +79,16 @@ export const BookingServiceModal = ({
                                 ? <SelectProfessional professionals={professionals} />
                                 : <p className="text-center ">No hay profesionales que se hayan asignado al servicio elegido</p>
                         }
-                        {serviceState.selectedProfessional && hoursData.scheduleHours.length > 0 &&
+                        {serviceState.selectedProfessional &&
                             <SelectDate
                                 isAdmin={isAdmin}
                                 dates={dates}
                                 openYear={initialYear}
                             />
                         }
-                        {serviceState.selectedProfessional && serviceState.selectedDate && hoursData.scheduleHours.length > 0 &&
+                        {serviceState.selectedProfessional && serviceState.selectedDate &&
                             <>
-                                <SelectHour
-                                    scheduleHours={hoursData.scheduleHours}
-                                    excludeHours={hoursData.excludeHours}
-                                />
+                                <SelectHour duration={currentProfessionalService?.duration!} />
                                 <BookingButton setStep={setStep} />
                             </>
                         }
