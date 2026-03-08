@@ -5,8 +5,6 @@ import { getServiceList, minutesToTime, toMinutes } from '@/helpers'
 
 export default async function SchedulePage() {
 
-    // TODO: Cargar eventos del profesional, y armar exclude hours
-
     const session = await auth()
     const user = await getUserById(session?.user?.id ?? '')
     const customers = await getCustomersByEntityId(user?.entityId ?? '')

@@ -10,6 +10,7 @@ export * from './create-work-day'
 export * from './create-work-experience'
 export * from './create-work-sample'
 
+export * from './get-available-slots'
 export * from './get-blocked-users'
 export * from './get-countries'
 export * from './get-customers-by-entityId'
