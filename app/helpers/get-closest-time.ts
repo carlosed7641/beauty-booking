@@ -1,4 +1,4 @@
-import { format24 } from './generate-hours-array'
+import { format24 } from './format-hour'
 
 export const getClosestTime = (hours: string[], inputHour: string) => {
 

@@ -13,9 +13,10 @@ interface Props {
     isAdmin?: boolean
     dates?: DateItem[]
     openYear?: number
+    professionalWorkdays: WorkDays[]
 }
 
-export const SelectDate = ({ isAdmin, openYear = CURRENT_YEAR, dates = availableDates }: Props) => {
+export const SelectDate = ({ isAdmin, professionalWorkdays, openYear = CURRENT_YEAR, dates = availableDates }: Props) => {
 
     const [date, setDate] = useState(new Date(dates[0].date))
     const [days, setDays] = useState<DateItem[]>(dates)
@@ -48,10 +49,6 @@ export const SelectDate = ({ isAdmin, openYear = CURRENT_YEAR, dates = available
 
     const years = CURRENT_YEAR - openYear + 1
 
-    const professionalWorkdays = 
-            serviceState.selectedProfessional?.workdays
-                .map(day => day.order) ?? []
-
     return (
         <>
             <div className="flex justify-between">
@@ -83,7 +80,7 @@ export const SelectDate = ({ isAdmin, openYear = CURRENT_YEAR, dates = available
                 <DateList
                     datesList={days}
                     onClick={onClickDate}
-                    workdays={professionalWorkdays}
+                    workdays={professionalWorkdays.map(workday => workday.order) ?? []}
                     selectedDate={serviceState.selectedDate}
                 />
             </div>

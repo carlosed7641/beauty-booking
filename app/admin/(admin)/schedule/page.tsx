@@ -15,7 +15,7 @@ export default async function SchedulePage() {
 
     const filteredServices = entity?.services.filter(s => !s.archived) ?? []
     const services = getServiceList(filteredServices)
-
+    
     const professionals = entity?.users.map(({ id, name, entityId, photo, workDays, serviceOverrides }) =>
     ({
         id,

@@ -5,7 +5,6 @@ interface ScheduleState {
     date: Date
     view: View
     selectedEvent: EventDate | null
-    isUpdatingReview: boolean
 }
 
 interface Store {
@@ -17,8 +16,7 @@ export const useSchedule = create<Store>()((set) => ({
     schedule: {
         date: new Date(),
         view: 'day',
-        selectedEvent: null,
-        isUpdatingReview: false
+        selectedEvent: null
     },
     setSchedule: (schedule: ScheduleState) => set({ schedule })
 }))

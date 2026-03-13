@@ -1,22 +1,33 @@
 'use server'
 
-import prisma from "@/lib/prisma"
+import prisma from '@/lib/prisma'
+import { format12, format24, roundToNextInterval } from '@/helpers'
 
 interface Props {
     workday: WorkDays
     date: Date
     serviceDuration: number
-    professionalId: string
+    professionalId: string,
+    editingEventId?: string
 }
 
 export const getAvailableSlots = async ({
     workday,
     date,
     serviceDuration,
-    professionalId
+    professionalId,
+    editingEventId
 }: Props) => {
 
     if (!workday) return []
+
+    const inputDate = new Date(date)
+    const today = new Date()
+
+    today.setHours(0, 0, 0, 0)
+    inputDate.setHours(0, 0, 0, 0)
+
+    if (inputDate < today) return []
 
     const start = new Date(date)
     const end = new Date(date)
@@ -48,7 +59,6 @@ export const getAvailableSlots = async ({
     startOfDay.setHours(0, 0, 0, 0)
 
     const endOfDay = new Date(startOfDay)
-    // endOfDay.setHours(23, 59, 59, 999)
     endOfDay.setDate(endOfDay.getDate() + 1)
 
     const events = await prisma.event.findMany({
@@ -57,16 +67,22 @@ export const getAvailableSlots = async ({
             start: {
                 gte: startOfDay,
                 lte: endOfDay
+            },
+            status: {
+                not: 'cancelled'
             }
         }
     })
 
+    const filteredEvents = editingEventId
+        ? events.filter(e => e.id !== editingEventId)
+        : events
 
     const slots: Date[] = []
     let current = new Date(start)
 
     while (current.getTime() + serviceDuration * 60000 <= end.getTime()) {
-        if (!isSlotOccupied(current, serviceDuration, events)) {
+        if (!isSlotOccupied(current, serviceDuration, filteredEvents)) {
             slots.push(new Date(current))
         }
         current.setMinutes(current.getMinutes() + interval)
@@ -81,51 +97,21 @@ export const getAvailableSlots = async ({
 }
 
 const isSlotOccupied = (
-  slotStart: Date,
-  serviceDuration: number,
-  events: { start: Date; end: Date }[]
+    slotStart: Date,
+    serviceDuration: number,
+    events: { start: Date; end: Date }[]
 ) => {
 
-  const slotEnd = new Date(slotStart.getTime() + serviceDuration * 60000)
+    const slotEnd = new Date(slotStart.getTime() + serviceDuration * 60000)
 
-  return events.some(event => {
+    return events.some(event => {
 
-    const eventStart = new Date(event.start)
-    const eventEnd = new Date(event.end)
+        const eventStart = new Date(event.start)
+        const eventEnd = new Date(event.end)
 
-    return (
-      slotStart < eventEnd &&
-      slotEnd > eventStart
-    )
-  })
-}
-
-const format12 = (date: Date) => {
-    const hours = date.getHours()
-    const mins = date.getMinutes()
-
-    const period = hours >= 12 ? 'PM' : 'AM'
-    const displayHour = hours % 12 === 0 ? 12 : hours % 12
-    const displayMinutes = mins.toString().padStart(2, '0')
-
-    return `${displayHour}:${displayMinutes} ${period}`
-}
-
-const format24 = (date: Date): string => {
-    const h = date.getHours().toString().padStart(2, '0')
-    const m = date.getMinutes().toString().padStart(2, '0')
-    return `${h}:${m}`
-}
-
-const roundToNextInterval = (date: Date, interval: number) => {
-    const minutes = date.getMinutes()
-    const remainder = minutes % interval
-
-    if (remainder === 0) return date
-
-    const diff = interval - remainder
-    const rounded = new Date(date)
-    rounded.setMinutes(minutes + diff, 0, 0)
-
-    return rounded
+        return (
+            slotStart < eventEnd &&
+            slotEnd > eventStart
+        )
+    })
 }

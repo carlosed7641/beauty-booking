@@ -5,9 +5,9 @@ interface Customer {
         indicator: string
         number: string
     }
-    birthDay: Date
-    gender: Gender
-    reviewPointsAverage: number
+    birthDay: Date | null
+    gender: Gender | null
+    userId?: string | null
 }
 
 interface EventDate {
@@ -27,13 +27,21 @@ interface EventDate {
         }
         price: number
     },
+    professionalRating?: number | null
     selectedProfessional: {
         id: string
         name: string
         photo?: string
     },
     isAdminBooking: boolean
-    customerReview: number | null
-    status?: 'completed' | 'pending' | 'cancelled' | 'aborted'
-    allDay: boolean
+    status?: EventStatus | null
 }
+
+const EventStatus = {
+  completed: 'completed',
+  pending: 'pending',
+  cancelled: 'cancelled',
+  aborted: 'aborted'
+} as const
+
+type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]

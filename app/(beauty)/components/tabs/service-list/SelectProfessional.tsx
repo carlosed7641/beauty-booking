@@ -17,8 +17,7 @@ export const SelectProfessional = ({ professionals }: { professionals: Professio
                             ...serviceState,
                             selectedProfessional: {
                                 id: p.id,
-                                name: p.name,
-                                workdays: p.workdays
+                                name: p.name
                             }
                         })} className="flex flex-col w-40 shrink-0 md:w-auto gap-2 items-center cursor-pointer" key={p.name}>
                             <Image

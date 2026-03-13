@@ -5,13 +5,16 @@ import { useEffect, useMemo, useState } from 'react'
 import { Calendar, Formats, SlotInfo, View } from 'react-big-calendar'
 import { format } from 'date-fns'
 import { IoMdArrowRoundBack } from 'react-icons/io'
-import { useModal, useService } from '@/store'
+import { useEvents, useModal, useService } from '@/store'
 import { BookingServiceModal } from '@/(beauty)/components'
 import { useSchedule } from '../store'
-import { EventSummary, ScheduleSelect, UpdateCustomer, CustomDays, ScheduleButton, ScheduleAssign, SelectProfessional, EventList } from '../components'
+import { EventSummary, ScheduleSelect, UpdateCustomer, CustomDays, ScheduleButton, ScheduleAssign, SelectProfessional, EventList, CancelEvent } from '../components'
 import { isGreaterOrEqualThanToday, generateMonthDatesArray, getMessagesES, localizer, format24, compareDates } from '@/helpers'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { CALENDAR_VIEWS } from '@/util/const'
+import { getEventsByMonth } from '@/actions'
+import { ImSpinner8 } from 'react-icons/im'
+import { TbReload } from 'react-icons/tb'
 
 interface Props {
     foundationYear: number
@@ -37,63 +40,6 @@ const formats: Formats = {
         `${format(start, "MMM d")} - ${format(end, "MMM d")}`,
 }
 
-const bdEvents: EventDate[] = [
-    {
-        id: 'f445465',
-        title: 'Cepillado',
-        start: new Date(2026, 2, 1, 17, 45, 0),
-        end: new Date(2026, 2, 1, 18, 30, 0),
-        customer: {
-            id: "125",
-            name: "David Ortiz",
-            phone: { indicator: '57', number: '3004394704' },
-            birthDay: new Date(),
-            gender: 'men',
-            reviewPointsAverage: 5
-        },
-        selectedService: {
-            serviceId: "006",
-            name: "Cepillado",
-            duration: { hours: 0, minutes: 45 },
-            price: 30_000
-        },
-        selectedProfessional: {
-            id: 'bcf',
-            name: "Carlos Castro"
-        },
-        isAdminBooking: false,
-        customerReview: 2,
-        allDay: false
-    },
-    {
-        id: 'f445466',
-        title: 'Cepillado',
-        start: new Date(2026, 2, 1, 17, 45, 0),
-        end: new Date(2026, 2, 1, 18, 30, 0),
-        customer: {
-            id: "125",
-            name: "David Ortiz",
-            phone: { indicator: '57', number: '3004394704' },
-            birthDay: new Date(),
-            gender: 'men',
-            reviewPointsAverage: 5
-        },
-        selectedService: {
-            serviceId: "006",
-            name: "Cepillado",
-            duration: { hours: 0, minutes: 45 },
-            price: 30_000
-        },
-        selectedProfessional: {
-            id: 'abc',
-            name: "Gregorio Carrena"
-        },
-        isAdminBooking: false,
-        customerReview: 2,
-        allDay: false
-    }
-] // TODO: Get from Api
-
 export const Schedule = ({ foundationYear, professionals, customers, entityId, services, workdays }: Props) => {
 
     const openModal = useModal(state => state.openModal)
@@ -101,12 +47,17 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
     const serviceState = useService(state => state.serviceState)
     const setServiceState = useService(state => state.setServiceState)
 
-    const { schedule, setSchedule } = useSchedule()
+    const schedule = useSchedule(state => state.schedule)
+    const setSchedule = useSchedule(state => state.setSchedule)
     const { date, view } = useSchedule(state => state.schedule)
+    const events = useEvents(state => state.events)
+    const setEvents = useEvents(state => state.setEvents)
+
     const [step, setStep] = useState(1)
-    const [events, setEvents] = useState<EventDate[]>([])
     const [profEvents, setProfEvents] = useState<EventDate[]>([])
     const [selectedProfessional, setSelectedProfessional] = useState<ProfessionalData | null>(null)
+    const [isLoadingEvents, setIsLoadingEvents] = useState(true)
+    const [lastReload, setLastReload] = useState(new Date())
 
     const onSelectEvent = (event: EventDate) => {
         setOpenModal('ScheduleEvent')
@@ -115,7 +66,7 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
 
     const onSelectSlot = (e: SlotInfo) => {
         const date = e.start
-        const isAvailable = isGreaterOrEqualThanToday(date)
+        const isAvailable = isGreaterOrEqualThanToday(date) && workdays.includes(((date.getDay() + 6) % 7) + 1)
         if (!isAvailable) return
         setServiceState({
             ...serviceState,
@@ -141,45 +92,30 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
         ))
     }
 
-    const setCustomerReview = (reviewPoints: number) => {
-        //TODO: Api patch
-        // event.customerReview
-    }
-
     useEffect(() => {
         if (!openModal) {
             setStep(1)
-            setSchedule({ ...schedule, isUpdatingReview: false })
         }
     }, [openModal])
 
     useEffect(() => {
+        setIsLoadingEvents(true)
         const fetchEvents = async () => {
-            const month = date.getMonth()
-            const year = date.getFullYear()
-
-            // TODO: reemplazar por llamada real al backend
-            // Ejemplo:
-            // const res = await api.get(`/events?month=${month + 1}&year=${year}`)
-            // setEvents(res.data)
-
-            const simulated = bdEvents.filter(ev =>
-                ev.start.getMonth() === month &&
-                ev.start.getFullYear() === year
-            )
-
-            setEvents(simulated)
+            const dbEvents = await getEventsByMonth(date)
+            setEvents(dbEvents)
+            setIsLoadingEvents(false)
         }
 
         fetchEvents()
 
-    }, [date.getMonth(), date.getFullYear()])
+    }, [date.getMonth(), date.getFullYear(), lastReload])
 
     useEffect(() => {
         const currentEvents = events.filter(e =>
             e.selectedProfessional.id === selectedProfessional?.id
             && compareDates(date, e.start)
-        )
+        ).sort((a, b) => a.start.getTime() - b.start.getTime())
+
         setProfEvents(currentEvents)
     }, [events, date, selectedProfessional])
 
@@ -191,6 +127,8 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
         return isGreaterOrEqualThanToday(date) && workdays.includes(((date.getDay() + 6) % 7) + 1)
     }, [date])
 
+    const filteredEvents = events.filter(ev => ev.status !== 'cancelled')
+
     return (
         <>
             <div className="flex items-center gap-2 mb-3">
@@ -201,6 +139,10 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
             </div>
             <div className="flex flex-col gap-6">
                 <div className="bg-white w-full rounded-md p-7 relative">
+                    <button onClick={()=> setLastReload(new Date())} disabled={isLoadingEvents} 
+                        className="flex ml-auto w-fit text-green-700 text-3xl mb-1.5 cursor-pointer disabled:opacity-65 disabled:pointer-events-none md:mb-0" >
+                        <TbReload />
+                    </button>
                     <CustomDays
                         onClick={(dayItem) => setSchedule({ ...schedule, date: dayItem.date })}
                         date={schedule.date}
@@ -212,40 +154,47 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
                         setSelectedProfessional={onSelectProfessional as () => void}
                     />
                     {
-                        selectedProfessional?.id ?
-                            profEvents.length > 0 ?
-                                <EventList
-                                    events={profEvents}
-                                    setCustomerReview={setCustomerReview}
-                                />
-                                :
-                                <h2 className="text-center text-zinc-600 py-10">
-                                    No se encontraron agendas para este día
-                                </h2>
+                        isLoadingEvents ?
+                            <div className="h-screen! md:h-125! flex justify-center items-center">
+                                <div className="flex flex-col items-center justify-center gap-2.5">
+                                    <ImSpinner8 className="text-4xl text-green-700 animate-spin" />
+                                    Cargando agendas...
+                                </div>
+                            </div>
                             :
-                            <Calendar
-                                culture='es'
-                                selectable
-                                onSelectSlot={onSelectSlot}
-                                messages={getMessagesES()}
-                                views={CALENDAR_VIEWS}
-                                onView={view => setSchedule({ ...schedule, view })}
-                                view={view as View}
-                                date={date}
-                                onNavigate={date => setSchedule({ ...schedule, date })}
-                                localizer={localizer}
-                                events={events}
-                                startAccessor="start"
-                                endAccessor="end"
-                                components={{
-                                    event: ({ event }) => <Event event={event} />,
-                                    toolbar: () => null
-                                }}
-                                eventPropGetter={eventPropGetter}
-                                onSelectEvent={onSelectEvent}
-                                formats={formats}
-                                className="h-screen! md:h-125!"
-                            />
+                            selectedProfessional?.id ?
+                                profEvents.length > 0 ?
+                                    <EventList
+                                        events={profEvents}
+                                    />
+                                    :
+                                    <h2 className="text-center text-zinc-600 py-10">
+                                        No se encontraron agendas para este día
+                                    </h2>
+                                :
+                                <Calendar
+                                    culture='es'
+                                    selectable
+                                    onSelectSlot={onSelectSlot}
+                                    messages={getMessagesES()}
+                                    views={CALENDAR_VIEWS}
+                                    onView={view => setSchedule({ ...schedule, view })}
+                                    view={view as View}
+                                    date={date}
+                                    onNavigate={date => setSchedule({ ...schedule, date })}
+                                    localizer={localizer}
+                                    events={filteredEvents}
+                                    startAccessor="start"
+                                    endAccessor="end"
+                                    components={{
+                                        event: ({ event }) => <Event event={event} />,
+                                        toolbar: () => null
+                                    }}
+                                    eventPropGetter={eventPropGetter}
+                                    onSelectEvent={onSelectEvent}
+                                    formats={formats}
+                                    className="h-screen! md:h-125!"
+                                />
                     }
                     {isValidDate && <ScheduleButton />}
                 </div>
@@ -264,10 +213,12 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
                     initialYear={foundationYear}
                     dates={generateMonthDatesArray(date)}
                     professionals={professionalsByService}
+                    entityId={entityId}
                     isAdmin
                 />
             }
-            {openModal === 'ScheduleEvent' && <EventSummary />}
+            {openModal === 'ScheduleEvent' && <EventSummary entityId={entityId} />}
+            {openModal === 'CancelEvent' && <CancelEvent />}
             {openModal === 'ScheduleMonths' &&
                 <ScheduleSelect
                     type="month"

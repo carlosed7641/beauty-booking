@@ -1,4 +1,5 @@
 export * from './admin-sections/AdminSections'
+export * from './event-summary/CancelEvent'
 export * from './custom-days/CustomDays'
 export * from './customer-form-modal/CustomerFormModal'
 export * from './customer-info-modal/CustomerInfoModal'

@@ -42,7 +42,11 @@ export const ScheduleAssign = ({ customers, serviceList }: Props) => {
 
     const handleSelectCustomer = (customer: { id: string, name: string }) => {
         setStep(step => step + 1)
-        setServiceState({ ...serviceState, selectedDate, customer })
+        setServiceState({  
+            ...serviceState, 
+            selectedDate: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()), 
+            customer 
+        })
     }
 
     return (

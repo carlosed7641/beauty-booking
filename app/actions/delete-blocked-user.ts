@@ -20,3 +20,12 @@ export const deleteBlockedUser = async (userId: string, entityId: string) => {
         console.log(e)
     }
 }
+
+export const blockUser = async (userId: string, entityId: string) => {
+    await prisma.blockedUser.create({
+        data: {
+            userId,
+            entityId
+        }
+    })
+}

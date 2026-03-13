@@ -15,6 +15,7 @@ interface Props {
     isAdmin?: boolean
     dates?: DateItem[]
     initialYear?: number
+    entityId: string
 }
 
 export const BookingServiceModal = ({
@@ -23,6 +24,7 @@ export const BookingServiceModal = ({
     professionals,
     isAdmin,
     dates,
+    entityId,
     initialYear
 }: Props) => {
 
@@ -39,6 +41,9 @@ export const BookingServiceModal = ({
         ?.find(p => p.id === serviceState.selectedProfessional?.id)
         ?.services.find(s => s.id === serviceState.selectedService?.serviceId) ?? serviceState?.selectedService
 
+    const professionalWorkdays = professionals
+        ?.find(p => p.id === serviceState.selectedProfessional?.id)?.workdays ?? []
+                
     return (
         <Modal>
             <ModalHeader>
@@ -84,22 +89,31 @@ export const BookingServiceModal = ({
                                 isAdmin={isAdmin}
                                 dates={dates}
                                 openYear={initialYear}
+                                professionalWorkdays={professionalWorkdays}
                             />
                         }
                         {serviceState.selectedProfessional && serviceState.selectedDate &&
                             <>
-                                <SelectHour duration={currentProfessionalService?.duration!} />
+                                <SelectHour 
+                                    duration={currentProfessionalService?.duration!} 
+                                    workdays={professionalWorkdays}
+                                />
                                 <BookingButton setStep={setStep} />
                             </>
                         }
                     </>
                 }
-                {step === 2 && <Confirm />}
+                {step === 2 && (
+                    <Confirm 
+                        entityId={entityId}
+                        price={currentProfessionalService?.price!} 
+                        duration={currentProfessionalService?.duration!} 
+                    />
+                )}
             </div>
         </Modal>
     )
 }
-
 
 const ServiceDuration = (duration: { hours: number, minutes: number }) => {
     return (

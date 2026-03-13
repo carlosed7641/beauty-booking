@@ -1,13 +1,3 @@
-'use client'
-
-interface Props {
-    frequencyMinutes: number,
-    inputDate: Date
-    scheduleHours: [string, string]
-    excludeHours?: string[]
-}
-
-
 export const format12 = (date: Date) => {
     const hours = date.getHours()
     const mins = date.getMinutes()
@@ -31,4 +21,17 @@ export const isSameDay = (d1: Date, d2: Date): boolean => {
         d1.getMonth() === d2.getMonth() &&
         d1.getDate() === d2.getDate()
     )
+}
+
+export const roundToNextInterval = (date: Date, interval: number) => {
+    const minutes = date.getMinutes()
+    const remainder = minutes % interval
+
+    if (remainder === 0) return date
+
+    const diff = interval - remainder
+    const rounded = new Date(date)
+    rounded.setMinutes(minutes + diff, 0, 0)
+
+    return rounded
 }
