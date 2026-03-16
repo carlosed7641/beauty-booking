@@ -82,7 +82,10 @@ export const EventItem = ({ event }: Props) => {
                                         <div className="flex items-center gap-2">
                                             <Emotion showLabel averagePoints={professionalRating} />
                                             <button
-                                                onClick={() => setIsUpdatingReview(prev => !prev)}
+                                                onClick={(e) =>{
+                                                    e.stopPropagation()
+                                                    setIsUpdatingReview(prev => !prev)
+                                                }}
                                                 className="btn-primary text-sm rounded-full"
                                             >
                                                 Editar

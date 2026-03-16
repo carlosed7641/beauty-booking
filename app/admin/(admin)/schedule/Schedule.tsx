@@ -101,7 +101,7 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
     useEffect(() => {
         setIsLoadingEvents(true)
         const fetchEvents = async () => {
-            const dbEvents = await getEventsByMonth(date)
+            const dbEvents = await getEventsByMonth(date, entityId)
             setEvents(dbEvents)
             setIsLoadingEvents(false)
         }

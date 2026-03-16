@@ -9,6 +9,7 @@ interface Customer {
     gender: Gender | null
     userId?: string | null
     isBlocked?: boolean
+    customerAvgRating?: number | null
 }
 
 interface EventDate {

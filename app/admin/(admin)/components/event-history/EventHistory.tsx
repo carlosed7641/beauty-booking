@@ -20,8 +20,8 @@ export const EventHistory = ({
     return (
         events.length > 0 ? (() => {
             const filteredEvents = events.filter(event => {
-                if (currentTab === 'no-rated') return !event.customerReview
-                if (currentTab === 'rated') return !!event.customerReview
+                if (currentTab === 'no-rated') return event.professionalRating === null
+                if (currentTab === 'rated') return event.professionalRating !== null
                 return true
             })
 
@@ -35,8 +35,7 @@ export const EventHistory = ({
 
             return (
                 <EventList
-                    events={events}
-                    setCustomerReview={setCustomerReview}
+                    events={filteredEvents}
                 />
             )
         })() : (

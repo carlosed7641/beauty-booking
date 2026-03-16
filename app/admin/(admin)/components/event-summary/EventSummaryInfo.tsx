@@ -18,7 +18,10 @@ export const EventSummaryInfo = () => {
                     <span>-</span>
                     <span>{format12(selectedEvent.end)}</span>
                 </div>
-                <span className="text-green-700 my-2 flex gap-2 items-center">Cita con: <strong>{selectedEvent?.customer.name}</strong></span>
+                <div className="text-green-700 my-2 flex gap-2 items-center">
+                    <span>Cita con: <strong>{selectedEvent?.customer.name}</strong></span>
+                    {selectedEvent?.customer.userId &&  <Emotion size="text-2xl" averagePoints={selectedEvent.customer.customerAvgRating ?? 3} />}
+                </div>
                 {selectedEvent?.customer.phone &&
                     <Link href={`https://wa.me/${selectedEvent.customer.phone.number}`} className="underline text-zinc-600 flex gap-1 mb-2 w-fit" target="_blank">
                         <FaWhatsapp className="text-green-500" />

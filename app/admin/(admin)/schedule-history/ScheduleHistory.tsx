@@ -1,13 +1,16 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { GoQuestion, GoCheck } from 'react-icons/go'
-import { useModal } from '@/store'
+import { IoMdArrowRoundBack } from 'react-icons/io'
+import { ImSpinner8 } from 'react-icons/im'
+import { TbReload } from 'react-icons/tb'
+import { useEvents, useModal } from '@/store'
+import { getEventsByMonth } from '@/actions'
 import { SimpleTabs } from '@/components'
 import { CustomDays, ScheduleSelect, SelectProfessional, EventHistory } from '../components'
 import { compareDates } from '@/helpers'
-import Link from 'next/link'
-import { IoMdArrowRoundBack } from 'react-icons/io'
 
 const tabs = [
     { id: 'all', label: 'Todas' },
@@ -17,17 +20,22 @@ const tabs = [
 
 interface Props {
     professionals: ProfessionalData[]
-    events: EventDate[]
     foundationYear: number
+    entityId: string
 }
 
-export function ScheduleHistory({ professionals, events, foundationYear }: Props) {
+export function ScheduleHistory({ professionals, foundationYear, entityId }: Props) {
 
     const [date, setDate] = useState(new Date())
     const [currentTab, setCurrentTab] = useState('all')
+    const events = useEvents(state => state.events)
+    const setEvents = useEvents(state => state.setEvents)
     const [currentEvents, setCurrentEvents] = useState<EventDate[]>([])
     const [selectedProfessional, setSelectedProfessional] = useState(professionals[0])
-    const { openModal, setOpenModal } = useModal()
+    const [isLoadingEvents, setIsLoadingEvents] = useState(true)
+    const [lastReload, setLastReload] = useState(new Date())
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
 
     const onChangeDate = (value: number, type: 'month' | 'year') => {
         setDate(prev => {
@@ -40,20 +48,28 @@ export function ScheduleHistory({ professionals, events, foundationYear }: Props
     }
 
     useEffect(() => {
-        const getEvents = () => {
-            // TODO: Api get Select events where selectedProfessional.id === event.selectedProfessional.id && date === event.start
-            const filteredEvents = events.filter(event => {
-                const isSameDay = compareDates(date, event.start)
-                const isSameProfesional = selectedProfessional.id === event.selectedProfessional.id
-                return isSameDay && isSameProfesional
-            })
-
-           setCurrentEvents(filteredEvents)
+        setIsLoadingEvents(true)
+        const fetchEvents = async () => {
+            const dbEvents = await getEventsByMonth(date, entityId)
+            setEvents(dbEvents)
+            setIsLoadingEvents(false)
         }
 
-        getEvents()
+        fetchEvents()
 
-    }, [date, selectedProfessional])
+    }, [date.getMonth(), date.getFullYear(), lastReload])
+
+    useEffect(() => {
+        if (!events.length) return
+
+        const currentEvents = events.filter(e =>
+            e.selectedProfessional.id === selectedProfessional?.id
+            && compareDates(date, e.start)
+        ).sort((a, b) => a.start.getTime() - b.start.getTime())
+
+        setCurrentEvents(currentEvents)
+
+    }, [events, date, selectedProfessional])
 
     return (
         <>
@@ -65,40 +81,58 @@ export function ScheduleHistory({ professionals, events, foundationYear }: Props
             </div>
             <div className="flex flex-col gap-6">
                 <div className="bg-white w-full rounded-md p-7 relative flex flex-col gap-4">
+                    <button onClick={() => setLastReload(new Date())} disabled={isLoadingEvents}
+                        className="flex ml-auto w-fit text-green-700 text-3xl mb-1.5 cursor-pointer disabled:opacity-65 disabled:pointer-events-none md:mb-0" >
+                        <TbReload />
+                    </button>
                     <CustomDays
                         disabledDays="afterToday"
                         onClick={dateItem => setDate(dateItem.date)}
                         date={date}
                     />
-                    <SelectProfessional
-                        professionals={professionals}
-                        selectedProfessional={selectedProfessional}
-                        setSelectedProfessional={setSelectedProfessional as () => void}
-                    />
-                    <SimpleTabs
-                        tabs={tabs}
-                        activeTab={currentTab}
-                        setActiveTab={setCurrentTab}
-                    />
-                    <EventHistory
-                        currentTab={currentTab}
-                        events={currentEvents}
-                    />
+
+                    {
+                        isLoadingEvents ?
+                            <div className="h-screen! md:h-125! flex justify-center items-center">
+                                <div className="flex flex-col items-center justify-center gap-2.5">
+                                    <ImSpinner8 className="text-4xl text-green-700 animate-spin" />
+                                    Cargando agendas...
+                                </div>
+                            </div>
+                            :
+                            <>
+                                <SelectProfessional
+                                    professionals={professionals}
+                                    selectedProfessional={selectedProfessional}
+                                    setSelectedProfessional={setSelectedProfessional as () => void}
+                                />
+                                <SimpleTabs
+                                    tabs={tabs}
+                                    activeTab={currentTab}
+                                    setActiveTab={setCurrentTab}
+                                />
+                                <EventHistory
+                                    currentTab={currentTab}
+                                    events={currentEvents}
+                                />
+                            </>
+                    }
+
                 </div>
             </div>
             {openModal === 'ScheduleMonths' &&
                 <ScheduleSelect
                     type="month"
                     date={date}
-                    onChangeDate={onChangeDate} 
+                    onChangeDate={onChangeDate}
                 />
             }
             {openModal === 'ScheduleYears' &&
                 <ScheduleSelect
                     type="year"
                     date={date}
-                    onChangeDate={onChangeDate} 
-                    yearLimit={foundationYear} 
+                    onChangeDate={onChangeDate}
+                    yearLimit={foundationYear}
                 />
             }
         </>
