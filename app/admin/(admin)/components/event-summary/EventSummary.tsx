@@ -2,12 +2,13 @@
 
 import { useState, useTransition } from 'react'
 import { Modal, ModalHeader, Emotion } from '@/components'
-import { useEvents } from '@/store'
+import { useEvents, useModal } from '@/store'
 import { blockUser, cancelEvent, updateEventReview } from '@/actions'
 import { useSchedule } from '../../store'
 import { EventSummaryInfo } from './EventSummaryInfo'
 import { CustomerReviewOptions } from './CustomerReviewOptions'
 import { EventSummaryButtons } from './EventSummaryButtons'
+import { BsPersonFillLock } from 'react-icons/bs'
 
 export const EventSummary = ({ entityId }: { entityId: string }) => {
 
@@ -20,6 +21,8 @@ export const EventSummary = ({ entityId }: { entityId: string }) => {
 
     const [isUpdatingReview, setIsUpdatingReview] = useState(false)
     const [isBlocking, setIsBlocking] = useState(false)
+
+    const setOpenModal = useModal(state => state.setOpenModal)
 
     const now = new Date().getTime()
     const startDate = schedule.selectedEvent?.start.getTime()!
@@ -50,9 +53,26 @@ export const EventSummary = ({ entityId }: { entityId: string }) => {
         if (!schedule.selectedEvent?.customer.userId) return
         startTransition(async () => {
             await blockUser(schedule.selectedEvent?.customer.userId!, entityId)
-            if (schedule.selectedEvent?.status === 'pending') {
+            if (schedule.selectedEvent?.status === 'pending' && now < startDate) {
                 await cancelEvent(schedule.selectedEvent.id, schedule.selectedEvent.selectedProfessional.id)
             }
+
+            const eventId = schedule.selectedEvent?.id
+
+            if (!eventId) return
+
+            const updatedEvents = allEvents.map(ev =>
+                ev.id === eventId
+                    ? { 
+                        ...ev, 
+                        customer: { ...ev.customer, isBlocked: true },
+                        status: schedule.selectedEvent?.status === 'pending' && now < startDate ? 'cancelled' : ev.status
+                    }
+                    : ev
+            )
+
+            setOpenModal(null)
+            setAllEvents(updatedEvents)
         })
     }
 
@@ -70,26 +90,30 @@ export const EventSummary = ({ entityId }: { entityId: string }) => {
                             :
                             isPending ? <span className="flex my-2">Procesando...</span> :
 
-                                now > startDate ?
-                                    <div className="mt-3">
-                                        <span className="text-base font-bold">Indicanos si el cliente llegó a tiempo</span>
-                                        {
-                                            schedule.selectedEvent?.professionalRating && !isUpdatingReview ?
-                                                <div className="flex items-center gap-2">
-                                                    <Emotion showLabel averagePoints={schedule.selectedEvent.professionalRating} />
-                                                    <button onClick={() => setIsUpdatingReview(true)} className="btn-primary rounded-full">Editar</button>
-                                                </div>
-                                                :
-                                                <CustomerReviewOptions eventId={schedule.selectedEvent?.id ?? ''} setCustomerReview={setCustomerReview} />
-                                        }
-                                    </div>
+                                schedule.selectedEvent?.customer.isBlocked ?
+                                    null
                                     :
-                                    <EventSummaryButtons />
+                                    now > startDate ?
+                                        <div className="mt-3">
+                                            <span className="text-base font-bold">Indicanos si el cliente llegó a tiempo</span>
+                                            {
+                                                schedule.selectedEvent?.professionalRating && !isUpdatingReview ?
+                                                    <div className="flex items-center gap-2">
+                                                        <Emotion showLabel averagePoints={schedule.selectedEvent.professionalRating} />
+                                                        <button onClick={() => setIsUpdatingReview(true)} className="btn-primary rounded-full">Editar</button>
+                                                    </div>
+                                                    :
+                                                    <CustomerReviewOptions eventId={schedule.selectedEvent?.id ?? ''} setCustomerReview={setCustomerReview} />
+                                            }
+                                        </div>
+                                        :
+                                        <EventSummaryButtons />
                     }
                     {
-                        schedule.selectedEvent?.customer.userId && !isPending &&
+                        schedule.selectedEvent?.customer.userId && !schedule.selectedEvent?.customer.isBlocked && !isPending &&
                         <>
-                            <div className="py-3 text-red-500 cursor-pointer" onClick={() => setIsBlocking(true)}>
+                            <div className="py-3 flex gap-2 items-center text-red-500 cursor-pointer" onClick={() => setIsBlocking(true)}>
+                                <BsPersonFillLock className="text-lg" />
                                 Bloquear usuario
                             </div>
                             {

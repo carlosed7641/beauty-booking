@@ -73,23 +73,26 @@ export const EventItem = ({ event }: Props) => {
                     <span className="text-red-500">Reserva cancelada</span>
                     :
                     isPending ? <span className="flex my-2">Procesando...</span> :
-                        now > startDate ?
-                            (
-                                professionalRating && !isUpdatingReview ? (
-                                    <div className="flex items-center gap-2">
-                                        <Emotion showLabel averagePoints={professionalRating} />
-                                        <button
-                                            onClick={() => setIsUpdatingReview(prev => !prev)}
-                                            className="btn-primary text-sm rounded-full"
-                                        >
-                                            Editar
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <CustomerReviewOptions eventId={id} setCustomerReview={setCustomerReview} />
+                        event?.customer.isBlocked ?
+                            null
+                            :
+                            now > startDate ?
+                                (
+                                    professionalRating && !isUpdatingReview ? (
+                                        <div className="flex items-center gap-2">
+                                            <Emotion showLabel averagePoints={professionalRating} />
+                                            <button
+                                                onClick={() => setIsUpdatingReview(prev => !prev)}
+                                                className="btn-primary text-sm rounded-full"
+                                            >
+                                                Editar
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <CustomerReviewOptions eventId={id} setCustomerReview={setCustomerReview} />
+                                    )
                                 )
-                            )
-                            : null
+                                : null
             }
         </li>
     )

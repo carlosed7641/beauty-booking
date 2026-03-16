@@ -8,6 +8,7 @@ interface Customer {
     birthDay: Date | null
     gender: Gender | null
     userId?: string | null
+    isBlocked?: boolean
 }
 
 interface EventDate {

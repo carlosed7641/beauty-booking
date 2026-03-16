@@ -25,7 +25,8 @@ export const getEventsByMonth = async (date: Date): Promise<EventDate[]> => {
                             indicator: true,
                             phone: true,
                             birthDay: true,
-                            gender: true
+                            gender: true,
+                            blockedUsers: true,
                         }
                     }
                 }
@@ -58,7 +59,8 @@ export const getEventsByMonth = async (date: Date): Promise<EventDate[]> => {
             },
             birthDay: event.customer.user?.birthDay || event.customer.birthDay,
             gender: event.customer.user?.gender || event.customer.gender,
-            userId: event.customer.userId
+            userId: event.customer.userId,
+            isBlocked: event.customer.user?.blockedUsers.map(e => e.entityId).includes(event.entityId) ?? false
         },
         selectedProfessional: {
             id: event.professional.id,

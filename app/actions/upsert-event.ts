@@ -20,7 +20,8 @@ const include = {
                     indicator: true,
                     phone: true,
                     birthDay: true,
-                    gender: true
+                    gender: true,
+                    blockedUsers: true
                 }
             }
         }
@@ -100,7 +101,8 @@ export const upsertEvent = async (event: Event, isAdminBooking = false): Promise
             },
             birthDay: eventResponse.customer.user?.birthDay || eventResponse.customer.birthDay,
             gender: eventResponse.customer.user?.gender || eventResponse.customer.gender,
-            userId: eventResponse.customer.userId
+            userId: eventResponse.customer.userId,
+            isBlocked: eventResponse.customer.user?.blockedUsers.map(e => e.entityId).includes(event.entityId) ?? false
         },
         selectedProfessional: {
             id: eventResponse.professional.id,

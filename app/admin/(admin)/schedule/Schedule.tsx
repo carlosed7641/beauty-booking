@@ -59,7 +59,7 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
     const [isLoadingEvents, setIsLoadingEvents] = useState(true)
     const [lastReload, setLastReload] = useState(new Date())
 
-    const onSelectEvent = (event: EventDate) => {
+    const onSelectEvent = (event: EventDate) => {   
         setOpenModal('ScheduleEvent')
         setSchedule({ ...schedule, selectedEvent: event })
     }
