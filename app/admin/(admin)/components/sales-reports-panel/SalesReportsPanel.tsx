@@ -1,4 +1,4 @@
-import { formatNumber } from '@/helpers'
+import { formatDisplayNumber } from '@/helpers'
 import { CgSpinner } from 'react-icons/cg'
 
 interface Props {
@@ -15,7 +15,7 @@ export const SalesReportsPanel = ({
     groupSales,
 }: Props) => {
     return (
-        <div className="w-[300px] md:w-[450px] mx-auto flex flex-col items-center">
+        <div className="w-75 md:w-112.5 mx-auto flex flex-col items-center">
             {
                 isLoading ?
                     <CgSpinner className="text-5xl text-green-700 animate-spin my-8" />
@@ -23,7 +23,7 @@ export const SalesReportsPanel = ({
                     groupSales.length > 0 ?
                         <>
                             <div className="flex justify-center gap-8 pb-2 border-b border-zinc-300">
-                                <span>Total: <b>{formatNumber(totalSales)}</b></span>
+                                <span>Total: <b>{formatDisplayNumber(totalSales)}</b></span>
                                 <span>Cantidad: <b>{completedServices}</b></span>
                             </div>
                             <table className="w-full">
@@ -40,7 +40,7 @@ export const SalesReportsPanel = ({
                                             <tr key={s.id} className="border-b border-zinc-300">
                                                 <td className="text-center py-1">{s.name}</td>
                                                 <td className="text-center py-1">{s.quantity}</td>
-                                                <td className="text-center py-1">${formatNumber(s.total)}</td>
+                                                <td className="text-center py-1">${formatDisplayNumber(s.total)}</td>
                                             </tr>
                                         ))
                                     }

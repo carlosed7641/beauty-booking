@@ -110,7 +110,7 @@ export const DateSwitcher = ({
             }
             <button className={
                 clsx(
-                    "flex-1 md:max-w-[400px] flex justify-center items-center gap-1" ,
+                    "flex-1 md:max-w-100 flex justify-center items-center gap-1" ,
                     { "cursor-pointer": isRange }
                 )
             }

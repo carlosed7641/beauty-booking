@@ -45,7 +45,7 @@ export const DateRangeModal = ({
     }
 
     return (
-        <Modal className="overflow-hidden! md:w-[600px]!">
+        <Modal className="overflow-hidden! md:w-150!">
             <ModalHeader>
                 <h1 className="text-green-700 text-lg">Selecciona un rango de fechas</h1>
             </ModalHeader>

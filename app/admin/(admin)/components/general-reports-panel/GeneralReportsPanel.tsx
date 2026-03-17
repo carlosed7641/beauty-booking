@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import clsx from 'clsx'
-import { formatMinutes, formatNumber } from '@/helpers'
+import { formatDisplayNumber, formatMinutes } from '@/helpers'
 
 interface Props {
     isLoading: boolean
     dataSummary: ReportDataSummary
-    selectedProfessionalId: string
+    selectedProfessionalId: string | null
 }
 
 interface SummaryProps {
@@ -37,7 +37,7 @@ export const GeneralReportsPanel = ({ isLoading, dataSummary, selectedProfession
         <ul className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <Summary
                 title="Ventas generales"
-                value={`$${formatNumber(totalSales)}`}
+                value={`$${formatDisplayNumber(totalSales)}`}
                 isLoading={isLoading}
                 isLarge
             />
@@ -53,12 +53,12 @@ export const GeneralReportsPanel = ({ isLoading, dataSummary, selectedProfession
             />
             <Summary
                 title="Valor promedio de servicios completados"
-                value={`$${formatNumber(averageServiceValue)}`}
+                value={`$${formatDisplayNumber(averageServiceValue)}`}
                 isLoading={isLoading}
             />
             <Summary
                 title="Gastos"
-                value={`$${formatNumber(bills)}`}
+                value={`$${formatDisplayNumber(bills)}`}
                 isLoading={isLoading}
             />
             {
@@ -80,7 +80,7 @@ export const GeneralReportsPanel = ({ isLoading, dataSummary, selectedProfession
                                         <div className="flex items-center gap-3 pr-4 border-r border-zinc-200">
                                             {bestSellingProfessional.data.photo ?
                                                 <Image
-                                                    src="https://picsum.photos/64/64"
+                                                    src={bestSellingProfessional.data.photo}
                                                     width={64}
                                                     height={64}
                                                     alt="Image"
@@ -96,7 +96,7 @@ export const GeneralReportsPanel = ({ isLoading, dataSummary, selectedProfession
                                         </div>
                                     }
                                     <span className="text-green-700 font-bold">
-                                        ${formatNumber(bestSellingProfessional.count ?? '')}
+                                        ${formatDisplayNumber(bestSellingProfessional.count ?? '')}
                                     </span>
                                 </div>
                             </>

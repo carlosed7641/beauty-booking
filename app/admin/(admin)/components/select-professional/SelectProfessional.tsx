@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import clsx from 'clsx'
-import { DEFAULT_PROFESSIONAL } from '@/util/const'
 
 interface Props {
     professionals: ProfessionalSettings[] | ProfessionalData[]
@@ -24,8 +23,8 @@ export const SelectProfessional = ({
                     <div className={
                         clsx(
                             {
-                                "border-4 border-white rounded-full": selectedProfessional?.id !== null,
-                                "border-4 border-green-900 rounded-full": selectedProfessional?.id === null
+                                "border-4 border-white rounded-full": selectedProfessional?.id,
+                                "border-4 border-green-900 rounded-full": !selectedProfessional?.id
                             }
                         )
                     }>
