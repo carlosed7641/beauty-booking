@@ -1,6 +1,6 @@
 'use client'
 
-import { SetStateAction, useEffect, useState } from 'react'
+import { SetStateAction, useState } from 'react'
 import Image from 'next/image'
 import { IoMdCloseCircle } from 'react-icons/io'
 import { Field, UploadImage } from '@/components'

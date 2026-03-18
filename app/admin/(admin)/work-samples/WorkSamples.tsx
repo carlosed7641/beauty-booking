@@ -9,10 +9,18 @@ import { Modal, ModalHeader } from '@/components'
 import { WorkSamplesForm, WorkSamplesList } from '../components'
 import { INITAL_WS_FORM_DATA } from '@/util/const'
 
-export const WorkSamples = ({ workSamples }: { workSamples: WorkSample[] }) => {
+
+interface Props {
+    workSamples: WorkSample[]
+    entityId: string
+    authorId: string
+}
+
+export const WorkSamples = ({ workSamples, entityId, authorId }: Props) => {
 
     const [formData, setFormData] = useState(INITAL_WS_FORM_DATA)
-    const { openModal, setOpenModal } = useModal()
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
 
     useEffect(() => {
         if (!openModal) {
@@ -53,6 +61,8 @@ export const WorkSamples = ({ workSamples }: { workSamples: WorkSample[] }) => {
                         formData={formData}
                         setFormData={setFormData}
                         setShowForm={setOpenModal}
+                        entityId={entityId}
+                        authorId={authorId}
                         hideHint
                     />
                 </Modal>

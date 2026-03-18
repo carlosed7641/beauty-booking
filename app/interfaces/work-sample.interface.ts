@@ -9,8 +9,7 @@ interface WorkSample {
     category: string
     name: string
     images: WorkSampleImage[]
-    // author: string
-    updatedAt: Date
+    updatedAt?: Date
     authorId: string
     entityId: string
 }

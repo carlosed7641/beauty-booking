@@ -1,13 +1,17 @@
+import { auth } from '@/auth.config'
 import { WorkSamples } from './WorkSamples'
-import { workSamples as allWorkSamples } from '@/util/fake-data'
+import { getUserById } from '@/actions'
 
-export default function WorkSamplesPage() {
+export default async function WorkSamplesPage() {
 
-    const workSamples = allWorkSamples.filter(ws => ws.entityId === '422')
+    const session = await auth()
+    const userData = await getUserById(session?.user?.id ?? '')
 
     return (
         <WorkSamples
-            workSamples={workSamples}
+            workSamples={userData?.samples ?? []}
+            entityId={userData?.entityId ?? ''}
+            authorId={userData?.id ?? ''}
         />
     )
 }

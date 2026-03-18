@@ -13,11 +13,12 @@ interface Props {
 
 export const ProfileWorkSamples = ({ samples, entityId, authorId }: Props) => {
 
-    const { openModal, setOpenModal } = useModal()
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
 
     // To revalidate path
     const samplesKey = samples
-        .map(s => `${s.id}-${s.updatedAt.getTime()}`)
+        .map(s => `${s.id}-${s.updatedAt?.getTime() ?? new Date().getTime()}`)
         .join('|')
 
     return (
