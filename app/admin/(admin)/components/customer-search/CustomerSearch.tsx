@@ -14,7 +14,7 @@ export const CustomerSearch = ({ searchValue, setSearchValue }: Props) => {
     }
 
     return (
-        <div className="relative w-full md:w-[600px] flex self-center mb-6">
+        <div className="relative w-full md:w-150 flex self-center mb-6">
             <input className="border border-green-700 py-1 w-full rounded-full px-4 focus:outline-0" type="text" onChange={handleSearchChange} value={searchValue} placeholder="Buscar por nombre o celular" />
             {
                 searchValue ?

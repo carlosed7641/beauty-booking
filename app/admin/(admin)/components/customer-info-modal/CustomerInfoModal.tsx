@@ -10,7 +10,8 @@ import { PiHairDryerLight } from 'react-icons/pi'
 import { TbGenderMale } from 'react-icons/tb'
 import { useModal } from '@/store'
 import { Emotion, Modal, ModalHeader } from '@/components'
-import { formatDate, formatNumber, getDaysSince } from '@/helpers'
+import { formatDate, formatDisplayNumber, formatNumber, getDaysSince } from '@/helpers'
+import { GENDERS } from '@/util/const'
 
 interface Props {
     selectedCustomer: CustomerData
@@ -18,7 +19,7 @@ interface Props {
 
 export const CustomerInfoModal = ({ selectedCustomer }: Props) => {
 
-    const { setOpenModal } = useModal()
+    const setOpenModal = useModal(state => state.setOpenModal)
     const {
         name,
         gender,
@@ -26,38 +27,46 @@ export const CustomerInfoModal = ({ selectedCustomer }: Props) => {
         birthDay,
         visits,
         lastVisit,
-        reviewPointsAverage,
+        // reviewPointsAverage,
         total,
-        services
+        services,
+        isAdminCreated
     } = selectedCustomer
 
     return (
-        <Modal className="md:overflow-hidden max-w-[700px]">
+        <Modal className="md:overflow-hidden max-w-175">
             <ModalHeader>
                 <span className="text-green-700 font-bold text-xl">Cliente</span>
             </ModalHeader>
             <div className="flex flex-col gap-2 pb-3 border-b border-zinc-300">
                 <h3 className="text-2xl text-green-700 font-bold flex items-center justify-between md:justify-start md:gap-2">
                     {name}
-                    <BiSolidEdit className="cursor-pointer" onClick={()=> setOpenModal('CustomerUpdate')} />
+                    {
+                        !isAdminCreated && (
+                            <BiSolidEdit className="cursor-pointer" onClick={() => setOpenModal('CustomerUpdate')} />
+                        )
+                    }
                 </h3>
                 <div className="flex">
                     <div className="flex flex-col pr-5 border-r border-zinc-300">
-                        <span className="flex gap-1 items-center">
-                            <TbGenderMale className="text-green-700 text-lg" />
-                            {gender}
-                        </span>
+                        {
+                            gender &&
+                            <span className="flex gap-1 items-center">
+                                <TbGenderMale className="text-green-700 text-lg" />
+                                {GENDERS[gender]}
+                            </span>
+                        }
                         <Link href={`https://wa.me/${phone.number}`} target="_blank" className="flex gap-1 items-center">
                             <FaWhatsapp className="text-green-500" />
                             <span className="underline">{phone.number}</span>
                         </Link>
                         <span className="flex gap-1 items-center">
                             <LiaBirthdayCakeSolid className="text-green-700" />
-                            {formatDate({ date: birthDay, month: 'short' })}
+                            {formatDate({ date: (birthDay as Date), month: 'short' })}
                         </span>
                     </div>
                     <div className="flex flex-col gap-3 pl-5 justify-center">
-                        <div className="flex items-center gap-1">
+                        {/* <div className="flex items-center gap-1">
                             <Emotion averagePoints={reviewPointsAverage} />
                             <div className="flex flex-col text-sm">
                                 <span className="font-bold">Reputación</span>
@@ -66,7 +75,7 @@ export const CustomerInfoModal = ({ selectedCustomer }: Props) => {
                                         ? 'Regular' : 'Mala'
                                 }</span>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
@@ -77,21 +86,24 @@ export const CustomerInfoModal = ({ selectedCustomer }: Props) => {
                         Visitas
                     </p>
                     <li>Te ha visitado {visits} {visits === 1 ? 'vez' : 'veces'}</li>
-                    <li>
-                        {
-                            (() => {
-                                const days = getDaysSince(lastVisit)
-                                return `La última vez que te visitó fue ${days === 0 ? 'hoy' : days === 1 ? `hace ${days} día` : `hace ${days} días`}`
-                            })()
-                        }
-                    </li>
+                    {
+                        lastVisit &&
+                        <li>
+                            {
+                                (() => {
+                                    const days = getDaysSince(lastVisit)
+                                    return `La última vez que te visitó fue ${days === 0 ? 'hoy' : days === 1 ? `hace ${days} día` : `hace ${days} días`}`
+                                })()
+                            }
+                        </li>
+                    }
                 </ul>
                 <ul>
                     <p className="text-green-700 flex items-center gap-1 font-bold mb-2">
                         <AiOutlineDollarCircle className="text-lg" />
                         Ganancias
                     </p>
-                    <li>Te ha comprado ${formatNumber(total)}</li>
+                    <li>Te ha comprado ${formatDisplayNumber(total)}</li>
                 </ul>
                 <ul>
                     <p className="text-green-700 flex items-center gap-1 font-bold mb-2">

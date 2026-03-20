@@ -16,7 +16,7 @@ interface Props {
 
 export const CustomerList = ({ customers, activeTab, setSelectedCustomer }: Props) => {
 
-    const { setOpenModal } = useModal()
+    const setOpenModal = useModal(state => state.setOpenModal)
 
     const showCustomerInfo = (c: CustomerData) => {
         setSelectedCustomer(c)
@@ -26,18 +26,18 @@ export const CustomerList = ({ customers, activeTab, setSelectedCustomer }: Prop
     const getValueByActiveTab = (c: CustomerData) => {
         switch (activeTab) {
             case 'all':
-                return formaDateShort(c.birthDay)
+                return formaDateShort(c.birthDay as Date)
             case 'most-visits':
                 return c.visits
             case 'not-returned':
-                return getDaysSince(c.lastVisit)
+                return c.lastVisit ? getDaysSince(c.lastVisit) : 'Aún no te visita'
         }
     }
 
     return (
 
         customers.length > 0 ?
-            <ul className="flex flex-col gap-2 md:w-[600px] mt-4 md:mx-auto">
+            <ul className="flex flex-col gap-2 md:w-150 mt-4 md:mx-auto">
                 <p className="self-end my-2 text-green-700">{hints[activeTab]}</p>
                 {
                     customers.map(c => (

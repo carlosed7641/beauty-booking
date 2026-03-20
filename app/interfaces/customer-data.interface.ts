@@ -3,6 +3,7 @@ interface CustomerData extends Customer {
     lastVisit: Date
     total: number
     services: { id: string, name: string }[]
+    isAdminCreated: boolean
 }
 
 interface CustomerInfo {
