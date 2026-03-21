@@ -27,11 +27,14 @@ export const CustomerInfoModal = ({ selectedCustomer }: Props) => {
         birthDay,
         visits,
         lastVisit,
-        // reviewPointsAverage,
+        customerAvgRating: customerRating,
         total,
         services,
-        isAdminCreated
+        isAdminCreated,
+        userId,
     } = selectedCustomer
+
+    const customerAvgRating = customerRating ?? 3
 
     return (
         <Modal className="md:overflow-hidden max-w-175">
@@ -65,18 +68,21 @@ export const CustomerInfoModal = ({ selectedCustomer }: Props) => {
                             {formatDate({ date: (birthDay as Date), month: 'short' })}
                         </span>
                     </div>
-                    <div className="flex flex-col gap-3 pl-5 justify-center">
-                        {/* <div className="flex items-center gap-1">
-                            <Emotion averagePoints={reviewPointsAverage} />
-                            <div className="flex flex-col text-sm">
-                                <span className="font-bold">Reputación</span>
-                                <span>{reviewPointsAverage >= 2.5
-                                    ? 'Buena' : reviewPointsAverage >= 1.5
-                                        ? 'Regular' : 'Mala'
-                                }</span>
+                    {
+                        userId &&
+                        <div className="flex flex-col gap-3 pl-5 justify-center">
+                            <div className="flex items-center gap-1">
+                                <Emotion averagePoints={customerAvgRating} />
+                                <div className="flex flex-col text-sm">
+                                    <span className="font-bold">Reputación</span>
+                                    <span>{customerAvgRating >= 2.5
+                                        ? 'Buena' : customerAvgRating >= 1.5
+                                            ? 'Regular' : 'Mala'
+                                    }</span>
+                                </div>
                             </div>
-                        </div> */}
-                    </div>
+                        </div>
+                    }
                 </div>
             </div>
             <div className="flex flex-col gap-3 mt-3">

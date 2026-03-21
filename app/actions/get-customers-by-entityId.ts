@@ -176,7 +176,9 @@ const getCustomersData = (customers: CustomerInput[], ratingsMap: Map<string, nu
             lastVisit: completedVisits?.[0]?.start,
             total,
             services,
-            isAdminCreated: Boolean(customer.userId)
+            isAdminCreated: Boolean(customer.userId),
+            customerAvgRating: ratingsMap.get(customer.id) ?? null,
+            userId: customer.userId
         })
     }
 

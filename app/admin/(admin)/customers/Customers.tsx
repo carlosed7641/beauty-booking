@@ -18,9 +18,11 @@ const tabs = [
 
 interface Props {
     customers: CustomerData[]
+    countries: Country[]
+    entityId: string
 }
 
-export const Customers = ({ customers }: Props) => {
+export const Customers = ({ customers, countries, entityId }: Props) => {
 
     const [selectedCustomer, setSelectedCustomer] = useState<CustomerData | null>(null)
     const [searchValue, setSearchValue] = useState('')
@@ -51,7 +53,11 @@ export const Customers = ({ customers }: Props) => {
                 break
 
             case 'not-returned':
-                result.sort((a, b) => a?.lastVisit?.getTime() - b?.lastVisit?.getTime())
+                result.sort((a, b) => {
+                    const timeA = a.lastVisit ? a.lastVisit.getTime() : Infinity
+                    const timeB = b.lastVisit ? b.lastVisit.getTime() : Infinity
+                    return timeA - timeB
+                })
                 break
         }
 
@@ -112,6 +118,8 @@ export const Customers = ({ customers }: Props) => {
                 openModal === 'CustomerUpdate' && selectedCustomer &&
                 <CustomerFormModal
                     selectedCustomer={selectedCustomer}
+                    countries={countries}
+                    entityId={entityId}
                 />
             }
         </>
