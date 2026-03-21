@@ -30,4 +30,5 @@ export const blockUser = async (userId: string, entityId: string) => {
     })
 
     revalidatePath('/admin/schedule')
+    revalidatePath('/admin/followers')
 }

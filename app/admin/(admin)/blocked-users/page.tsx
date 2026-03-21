@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { BlockedUsers } from './BlockedUsers'
 import { auth } from '@/auth.config'
-import { getBlockedUsers, getEntityById, getUserById } from '@/actions'
+import { getBlockedUsers, getUserById } from '@/actions'
 
 export default async function BlockedUsersPage() {
 

@@ -43,22 +43,21 @@ export default async function HomePage() {
               <IoShareSocialOutline title="Compartir" className="cursor-pointer" />
               <Link href="/admin/settings" className="flex gap-2">
                 <IoSettingsOutline title="Configuración" className="cursor-pointer" />
-              </Link>
-              <GoQuestion title="Ayuda" className="cursor-pointer" />
+              </Link> 
             </div>
           </div>
           <div className="grid grid-cols-3 mt-5 gap-4">
             <div className="flex flex-col items-center gap-2">
               <HiOutlineUsers className="text-lg text-green-700" />
               <div className="flex flex-col items-center">
-                <span className="text-sm">{shopData?.followers}</span>
+                <span className="text-sm">{shopData?.followers.length ?? 0}</span>
                 <span className="text-xs text-center text-zinc-500">Seguidores del negocio</span>
               </div>
             </div>
             <div className="flex flex-col items-center gap-2">
               <FaRegCalendar className="text-lg text-green-700" />
               <div className="flex flex-col items-center">
-                <span className="text-sm">{shopData?.scheduling}</span>
+                <span className="text-sm">{shopData?.events.length ?? 0}</span>
                 <span className="text-xs text-center text-zinc-500">Agendamientos</span>
               </div>
             </div>

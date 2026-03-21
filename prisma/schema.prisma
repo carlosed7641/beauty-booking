@@ -13,8 +13,6 @@ model Entity {
   cover                 String?
   name                  String?
   contactUrl            String?
-  followers             Int           @default(0)
-  scheduling            Int           @default(0)
   countryId             String
   ownerId               String        @unique
   address               String?
@@ -33,6 +31,7 @@ model Entity {
   blockedUsers          BlockedUser[]
   customers             Customer[]
   events                Event[]
+  followers             Follower[]
 }
 
 model User {
@@ -67,6 +66,7 @@ model User {
   serviceOverrides    ServiceOverride[]
   blockedUsers        BlockedUser[]
   customers           Customer[]
+  followers           Follower[]
 }
 
 model Customer {
@@ -84,6 +84,17 @@ model Customer {
   entity    Entity   @relation(fields: [entityId], references: [id], onDelete: Cascade)
   user      User?    @relation(fields: [userId], references: [id])
   events    Event[]
+}
+
+model Follower {
+  id       String @id @default(uuid())
+  userId   String
+  entityId String
+
+  entity Entity @relation(fields: [entityId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, entityId])
 }
 
 model BlockedUser {

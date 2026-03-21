@@ -43,6 +43,25 @@ export const getEntityById = async (id: string) => {
                 },
                 services: {
                     orderBy: { name: 'asc' }
+                },
+                followers: {
+                    where: {
+                        user: {
+                            blockedUsers: {
+                                none: {
+                                    entityId: id
+                                }
+                            }
+                        }
+                    },
+                    select: {
+                        id: true
+                    }
+                },
+                events: {
+                    select: {
+                        id: true
+                    }
                 }
             }
         })
