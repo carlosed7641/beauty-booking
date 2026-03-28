@@ -5,7 +5,7 @@ interface Props {
     serviceName: string
     price: number
     error?: string
-    isPending: boolean
+    isPending?: boolean
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     handleSave: () => void
 }

@@ -9,6 +9,12 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
+// Admin profile page type error
+// Citas abandonadas
+// Danger Buttons
+// Cerrar sesión
+// Seguir con el rol de empleado
+
 // Imágenes Cloduinary 
 // Optimizar estados zustand
 // Map

@@ -293,7 +293,7 @@ export const SECTIONS_SETTINGS = [
     },
     {
         title: 'Configurar profesionales',
-        url: '/admin/professional/settings',
+        url: '/admin/professional-settings',
         icon: RiUserSettingsLine
     },
     {

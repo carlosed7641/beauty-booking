@@ -11,7 +11,8 @@ import { deleteWorkExperience } from '@/actions'
 export const WorkExperience = ({ workExperiences }: { workExperiences: WorkExperience[] }) => {
 
     const methods = useForm()
-    const { openModal, setOpenModal } = useModal()
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
     const [selectedId, setSelectedId] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 

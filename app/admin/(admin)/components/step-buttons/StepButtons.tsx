@@ -9,7 +9,13 @@ import { useSteps } from '../../store'
 import { completeRegistration } from '@/actions'
 
 export const StepButtons = ({ stepQuantity, entityId }: { stepQuantity: number, entityId: string }) => {
-    const { step, setStep, setShowErrors, completedSteps, setCompletedSteps, data, showErrors } = useSteps()
+    const step = useSteps(state => state.step)
+    const setStep = useSteps(state => state.setStep)
+    const setShowErrors = useSteps(state => state.setShowErrors)
+    const completedSteps = useSteps(state => state.completedSteps)
+    const setCompletedSteps = useSteps(state => state.setCompletedSteps)
+    const data = useSteps(state => state.data)
+    const showErrors = useSteps(state => state.showErrors)
     const [isLoading, setIsLoading] = useState(false)
 
     const nextStep = () => {
@@ -113,7 +119,7 @@ export const StepButtons = ({ stepQuantity, entityId }: { stepQuantity: number, 
                                 { "opacity-50": isLoading }
                             )
                         }>
-                        {isLoading ? <CgSpinner className="text-white animate-spin text-xl" /> 
+                        {isLoading ? <CgSpinner className="text-white animate-spin text-xl" />
                             : <>
                                 Finalizar
                                 <FaCheck />

@@ -70,7 +70,7 @@ export const DateSwitcher = ({
     foundationDate
 }: Props) => {
 
-    const { setOpenModal } = useModal()
+    const setOpenModal = useModal(state => state.setOpenModal)
     
     const handleChangeDate = useCallback((value: -1 | 1) => {
         setDateRange(prev => handleDateShift(prev, value, activeOption.id))

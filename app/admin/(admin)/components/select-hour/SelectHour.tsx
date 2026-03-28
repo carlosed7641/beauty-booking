@@ -5,7 +5,7 @@ interface Props {
     hours: number
     minutes: number
     error?: string
-    isPending: boolean
+    isPending?: boolean
     handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
     handleSave: () => void
 }

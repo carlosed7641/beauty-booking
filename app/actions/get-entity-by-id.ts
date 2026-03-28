@@ -59,6 +59,9 @@ export const getEntityById = async (id: string) => {
                     }
                 },
                 events: {
+                    where: {
+                        status: 'completed'
+                    },
                     select: {
                         id: true
                     }

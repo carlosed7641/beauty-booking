@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { useModal } from '@/store'
 import { useSteps } from '../../store'
 import { SelectPrice } from '..'
-import { formatNumber, getRawNumber } from '@/helpers'
+import { formatDisplayNumber, getRawNumber } from '@/helpers'
 
 export const StepFour = () => {
 
-  const { data, setData } = useSteps()
-  const { openModal, setOpenModal } = useModal()
+  const data = useSteps(state => state.data)
+  const setData = useSteps(state => state.setData)
+  const openModal = useModal(state => state.openModal)
+  const setOpenModal = useModal(state => state.setOpenModal)
   const [error, setError] = useState('')
   const [selectedService, setSelectedService] = useState({ key: '', name: '', price: 0 })
 
@@ -71,7 +73,7 @@ export const StepFour = () => {
                       <li key={service.name} className="flex justify-between">
                         <span>{service.name}</span>
                         <button onClick={() => handleOpenPrice(name, service)} className="text-green-700 underline font-bold cursor-pointer">
-                          ${formatNumber(service.price)}
+                          ${formatDisplayNumber(service.price)}
                         </button>
                       </li>
                     ))

@@ -37,7 +37,7 @@ const steps = [
 export const RegistrationSteps = ({ entityId }: { entityId: string }) => {
 
   const [isLoading, setIsLoading] = useState(true)
-  const { step } = useSteps()
+  const step = useSteps(state => state.step)
   const { title, subtitle, content } = steps[step]
 
   useEffect(() => {

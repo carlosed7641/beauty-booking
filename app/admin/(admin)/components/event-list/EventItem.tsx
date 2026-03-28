@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react'
 import { useEvents, useModal } from '@/store'
 import { updateEventReview } from '@/actions'
-import { formatDate, formatTextHour } from '@/helpers'
+import { format12, formatDate } from '@/helpers'
 import { Emotion } from '@/components'
 import { CustomerReviewOptions } from '..'
 import { useSchedule } from '../../store'
@@ -35,9 +35,7 @@ export const EventItem = ({ event }: Props) => {
         })
     }
 
-    const formatTime = (date: Date) =>
-        formatTextHour(`${date.getHours()}:${date.getMinutes()}`)
-    const duration = `De ${formatTime(event.start)} a ${formatTime(event.end)}`
+    const duration = `De ${format12(event.start)} a ${format12(event.end)}`
     const { customer, selectedService, start, status, professionalRating, id } = event
     const now = new Date().getTime()
     const startDate = start.getTime()
@@ -56,7 +54,7 @@ export const EventItem = ({ event }: Props) => {
         >
             <span className="text-green-700">{customer.name}</span>
             <span>{selectedService.name}</span>
-            <span>{formatDate({ date: start })}</span>
+            <span>{formatDate({ date: start, weekday: 'long' })}</span>
 
             <p className="flex gap-2 items-center">
                 <span>{duration}</span>

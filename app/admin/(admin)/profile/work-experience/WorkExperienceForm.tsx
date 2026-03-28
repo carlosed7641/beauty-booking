@@ -9,7 +9,7 @@ import { CgSpinner } from 'react-icons/cg'
 export const WorkExperienceForm = () => {
 
   const { register, handleSubmit, formState, formState: { isValid }, trigger, watch, setValue } = useFormContext<WorkExperience>()
-  const { setOpenModal } = useModal()
+  const setOpenModal = useModal(state => state.setOpenModal)
   const [errors, setErrors] = useState({
     startDate: '',
     endDate: '',

@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { useSteps } from '../../store'
 
 export const Stepper = () => {
-    const { step } = useSteps()
+    const step = useSteps(state => state.step)
 
     return (
         <div className="pt-5 pb-0 px-2">

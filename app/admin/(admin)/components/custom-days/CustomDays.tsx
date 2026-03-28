@@ -24,7 +24,8 @@ export const CustomDays = ({
 }: Props) => {
 
     const [daysOfCurrentMonth, setDaysOfCurrentMonth] = useState(INITIAL_DAYS_OF_MONTH)
-    const { setOpenModal } = useModal()
+    const setOpenModal = useModal(state => state.setOpenModal)
+    
     const el = useRef<HTMLDivElement>(null)
     const [canScrollLeft, setCanScrollLeft] = useState(false)
     const [canScrollRight, setCanScrollRight] = useState(true)
@@ -33,7 +34,7 @@ export const CustomDays = ({
         if (el.current) {
             const elDiv = el.current
             const clientWidth = elDiv.clientWidth
-            const scrollOffset = direction === 'left' ? -clientWidth  : clientWidth
+            const scrollOffset = direction === 'left' ? -clientWidth : clientWidth
             elDiv.scrollBy({ left: scrollOffset, behavior: 'smooth' })
         }
     }
@@ -63,12 +64,35 @@ export const CustomDays = ({
             elDiv.removeEventListener('scroll', handleScroll)
         }
     }, [])
-    
+
 
     useEffect(() => {
         const newDays = generateMonthDatesArray(date)
         setDaysOfCurrentMonth(newDays)
     }, [date.getMonth(), date.getFullYear()])
+
+    useEffect(() => {
+        if (!el.current) return
+
+        const container = el.current
+
+        const selectedEl = container.querySelector('[data-selected="true"]')
+
+        if (selectedEl) {
+            const elHtml = selectedEl as HTMLElement
+
+            const containerWidth = container.clientWidth
+            const elLeft = elHtml.offsetLeft
+            const elWidth = elHtml.clientWidth
+
+            const scrollTo = elLeft - (containerWidth / 2) + (elWidth / 2)
+
+            container.scrollTo({
+                left: scrollTo,
+                behavior: 'smooth'
+            })
+        }
+    }, [daysOfCurrentMonth, date])
 
     return (
         <div className={`${className ? className : ''}`}>

@@ -1,6 +1,6 @@
 import { useModal } from '@/store'
 import { Modal, ModalHeader } from '@/components'
-import { formatInputDate, isLessOrEqualThan } from '@/helpers'
+import { formatInputDate } from '@/helpers'
 
 interface Props {
     customRange: Date[]
@@ -16,15 +16,13 @@ export const DateRangeModal = ({
     limitDate
 }: Props) => {
 
-    const { setOpenModal } = useModal()
+    const setOpenModal = useModal(state => state.setOpenModal)
 
     const handleCustomRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target
 
         const [year, month, day] = value.split("-").map(Number)
         const date = new Date(year, month - 1, day)
-
-        if (isLessOrEqualThan(date, limitDate)) return
 
         const [start, end] = customRange
 
@@ -40,7 +38,9 @@ export const DateRangeModal = ({
     }
 
     const handleSubmit = () => {
-        setDateRange(customRange)
+        const [start, end] = customRange
+        end.setHours(23, 59, 59, 999)
+        setDateRange([start, end])
         setOpenModal(null)
     }
 

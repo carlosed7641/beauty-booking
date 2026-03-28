@@ -3,6 +3,7 @@
 import prisma from '@/lib/prisma'
 import { EventStatus } from '@/generated/prisma/enums'
 import { getTotalMinutes } from '@/helpers'
+import { revalidatePath } from 'next/cache'
 
 interface Event extends ServiceState {
     price: number
@@ -146,6 +147,8 @@ export const updateEventReview = async ({ id, professionalRating }: Props) => {
     }
 
     if (Object.keys(data).length === 0) return
+
+    data.status = 'completed'
 
     await prisma.event.update(({
         data,

@@ -38,7 +38,9 @@ export const DateList = ({
                     key={date.dateString}
                     className="cursor-pointer flex flex-col justify-end gap-1 items-center disabled:pointer-events-none">
                     {date.month && <p className="text-[14px] text-green-700">{date.month}</p>}
-                    <div className={
+                    <div 
+                    data-selected={selected ? 'true' : 'false'}
+                    className={
                         clsx(
                             "flex h-10 w-10 items-center justify-center border-2 rounded-full transition-all font-bold",
                             {

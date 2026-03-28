@@ -7,7 +7,8 @@ import { deleteUser, logout } from '@/actions'
 
 export const DangerButtons = () => {
 
-    const { openModal, setOpenModal } = useModal()
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
     const [isLoading, setIsLoading] = useState(false)
 
     const onDeleteUser = async () => {

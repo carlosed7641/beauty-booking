@@ -8,7 +8,10 @@ import { DEFAULT_SERVICES_LIST } from '@/util/const'
 
 export const StepTwo = () => {
 
-  const { data, setData, showErrors } = useSteps()
+  const data = useSteps(state => state.data)
+  const setData = useSteps(state => state.setData)
+  const showErrors = useSteps(state => state.showErrors)
+
   const [customFields, setCustomFields] = useState<{ [key: string]: string[] }>({})
   const [serviceList, setServiceList] = useState<{ [key: string]: string[] }>(DEFAULT_SERVICES_LIST)
 

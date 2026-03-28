@@ -10,7 +10,6 @@ export const RegistrationData = ({ countries }: { countries: Country[] }) => {
     const [showCountryStep, setShowCountryStep] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
-    // TODO: Borrar lastname de prisma && image && indicator
     const onSubmit: SubmitHandler<RegistrationInputs> = async (data) => {
         setIsLoading(true)
         const response = await updateUser(data)

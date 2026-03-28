@@ -20,7 +20,19 @@ const timeOptions: TimeOptionItem[] = [
 
 const tabs = [{ id: 'general', label: 'Generales' }, { id: 'sales', label: 'Ventas' }]
 
-const INITIAL_DATES = [new Date(), new Date()]
+const startOfDay = (date: Date) => {
+    const d = new Date(date)
+    d.setHours(0, 0, 0, 0)
+    return d
+}
+
+const endOfDay = (date: Date) => {
+    const d = new Date(date)
+    d.setHours(23, 59, 59, 999)
+    return d
+}
+
+const INITIAL_DATES = [startOfDay(new Date()), endOfDay(new Date())]
 
 interface Props {
     foundationDate: Date,
@@ -30,10 +42,13 @@ interface Props {
 
 const getDateRange = (optionId: TimeOption) => {
     const today = new Date()
-
+    
     switch (optionId) {
-        case 'day':
-            return [today, today]
+        case 'day': {
+            const start = startOfDay(today)
+            const end = endOfDay(today)
+            return [start, end]
+        }
 
         case 'week': {
             const startDate = new Date(today)
@@ -43,7 +58,11 @@ const getDateRange = (optionId: TimeOption) => {
 
             const endDate = new Date(startDate)
             endDate.setDate(startDate.getDate() + 6)
-            return [startDate, endDate]
+
+            const start = startOfDay(startDate)
+            const end = endOfDay(endDate)
+
+            return [start, end]
         }
 
         case 'fortnight': {
@@ -52,27 +71,47 @@ const getDateRange = (optionId: TimeOption) => {
             const isSecondHalf = today.getDate() > 15
 
             startDate.setDate(isSecondHalf ? 16 : 1)
-            const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
+
+            const lastDay = new Date(
+                today.getFullYear(),
+                today.getMonth() + 1,
+                0
+            ).getDate()
+
             endDate.setDate(isSecondHalf ? lastDay : 15)
 
-            return [startDate, endDate]
+            const start = startOfDay(startDate)
+            const end = endOfDay(endDate)
+
+            return [start, end]
         }
 
         case 'month': {
             const startDate = new Date(today.getFullYear(), today.getMonth(), 1)
             const endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0)
-            return [startDate, endDate]
+
+            const start = startOfDay(startDate)
+            const end = endOfDay(endDate)
+
+            return [start, end]
         }
 
         case 'year': {
             const year = today.getFullYear()
             const startDate = new Date(year, 0, 1)
             const endDate = new Date(year, 11, 31)
-            return [startDate, endDate]
+
+            const start = startOfDay(startDate)
+            const end = endOfDay(endDate)
+
+            return [start, end]
         }
 
-        default:
-            return [today, today]
+        default: {
+            const start = startOfDay(today)
+            const end = endOfDay(today)
+            return [start, end]
+        }
     }
 }
 

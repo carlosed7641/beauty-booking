@@ -12,7 +12,7 @@ interface Props {
 
 export const WorkExperienceItem = ({ modalId, item, setSelectedId }: Props) => {
 
-    const { setOpenModal } = useModal()
+    const setOpenModal = useModal(state => state.setOpenModal)
     const { reset } = useFormContext()
 
     const handleUpdate = (data: WorkExperience) => {

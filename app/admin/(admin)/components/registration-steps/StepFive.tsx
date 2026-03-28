@@ -2,7 +2,9 @@ import { useSteps } from '../../store'
 import { WorkDays } from '..'
 
 export const StepFive = () => {
-  const { data, setData } = useSteps()
+  const data = useSteps(state => state.data)
+  const setData = useSteps(state => state.setData)
+
   return (
     <WorkDays
       data={data}

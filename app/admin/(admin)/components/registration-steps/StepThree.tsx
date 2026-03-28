@@ -5,8 +5,12 @@ import { SelectHour } from '..'
 
 export const StepThree = () => {
 
-  const { data, setData } = useSteps()
-  const { openModal, setOpenModal } = useModal()
+  const data = useSteps(state => state.data)
+  const setData = useSteps(state => state.setData)
+
+  const openModal = useModal(state => state.openModal)
+  const setOpenModal = useModal(state => state.setOpenModal)
+  
   const [error, setError] = useState('')
   const [selectedService, setSelectedService] = useState({ key: '', name: '', hours: 0, minutes: 0 })
 

@@ -16,7 +16,7 @@ const initialForm = {
 
 export const WorkExperienceModal = ({ modalId }: { modalId: string }) => {
 
-    const { openModal } = useModal()
+    const openModal = useModal(state => state.openModal)
     const { reset } = useFormContext()
 
     useEffect(() => {

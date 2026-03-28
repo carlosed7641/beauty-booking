@@ -12,11 +12,6 @@ export const EventHistory = ({
     currentTab
 }: Props) => {
 
-    const setCustomerReview = (reviewPoints: number) => {
-        //TODO: Api patch
-        // event.customerReview
-    }
-
     return (
         events.length > 0 ? (() => {
             const filteredEvents = events.filter(event => {

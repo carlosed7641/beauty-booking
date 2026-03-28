@@ -10,7 +10,7 @@ import {
     WorkExperience, 
 } from '.'
 import { SignOut } from './sign-out/SignOut'
-import { getCountries, getUserById } from '@/actions'
+import { getUserById } from '@/actions'
 import { auth } from '@/auth.config'
 
 

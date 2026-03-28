@@ -3,7 +3,9 @@ import { SHOP_TYPES } from '@/util/const'
 
 export const StepOne = () => {
 
-  const { data, setData, showErrors } = useSteps()
+  const data = useSteps(state => state.data)
+  const setData = useSteps(state => state.setData)
+  const showErrors = useSteps(state => state.showErrors)
 
   const handleSetType = (type: string) => {
     const { types } = data

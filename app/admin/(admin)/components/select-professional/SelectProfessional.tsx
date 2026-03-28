@@ -8,7 +8,6 @@ interface Props {
     allOption?: boolean
 }
 
-
 export const SelectProfessional = ({
     professionals,
     selectedProfessional,
