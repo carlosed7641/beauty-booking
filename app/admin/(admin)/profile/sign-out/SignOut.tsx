@@ -7,7 +7,6 @@ export const SignOut = () => {
 
     const onLogout = async () => {
         await logout()
-        window.location.reload()
     }
     
     return (

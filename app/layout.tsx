@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { SessionProvider } from 'next-auth/react'
 import { ModalProvider } from '@/components'
 import { inter, mainFont } from './config/fonts'
 import './globals.css'
@@ -8,12 +7,6 @@ export const metadata: Metadata = {
   title: 'Beauty Booking',
   description: 'The best beauty salons, spas and barbershops'
 }
-
-// Admin profile page type error
-// Citas abandonadas
-// Danger Buttons
-// Cerrar sesión
-// Seguir con el rol de empleado
 
 // Imágenes Cloduinary 
 // Optimizar estados zustand
