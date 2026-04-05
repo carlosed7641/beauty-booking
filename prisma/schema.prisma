@@ -22,6 +22,7 @@ model Entity {
   cancelDateTime        Int           @default(20)
   advanceBookingControl Int           @default(30)
   showAdminAgenda       Boolean       @default(true)
+  linkingCode           String        @unique      
   country               Country       @relation(fields: [countryId], references: [id])
   owner                 User          @relation("EntityOwner", fields: [ownerId], references: [id])
   services              Service[]

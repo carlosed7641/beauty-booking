@@ -8,6 +8,8 @@ export const createEntity = async (countryId: string) => {
      const session = await auth()
      if (!session?.user?.id) throw new Error()
 
+     const linkingCode = generateLinkingCode()
+
      const entityId = await prisma.$transaction(async tx => {
           const entity = await tx.entity.create({
                data: {
@@ -16,7 +18,8 @@ export const createEntity = async (countryId: string) => {
                     },
                     owner: {
                          connect: { id: session?.user?.id },
-                    }
+                    },
+                    linkingCode
                }
           })
 
@@ -30,4 +33,12 @@ export const createEntity = async (countryId: string) => {
      })
 
      return { id: entityId }
+}
+
+const generateLinkingCode = () => {
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  const array = new Uint32Array(6)
+  crypto.getRandomValues(array)
+
+  return Array.from(array, x => letters[x % letters.length]).join('')
 }

@@ -54,7 +54,7 @@ export const LoginForm = ({ isAdmin = false }: { isAdmin?: boolean }) => {
                 </label>
                 <button type="submit" className={
                     clsx(
-                         "bg-green-700 text-white rounded-md py-2 font-bold cursor-pointer hover:bg-green-800 flex justify-center",
+                        "bg-green-700 text-white rounded-md py-2 font-bold cursor-pointer hover:bg-green-800 flex justify-center",
                         {
                             "opacity-50 pointer-events-none": formState.loading
                         }

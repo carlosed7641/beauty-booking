@@ -7,23 +7,28 @@ import { AssignServices, AssignWorkDays, SelectOption } from '.'
 interface Props {
     professionals: ProfessionalSettings[]
     workDays: WorkDays[]
+    isAdmin: boolean
 }
 
-export const ProfessionalSettings = ({ professionals, workDays }: Props) => {
+export const ProfessionalSettings = ({ professionals, workDays, isAdmin }: Props) => {
 
     const [selectedProfessional, setSelectedProfessional] = useState(professionals[0])
     const [selectedOption, setSelectedOption] = useState(0)
 
     return (
         <>
-            <SelectProfessional
-                professionals={professionals}
-                selectedProfessional={selectedProfessional}
-                setSelectedProfessional={setSelectedProfessional as () => void}
-            />
+            {
+                isAdmin && 
+                    <SelectProfessional
+                    professionals={professionals}
+                    selectedProfessional={selectedProfessional}
+                    setSelectedProfessional={setSelectedProfessional as () => void}
+                    />
+            }
             <SelectOption
                 selectedOption={selectedOption}
                 setSelectedOption={setSelectedOption}
+                isAdmin={isAdmin}
             />
             {selectedOption === 0 &&
                 <AssignWorkDays
@@ -35,7 +40,7 @@ export const ProfessionalSettings = ({ professionals, workDays }: Props) => {
             {selectedOption === 1 &&
                 <AssignServices
                     title="Asignar servicios"
-                    hint="Elige qué servicios asignar al profesional"
+                    hint={isAdmin ? "Elige que servicios asignar al profesional" : 'Elige que servicios ofreces'}
                     selectedProfessional={selectedProfessional}
                     setSelectedProfessional={setSelectedProfessional}
                 />

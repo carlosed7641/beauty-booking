@@ -15,6 +15,8 @@ interface Props {
     onSubmit: (data: UserDTO) => void
 }
 
+const ROLES = ['admin', 'employee']
+
 export const ProfileForm = ({ initialValues, onSubmit, isLoading, error }: Props) => {
 
     const defaultValues = initialValues ? {
@@ -23,10 +25,8 @@ export const ProfileForm = ({ initialValues, onSubmit, isLoading, error }: Props
     } : {}
     const [countries, setCountries] = useState<Country[]>([])
 
-    const { register, handleSubmit, formState, watch } = useForm<UserDTO>({ defaultValues })
+    const { register, handleSubmit, formState, watch, reset } = useForm<UserDTO>({ defaultValues })
     const watchRole = watch('role')
-
-
 
     useEffect(() => {
         const fetchCountries = async () => {
@@ -36,6 +36,18 @@ export const ProfileForm = ({ initialValues, onSubmit, isLoading, error }: Props
 
         fetchCountries()
     }, [])
+
+    useEffect(() => {
+        if (initialValues) {
+
+            const defaultValues = initialValues ? {
+                ...initialValues,
+                birthDay: initialValues.birthDay ? formatInputDate(initialValues.birthDay as Date) : null
+            } : {}
+            
+            reset(defaultValues)
+        }
+    }, [initialValues, countries])
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
@@ -70,7 +82,7 @@ export const ProfileForm = ({ initialValues, onSubmit, isLoading, error }: Props
                         className="mt-2 border border-green-700 p-1 rounded-md focus:outline-0" type="text" />
                 </label>
                 {
-                    watchRole === 'admin' &&
+                    watchRole && ROLES.includes(watchRole) &&
                     <>
                         <label className="flex flex-col">
                             Nombre artístico
@@ -116,7 +128,7 @@ export const ProfileForm = ({ initialValues, onSubmit, isLoading, error }: Props
                 </label>
             </div>
             {
-                watchRole === 'admin' &&
+                watchRole && ROLES.includes(watchRole) &&
                 <label className="flex flex-col w-full">
                     Escribe una descripción sobre ti
                     <textarea {...register("description")} className="mt-2 border border-green-700 p-1 rounded-md focus:outline-0" />

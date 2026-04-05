@@ -5,19 +5,35 @@ import { SubmitHandler } from 'react-hook-form'
 import { RegistrationForm, SelectCountry } from '..'
 import { updateUser } from '@/actions'
 
-export const RegistrationData = ({ countries }: { countries: Country[] }) => {
+interface Props {
+    countries: Country[]
+    isEmployee: boolean
+}
+
+export const RegistrationData = ({ countries, isEmployee }: Props) => {
 
     const [showCountryStep, setShowCountryStep] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
     const onSubmit: SubmitHandler<RegistrationInputs> = async (data) => {
         setIsLoading(true)
-        const response = await updateUser(data)
+
+        const newData = {
+            ...data,
+            ...(isEmployee && { isRegisterCompleted: true })
+        }
+
+        const response = await updateUser(newData)
 
         if (!response.ok) {
             setIsLoading(false)
             return
         } 
+
+        if (isEmployee) {
+            window.location.reload()
+            return
+        }
 
         setShowCountryStep(true)
     }

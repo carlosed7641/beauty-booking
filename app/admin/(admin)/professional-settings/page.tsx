@@ -64,7 +64,7 @@ export default async function ProfessionalSettingsPage() {
 
     const entityServiceList = getServiceList(filterServices as ServiceProps[])
 
-    const professionals = entity?.users.map(({ id, name, entityId, photo, workDays, serviceOverrides }) =>
+    const availableProfessionals = entity?.users.map(({ id, name, entityId, photo, workDays, serviceOverrides }) =>
     ({
         id,
         name: name ?? '',
@@ -106,6 +106,11 @@ export default async function ProfessionalSettingsPage() {
             : entity.workdays
     })) ?? []
 
+    const professionals = 
+        user?.role === 'admin' 
+        ? [...availableProfessionals]
+        : availableProfessionals.filter(professional => professional.id === user?.id)
+
     return (
         <>
             <div className="flex items-center gap-2 mb-3">
@@ -118,6 +123,7 @@ export default async function ProfessionalSettingsPage() {
                 <div className="bg-white w-full rounded-md p-7">
                     <ProfessionalSettings
                         professionals={professionals}
+                        isAdmin={user?.role === 'admin'}
                         workDays={entity?.workdays ?? []}
                     />
                 </div>

@@ -15,6 +15,7 @@ export * from './get-blocked-users'
 export * from './get-countries'
 export * from './get-customers-by-entityId'
 export * from './get-entity-by-id'
+export * from './get-entity-employe-data'
 export * from './get-events-by-month'
 export * from './get-events-data-by-range'
 export * from './get-followers'
@@ -42,3 +43,4 @@ export * from './delete-work-sample'
 
 export * from './complete-registration'
 
+export * from './link-professional'

@@ -188,7 +188,8 @@ export const ADMIN_SECTIONS = {
         {
             name: 'Servicios',
             Icon: LuListTodo,
-            url: 'services'
+            url: 'services',
+            adminOnly: true
         },
         {
             name: 'Historial de agenda',
@@ -210,12 +211,14 @@ export const ADMIN_SECTIONS = {
         {
             name: 'Clientes',
             Icon: TbUsers,
-            url: 'customers'
+            url: 'customers',
+            adminOnly: true
         },
         {
             name: 'Seguidores',
             Icon: TbUserHeart,
-            url: 'followers'
+            url: 'followers',
+            adminOnly: true
         }
     ]
 }
@@ -288,7 +291,7 @@ export const SECTIONS_SETTINGS = [
     },
     {
         title: 'Vincular profesionales',
-        url: '',
+        url: '/admin/linking-professional',
         icon: FiUsers
     },
     {
@@ -359,8 +362,8 @@ export const PROFESSIONAL_SETTINGS_ERRORS = {
 export const PROFESSIONAL_SETTINGS_OPTIONS = [
     { title: 'Disponibilidad', icon: RiCalendarScheduleLine },
     { title: 'Asignar servicios', icon: LuCopyCheck },
-    { title: 'Asignar duración de servicios', icon: TbClockHour3 },
-    { title: 'Asignar precio de servicios', icon: AiOutlineDollar }
+    { title: 'Asignar duración de servicios', icon: TbClockHour3, adminOnly: true  },
+    { title: 'Asignar precio de servicios', icon: AiOutlineDollar, adminOnly: true  }
 ]
 
 export const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
@@ -422,6 +425,6 @@ export const DEFAULT_REPORT_DATA_SUMMARY: ReportDataSummary = {
 
 export const ROLES = {
     admin: 'Administrador',
-    user: 'Ususario',
-    employee: 'Empleado'
+    user: 'Usuario',
+    employee: 'Profesional'
 }

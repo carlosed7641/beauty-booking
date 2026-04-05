@@ -41,7 +41,7 @@ export default async function HomePage() {
             </Link>
             <div className="text-green-700 text-xl md:text-2xl flex gap-4 md:w-full">
               <IoShareSocialOutline title="Compartir" className="cursor-pointer" />
-              <Link href="/admin/settings" className="flex gap-2">
+              <Link href={user?.role === 'admin' ? "/admin/settings" : '/admin/professional-settings'} className="flex gap-2">
                 <IoSettingsOutline title="Configuración" className="cursor-pointer" />
               </Link> 
             </div>
@@ -71,7 +71,7 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
-      <AdminSections />
+      <AdminSections role={user?.role as string} />
     </div>
   )
 }
