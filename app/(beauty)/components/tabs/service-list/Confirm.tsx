@@ -23,7 +23,6 @@ export const Confirm = ({ duration, price, entityId }: Props) => {
     const [error, setError] = useState(false)
     const [isPending, startTransition] = useTransition()
 
-
     const handleConfirmBooking = () => {
         setError(false)
 
@@ -35,9 +34,9 @@ export const Confirm = ({ duration, price, entityId }: Props) => {
                         price, 
                         durationHours: duration.hours, 
                         durationMinutes: duration.minutes,
-                        entityId
-                    }, 
-                    true
+                        entityId,
+                       
+                    }
                 )
                 setOpenModal(null)
                 const newEvents = events.filter(ev => ev.id !== event.id)

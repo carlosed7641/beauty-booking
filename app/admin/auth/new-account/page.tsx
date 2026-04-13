@@ -54,8 +54,8 @@ export default function NewAccountPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
                 <label className="flex flex-col gap-2">
                     ¿Qué deseas hacer?
-                    <select {...register('role', { required: true })} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700">
-                        <option value="" selected disabled>Selecciona una opción</option>
+                    <select  defaultValue={""} {...register('role', { required: true })} className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700">
+                        <option value=""disabled>Selecciona una opción</option>
                         <option value="admin">Crear mi negocio</option>
                         <option value="employee">Vincularme a un negocio</option>
                     </select>

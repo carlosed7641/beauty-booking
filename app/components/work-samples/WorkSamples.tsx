@@ -40,13 +40,14 @@ export const WorkSamples = ({ workSamples, hideFilters, hideName }: Props) => {
                     <div className="md:max-w-100 my-auto mx-auto md:p-2">
                         <Slider {...SLIDER_SETTINGS}>
                             {wsOrderedByMainImage.find(sample => sample.id === selectedGallery.id)?.images?.map((image, index) => (
-                                <div key={index}>
+                                <div key={index} className="w-full h-95 relative">
                                     <Image
-                                        className="w-full aspect-square object-contain focus:outline-0"
+                                        className="object-cover focus:outline-0"
                                         src={image.url}
                                         alt={selectedGallery.name}
-                                        width={160}
-                                        height={160} />
+                                        width={380}
+                                        height={380}
+                                    />
                                 </div>
                             ))}
                         </Slider>

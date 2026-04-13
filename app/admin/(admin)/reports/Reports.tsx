@@ -38,6 +38,7 @@ interface Props {
     foundationDate: Date,
     professionals: ProfessionalData[]
     entityId: string
+    isEmployee: boolean
 }
 
 const getDateRange = (optionId: TimeOption) => {
@@ -115,12 +116,16 @@ const getDateRange = (optionId: TimeOption) => {
     }
 }
 
-export const Reports = ({ foundationDate, professionals, entityId }: Props) => {
+export const Reports = ({ foundationDate, professionals, entityId, isEmployee }: Props) => {
 
     const [activeOptionDate, setActiveOptionDate] = useState<TimeOptionItem>(timeOptions[0])
     const [dateRange, setDateRange] = useState<Date[]>(INITIAL_DATES)
     const [activeTab, setActiveTab] = useState(tabs[0].id)
-    const [selectedProfessional, setSelectedProfessional] = useState<ProfessionalData>(DEFAULT_PROFESSIONAL)
+    const [selectedProfessional, setSelectedProfessional] = useState<ProfessionalData>(
+        isEmployee 
+        ? professionals[0]
+        : DEFAULT_PROFESSIONAL
+    )
     const [dataSummary, setDataSummary] = useState<ReportDataSummary>({ ...DEFAULT_REPORT_DATA_SUMMARY })
     const [customRange, setCustomRange] = useState(dateRange)
     const [isLoadingData, setIsLoadingData] = useState(true)
@@ -184,12 +189,15 @@ export const Reports = ({ foundationDate, professionals, entityId }: Props) => {
                         setActiveTab={setActiveTab}
                         tabs={tabs}
                     />
-                    <SelectProfessional
-                        professionals={professionals}
-                        selectedProfessional={selectedProfessional}
-                        setSelectedProfessional={setSelectedProfessional as () => void}
-                        allOption
-                    />
+                   { 
+                    !isEmployee &&
+                        <SelectProfessional
+                            professionals={professionals}
+                            selectedProfessional={selectedProfessional}
+                            setSelectedProfessional={setSelectedProfessional as () => void}
+                            allOption
+                        />
+                    }
                     {
                         activeTab === 'general' &&
                         <GeneralReportsPanel

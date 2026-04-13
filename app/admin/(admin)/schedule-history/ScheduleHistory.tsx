@@ -22,9 +22,10 @@ interface Props {
     professionals: ProfessionalData[]
     foundationYear: number
     entityId: string
+    isEmployee: boolean
 }
 
-export function ScheduleHistory({ professionals, foundationYear, entityId }: Props) {
+export function ScheduleHistory({ professionals, foundationYear, entityId, isEmployee }: Props) {
 
     const [date, setDate] = useState(new Date())
     const [currentTab, setCurrentTab] = useState('all')
@@ -50,7 +51,14 @@ export function ScheduleHistory({ professionals, foundationYear, entityId }: Pro
     useEffect(() => {
         setIsLoadingEvents(true)
         const fetchEvents = async () => {
-            const dbEvents = await getEventsByMonth(date, entityId)
+            const dbEvents = await
+                getEventsByMonth(
+                    date,
+                    entityId,
+                    isEmployee
+                        ? professionals[0].id
+                        : null
+                )
             setEvents(dbEvents)
             setIsLoadingEvents(false)
         }
@@ -101,11 +109,13 @@ export function ScheduleHistory({ professionals, foundationYear, entityId }: Pro
                             </div>
                             :
                             <>
-                                <SelectProfessional
+                               {
+                               !isEmployee &&
+                               <SelectProfessional
                                     professionals={professionals}
                                     selectedProfessional={selectedProfessional}
                                     setSelectedProfessional={setSelectedProfessional as () => void}
-                                />
+                                />}
                                 <SimpleTabs
                                     tabs={tabs}
                                     activeTab={currentTab}

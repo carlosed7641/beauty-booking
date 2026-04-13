@@ -13,6 +13,7 @@ interface Props {
     setStep: (step: number) => void
     professionals?: ProfessionalSchedule[]
     isAdmin?: boolean
+    isEmployee?: boolean
     dates?: DateItem[]
     initialYear?: number
     entityId: string
@@ -25,7 +26,8 @@ export const BookingServiceModal = ({
     isAdmin,
     dates,
     entityId,
-    initialYear
+    initialYear,
+    isEmployee
 }: Props) => {
 
     const serviceState = useService(state => state.serviceState)
@@ -34,7 +36,7 @@ export const BookingServiceModal = ({
 
     const handleBack = () => {
         setServiceState(SERVICE_INITIAL_STATE)
-        setOpenModal('ScheduleAssing')
+        setOpenModal(serviceState.id ? 'ScheduleEvent' : 'ScheduleAssing')
     }
 
     const currentProfessionalService = professionals
@@ -43,7 +45,7 @@ export const BookingServiceModal = ({
 
     const professionalWorkdays = professionals
         ?.find(p => p.id === serviceState.selectedProfessional?.id)?.workdays ?? []
-                
+
     return (
         <Modal>
             <ModalHeader>
@@ -80,9 +82,12 @@ export const BookingServiceModal = ({
                     step === 1 &&
                     <>
                         {
-                            professionals && professionals.length > 0
-                                ? <SelectProfessional professionals={professionals} />
-                                : <p className="text-center ">No hay profesionales que se hayan asignado al servicio elegido</p>
+                            isEmployee ?
+                                null
+                                :
+                                professionals && professionals.length > 0
+                                    ? <SelectProfessional professionals={professionals} />
+                                    : <p className="text-center ">No hay profesionales que se hayan asignado al servicio elegido</p>
                         }
                         {serviceState.selectedProfessional &&
                             <SelectDate
@@ -94,8 +99,8 @@ export const BookingServiceModal = ({
                         }
                         {serviceState.selectedProfessional && serviceState.selectedDate &&
                             <>
-                                <SelectHour 
-                                    duration={currentProfessionalService?.duration!} 
+                                <SelectHour
+                                    duration={currentProfessionalService?.duration!}
                                     workdays={professionalWorkdays}
                                 />
                                 <BookingButton setStep={setStep} />
@@ -104,10 +109,10 @@ export const BookingServiceModal = ({
                     </>
                 }
                 {step === 2 && (
-                    <Confirm 
+                    <Confirm
                         entityId={entityId}
-                        price={currentProfessionalService?.price!} 
-                        duration={currentProfessionalService?.duration!} 
+                        price={currentProfessionalService?.price!}
+                        duration={currentProfessionalService?.duration!}
                     />
                 )}
             </div>

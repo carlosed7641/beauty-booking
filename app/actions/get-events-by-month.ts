@@ -2,7 +2,7 @@
 
 import prisma from '@/lib/prisma'
 
-export const getEventsByMonth = async (date: Date, entityId: string): Promise<EventDate[]> => {
+export const getEventsByMonth = async (date: Date, entityId: string, professionalId: string | null): Promise<EventDate[]> => {
 
     const currentDate = new Date(date)
 
@@ -17,7 +17,8 @@ export const getEventsByMonth = async (date: Date, entityId: string): Promise<Ev
                     gte: startOfMonth,
                     lt: startOfNextMonth
                 },
-                entityId
+                entityId,
+                ...(professionalId && { professionalId })
             },
             include: {
                 customer: {
@@ -102,7 +103,7 @@ export const getEventsByMonth = async (date: Date, entityId: string): Promise<Ev
             price: event.price
         },
         professionalRating: event.professionalRating,
-        isAdminBooking: event.isAdminBooking,
+        typeBooking: event.typeBooking,
         status: event.status
     }))
 }

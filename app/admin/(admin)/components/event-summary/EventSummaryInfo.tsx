@@ -4,6 +4,11 @@ import { useSchedule } from '../../store'
 import { format12, formatDate, formatDisplayNumber } from '@/helpers'
 import { Emotion } from '@/components'
 
+const bookingRoles = {
+    user: 'Cliente',
+    admin: 'Administración',
+    employee: 'Profesional'
+}
 
 export const EventSummaryInfo = () => {
 
@@ -27,7 +32,7 @@ export const EventSummaryInfo = () => {
                         <FaWhatsapp className="text-green-500" />
                         {selectedEvent.customer.phone.number}
                     </Link>}
-                <span>Reservado por: <strong>{selectedEvent?.isAdminBooking ? 'Administración' : 'Cliente'}</strong></span>
+               {selectedEvent?.typeBooking && <span>Reservado por: <strong>{bookingRoles[selectedEvent.typeBooking as keyof typeof bookingRoles]}</strong></span>}
                 <span>Duración: <strong>{selectedEvent.selectedService.duration.hours > 0 ? `${selectedEvent?.selectedService.duration.hours} ${selectedEvent.selectedService.duration.hours === 1 ? 'hr' : 'hrs'} ${selectedEvent.selectedService.duration.minutes > 0 ? 'y ' + selectedEvent.selectedService.duration.minutes + ' min' : ''}` : `${selectedEvent.selectedService.duration.minutes} min`}</strong></span>
                 <span>Profesional: <strong>{selectedEvent?.selectedProfessional.name}</strong></span>
                 <span>Valor del servicio: <strong>${formatDisplayNumber(selectedEvent?.selectedService.price!)}</strong></span>

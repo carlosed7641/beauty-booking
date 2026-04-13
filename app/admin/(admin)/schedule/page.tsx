@@ -13,10 +13,11 @@ export default async function SchedulePage() {
         ? new Date(user.entity.createdAt).getFullYear()
         : new Date().getFullYear()
 
-    const filteredServices = entity?.services.filter(s => !s.archived) ?? []
-    const services = getServiceList(filteredServices)
-    
-    const professionals = entity?.users.map(({ id, name, entityId, photo, workDays, serviceOverrides }) =>
+    const filteredProfessionals = user?.role === 'employee'
+        ? entity?.users.filter(usr => usr.id === user.id) ?? []
+        : (entity?.users ? [...entity.users] : [])
+
+    const professionals = filteredProfessionals.map(({ id, name, entityId, photo, workDays, serviceOverrides }) =>
     ({
         id,
         name: name ?? '',
@@ -34,7 +35,7 @@ export default async function SchedulePage() {
                         },
                         price: s.price
                     }))
-                : entity.services
+                : entity?.services
                     .filter(s => !s.archived)
                     .map(s => ({
                         id: s.id,
@@ -43,7 +44,7 @@ export default async function SchedulePage() {
                             minutes: s.baseDurationMinutes
                         },
                         price: s.basePrice
-                    })),
+                    })) ?? [],
         workdays:
             workDays.length > 0
                 ?
@@ -53,21 +54,28 @@ export default async function SchedulePage() {
                         from: minutesToTime(
                             Math.max(
                                 toMinutes(w.from),
-                                toMinutes(entity.workdays[idx].from)
+                                toMinutes(entity!.workdays[idx].from)
                             )
                         ),
                         to: minutesToTime(
                             Math.min(
                                 toMinutes(w.to),
-                                toMinutes(entity.workdays[idx].to)
+                                toMinutes(entity!.workdays[idx].to)
                             )
                         )
                     }))
-                    .filter((w, idx) => !entity.workdays[idx].disabled && !w.disabled)
+                    .filter((w, idx) => !entity?.workdays[idx].disabled && !w.disabled)
                 :
-                entity.workdays.filter(w => !w.disabled)
+                entity?.workdays.filter(w => !w.disabled) ?? []
     })) ?? []
 
+    const filteredServices = entity?.services.filter(s => {
+        return user?.role === 'admin' 
+            ? !s.archived 
+            : !s.archived && professionals?.[0].services?.map(s => s.id).includes(s.id)
+    }) ?? []
+
+    const services = getServiceList(filteredServices)
 
     const workdays = entity?.workdays.filter(w => !w.disabled)
         .map(w => w.order) ?? []
@@ -80,6 +88,7 @@ export default async function SchedulePage() {
             entityId={user?.entityId ?? ''}
             services={services}
             workdays={workdays}
+            isEmployee={user?.role === 'employee'}
         />
     )
 }

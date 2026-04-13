@@ -265,11 +265,11 @@ export const ADDITIONAL_FUNCTIONS_CONFIG = [
             { value: 90, label: '1h30m' }
         ]
     },
-    {
-        id: 'showAdminAgenda',
-        title: 'Mostrar agenda del adminstrador',
-        hint: 'Habilita esta opción para ver la agenda del administrador'
-    },
+    // {
+    //     id: 'showAdminAgenda',
+    //     title: 'Mostrar agenda del adminstrador',
+    //     hint: 'Habilita esta opción para ver la agenda del administrador'
+    // },
     {
         id: 'advanceBookingControl',
         title: 'Control de antelación',

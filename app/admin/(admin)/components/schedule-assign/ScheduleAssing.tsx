@@ -13,9 +13,10 @@ import { SERVICE_INITIAL_STATE } from '@/util/const'
 interface Props {
     customers: CustomerInfo[]
     serviceList: Service[]
+    employee?: ProfessionalSchedule | null
 }
 
-export const ScheduleAssign = ({ customers, serviceList }: Props) => {
+export const ScheduleAssign = ({ customers, serviceList, employee }: Props) => {
 
     const setOpenModal = useModal(state => state.setOpenModal)
     const serviceState = useService(state => state.serviceState)
@@ -42,10 +43,11 @@ export const ScheduleAssign = ({ customers, serviceList }: Props) => {
 
     const handleSelectCustomer = (customer: { id: string, name: string }) => {
         setStep(step => step + 1)
-        setServiceState({  
-            ...serviceState, 
-            selectedDate: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()), 
-            customer 
+        setServiceState({
+            ...serviceState,
+            selectedDate: new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()),
+            customer,
+            ...(employee && { selectedProfessional: { id: employee.id, name: employee.name } })
         })
     }
 

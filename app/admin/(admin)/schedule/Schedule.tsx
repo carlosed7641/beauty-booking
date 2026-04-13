@@ -8,7 +8,7 @@ import { IoMdArrowRoundBack } from 'react-icons/io'
 import { useEvents, useModal, useService } from '@/store'
 import { BookingServiceModal } from '@/(beauty)/components'
 import { useSchedule } from '../store'
-import { EventSummary, ScheduleSelect, UpdateCustomer, CustomDays, ScheduleButton, ScheduleAssign, SelectProfessional, EventList, CancelEvent } from '../components'
+import { EventSummary, ScheduleSelect, UpdateCustomer, CustomDays, ScheduleButton, ScheduleAssign, SelectProfessional, EventList, CancelEvent, ToggleListView } from '../components'
 import { isGreaterOrEqualThanToday, generateMonthDatesArray, getMessagesES, localizer, format24, compareDates } from '@/helpers'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { CALENDAR_VIEWS } from '@/util/const'
@@ -23,6 +23,7 @@ interface Props {
     entityId: string
     services: Service[]
     workdays: number[]
+    isEmployee: boolean
 }
 
 const eventPropGetter = () => ({
@@ -40,7 +41,7 @@ const formats: Formats = {
         `${format(start, "MMM d")} - ${format(end, "MMM d")}`,
 }
 
-export const Schedule = ({ foundationYear, professionals, customers, entityId, services, workdays }: Props) => {
+export const Schedule = ({ foundationYear, professionals, customers, entityId, services, workdays, isEmployee }: Props) => {
 
     const openModal = useModal(state => state.openModal)
     const setOpenModal = useModal(state => state.setOpenModal)
@@ -59,7 +60,7 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
     const [isLoadingEvents, setIsLoadingEvents] = useState(true)
     const [lastReload, setLastReload] = useState(new Date())
 
-    const onSelectEvent = (event: EventDate) => {   
+    const onSelectEvent = (event: EventDate) => {
         setOpenModal('ScheduleEvent')
         setSchedule({ ...schedule, selectedEvent: event })
     }
@@ -101,7 +102,14 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
     useEffect(() => {
         setIsLoadingEvents(true)
         const fetchEvents = async () => {
-            const dbEvents = await getEventsByMonth(date, entityId)
+            const dbEvents = await 
+            getEventsByMonth(
+                date, 
+                entityId, 
+                isEmployee 
+                    ? professionals[0].id
+                    : null
+                )
             setEvents(dbEvents)
             setIsLoadingEvents(false)
         }
@@ -139,7 +147,7 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
             </div>
             <div className="flex flex-col gap-6">
                 <div className="bg-white w-full rounded-md p-7 relative">
-                    <button onClick={()=> setLastReload(new Date())} disabled={isLoadingEvents} 
+                    <button onClick={() => setLastReload(new Date())} disabled={isLoadingEvents}
                         className="flex ml-auto w-fit text-green-700 text-3xl mb-1.5 cursor-pointer disabled:opacity-65 disabled:pointer-events-none md:mb-0" >
                         <TbReload />
                     </button>
@@ -148,11 +156,21 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
                         date={schedule.date}
                         disabledDays="none"
                     />
-                    <SelectProfessional
-                        professionals={professionals}
-                        selectedProfessional={selectedProfessional}
-                        setSelectedProfessional={onSelectProfessional as () => void}
-                    />
+                    {
+                        isEmployee ?
+                            <ToggleListView 
+                                selectedView={selectedProfessional}
+                                setSelectedView={onSelectProfessional} 
+                                professional={professionals[0]}
+                            />
+                            :
+                            <SelectProfessional
+                                professionals={professionals}
+                                selectedProfessional={selectedProfessional}
+                                setSelectedProfessional={onSelectProfessional as () => void}
+                            />
+                    }
+
                     {
                         isLoadingEvents ?
                             <div className="h-screen! md:h-125! flex justify-center items-center">
@@ -203,6 +221,7 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
                 <ScheduleAssign
                     serviceList={services}
                     customers={customers}
+                    employee={isEmployee ? professionals[0] : null}
                 />
             )}
             {openModal === 'UpdateCustomer' && <UpdateCustomer entityId={entityId} />}
@@ -214,10 +233,11 @@ export const Schedule = ({ foundationYear, professionals, customers, entityId, s
                     dates={generateMonthDatesArray(date)}
                     professionals={professionalsByService}
                     entityId={entityId}
+                    isEmployee={isEmployee}
                     isAdmin
                 />
             }
-            {openModal === 'ScheduleEvent' && <EventSummary entityId={entityId} />}
+            {openModal === 'ScheduleEvent' && <EventSummary entityId={entityId} isAdmin={!isEmployee} />}
             {openModal === 'CancelEvent' && <CancelEvent />}
             {openModal === 'ScheduleMonths' &&
                 <ScheduleSelect

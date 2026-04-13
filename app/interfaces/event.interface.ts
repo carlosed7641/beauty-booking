@@ -35,7 +35,7 @@ interface EventDate {
         name: string
         photo?: string
     },
-    isAdminBooking: boolean
+    typeBooking: string
     status?: EventStatus | null
 }
 

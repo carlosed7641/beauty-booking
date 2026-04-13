@@ -11,18 +11,25 @@ export default async function ScheduleHistoryPage() {
         ? new Date(user.entity.createdAt).getFullYear()
         : new Date().getFullYear()
 
-    const professionals = entity?.users.map(({ id, name, entityId, photo }) => ({
+    const filteredProfessionals = user?.role === 'employee'
+        ? entity?.users.filter(usr => usr.id === user.id) ?? []
+        : (entity?.users ? [...entity.users] : [])
+
+    const professionals = filteredProfessionals.map(({ id, name, entityId, photo }) => ({
         id,
         name: name ?? '',
         entityId: entityId ?? '',
         photo
     })) ?? []
 
+
+
     return (
         <ScheduleHistory
             professionals={professionals}
             foundationYear={foundationYear}
             entityId={user?.entityId ?? ''}
+            isEmployee={user?.role === 'employee'}
         />
     )
 }

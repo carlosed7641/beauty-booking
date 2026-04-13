@@ -7,6 +7,7 @@ import { format12, formatDate } from '@/helpers'
 import { Emotion } from '@/components'
 import { CustomerReviewOptions } from '..'
 import { useSchedule } from '../../store'
+import { usePathname } from 'next/navigation'
 
 interface Props {
     event: EventDate
@@ -19,6 +20,7 @@ export const EventItem = ({ event }: Props) => {
     const allEvents = useEvents(state => state.events)
     const setAllEvents = useEvents(state => state.setEvents)
     const setOpenModal = useModal(state => state.setOpenModal)
+    const pathname = usePathname()
 
     const schedule = useSchedule(state => state.schedule)
     const setSchedule = useSchedule(state => state.setSchedule)
@@ -41,6 +43,7 @@ export const EventItem = ({ event }: Props) => {
     const startDate = start.getTime()
 
     const onSelectEvent = () => {
+        if (pathname.includes('schedule-history')) return
         setOpenModal('ScheduleEvent')
         setSchedule({ ...schedule, selectedEvent: event })
     }

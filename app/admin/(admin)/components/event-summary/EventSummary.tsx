@@ -10,7 +10,7 @@ import { CustomerReviewOptions } from './CustomerReviewOptions'
 import { EventSummaryButtons } from './EventSummaryButtons'
 import { BsPersonFillLock } from 'react-icons/bs'
 
-export const EventSummary = ({ entityId }: { entityId: string }) => {
+export const EventSummary = ({ entityId, isAdmin }: { entityId: string, isAdmin: boolean }) => {
 
     const schedule = useSchedule(state => state.schedule)
     const setSchedule = useSchedule(state => state.setSchedule)
@@ -111,6 +111,7 @@ export const EventSummary = ({ entityId }: { entityId: string }) => {
                     }
                     {
                         schedule.selectedEvent?.customer.userId && !schedule.selectedEvent?.customer.isBlocked && !isPending &&
+                        isAdmin &&
                         <>
                             <div className="py-3 flex gap-2 items-center text-red-500 cursor-pointer" onClick={() => setIsBlocking(true)}>
                                 <BsPersonFillLock className="text-lg" />

@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma'
 import { EventStatus } from '@/generated/prisma/enums'
 import { getTotalMinutes } from '@/helpers'
 import { revalidatePath } from 'next/cache'
+import { auth } from '@/auth.config'
 
 interface Event extends ServiceState {
     price: number
@@ -40,7 +41,7 @@ const include = {
     }
 }
 
-export const upsertEvent = async (event: Event, isAdminBooking = false): Promise<EventDate> => {
+export const upsertEvent = async (event: Event): Promise<EventDate> => {
 
     const start = new Date(event.selectedDate as Date)
     const [hours, minutes] = event.selectedHour!.split(':').map(Number)
@@ -50,6 +51,8 @@ export const upsertEvent = async (event: Event, isAdminBooking = false): Promise
     const end = new Date(start.getTime() + duration * 60000)
 
     let eventResponse
+
+    const session = await auth()   
 
     if (event.id) {
         eventResponse = await prisma.event.update({
@@ -74,7 +77,7 @@ export const upsertEvent = async (event: Event, isAdminBooking = false): Promise
                 customerId: event.customer?.id ?? '',
                 start,
                 end,
-                isAdminBooking,
+                typeBooking: session?.user?.role ?? '',
                 professionalId: event.selectedProfessional?.id ?? '',
                 serviceId: event.selectedService?.serviceId ?? '',
                 status: EventStatus.pending,
@@ -115,7 +118,7 @@ export const upsertEvent = async (event: Event, isAdminBooking = false): Promise
             duration: { hours: eventResponse.durationHours, minutes: eventResponse.durationMinutes },
             price: eventResponse.price
         },
-        isAdminBooking: eventResponse.isAdminBooking,
+        typeBooking: eventResponse.typeBooking,
         status: eventResponse.status
     }
 }

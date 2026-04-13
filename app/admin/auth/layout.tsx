@@ -1,6 +1,8 @@
 import { auth } from '@/auth.config'
 import { redirect } from 'next/navigation'
 
+const ADMIN_ROLES = ['admin', 'employee']
+
 export default async function AuthLayout({
   children
 }: {
@@ -9,7 +11,7 @@ export default async function AuthLayout({
 
   const session = await auth()
 
-  if (session?.user && session.user.role === 'admin') {
+  if (session?.user && session?.user.role && ADMIN_ROLES.includes(session.user.role)) {
       redirect('/admin')
   }
 

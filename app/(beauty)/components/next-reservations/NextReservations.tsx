@@ -37,7 +37,7 @@ const currentReservations: EventDate[] = [
         },
         start: new Date(),
         end: new Date(),
-        isAdminBooking: false,
+        typeBooking: 'user',
         customerReview: null,
         status: 'pending',
         allDay: false

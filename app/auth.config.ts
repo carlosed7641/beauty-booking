@@ -12,7 +12,7 @@ export const authConfig: NextAuthConfig = {
     callbacks: {
         jwt({ token, user }) {
             if (user) {
-                token.data = user
+                token.data = user as any
             }
             return token
         },

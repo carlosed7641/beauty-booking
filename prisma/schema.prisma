@@ -114,7 +114,7 @@ model Event {
   title           String
   start           DateTime
   end             DateTime
-  isAdminBooking  Boolean
+  typeBooking     String
   status          EventStatus?
   customerId      String
   professionalId  String

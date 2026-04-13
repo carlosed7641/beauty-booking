@@ -235,7 +235,7 @@ export const reservations: EventDate[] = [
       id: "abc",
       name: "Carlos Castro"
     },
-    isAdminBooking: false,
+    typeBooking: 'user',
     customerReview: 4.5,
     allDay: false,
     status: 'pending'
@@ -268,7 +268,7 @@ export const reservations: EventDate[] = [
       id: "abc",
       name: "Carlos Castro"
     },
-    isAdminBooking: false,
+    typeBooking: 'user',
     customerReview: 4.5,
     allDay: false,
     status: 'cancelled'
@@ -301,7 +301,7 @@ export const reservations: EventDate[] = [
       id: "abc",
       name: "Carlos Castro"
     },
-    isAdminBooking: false,
+    typeBooking: 'user',
     customerReview: 4.5,
     allDay: false,
     status: 'completed'

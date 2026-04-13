@@ -48,9 +48,9 @@ export const getEventsDataByRange = async ({ dateRange, professionalId, entityId
 
     const dataSummary = events.reduce((acc, event) => {
 
-        const { status, isAdminBooking, durationHours, durationMinutes, price, professional, service, customerId } = event
+        const { status, typeBooking, durationHours, durationMinutes, price, professional, service, customerId } = event
 
-        isAdminBooking ? acc.adminScheduling++ : acc.manualScheduling++
+        typeBooking !== 'user' ? acc.adminScheduling++ : acc.manualScheduling++
 
         switch (status) {
             case 'completed':
