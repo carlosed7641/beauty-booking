@@ -2,7 +2,6 @@ import Link from 'next/link'
 
 import Image from 'next/image'
 import { FaRegCalendar } from 'react-icons/fa'
-import { GoQuestion } from 'react-icons/go'
 import { HiOutlineUsers } from 'react-icons/hi2'
 import { IoSettingsOutline, IoShareSocialOutline } from 'react-icons/io5'
 import { MdOutlineStarPurple500 } from 'react-icons/md'
@@ -36,7 +35,7 @@ export default async function HomePage() {
                 <span className="text-green-700 text-sm md:text-base pointer-events-none">{user?.name}</span>
 
                 <span>{ROLES[user?.role ?? 'user']}</span>
-                <span>Negocio: {user?.entity?.name}</span>
+                <span>{user?.role === 'admin' ? 'Negocio' : 'Trabajas en'}: {user?.entity?.name}</span>
               </div>
             </Link>
             <div className="text-green-700 text-xl md:text-2xl flex gap-4 md:w-full">

@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { auth } from '@/auth.config'
 import prisma from '@/lib/prisma'
 
@@ -18,4 +19,17 @@ export const deleteUser = async () => {
         throw new Error()
     }
 
+}
+
+export const unlinkEmployee = async (id: string) => {
+    await prisma.user.update({
+        where: {
+            id
+        },
+        data: {
+            entityId: null
+        }
+    })
+
+    revalidatePath('/admin/linking-professional')
 }

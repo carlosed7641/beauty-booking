@@ -39,6 +39,9 @@ export const getEntityById = async (id: string) => {
                                 }
                             }
                         }
+                    },
+                    where: {
+                        isActive: true
                     }
                 },
                 services: {

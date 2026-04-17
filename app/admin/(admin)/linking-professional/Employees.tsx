@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { RiUserMinusLine } from 'react-icons/ri'
 import { Modal, ModalHeader } from '@/components'
 import { useModal } from '@/store'
+import { unlinkEmployee } from '@/actions'
 
 interface Employee {
     id: string
@@ -19,11 +20,24 @@ export const Employees = ({ employees }: Props) => {
     const openModal = useModal(state => state.openModal)
     const setOpenModal = useModal(state => state.setOpenModal)
     const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleClick = (employee: Employee) => {
         setSelectedEmployee(employee)
         setOpenModal('UnlinkEmployee')
     }
+
+    const handleUnlink = async () => {
+        if (!selectedEmployee?.id) return
+        setIsLoading(true)
+        try {
+            await unlinkEmployee(selectedEmployee.id)
+            setOpenModal(null)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
 
     return (
         <>
@@ -43,10 +57,14 @@ export const Employees = ({ employees }: Props) => {
                                 ¿Está seguro que desea desvincular a <b>{selectedEmployee?.name}</b>?
                             </div>
                         </ModalHeader>
-                        <div className="flex gap-2 w-full mt-2">
-                            <button onClick={()=> {}} className="bg-red-500 py-1.5 hover:bg-red-600 text-white w-1/2 cursor-pointer rounded-md">Sí, desvincular</button>
-                            <button onClick={() => setOpenModal(null)} className="bg-gray-500 py-1.5 hover:bg-gray-600 text-white w-1/2 cursor-pointer rounded-md">Cancelar</button>
-                        </div>
+                        {
+                            isLoading ?
+                                <span>Procesando...</span>
+                                :
+                                <div className="flex gap-2 w-full mt-2">
+                                    <button onClick={handleUnlink} className="bg-red-500 py-1.5 hover:bg-red-600 text-white w-1/2 cursor-pointer rounded-md">Sí, desvincular</button>
+                                    <button onClick={() => setOpenModal(null)} className="bg-gray-500 py-1.5 hover:bg-gray-600 text-white w-1/2 cursor-pointer rounded-md">Cancelar</button>
+                                </div>}
                     </Modal>
                 )
             }

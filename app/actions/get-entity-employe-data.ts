@@ -13,7 +13,8 @@ export const getEntityEmployeeData = async (id: string) => {
                 },
                 where: {
                     role: 'employee',
-                    isRegisterCompleted: true
+                    isRegisterCompleted: true,
+                    isActive: true
                 }
             },
             linkingCode: true,

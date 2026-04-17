@@ -32,7 +32,12 @@ export default async function AdminLayout({
 
   if (!user.entityId && user.role === 'employee') {
     const countries = await getCountries() 
-    return <LinkingCodeScreen countries={countries} />
+    return (
+        <LinkingCodeScreen 
+          countries={countries} 
+          needRegistration={!user?.name || !user?.countryId || !user?.phone}
+        />
+      )
   }
   
   if (!user?.name || !user?.countryId || !user?.phone) {

@@ -3,12 +3,14 @@
 import { linkProfessional } from '@/actions'
 import { useState, useTransition } from 'react'
 import { RegistrationData } from '../registration-data/RegistrationData'
+import { SignOut } from '../../profile/sign-out/SignOut'
 
 interface Props {
     countries: Country[]
+    needRegistration: boolean
 }
 
-export const LinkingCodeScreen = ({ countries }: Props) => {
+export const LinkingCodeScreen = ({ countries, needRegistration }: Props) => {
 
     const [code, setCode] = useState('')
     const [isPending, startTransition] = useTransition()
@@ -27,7 +29,8 @@ export const LinkingCodeScreen = ({ countries }: Props) => {
         startTransition(async () => {
             try {
                 await linkProfessional(code)
-                setShowNextStep(true)
+                if (needRegistration) return setShowNextStep(true)
+                window.location.reload()
             } catch {
                 setError(true)
             }
@@ -49,6 +52,7 @@ export const LinkingCodeScreen = ({ countries }: Props) => {
                                 <button disabled={code.length < 6 || isPending} className="btn-primary rounded-full" style={{ paddingBlock: 6 }}>Ingresar</button>
                                 {error && <span className="text-red-500">El código expiró o es incorrecto</span>}
                             </form>
+                            <SignOut />
                         </div>
                     )
             }

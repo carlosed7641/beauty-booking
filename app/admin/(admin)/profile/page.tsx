@@ -55,7 +55,7 @@ export default async function ProfilePage() {
                     authorId={userData.id}
                 />
                 <Skills skills={userData.skills} />
-                <DangerButtons isOwner={isOwner} />
+                <DangerButtons isOwner={isOwner} userId={userData.id} />
             </div>
 
         </>
