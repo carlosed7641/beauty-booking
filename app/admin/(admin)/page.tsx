@@ -5,7 +5,7 @@ import { FaRegCalendar } from 'react-icons/fa'
 import { HiOutlineUsers } from 'react-icons/hi2'
 import { IoSettingsOutline, IoShareSocialOutline } from 'react-icons/io5'
 import { MdOutlineStarPurple500 } from 'react-icons/md'
-import { AdminSections } from './components'
+import { AdminSections, ShareButton } from './components'
 import { getEntityById, getUserById } from '@/actions'
 import { auth } from '@/auth.config'
 import { ROLES } from '@/util/const'
@@ -39,10 +39,16 @@ export default async function HomePage() {
               </div>
             </Link>
             <div className="text-green-700 text-xl md:text-2xl flex gap-4 md:w-full">
-              <IoShareSocialOutline title="Compartir" className="cursor-pointer" />
+              {
+                shopData?.name && shopData?.numberId &&
+                <ShareButton
+                  name={shopData.name}
+                  numberId={shopData.numberId}
+                />
+              }
               <Link href={user?.role === 'admin' ? "/admin/settings" : '/admin/professional-settings'} className="flex gap-2">
                 <IoSettingsOutline title="Configuración" className="cursor-pointer" />
-              </Link> 
+              </Link>
             </div>
           </div>
           <div className="grid grid-cols-3 mt-5 gap-4">
