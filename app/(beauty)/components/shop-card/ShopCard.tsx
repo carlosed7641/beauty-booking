@@ -6,13 +6,12 @@ import { redirect } from 'next/navigation'
 import clsx from 'clsx'
 import { FaStar } from 'react-icons/fa6'
 import { useService } from '@/store'
+import { MdOutlinePhotoLibrary } from 'react-icons/md'
 
 interface Props {
     cardWidth?: number,
     href: string,
-    imageSrc: string
-    imageWidth: number,
-    imageHeight: number,
+    imageSrc: string | null
     ratingPotins?: number
     ratingCount?: number
     shopName: string
@@ -25,8 +24,6 @@ export const ShopCard = ({
     cardWidth = 208,
     href,
     imageSrc,
-    imageWidth,
-    imageHeight,
     ratingPotins,
     ratingCount,
     shopName,
@@ -53,8 +50,8 @@ export const ShopCard = ({
     return (
         <li className={`bg-[#e8f7ea] rounded-b-md md:w-auto! shrink-0`} style={{ width: cardWidth }}>
             <Link title={title} href={href} className="flex flex-col">
-                <div className="relative ">
-                    <Image style={{ height: imageHeight }} className="rounded-t-md object-cover" alt={title} width={imageWidth} height={imageHeight} src={imageSrc} />
+                <div className="relative bg-white">
+                    <Image className="rounded-t-md object-cover aspect-square w-full" alt={title} width={180} height={180} src={imageSrc ?? '/images/placeholder.jpg'} />
                     <div className="bg-white round-md flex gap-2 text-sm items-center absolute bottom-3 left-3 px-2 rounded-md border border-zinc-500">
                         <FaStar className="text-amber-300" />
                         {ratingPotins ? `${ratingPotins} (${ratingCount})` : 'No hay reseñas'}

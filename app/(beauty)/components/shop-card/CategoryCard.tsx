@@ -17,7 +17,7 @@ export const CategoryCard = ({ name, iconId }: Props) => {
 
     const icon = icons[iconId]
     const router = useRouter()
-    const { setSelectedFilters } = useSelectedFilters()
+    const setSelectedFilters = useSelectedFilters(state => state.setSelectedFilters)
 
     const handleClickCategory = (name: string) => {
         const normalizedName = name.toLocaleLowerCase()

@@ -11,7 +11,7 @@ export default function BeautyLayout({
         <>
             <Suspense fallback={<Loading />}>
                 <Header />
-                <main className="min-h-screen max-w-[1200px] my-0 mx-auto py-5 px-2">
+                <main className="min-h-screen max-w-300 my-0 mx-auto py-5 px-2">
                     {children}
                 </main>
                 <BottomMenu />

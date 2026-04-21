@@ -1,0 +1,29 @@
+import { Title } from '@/components'
+import { ShopCardLayout, ShopCard } from '..'
+import { getPopularShops } from '@/actions'
+
+export const PopularShops = async () => {
+
+    const data = await getPopularShops() 
+
+    const items = data.map(item => ({
+        id: item.numberId,
+        href: `/entity/${item.numberId}`,
+        imageSrc: item.logo,
+        shopName: item.name ?? ''
+    }))
+
+
+    return (
+        <>
+            <Title title="Populares" />
+            <ShopCardLayout cols={6}>
+                {
+                    items.map(item => (
+                        <ShopCard key={item.id} {...item} />
+                    ))
+                }
+            </ShopCardLayout>
+        </>
+    )
+}

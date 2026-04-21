@@ -20,32 +20,35 @@ const ADMIN_ONLY_ROUTES = [
 ]
 
 export async function middleware(req: NextRequest) {
-
   const { pathname } = req.nextUrl
-
-  if (!pathname.startsWith('/admin')) {
-    return NextResponse.next()
-  }
 
   const token = await getToken({ req, secret: process.env.AUTH_SECRET })
   const role = token?.data?.role ?? ''
 
+  const isAdminOrEmployee = ADMIN_ROLES.includes(role)
+  const isAdminRoute = pathname.startsWith('/admin')
+  const isAdminHome = pathname === '/admin'
+
+  if (isAdminOrEmployee && !isAdminRoute) {
+    return NextResponse.redirect(new URL('/admin', req.url))
+  }
+
+  if (!isAdminRoute) {
+    return NextResponse.next()
+  }
+
   const isPublicAdminRoute = PUBLIC_ADMIN_ROUTES.some(route =>
     pathname.startsWith(route)
   )
-
-  const isAdmin = role === 'admin'
-  const isAdminOrEmployee = ADMIN_ROLES.includes(role)
 
   const isAdminOnlyRoute = ADMIN_ONLY_ROUTES.some(route =>
     pathname.startsWith(route)
   )
 
   if (isPublicAdminRoute) {
-    if (token && isAdminOrEmployee) {
+    if (token && isAdminOrEmployee && !isAdminHome) {
       return NextResponse.redirect(new URL('/admin', req.url))
     }
-
     return NextResponse.next()
   }
 
@@ -57,9 +60,15 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/', req.url))
   }
 
-  if (isAdminOnlyRoute && !isAdmin) {
+  if (isAdminOnlyRoute && role !== 'admin' && !isAdminHome) {
     return NextResponse.redirect(new URL('/admin', req.url))
   }
 
   return NextResponse.next()
+}
+
+export const config = {
+  matcher: [
+    '/((?!api|_next|favicon.ico).*)',
+  ],
 }
