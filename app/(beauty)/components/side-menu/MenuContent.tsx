@@ -8,7 +8,7 @@ import { MENU_OPTIONS } from '@/util/const'
 
 export const MenuContent = () => {
 
-    const { setIsOpenMenu } = useMenu()
+    const setIsOpenMenu = useMenu(state => state.setIsOpenMenu)
     const options = MENU_OPTIONS.filter(opt => !opt.onBotton?.only)
 
     const { optionRef } = useKeyboardOptions({

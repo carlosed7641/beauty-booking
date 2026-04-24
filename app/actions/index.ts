@@ -45,3 +45,4 @@ export * from './delete-work-sample'
 export * from './complete-registration'
 
 export * from './link-professional'
+export * from './search-entity'

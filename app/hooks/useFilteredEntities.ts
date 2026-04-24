@@ -1,12 +1,13 @@
 'use client'
 
+import { searchEntity } from '@/actions'
 import { useEffect, useState } from 'react'
-import { entities } from '@/util/fake-data'
 
 export const useFilteredEntities = (term: string) => {
 
-    const [results, setResults] = useState<Entity[]>([])
+    const [results, setResults] = useState<SimpleEntity[]>([])
     const [totalMatches, setTotalMatches] = useState(0)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
 
@@ -14,20 +15,29 @@ export const useFilteredEntities = (term: string) => {
 
         if (!trimmed) {
             setResults([])
+            setTotalMatches(0)
             return
         }
 
-        const matches = entities.filter(entity =>
-            entity.name.toLowerCase().includes(trimmed.toLowerCase())
-        )
+        const timeout = setTimeout(async () => {
+            try {
+                setLoading(true)
 
-        const totalMatches = matches.length
-        const filtered = matches.slice(0, 3)
+                const { results, total } = await searchEntity(term)
 
-        setResults(filtered)
-        setTotalMatches(totalMatches)
+                setResults(results)
+                setTotalMatches(total)
+            } finally {
+                setLoading(false)
+            }
+        }, 300)
+
+        return () => {
+            clearTimeout(timeout)
+        }
+
 
     }, [term])
 
-    return { results, totalMatches }
+    return { results, totalMatches, loading }
 }

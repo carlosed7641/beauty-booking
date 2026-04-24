@@ -144,7 +144,7 @@ export const MENU_OPTIONS = [
         href: '/map',
         onBotton: {
             is: true,
-            only: false
+            only: true
         }
     },
     {

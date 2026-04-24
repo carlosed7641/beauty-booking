@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import Loading from './loading'
-import { Header, BottomMenu } from './components'
+import { Header } from './components/header/Header'
+import { BottomMenu } from './components/bottom-menu/BottomMenu'
 
 export default function BeautyLayout({
     children,

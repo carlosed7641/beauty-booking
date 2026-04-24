@@ -9,7 +9,7 @@ export const SearchBar = () => {
 
     const [term, setTerm] = useState('')
     const [openResults, setOpenResults] = useState(false)
-    const { results, totalMatches } = useFilteredEntities(term)
+    const { results, totalMatches, loading } = useFilteredEntities(term)
     const searchParams = useSearchParams()
     const search = searchParams.get('q')
 
@@ -24,12 +24,15 @@ export const SearchBar = () => {
                 onChange={setTerm}
                 setOpenResults={setOpenResults}
             />
-            {term && openResults && <SearchResults
-                setOpenResults={setOpenResults}
-                results={results}
-                totalMatches={totalMatches}
-                term={term}
-            />}
+            {term && openResults && (
+                <SearchResults
+                    loading={loading}
+                    setOpenResults={setOpenResults}
+                    results={results}
+                    totalMatches={totalMatches}
+                    term={term}
+                />
+            )}
         </div>
     )
 }

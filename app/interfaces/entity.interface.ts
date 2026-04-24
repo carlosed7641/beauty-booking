@@ -16,3 +16,14 @@ interface Reviews {
     points: number
     counts: number
 }
+
+interface SimpleEntity {
+    numberId: number
+    logo: string | null
+    name: string | null
+    address: string | null
+    _count: {
+        events: number
+        followers: number
+    }
+}

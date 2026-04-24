@@ -38,7 +38,7 @@ export const UserMenu = () => {
                                     <span className="font-bold">Carlos Castro</span>
                                     <span className="text-sm flex items-center">
                                         Mi perfil
-                                        <RxCaretDown className="rotate-[270deg]" />
+                                        <RxCaretDown className="rotate-270" />
                                     </span>
                                 </div>
                             </Link>
