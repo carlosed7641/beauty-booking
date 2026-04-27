@@ -13,11 +13,16 @@ const WORKDAY_FIELDS = {
     professionalId: true
 }
 
-export const getEntityById = async (id: string) => {
+export const getEntityById = async (id: string | number) => {
 
     try {
-        const entity = await prisma.entity.findUnique({
-            where: { id },
+        const entity = await prisma.entity.findFirst({
+            where: {
+                OR: [
+                    { id: typeof id === 'string' ? id : undefined },
+                    { numberId: typeof id === 'number' ? id : undefined }
+                ]
+            },
             include: {
                 workdays: {
                     select: WORKDAY_FIELDS,
@@ -52,7 +57,12 @@ export const getEntityById = async (id: string) => {
                         user: {
                             blockedUsers: {
                                 none: {
-                                    entityId: id
+                                    entity: {
+                                        OR: [
+                                            { id: typeof id === 'string' ? id : undefined },
+                                            { numberId: typeof id === 'number' ? id : undefined }
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -67,6 +77,16 @@ export const getEntityById = async (id: string) => {
                     },
                     select: {
                         id: true
+                    }
+                },
+                samples: {
+                    include: {
+                        images: true,
+                        author: {
+                            select: {
+                                name: true
+                            }
+                        }
                     }
                 }
             }

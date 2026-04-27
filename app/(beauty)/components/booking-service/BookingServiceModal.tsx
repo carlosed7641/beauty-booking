@@ -60,10 +60,12 @@ export const BookingServiceModal = ({
                                 <ServiceDuration {...currentProfessionalService.duration} />
                             }
                             {
-                                !isAdmin &&
+                                !isAdmin && !isEmployee &&
                                 <div className="flex gap-1">
-                                    Desde
-                                    <p className="text-green-700 font-bold">${formatDisplayNumber(serviceState.selectedService?.price!)}</p>
+                                   { !serviceState.selectedProfessional && 'Desde' }
+                                    <p className="text-green-700 font-bold">${formatDisplayNumber(
+                                        currentProfessionalService?.price!
+                                    )}</p>
                                 </div>
                             }
                         </div>

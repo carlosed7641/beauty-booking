@@ -10,13 +10,19 @@ interface Props {
     serviceList: Service[],
     professionals?: ProfessionalSchedule[]
     professionalId?: string
+    entity: {
+        id: string
+        numberId: number
+    }
+    isAuthenticated?: boolean
 }
 
-export const ServiceListTab = ({ serviceList, professionals, professionalId }: Props) => {
+export const ServiceListTab = ({ serviceList, professionals, professionalId, entity, isAuthenticated }: Props) => {
 
     const [step, setStep] = useState(1)
-    const { serviceState, setServiceState } = useService()
-    const { openModal } = useModal()
+    const serviceState = useService(state => state.serviceState)
+    const setServiceState = useService(state => state.setServiceState)
+    const openModal = useModal(state => state.openModal)
     
     useEffect(() => {
         if (openModal) {
@@ -39,14 +45,23 @@ export const ServiceListTab = ({ serviceList, professionals, professionalId }: P
 
     }, [openModal])
 
+    const professionalsByService = professionals?.filter(({ services }) =>
+        services.some(s => s.id === serviceState.selectedService?.serviceId)
+    )
+
     return (
         <>
-            <ServiceList serviceList={serviceList} />
+            <ServiceList 
+                serviceList={serviceList} 
+                entityNumberId={entity.numberId}
+                isAuthenticated={isAuthenticated} 
+            />
             {openModal === 'ServiceList' && serviceState.selectedService &&
                 <BookingServiceModal
                     setStep={setStep}
                     step={step}
-                    professionals={professionals}
+                    professionals={professionalsByService}
+                    entityId={entity.id}
                 />
             }
         </>

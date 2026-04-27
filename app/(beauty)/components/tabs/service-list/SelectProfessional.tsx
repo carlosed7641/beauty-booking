@@ -20,16 +20,31 @@ export const SelectProfessional = ({ professionals }: { professionals: Professio
                                 name: p.name
                             }
                         })} className="flex flex-col w-40 shrink-0 md:w-auto gap-2 items-center cursor-pointer" key={p.name}>
-                            <Image
-                                className={
-                                    clsx(
-                                        "rounded-full",
-                                        {
-                                            "border-4 border-green-700": serviceState.selectedProfessional?.id === p.id
+                            {
+                                p.photo ?
+                                    <Image
+                                        className={
+                                            clsx(
+                                                "rounded-full aspect-square",
+                                                {
+                                                    "border-4 border-green-700": serviceState.selectedProfessional?.id === p.id
+                                                }
+                                            )
                                         }
-                                    )
-                                }
-                                src={p.photo ?? ''} alt={p.name} width={150} height={150} />
+                                        src={p.photo} alt={p.name} width={150} height={150} />
+                                    :
+                                    <div className={
+                                         clsx(
+                                                  "bg-green-600 text-white text-7xl rounded-full aspect-square flex justify-center items-center h-37.5 w-37.5",
+                                                {
+                                                   "border-4 border-green-700": serviceState.selectedProfessional?.id === p.id
+                                                }
+                                            )
+                                    }
+                                  >
+                                        {p.name[0]} 
+                                    </div>
+                            }
                             <div className="flex flex-col items-center">
                                 <p className="font-bold">{p.name}</p>
                             </div>

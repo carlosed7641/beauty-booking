@@ -12,13 +12,14 @@ import 'slick-carousel/slick/slick.css'
 interface Props {
     workSamples: WorkSample[]
     hideFilters?: boolean
-    hideName?: boolean
+    showName?: boolean
 }
 
-export const WorkSamples = ({ workSamples, hideFilters, hideName }: Props) => {
+export const WorkSamples = ({ workSamples, hideFilters, showName }: Props) => {
 
     const [selectedGallery, setSelectedGallery] = useState<{ id: string, name: string }>({ id: '', name: '' })
-    const { openModal, setOpenModal } = useModal()
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
 
     const handleSelectGallery = (id: string, name: string) => {
         setSelectedGallery({ id, name })
@@ -32,8 +33,12 @@ export const WorkSamples = ({ workSamples, hideFilters, hideName }: Props) => {
     
     return (
         <>
-            <WorkSamplesList workSamples={wsOrderedByMainImage} handleSelectGallery={handleSelectGallery} hideFilters={hideFilters}
-                hideName={hideName} />
+            <WorkSamplesList 
+                workSamples={wsOrderedByMainImage} 
+                handleSelectGallery={handleSelectGallery} 
+                hideFilters={hideFilters}
+                showName={showName} 
+            />
             {
                 openModal === 'WorkSampleGallery' && selectedGallery.id &&
                 <Modal className="overflow-hidden! h-fit! pb-10! pt-5! px-0! md:px-6! md:pt-0! md:pb-6! md:w-fit!">

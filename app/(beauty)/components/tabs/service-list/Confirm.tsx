@@ -55,7 +55,7 @@ export const Confirm = ({ duration, price, entityId }: Props) => {
             </div>
             <div className="flex gap-5">
                 <p className="text-green-700 w-25">Valor</p>
-                <span>Desde ${formatDisplayNumber(price)}</span>
+                <span>${formatDisplayNumber(price)}</span>
             </div>
             <div className="flex gap-5">
                 <p className="text-green-700 w-25">Duración</p>

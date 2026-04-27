@@ -11,5 +11,6 @@ interface WorkSample {
     images: WorkSampleImage[]
     updatedAt?: Date
     authorId: string
+    authorName?: string
     entityId: string
 }

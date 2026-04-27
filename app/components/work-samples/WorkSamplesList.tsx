@@ -9,12 +9,12 @@ interface Props {
     workSamples: WorkSample[]
     handleSelectGallery: (id: string, name: string) => void
     hideFilters?: boolean
-    hideName?: boolean
+    showName?: boolean
 }
 
-export const WorkSamplesList = ({ workSamples, handleSelectGallery, hideFilters, hideName }: Props) => {
+export const WorkSamplesList = ({ workSamples, handleSelectGallery, hideFilters, showName }: Props) => {
 
-    const filters = workSamples.map(({ name }) => name)
+    const filters = [...new Set(workSamples.map(({ category }) => category))]
 
     const [filterSamples, setFilterSamples] = useState(workSamples)
     const [selectedFilters, setSelectedFilters] = useState<string[]>([])
@@ -33,7 +33,7 @@ export const WorkSamplesList = ({ workSamples, handleSelectGallery, hideFilters,
             setFilterSamples(workSamples)
             return
         }
-        const newSamples = workSamples.filter(sample => selectedFilters.includes(sample.name))
+        const newSamples = workSamples.filter(sample => selectedFilters.includes(sample.category))
         setFilterSamples(newSamples)
     }, [selectedFilters])
 
@@ -67,7 +67,7 @@ export const WorkSamplesList = ({ workSamples, handleSelectGallery, hideFilters,
                             )}
                             <div className="p-2">
                                 <p className="font-bold">{sample.name}</p>
-                                {/* {!hideName && <span className="block truncate">{sample.author}</span>} */}
+                                {showName && <span className="block truncate text-sm">{sample.authorName}</span>}
                             </div>
                         </div>
                     )

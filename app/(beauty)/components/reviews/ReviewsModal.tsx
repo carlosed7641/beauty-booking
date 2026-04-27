@@ -7,8 +7,8 @@ import { Modal, ModalHeader } from '@/components'
 import { ReviewItem } from '../reviews'
 
 interface Props {
-    counts: number
-    points: number
+    counts?: number
+    points?: number
     reviews: ReviewList[]
     photo?: string
     name: string
@@ -17,12 +17,13 @@ interface Props {
 
 export const ReviewsModal = ({ photo, name, counts, points, reviews, alternativeStyle }: Props) => {
 
-    const { openModal, setOpenModal } = useModal()
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
 
     return (
         <>
             {
-                counts > 0 ?
+                counts && counts > 0 ?
                     <>
                         <button onClick={() => setOpenModal(ReviewsModal.name)} className="flex flex-col items-center cursor-pointer w-fit">
                             {
@@ -30,7 +31,7 @@ export const ReviewsModal = ({ photo, name, counts, points, reviews, alternative
                                     <div className="flex flex-col mb-2">
                                         {
                                             <div className="flex my-1">
-                                                {Array.from({ length: Math.round(points) }, (_, i) => (
+                                                {Array.from({ length: Math.round(points!) }, (_, i) => (
                                                     <FaStar key={i} className="text-amber-300" />
                                                 ))}
                                             </div>
@@ -74,8 +75,8 @@ export const ReviewsModal = ({ photo, name, counts, points, reviews, alternative
                                         <ReviewItem
                                             key={review.id}
                                             date={review.date}
-                                            name={review.user.name}
-                                            photoUrl={review.user.photo}
+                                            name={review.user.name!}
+                                            photoUrl={review.user.photo!}
                                             serviceName={review.service.name}
                                             points={review.points}
                                         />)
@@ -85,7 +86,7 @@ export const ReviewsModal = ({ photo, name, counts, points, reviews, alternative
                         }
                     </>
                     :
-                    <div className="mb-2 text-zinc-500">No hay reseñas</div>
+                    <div className="text-zinc-500 h-[stretch] flex flex-col justify-end">No hay reseñas</div>
             }
         </>
     )

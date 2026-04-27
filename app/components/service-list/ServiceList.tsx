@@ -1,19 +1,24 @@
 'use client'
 
-import clsx from 'clsx'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import clsx from 'clsx'
 import { RxCaretDown } from 'react-icons/rx'
 import { useModal, useService } from '@/store'
 import { formatDisplayNumber } from '@/helpers'
 
-export const ServiceList = ({ serviceList }: {
+export const ServiceList = ({ serviceList, isAuthenticated, entityNumberId }: {
     serviceList: Service[]
+    isAuthenticated?: boolean
+    entityNumberId?: number
 }) => {
 
     const [currentOpenCategory, setCurrentOpenCategory] = useState<string | null>(null)
     const serviceState = useService(state => state.serviceState)
     const setServiceState = useService(state => state.setServiceState)
-    const setOpenModal= useModal(state => state.setOpenModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
+    const router = useRouter()
+
 
     const handleSelectService = (serviceItem: ServiceItem) => {
         setServiceState({
@@ -59,7 +64,12 @@ export const ServiceList = ({ serviceList }: {
                                         {service.description && <p className="text-zinc-500">{service.description}</p>}
                                         <p className="text-green-700 font-bold">${formatDisplayNumber(service.price)}</p>
                                     </div>
-                                    <button onClick={() => handleSelectService({ ...service, category: s.category })} className="btn-primary font-bold rounded-md">Agendar</button>
+                                    <button onClick={() =>
+                                        isAuthenticated
+                                            ? handleSelectService({ ...service, category: s.category })
+                                            : router.push(`/auth/login?redirectTo=/entity/${entityNumberId}`)
+                                    }
+                                        className="btn-primary font-bold rounded-md">Agendar</button>
                                 </li>
                             ))}
                         </ul>
