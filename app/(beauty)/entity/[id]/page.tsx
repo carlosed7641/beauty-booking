@@ -1,21 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { FaWhatsapp } from 'react-icons/fa'
 import { FiMapPin } from 'react-icons/fi'
-import { GoShareAndroid } from 'react-icons/go'
 import { Tabs, ServiceListTab, Professionals, ReviewsModal } from '../../components'
 import { WorkSamples } from '@/components'
-import {
-    entities,
-    workSamples as allWorkSamples,
-    serviceList as allServiceList,
-    professionals as allProfessionals,
-    reviews as apiReviews
-} from '@/util/fake-data'
 import { getEntityById } from '@/actions'
 import { Social } from './Social'
-import { useState } from 'react'
 import { ShopInfo } from './ShopInfo'
 import { getServiceList, minutesToTime, toMinutes } from '@/helpers'
 import { auth } from '@/auth.config'
@@ -105,7 +95,8 @@ export default async function EntityPage({ params }: Props) {
             tab: <ServiceListTab 
                     serviceList={services} 
                     professionals={professionals} 
-                    entity={{ id: data.id, numberId: data.numberId }} 
+                    entity={{ id: data.id, numberId: data.numberId }}
+                    isAuthenticated={!!session} 
                 />,
             visible: services?.length > 0
         },

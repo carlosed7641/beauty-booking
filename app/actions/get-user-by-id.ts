@@ -1,6 +1,7 @@
 'use server'
 
 import prisma from '@/lib/prisma'
+import { WORKDAY_FIELDS } from '@/util/const'
 
 export const getUserById = async (id: string) => {
 
@@ -8,8 +9,25 @@ export const getUserById = async (id: string) => {
 
     try {
         const user = await prisma.user.findUnique({
-            where: { id },
+            where: { 
+                id,  
+                isActive: true
+            },
             include: {
+                workDays: {
+                    select: WORKDAY_FIELDS,
+                    orderBy: { order: 'asc' }
+                },
+                serviceOverrides: {
+                    include: {
+                        service: true
+                    },
+                    orderBy: {
+                        service: {
+                            name: 'asc'
+                        }
+                    }
+                },
                 entity: true,
                 skills: {
                     orderBy: { name: 'asc' }

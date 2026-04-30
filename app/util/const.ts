@@ -428,3 +428,13 @@ export const ROLES = {
     user: 'Usuario',
     employee: 'Profesional'
 }
+
+export const WORKDAY_FIELDS = {
+    id: true,
+    from: true,
+    order: true,
+    to: true,
+    name: true,
+    disabled: true,
+    professionalId: true
+}

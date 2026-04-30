@@ -1,17 +1,7 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-
-
-const WORKDAY_FIELDS = {
-    id: true,
-    from: true,
-    order: true,
-    to: true,
-    name: true,
-    disabled: true,
-    professionalId: true
-}
+import { WORKDAY_FIELDS } from '@/util/const'
 
 export const getEntityById = async (id: string | number) => {
 

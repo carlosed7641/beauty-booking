@@ -17,6 +17,7 @@ interface Props {
     dates?: DateItem[]
     initialYear?: number
     entityId: string
+    isProfessionalView?: boolean
 }
 
 export const BookingServiceModal = ({
@@ -27,7 +28,8 @@ export const BookingServiceModal = ({
     dates,
     entityId,
     initialYear,
-    isEmployee
+    isEmployee,
+    isProfessionalView
 }: Props) => {
 
     const serviceState = useService(state => state.serviceState)
@@ -84,7 +86,7 @@ export const BookingServiceModal = ({
                     step === 1 &&
                     <>
                         {
-                            isEmployee ?
+                            isEmployee || isProfessionalView ?
                                 null
                                 :
                                 professionals && professionals.length > 0

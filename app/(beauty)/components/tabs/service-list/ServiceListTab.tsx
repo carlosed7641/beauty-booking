@@ -9,7 +9,10 @@ import { professionals as allProfessionals } from '@/util/fake-data'
 interface Props {
     serviceList: Service[],
     professionals?: ProfessionalSchedule[]
-    professionalId?: string
+    professionalData?: {
+        id: string
+        name: string
+    }
     entity: {
         id: string
         numberId: number
@@ -17,28 +20,25 @@ interface Props {
     isAuthenticated?: boolean
 }
 
-export const ServiceListTab = ({ serviceList, professionals, professionalId, entity, isAuthenticated }: Props) => {
+export const ServiceListTab = ({ serviceList, professionals, professionalData, entity, isAuthenticated }: Props) => {
 
     const [step, setStep] = useState(1)
     const serviceState = useService(state => state.serviceState)
     const setServiceState = useService(state => state.setServiceState)
     const openModal = useModal(state => state.openModal)
-    
+
     useEffect(() => {
         if (openModal) {
-            if (professionalId) {
-                const professional = allProfessionals.find(p => p.id === professionalId)!
-
-                if (professional) {
-                    setServiceState({
-                        ...serviceState,
-                        selectedProfessional: {
-                            id: professional.id,
-                            name: professional.name
-                        }
-                    })
-                }
+            if (professionalData?.id) {
+                setServiceState({
+                    ...serviceState,
+                    selectedProfessional: {
+                        id: professionalData.id,
+                        name: professionalData.name
+                    }
+                })
             }
+
         } else {
             setStep(1)
         }
@@ -51,10 +51,10 @@ export const ServiceListTab = ({ serviceList, professionals, professionalId, ent
 
     return (
         <>
-            <ServiceList 
-                serviceList={serviceList} 
+            <ServiceList
+                serviceList={serviceList}
                 entityNumberId={entity.numberId}
-                isAuthenticated={isAuthenticated} 
+                isAuthenticated={isAuthenticated}
             />
             {openModal === 'ServiceList' && serviceState.selectedService &&
                 <BookingServiceModal
@@ -62,6 +62,7 @@ export const ServiceListTab = ({ serviceList, professionals, professionalId, ent
                     step={step}
                     professionals={professionalsByService}
                     entityId={entity.id}
+                    isProfessionalView={professionalData?.id ? true : false}
                 />
             }
         </>
