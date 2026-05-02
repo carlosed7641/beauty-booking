@@ -6,7 +6,7 @@ interface Props {
     photoUrl?: string
     name: string
     points: number
-    date: number
+    date: Date | null
     serviceName: string
 }
 
@@ -16,7 +16,7 @@ export const ReviewItem = ({ photoUrl, name, points, date, serviceName }: Props)
             {
                 photoUrl ?
                     <Image
-                        className="rounded-full"
+                        className="rounded-full aspect-square"
                         src={photoUrl}
                         width={80}
                         height={80}
@@ -36,7 +36,13 @@ export const ReviewItem = ({ photoUrl, name, points, date, serviceName }: Props)
                     ))}
                 </div>
             </div>
-            <p className="ml-auto text-sm text-zinc-500">{formatedDate(date)}</p>
+            {date && <p className="ml-auto text-sm text-zinc-500">{
+                date.toLocaleDateString('es-CO', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                })
+            }</p>}
             <div className='w-full text-sm'>
                 Serivicio adquirido: {serviceName}
             </div>

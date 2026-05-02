@@ -1,13 +1,8 @@
 interface ReviewList {
-    id: number
+    id: string
+    title: string
     user: UserInfo
-    service: {
-        id: string
-        name: string
-    }
-    professional: UserInfo
-    entityId: string
-    date: number
+    date: Date | null
     points: number
 }
 

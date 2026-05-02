@@ -1,10 +1,9 @@
-'use client'
 
-import { useState } from 'react'
 import { TfiAgenda } from 'react-icons/tfi'
-import { ReservationList } from '../components'
+import { ImproveExperience, ReservationList } from '../components'
 import { reservations } from '@/util/fake-data'
 import { SimpleTabs } from '@/components'
+import { auth } from '@/auth.config'
 
 const tabs = [
   {
@@ -17,12 +16,16 @@ const tabs = [
   }
 ]
 
-export default function MyReservationsPage() {
+export default async function MyReservationsPage() {
 
-  const [currentTab, setCurrentTab] = useState('current')
+  const session = await auth()
+
+  // const [currentTab, setCurrentTab] = useState('current')
 
   const currentReservations = reservations.filter(r => r.status === 'pending')
   const oldReservations = reservations.filter(r => r.status !== 'pending')
+
+  if (!session) return <ImproveExperience />
 
   return (
     <>
@@ -30,17 +33,17 @@ export default function MyReservationsPage() {
         <TfiAgenda />
         Mis reservas
       </h1>
-      <SimpleTabs
+      {/* <SimpleTabs
         tabs={tabs}
         activeTab={currentTab}
         setActiveTab={setCurrentTab}
-      />
+      /> */}
       <>
         {
-          currentTab === 'current' ?
+          // currentTab === 'current' ?
             <ReservationList reservations={currentReservations} />
-            :
-            <ReservationList reservations={oldReservations} />
+            // :
+            // <ReservationList reservations={oldReservations} />
         }
       </>
     </>

@@ -54,7 +54,7 @@ export const ShopCard = ({
                     <Image className="rounded-t-md object-cover aspect-square w-full" alt={title} width={180} height={180} src={imageSrc ?? '/images/placeholder.jpg'} />
                     <div className="bg-white round-md flex gap-2 text-sm items-center absolute bottom-3 left-3 px-2 rounded-md border border-zinc-500">
                         <FaStar className="text-amber-300" />
-                        {ratingPotins ? `${ratingPotins} (${ratingCount})` : 'No hay reseñas'}
+                        {ratingPotins ? `${ratingPotins.toFixed(1)} (${ratingCount})` : 'No hay reseñas'}
                     </div>
                 </div>
                 <div className="flex flex-col gap-2 p-5">

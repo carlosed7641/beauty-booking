@@ -1,12 +1,20 @@
 import { FaRegStar } from 'react-icons/fa'
 import { ReviewItem } from '../components'
 import { reviews as apiReviews } from '@/util/fake-data'
+import { auth } from '@/auth.config'
 
 const userId = '27'
 
-export default function MyReviewsPage() {
+export default async function MyReviewsPage() {
 
+  const session = await auth()
   const reviews = apiReviews.filter(r => r.user.id === userId)
+
+  if (!session) {
+    return (
+      <p className="text-center my-4">Aún no hay reseñas</p>
+    )
+  }
 
   return (
     <>
@@ -15,9 +23,8 @@ export default function MyReviewsPage() {
         Mis reseñas
       </h1>
       {
-        !reviews.length ? <h2>No hay reviews</h2> :
           <ul className="flex flex-col gap-3 md:gap-6">
-            {reviews.map(review =>
+            {/* {reviews.map(review =>
               <ReviewItem
                 key={review.id}
                 date={review.date}
@@ -26,7 +33,7 @@ export default function MyReviewsPage() {
                 serviceName={review.service.name}
                 points={review.points}
               />)
-            }
+            } */}
           </ul>
       }
     </>

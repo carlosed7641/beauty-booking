@@ -33,6 +33,28 @@ export const getEntityById = async (id: string | number) => {
                                     name: 'asc'
                                 }
                             }
+                        },
+                        professionalEvents: {
+                            where: {
+                                status: 'completed'
+                            },
+                            select: {
+                                id: true,
+                                title: true,
+                                customerRating: true,
+                                customerRatedAt: true,
+                                customer: {
+                                    include: {
+                                        user: {
+                                            select: {
+                                                id: true,
+                                                name: true,
+                                                photo: true,
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     },
                     where: {
@@ -66,7 +88,21 @@ export const getEntityById = async (id: string | number) => {
                         status: 'completed'
                     },
                     select: {
-                        id: true
+                        id: true,
+                        title: true,
+                        customerRating: true,
+                        customerRatedAt: true,
+                        customer: {
+                            include: {
+                                user: {
+                                    select: {
+                                        id: true,
+                                        name: true,
+                                        photo: true,
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 samples: {

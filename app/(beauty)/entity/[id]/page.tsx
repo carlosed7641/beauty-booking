@@ -27,7 +27,7 @@ export default async function EntityPage({ params }: Props) {
     const filteredServices = data?.services.filter(s => !s.archived) ?? []
     const services = getServiceList(filteredServices)
 
-    const professionals = data.users.map(({ id, name, entityId, photo, workDays, serviceOverrides }) =>
+    const professionals = data.users.map(({ id, name, entityId, photo, workDays, serviceOverrides, professionalEvents }) =>
     ({
         id,
         name: name ?? '',
@@ -76,7 +76,18 @@ export default async function EntityPage({ params }: Props) {
                     }))
                     .filter((w, idx) => !data?.workdays[idx].disabled && !w.disabled)
                 :
-                data?.workdays.filter(w => !w.disabled) ?? []
+                data?.workdays.filter(w => !w.disabled) ?? [],
+        reviews: {
+            points: 
+                professionalEvents
+                .filter(ev => ev.customerRating)
+                .map(ev => ({
+                    id: ev.id,
+                    points: ev.customerRating!
+                }))
+                .reduce((acc, current) => acc + current.points, 0) / professionalEvents.filter(ev => ev.customerRating).length,
+            count: professionalEvents.filter(ev => ev.customerRating).length
+        }
     })) ?? []
 
 
@@ -92,12 +103,12 @@ export default async function EntityPage({ params }: Props) {
         {
             id: 'services-list',
             label: 'Lista de servicios',
-            tab: <ServiceListTab 
-                    serviceList={services} 
-                    professionals={professionals} 
-                    entity={{ id: data.id, numberId: data.numberId }}
-                    isAuthenticated={!!session} 
-                />,
+            tab: <ServiceListTab
+                serviceList={services}
+                professionals={professionals}
+                entity={{ id: data.id, numberId: data.numberId }}
+                isAuthenticated={!!session}
+            />,
             visible: services?.length > 0
         },
         {
@@ -114,11 +125,30 @@ export default async function EntityPage({ params }: Props) {
         }
     ].filter(tab => tab.visible)
 
+
+    const reviews = data.events
+        .filter(ev => ev.customerRating)
+        .map(ev => ({
+            id: ev.id,
+            title: ev.title,
+            date: ev.customerRatedAt,
+            user: {
+                id: ev.customer.user?.id ?? '',
+                name: ev.customer.user?.name ?? '',
+                photo: ev.customer.user?.photo
+            },
+            points: ev.customerRating!
+        }))
+
     const shopInfo = {
+        id: data.id,
+        userId: session?.user?.id,
         followers: data.followers?.length ?? 0,
         scheduling: data.events?.length ?? 0,
         name: data.name ?? '',
-        logo: data.logo ?? undefined
+        logo: data.logo ?? undefined,
+        points: reviews.reduce((acc, current) => acc + current.points, 0) / reviews.length,
+        counts: reviews.length
     }
 
     return (
@@ -151,14 +181,14 @@ export default async function EntityPage({ params }: Props) {
                         Ver en el mapa
                     </Link>
                     <ShopInfo
-                        reviews={[]}
+                        reviews={reviews}
                         data={shopInfo}
                         className="hidden md:flex"
                     />
                 </div>
             </div>
             <ShopInfo
-                reviews={[]}
+                reviews={reviews}
                 data={shopInfo}
                 className="md:hidden justify-around"
             />

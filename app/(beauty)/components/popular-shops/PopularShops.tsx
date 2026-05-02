@@ -1,17 +1,27 @@
 import { Title } from '@/components'
 import { ShopCardLayout, ShopCard } from '..'
 import { getPopularShops } from '@/actions'
+import { getReviews } from '@/helpers'
+
+
 
 export const PopularShops = async () => {
 
-    const data = await getPopularShops() 
+    const data = await getPopularShops()
 
-    const items = data.map(item => ({
-        id: item.numberId,
-        href: `/entity/${item.numberId}`,
-        imageSrc: item.logo,
-        shopName: item.name ?? ''
-    }))
+    const items = data.map(item => {
+
+        const { ratingCount, ratingPotins } = getReviews(item.events)
+
+        return {
+            id: item.numberId,
+            href: `/entity/${item.numberId}`,
+            imageSrc: item.logo,
+            shopName: item.name ?? '',
+            ratingPotins,
+            ratingCount
+        }
+    })
 
 
     return (

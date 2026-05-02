@@ -1,19 +1,21 @@
 'use client'
 
-import { useState } from 'react'
-import { ReviewsModal } from '../../components'
+import { FollowButton, ReviewsModal } from '../../components'
 
 export const ShopInfo = ({ data, reviews, className = '' }: {
     data: {
+        id: string
+        userId?: string
         name: string
         logo?: string
         followers: number
         scheduling: number
+        counts: number
+        points: number
     },
     reviews: ReviewList[],
     className?: string
 }) => {
-    const [followers ,setFollowers] = useState(data.followers)
     
     return (
 
@@ -21,19 +23,15 @@ export const ShopInfo = ({ data, reviews, className = '' }: {
             <ReviewsModal
                 name={data.name}
                 photo={data.logo}
-                // counts={data.reviews.counts}
-                // points={data.reviews.points}
+                counts={data.counts}
+                points={data.points}
                 reviews={reviews}
             />
-            <button className="flex flex-col items-center cursor-pointer">
-                <p onClick={() => setFollowers(prev => prev + 1)} className="text-green-700 font-bold">+ Seguir</p>
-                <p className="text-zinc-500">
-                    {followers === 0  ? 'Sin seguidores' 
-                    : followers === 1 ? '1 seguidor' : 
-                    `${followers} seguidores `
-                    }
-                </p>
-            </button>
+            <FollowButton
+                initialValue={data.followers}
+                entityId={data.id}
+                userId={data.userId}
+            />
             <div className="flex flex-col items-center">
                 <p className="text-zinc-800 font-bold">{data.scheduling}</p>
                 <p className="text-zinc-500">Agendamientos</p>

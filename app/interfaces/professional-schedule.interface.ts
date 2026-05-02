@@ -12,4 +12,8 @@ interface ProfessionalSchedule {
         price: number
     }[],
     workdays: WorkDays[]
+    reviews?: {
+        count: number
+        points: number
+    }
 }

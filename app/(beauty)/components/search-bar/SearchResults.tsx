@@ -24,7 +24,12 @@ export const SearchResults = ({ results, totalMatches, term, setOpenResults, loa
                 :
                 totalMatches > 0 ? (
                     <>
-                        {results.map((entity, index) => <EntitySearchCard key={entity.numberId} ref={el => { optionRef.current[index] = el }} entity={entity} />)}
+                        {results.map((entity, index) => (
+                            <EntitySearchCard
+                                key={entity.numberId}
+                                ref={el => { optionRef.current[index] = el }}
+                                entity={entity} />
+                        ))}
                         {
                             totalMatches > 3 &&
                             <Link ref={el => { optionRef.current[results.length] = el }} className="flex p-2 justify-center border-t border-zinc-200 underline text-green-700 font-bold hover:bg-zinc-100 focus:bg-zinc-100 outline-0" href={`/entities?q=${term}`}>

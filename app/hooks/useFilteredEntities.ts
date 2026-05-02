@@ -1,6 +1,7 @@
 'use client'
 
 import { searchEntity } from '@/actions'
+import { getReviews } from '@/helpers'
 import { useEffect, useState } from 'react'
 
 export const useFilteredEntities = (term: string) => {
@@ -23,9 +24,21 @@ export const useFilteredEntities = (term: string) => {
             try {
                 setLoading(true)
 
-                const { results, total } = await searchEntity(term)
+                const { results, total } = await searchEntity(term, 3)
 
-                setResults(results)
+                const data = results.map(result => {
+                    const { ratingCount, ratingPotins } = getReviews(result.events)
+                    return {
+                        ...result,
+                        reviews: {
+
+                            count: ratingCount,
+                            points: ratingPotins
+                        }
+                    }
+                })
+
+                setResults(data)
                 setTotalMatches(total)
             } finally {
                 setLoading(false)

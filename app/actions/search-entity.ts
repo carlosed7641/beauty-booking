@@ -2,11 +2,12 @@
 
 import prisma from "@/lib/prisma"
 
-export const searchEntity = async (contains: string) => {
+export const searchEntity = async (contains: string, take?: number) => {
 
     const [results, total] = await Promise.all([
         prisma.entity.findMany({
             select: {
+                id: true,
                 numberId: true,
                 logo: true,
                 name: true,
@@ -20,12 +21,21 @@ export const searchEntity = async (contains: string) => {
                             }
                         }
                     }
+                },
+                events: {
+                    where: {
+                        status: 'completed'
+                    },
+                    select: {
+                        id: true,
+                        customerRating: true
+                    }
                 }
             },
             where: {
                 name: { contains, mode: 'insensitive' }
             },
-            take: 3
+            ...(take && { take: 3 })
         }),
         prisma.entity.count({
             where: {

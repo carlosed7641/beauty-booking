@@ -2,10 +2,10 @@
 
 import prisma from '@/lib/prisma'
 
-export const getWorkDaysById = async (entityId: string) => {
+export const getWorkDaysByEntityId= async (entityId: string) => {
     try {
         return await prisma.workDay.findMany({
-            where: { entityId  },
+            where: { entityId },
             orderBy: { order: 'asc' } 
         })
     } catch (e) {

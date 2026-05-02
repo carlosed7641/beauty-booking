@@ -15,7 +15,15 @@ export const getPopularShops = async () => {
             numberId: true,
             name: true,
             logo: true,
-            // events: {}
+            events: {
+                where: {
+                    status: 'completed'
+                },
+                select: {
+                    id: true,
+                    customerRating: true
+                }
+            }
         }
     })
 }

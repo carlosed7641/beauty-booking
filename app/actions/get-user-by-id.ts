@@ -28,6 +28,28 @@ export const getUserById = async (id: string) => {
                         }
                     }
                 },
+                professionalEvents: {
+                    where: {
+                        status: 'completed'
+                    },
+                    select: {
+                        id: true,
+                        title: true,
+                        customerRating: true,
+                        customerRatedAt: true,
+                        customer: {
+                            include: {
+                                user: {
+                                    select: {
+                                        id: true,
+                                        name: true,
+                                        photo: true,
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 entity: true,
                 skills: {
                     orderBy: { name: 'asc' }

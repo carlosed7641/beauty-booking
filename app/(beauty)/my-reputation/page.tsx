@@ -1,5 +1,7 @@
+import { auth } from '@/auth.config'
 import { Emotion } from '@/components'
 import { formatedDate } from '@/helpers'
+import { RiEmotionHappyLine } from 'react-icons/ri'
 
 const professionalReviews = [
   {
@@ -57,7 +59,9 @@ const professionalReviews = [
 
 const userId = 1
 
-export default function MyReputationPage() {
+export default async function MyReputationPage() {
+
+  const session = await auth()
 
   const reputationList = professionalReviews.filter(pr => userId === pr.userId)
   const totalPoints = reputationList.reduce((sum, pr) => sum + pr.points, 0)
@@ -65,6 +69,15 @@ export default function MyReputationPage() {
     ? totalPoints / reputationList.length
     : 0
   const reputationLevel = averagePoints >= 2.5 ? 'Buena' : averagePoints >= 1.5 ? 'Regular' : 'Mala'
+
+  if (!session) {
+    return (
+      <div className="flex flex-col items-center my-4 gap-3">
+        <RiEmotionHappyLine className="text-5xl" />
+        <p className="text-xl text-center">Ningún profesional te ha dejado calificaciones aún</p>
+      </div>
+    )
+  }
 
   return (
     <>

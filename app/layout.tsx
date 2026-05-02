@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: 'The best beauty salons, spas and barbershops'
 }
 
+// Seguir y agendar modal de sesion
+
 // Campos condicionales en server components
 // Imágenes Cloduinary 
 // Optimizar estados zustand

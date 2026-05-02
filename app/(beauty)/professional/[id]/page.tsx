@@ -4,7 +4,7 @@ import { notFound, redirect } from 'next/navigation'
 import { Tabs, ReviewsModal, ServiceListTab } from '../../components'
 import { WorkSamples } from '@/components'
 import { auth } from '@/auth.config'
-import { getServiceByEntityId, getUserById } from '@/actions'
+import { getServiceByEntityId, getUserById, getWorkDaysByEntityId } from '@/actions'
 import { getServiceList, minutesToTime, toMinutes } from '@/helpers'
 
 interface Props {
@@ -17,24 +17,25 @@ export default async function ProfessionalPage({ params }: Props) {
     const session = await auth()
     const data = await getUserById(id)
     const entityServices = await getServiceByEntityId(data?.entityId ?? '')
+    const entityWorkDays = await getWorkDaysByEntityId(data?.entityId ?? '')
 
     if (!data) {
         notFound()
     }
-    
 
-    const filteredServices = 
-        data?.serviceOverrides ? 
+
+    const filteredServices =
+        data?.serviceOverrides ?
             data.serviceOverrides
-            .filter(s => !s.service.archived && s.enabled)
-            .map(s => ({
-                ...s.service,
-                baseDurationHours: s.durationHours,
-                baseDurationMinutes: s.durationMinutes,
-                basePrice: s.price
-            })) ?? []
-        :
-        entityServices.filter(s => !s.archived) ?? []
+                .filter(s => !s.service.archived && s.enabled)
+                .map(s => ({
+                    ...s.service,
+                    baseDurationHours: s.durationHours,
+                    baseDurationMinutes: s.durationMinutes,
+                    basePrice: s.price
+                })) ?? []
+            :
+            entityServices.filter(s => !s.archived) ?? []
 
     const services = getServiceList(filteredServices)
 
@@ -75,20 +76,28 @@ export default async function ProfessionalPage({ params }: Props) {
                             from: minutesToTime(
                                 Math.max(
                                     toMinutes(w.from),
-                                    toMinutes(workdays[idx].from)
+                                    toMinutes(entityWorkDays[idx].from)
                                 )
                             ),
                             to: minutesToTime(
                                 Math.min(
                                     toMinutes(w.to),
-                                    toMinutes(workdays[idx].to)
+                                    toMinutes(entityWorkDays[idx].to)
                                 )
                             )
                         }))
-                        .filter((w, idx) => workdays[idx].disabled && !w.disabled)
+                        .filter((w, idx) => !entityWorkDays[idx].disabled && !w.disabled)
                     :
-                    workdays.filter(w => !w.disabled) ?? []
+                    entityWorkDays.filter(w => !w.disabled) ?? []
         }]
+
+    const samples =
+        data.samples
+            .map(sample =>
+            ({
+                ...sample,
+                authorName: data.name ?? ''
+            }))
 
 
     const tabs: Tab[] = [
@@ -100,20 +109,43 @@ export default async function ProfessionalPage({ params }: Props) {
                 entity={{ id: data.entity!.id, numberId: data.entity!.numberId }}
                 professionalData={{ id: data.id, name: data.name ?? '' }}
                 isAuthenticated={!!session}
-            />
+                professionals={professionals}
+            />,
+            visible: true,
         },
-        // {
-        //     id: 'work-samples',
-        //     label: 'Muestras de trabajo',
-        //     tab: <WorkSamples workSamples={workSamples} hideName />
-        // }
-    ]
+        {
+            id: 'work-samples',
+            label: 'Muestras de trabajo',
+            tab: <WorkSamples workSamples={samples} />,
+            visible: samples?.length > 0
+
+        }
+    ].filter(tab => tab.visible)
+
+    const reviews = data.professionalEvents
+        .filter(ev => ev.customerRating)
+        .map(ev => ({
+            id: ev.id,
+            title: ev.title,
+            date: ev.customerRatedAt,
+            user: {
+                id: ev.customer.user?.id ?? '',
+                name: ev.customer.user?.name ?? '',
+                photo: ev.customer.user?.photo
+            },
+            points: ev.customerRating!
+        }))
 
     return (
         <>
             <div className="flex gap-5">
                 <div className="flex flex-col">
-                    <Image className="rounded-full self-start md:mb-8 aspect-square" width={200} height={200} src={data.photo ?? ''} alt={data.name ?? ''} />
+                    {data.photo ? <Image className="rounded-full self-start md:mb-8 aspect-square" width={200} height={200} src={data.photo} alt={data.name ?? ''} />
+                        :
+                        <div className="flex items-center h-35 w-35 md:w-50 md:h-50 aspect-square justify-center text-8xl rounded-full bg-green-700 text-white">
+                            {data?.name?.[0]}
+                        </div>
+                    }
                 </div>
                 <div className="flex flex-col py-2 md:py-6 w-4/5 md:w-auto justify-center md:justify-start">
                     <p className="text-base md:text-3xl text-green-700 font-bold mb-2">{data.name}</p>
@@ -121,9 +153,9 @@ export default async function ProfessionalPage({ params }: Props) {
                         alternativeStyle
                         name={data.name ?? ''}
                         photo={data.photo ?? undefined}
-                        // counts={professional.reviews.count}
-                        // points={professional.reviews.points}
-                        reviews={[]}
+                        counts={reviews.length}
+                        points={reviews.reduce((acc, current) => acc + current.points, 0) / reviews.length}
+                        reviews={reviews}
                     />
                     {data.description && <p className="text-md md:text-lg mb-2 hidden md:block">
                         {data.description}
