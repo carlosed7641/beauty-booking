@@ -4,12 +4,11 @@ import { Categories, FavoriteEntites, NearMe, NextReservations, PopularShops, Re
 export default async function HomePage() {
 
   const session = await auth()
-  const isCustomer = session?.user?.role === 'user'
 
   return (
     <>
-      {!isCustomer && <PopularShops />}
-      {isCustomer && (
+      <PopularShops />
+      {session && (
         <>
           <NextReservations />
           <RecentServices />
@@ -17,7 +16,7 @@ export default async function HomePage() {
         </>
       )}
       <Categories />
-      {isCustomer && <NearMe />}
+      {session && <NearMe />}
     </>
   )
 }

@@ -2,8 +2,9 @@
 
 import { useState } from 'react'
 import { SubmitHandler } from 'react-hook-form'
-import { RegistrationForm, SelectCountry } from '..'
+import { RegistrationForm } from '..'
 import { updateUser } from '@/actions'
+import { SelectCountry } from '@/components'
 
 interface Props {
     countries: Country[]

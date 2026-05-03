@@ -12,6 +12,7 @@ export const ShopInfo = ({ data, reviews, className = '' }: {
         scheduling: number
         counts: number
         points: number
+        isFollowing: boolean
     },
     reviews: ReviewList[],
     className?: string
@@ -31,6 +32,7 @@ export const ShopInfo = ({ data, reviews, className = '' }: {
                 initialValue={data.followers}
                 entityId={data.id}
                 userId={data.userId}
+                isFollowing={data.isFollowing}
             />
             <div className="flex flex-col items-center">
                 <p className="text-zinc-800 font-bold">{data.scheduling}</p>

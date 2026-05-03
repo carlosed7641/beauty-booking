@@ -2,6 +2,7 @@ import { EntityCard } from '../components'
 import { searchEntity } from '@/actions'
 import { auth } from '@/auth.config'
 import { getReviews } from '@/helpers'
+import prisma from '@/lib/prisma'
 
 interface Props {
   params: Promise<{ type: string }>
@@ -12,11 +13,28 @@ export default async function EntitiesPage({ searchParams }: Props) {
 
   const { q } = await searchParams
   const session = await auth()
-  
+
 
   const normalizedQuery = q?.toLowerCase() || ''
 
   const { results } = await searchEntity(normalizedQuery)
+
+  let userFollowing: string[] = []
+
+  if (session) {
+    const data = await prisma.user.findFirst({
+      where: { id: session?.user?.id },
+      select: {
+        followers: {
+          select: {
+            entityId: true
+          }
+        }
+      }
+    })
+
+    userFollowing = data?.followers.map(({ entityId }) => entityId) ?? []
+  }
 
   return (
     <>
@@ -34,11 +52,12 @@ export default async function EntitiesPage({ searchParams }: Props) {
 
                 const data = {
                   ...entity,
-                   reviews: {
-                      points: ratingPotins,
-                      count: ratingCount,
-                      userId: session?.user?.id
-                  }
+                  reviews: {
+                    points: ratingPotins,
+                    count: ratingCount,
+                  },
+                  userId: session?.user?.id,
+                  isFollowing: userFollowing.includes(entity.id)
                 }
 
                 return (

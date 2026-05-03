@@ -9,6 +9,7 @@ import { Social } from './Social'
 import { ShopInfo } from './ShopInfo'
 import { getServiceList, minutesToTime, toMinutes } from '@/helpers'
 import { auth } from '@/auth.config'
+import prisma from '@/lib/prisma'
 
 interface Props {
     params: Promise<{ id: string }>
@@ -78,14 +79,14 @@ export default async function EntityPage({ params }: Props) {
                 :
                 data?.workdays.filter(w => !w.disabled) ?? [],
         reviews: {
-            points: 
+            points:
                 professionalEvents
-                .filter(ev => ev.customerRating)
-                .map(ev => ({
-                    id: ev.id,
-                    points: ev.customerRating!
-                }))
-                .reduce((acc, current) => acc + current.points, 0) / professionalEvents.filter(ev => ev.customerRating).length,
+                    .filter(ev => ev.customerRating)
+                    .map(ev => ({
+                        id: ev.id,
+                        points: ev.customerRating!
+                    }))
+                    .reduce((acc, current) => acc + current.points, 0) / professionalEvents.filter(ev => ev.customerRating).length,
             count: professionalEvents.filter(ev => ev.customerRating).length
         }
     })) ?? []
@@ -140,6 +141,23 @@ export default async function EntityPage({ params }: Props) {
             points: ev.customerRating!
         }))
 
+    let isFollowing = false
+
+    if (session) {
+        const userFollowing = await prisma.user.findFirst({
+            where: { id: session?.user?.id },
+            select: {
+                followers: {
+                    select: {
+                        entityId: true
+                    }
+                }
+            }
+        })
+
+        isFollowing = userFollowing?.followers?.some(({ entityId }) => entityId === data.id) ?? false
+    }
+
     const shopInfo = {
         id: data.id,
         userId: session?.user?.id,
@@ -148,7 +166,8 @@ export default async function EntityPage({ params }: Props) {
         name: data.name ?? '',
         logo: data.logo ?? undefined,
         points: reviews.reduce((acc, current) => acc + current.points, 0) / reviews.length,
-        counts: reviews.length
+        counts: reviews.length,
+        isFollowing
     }
 
     return (

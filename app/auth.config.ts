@@ -29,6 +29,7 @@ export const authConfig: NextAuthConfig = {
     providers: [
         Credentials({
             async authorize(credentials) {
+                const isAdmin = (credentials as any).callbackUrl?.includes('admin')
                 const parsedCredentials = z
                     .object({ email: z.email(), password: z.string().min(6) })
                     .safeParse(credentials)
@@ -37,7 +38,20 @@ export const authConfig: NextAuthConfig = {
 
                 const { email, password } = parsedCredentials.data
 
-                const user = await prisma.user.findFirst({ where: { email: email.toLowerCase(), isActive: true } })
+                const user = await prisma.user.findFirst({
+                    where: {
+                        email: email.toLowerCase(),
+                        isActive: true,
+                        OR: isAdmin
+                            ? [
+                                { role: 'admin' },
+                                { role: 'employee' }
+                            ]
+                            : [
+                                { role: 'user' }
+                            ]
+                    }
+                })
                 if (!user) return null
 
                 if (!bcryptjs.compareSync(password, user.password)) return null

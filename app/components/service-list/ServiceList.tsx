@@ -65,7 +65,7 @@ export const ServiceList = ({ serviceList, isAuthenticated, entityNumberId }: {
                                         <p className="text-green-700 font-bold">${formatDisplayNumber(service.price)}</p>
                                     </div>
                                     <button onClick={() =>
-                                        !isAuthenticated
+                                        isAuthenticated
                                             ? handleSelectService({ ...service, category: s.category })
                                             : router.push(`/auth/login?redirectTo=/entity/${entityNumberId}`)
                                     }

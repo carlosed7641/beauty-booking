@@ -47,3 +47,4 @@ export * from './complete-registration'
 
 export * from './link-professional'
 export * from './search-entity'
+export * from './toggle-followers'

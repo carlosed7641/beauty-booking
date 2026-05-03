@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation'
-import { LinkingCodeScreen, RegistrationData, RegistrationSteps, SelectCountry } from './components'
+import { LinkingCodeScreen, RegistrationData, RegistrationSteps } from './components'
+import { SelectCountry } from '@/components'
 import { getCountries } from '@/actions'
 import { auth } from '@/auth.config'
 import prisma from '@/lib/prisma'

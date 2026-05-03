@@ -4,13 +4,14 @@ import { useState } from 'react'
 import clsx from 'clsx'
 import { CgSpinner } from 'react-icons/cg'
 import { createEntity, updateUser } from '@/actions'
-import { RegistrationSteps } from '..'
+import { RegistrationSteps } from '../../admin/(admin)/components'
+import { RegistrationUserForm } from '@/(beauty)/components'
 import { FLAGS } from '@/util/const'
 
-export const SelectCountry = ({ countries }: { countries: Country[] }) => {
+export const SelectCountry = ({ countries, isUser }: { countries: Country[], isUser?: boolean }) => {
 
     const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null)
-    const [showSteps, setShowSteps] = useState(false)
+    const [showNextStep, setNextStep] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [entityId, setEntityId] = useState('')
 
@@ -19,24 +20,35 @@ export const SelectCountry = ({ countries }: { countries: Country[] }) => {
         setIsLoading(true)
 
         try {
-            const { id } = await createEntity(selectedCountryId)
-            setEntityId(id)
+            if (isUser) {
+                await updateUser({ countryId: selectedCountryId })
+            } else {
+                const { id } = await createEntity(selectedCountryId)
+                setEntityId(id)
+            }
         } catch (e) {
             console.log(e)
         } finally {
             setIsLoading(false)
         }
 
-        setShowSteps(true)
+        setNextStep(true)
     }
 
     return (
         <>
             {
-                showSteps ? <RegistrationSteps entityId={entityId} /> :
+                showNextStep ? (
+                     isUser ? 
+                     <RegistrationUserForm countries={countries} />
+                     :
+                     <RegistrationSteps entityId={entityId} />
+                ) :
                     <div className="bg-[#eaf1eb] flex justify-center pt-24 md:items-center px-4 md:pt-0 h-screen">
                         <div className="bg-white p-5 rounded-md shadow-md h-fit">
-                            <h1 className="text-green-700 text-2xl text-center mb-5">Selecciona el país donde tienes tu negocio</h1>
+                            <h1 className="text-green-700 text-2xl text-center mb-5">
+                                {isUser ? '¿De qué país eres?' : 'Selecciona el país donde tienes tu negocio' }
+                            </h1>
                             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6">
                                 {countries.map(({ id, name, shortName }) => {
 
@@ -62,19 +74,19 @@ export const SelectCountry = ({ countries }: { countries: Country[] }) => {
                                             }>{name}</span>
                                         </div>
                                     )
-                                    }
+                                }
                                 )}
                             </div>
                             <div className="flex justify-center mt-5">
                                 <button onClick={handleSubmit} className={
                                     clsx(
-                                        "btn-primary w-full md:w-1/5 rounded-md font-bold",
+                                        "btn-primary w-full md:w-1/5 rounded-md font-bold text-center",
                                         {
                                             "opacity-50": isLoading
                                         }
                                     )
                                 } disabled={!selectedCountryId}>
-                                    {isLoading ?  <CgSpinner className="text-white animate-spin text-2xl" /> : 'Continuar'}
+                                    {isLoading ? <CgSpinner className="text-white animate-spin text-2xl" /> : 'Continuar'}
                                 </button>
                             </div>
                         </div>

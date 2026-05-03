@@ -28,6 +28,7 @@ interface SimpleEntity {
         events: number
         followers: number
     },
+    isFollowing?: boolean
     reviews?: {
         points: number
         count: number

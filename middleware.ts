@@ -8,6 +8,12 @@ const PUBLIC_ADMIN_ROUTES = [
   '/admin/auth/new-account'
 ]
 
+const PUBLIC_ROUTES = [
+  '/auth/login',
+  '/auth/new-account'
+]
+
+
 const ADMIN_ONLY_ROUTES = [
   '/admin/services',
   '/admin/customers',
@@ -29,11 +35,18 @@ export async function middleware(req: NextRequest) {
   const isAdminRoute = pathname.startsWith('/admin')
   const isAdminHome = pathname === '/admin'
 
+  const isPublicRoute = PUBLIC_ROUTES.some(route =>
+    pathname.startsWith(route)
+  )
+
   if (isAdminOrEmployee && !isAdminRoute) {
     return NextResponse.redirect(new URL('/admin', req.url))
   }
 
   if (!isAdminRoute) {
+    if (isPublicRoute && token) {
+      return NextResponse.redirect(new URL('/', req.url))
+    }
     return NextResponse.next()
   }
 
@@ -49,6 +62,11 @@ export async function middleware(req: NextRequest) {
     if (token && isAdminOrEmployee && !isAdminHome) {
       return NextResponse.redirect(new URL('/admin', req.url))
     }
+
+    if (token && !isAdminOrEmployee) {
+      return NextResponse.redirect(new URL('/', req.url))
+    }
+
     return NextResponse.next()
   }
 

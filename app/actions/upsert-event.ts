@@ -3,7 +3,6 @@
 import prisma from '@/lib/prisma'
 import { EventStatus } from '@/generated/prisma/enums'
 import { getTotalMinutes } from '@/helpers'
-import { revalidatePath } from 'next/cache'
 import { auth } from '@/auth.config'
 
 interface Event extends ServiceState {
@@ -52,7 +51,7 @@ export const upsertEvent = async (event: Event): Promise<EventDate> => {
 
     let eventResponse
 
-    const session = await auth()   
+    const session = await auth()
 
     if (event.id) {
         eventResponse = await prisma.event.update({
@@ -72,9 +71,32 @@ export const upsertEvent = async (event: Event): Promise<EventDate> => {
         })
 
     } else {
+
+        let customerId = event.customer?.id
+
+        if (!customerId) {
+            const existingCustomer = await prisma.customer.findFirst({
+                where: { userId: session?.user?.id, entityId: event.entityId },
+                select: { id: true }
+            })
+
+            if (existingCustomer?.id) {
+                customerId = existingCustomer.id
+            } else {
+                const newCustomer = await prisma.customer.create({
+                    data: {
+                        entityId: event.entityId,
+                        userId: session?.user?.id
+                    }
+                })
+
+                customerId = newCustomer.id
+            }
+        }
+
         eventResponse = await prisma.event.create({
             data: {
-                customerId: event.customer?.id ?? '',
+                customerId,
                 start,
                 end,
                 typeBooking: session?.user?.role ?? '',
@@ -151,8 +173,8 @@ export const updateEventReview = async ({ id, professionalRating }: Props) => {
 
     if (Object.keys(data).length === 0) return
 
-    professionalRating === 1 
-        ? data.status = 'aborted' 
+    professionalRating === 1
+        ? data.status = 'aborted'
         : data.status = 'completed'
 
     await prisma.event.update(({

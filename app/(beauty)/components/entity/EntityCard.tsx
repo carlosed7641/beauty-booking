@@ -35,6 +35,7 @@ export const EntityCard = ({ entity }: Props) => {
                         entityId={entity.id}
                         initialValue={entity._count.followers}
                         userId={entity.userId}
+                        isFollowing={entity.isFollowing ?? false}
                         alternativeStyles
                     />
                     <p className="text-sm text-zinc-500">
