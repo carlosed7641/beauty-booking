@@ -43,7 +43,6 @@ export const RegistrationUserForm = ({ countries }: Props) => {
             }
 
             await updateUser(data)
-            window.location.reload()
         } catch {
             setError(true)
         } finally {

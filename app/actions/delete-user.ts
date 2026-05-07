@@ -32,4 +32,5 @@ export const unlinkEmployee = async (id: string) => {
     })
 
     revalidatePath('/admin/linking-professional')
+    revalidatePath('/admin/profile')
 }

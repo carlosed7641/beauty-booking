@@ -32,7 +32,6 @@ export const RegistrationData = ({ countries, isEmployee }: Props) => {
         } 
 
         if (isEmployee) {
-            window.location.reload()
             return
         }
 

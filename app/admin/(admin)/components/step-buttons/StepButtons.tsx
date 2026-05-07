@@ -69,8 +69,6 @@ export const StepButtons = ({ stepQuantity, entityId }: { stepQuantity: number, 
                 localStorage.removeItem('steps-data')
                 localStorage.removeItem('service-list')
 
-                window.location.reload()
-
             } catch (e) {
                 console.error(e)
             } finally {

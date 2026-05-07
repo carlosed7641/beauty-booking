@@ -30,7 +30,6 @@ export const LinkingCodeScreen = ({ countries, needRegistration }: Props) => {
             try {
                 await linkProfessional(code)
                 if (needRegistration) return setShowNextStep(true)
-                window.location.reload()
             } catch {
                 setError(true)
             }

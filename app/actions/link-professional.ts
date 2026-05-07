@@ -2,6 +2,7 @@
 
 import { auth } from '@/auth.config'
 import prisma from '@/lib/prisma'
+import { revalidatePath } from 'next/cache'
 
 
 export const linkProfessional = async (linkingCode: string) => {
@@ -28,7 +29,11 @@ export const linkProfessional = async (linkingCode: string) => {
                 entityId: entity.id
             }
         })        
-    
+
+        
+        revalidatePath('/admin')
+        revalidatePath('/admin/profile')
+        
     } catch {
         throw new Error('Ocurrió un error inesperado')
     }

@@ -16,10 +16,10 @@ export const DangerButtons = ({ isOwner, userId }: { isOwner: boolean, userId: s
         try {
             if (openModal === 'DeleteAccount') {
                 await deleteUser()
+                await logout()
             } else {
                 await unlinkEmployee(userId)
             }
-            await logout()
         } catch {
             setIsLoading(false)
         }

@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth.config"
 import prisma from "@/lib/prisma"
+import { revalidatePath } from "next/cache"
 
 interface CompleteRegistrationPayload {
     entityId: string
@@ -61,4 +62,6 @@ export const completeRegistration = async (payload: CompleteRegistrationPayload)
             data: { isRegisterCompleted: true }
         })
     })
+
+    revalidatePath('/admin')
 }

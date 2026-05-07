@@ -80,7 +80,7 @@ export const SelectCountry = ({ countries, isUser }: { countries: Country[], isU
                             <div className="flex justify-center mt-5">
                                 <button onClick={handleSubmit} className={
                                     clsx(
-                                        "btn-primary w-full md:w-1/5 rounded-md font-bold text-center",
+                                        "btn-primary flex justify-center w-full md:w-1/5 rounded-md font-bold text-center",
                                         {
                                             "opacity-50": isLoading
                                         }
