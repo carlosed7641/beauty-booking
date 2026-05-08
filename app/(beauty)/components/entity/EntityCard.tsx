@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { FaStar } from 'react-icons/fa'
-import { useState } from 'react'
 import { FollowButton } from '../follow-button/FollowButton'
 
 interface Props {

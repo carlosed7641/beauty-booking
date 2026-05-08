@@ -25,7 +25,6 @@ export const FollowButton = ({ initialValue, entityId, userId, alternativeStyles
     const setOpenModal = useModal(state => state.setOpenModal)
     
     const toggleFollow = async (receivedUserId?: string, receivedFollowing?: string[]) => {
-
         setIsLoading(true)
 
         try {
@@ -41,55 +40,55 @@ export const FollowButton = ({ initialValue, entityId, userId, alternativeStyles
         }
     }
 
-    return (
-        <>
-            <button className={
-                clsx(
-                    "flex flex-col cursor-pointer",
-                    {
-                        "items-end": alternativeStyles,
-                        "items-center": !alternativeStyles,
-                        "opacity-40 pointer-events-none": isLoading
-                    }
-                )
-            }
-                onClick={() => {
-                    isAuthenticated ? 
-                        toggleFollow() : 
-                        setOpenModal('AuthModal')
-                }}
-            >
-                <p className="text-green-700 font-bold">
-                    {
-                        following ?
-                            '- Dejar de seguir'
-                            :
-                            '+ Seguir'
-                    }
-                </p>
-                <p className={
+        return (
+            <>
+                <button className={
                     clsx(
-                        "text-zinc-500",
+                        "flex flex-col cursor-pointer",
                         {
-                            "text-sm": alternativeStyles,
-                            "text-base": !alternativeStyles
+                            "items-end": alternativeStyles,
+                            "items-center": !alternativeStyles,
+                            "opacity-40 pointer-events-none": isLoading
                         }
                     )
-                }>
-                    {followers === 0 ? 'Sin seguidores'
-                        : followers === 1 ? '1 seguidor' :
-                            `${followers} seguidores `
-                    }
-                </p>
-            </button>
-            {
-                openModal === 'AuthModal' &&
-                <Modal className="sm:w-112.5! overflow-hidden!">
-                  <div className="pt-6">
-                    <LoginForm callback={toggleFollow} />
-                  </div>
-                </Modal>
-            }
-        </>
+                }
+                    onClick={() => {
+                        isAuthenticated ? 
+                            toggleFollow() : 
+                            setOpenModal(entityId)
+                    }}
+                >
+                    <p className="text-green-700 font-bold">
+                        {
+                            following ?
+                                '- Dejar de seguir'
+                                :
+                                '+ Seguir'
+                        }
+                    </p>
+                    <p className={
+                        clsx(
+                            "text-zinc-500",
+                            {
+                                "text-sm": alternativeStyles,
+                                "text-base": !alternativeStyles
+                            }
+                        )
+                    }>
+                        {followers === 0 ? 'Sin seguidores'
+                            : followers === 1 ? '1 seguidor' :
+                                `${followers} seguidores `
+                        }
+                    </p>
+                </button>
+                {
+                    openModal === entityId &&
+                    <Modal className="sm:w-112.5! overflow-hidden!">
+                        <div className="pt-6">
+                            <LoginForm callback={toggleFollow} />
+                        </div>
+                    </Modal>
+                }
+            </>
     )
 }
