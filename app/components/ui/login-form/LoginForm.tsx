@@ -6,13 +6,19 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { login } from '@/actions'
 import clsx from 'clsx'
 import { CgSpinner } from 'react-icons/cg'
+import { useModal } from '@/store'
 
 interface Inputs {
     email: string
     password: string
 }
 
-export const LoginForm = ({ isAdmin = false }: { isAdmin?: boolean }) => {
+interface Props {
+    callback?: (id?: string, arr?: string[]) => Promise<void>
+    isAdmin?: boolean
+} 
+
+export const LoginForm = ({ isAdmin = false, callback }: Props) => {
 
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -20,6 +26,7 @@ export const LoginForm = ({ isAdmin = false }: { isAdmin?: boolean }) => {
     const { handleSubmit, register } = useForm<Inputs>()
     const [showPassword, setShowPassword] = useState(false)
     const [formState, setFormState] = useState({ error: '', loading: false })
+    const setOpenModal = useModal(state => state.setOpenModal)
 
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -30,6 +37,13 @@ export const LoginForm = ({ isAdmin = false }: { isAdmin?: boolean }) => {
         if (!response.ok) {
             console.error(response.message)
             setFormState({ loading: false, error: 'Usuario o contraseña incorrecto' })
+            return
+        }
+
+        if (callback) {
+            router.refresh()
+            setOpenModal(null)
+            callback(response.data?.id, response.data?.following) 
             return
         }
 

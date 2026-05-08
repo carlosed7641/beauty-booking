@@ -202,6 +202,7 @@ export default async function EntityPage({ params }: Props) {
                     <ShopInfo
                         reviews={reviews}
                         data={shopInfo}
+                        isAuthenticated={!!session}
                         className="hidden md:flex"
                     />
                 </div>
@@ -209,6 +210,7 @@ export default async function EntityPage({ params }: Props) {
             <ShopInfo
                 reviews={reviews}
                 data={shopInfo}
+                isAuthenticated={!!session}
                 className="md:hidden justify-around"
             />
             <Social

@@ -98,7 +98,7 @@ export const ScheduleAssign = ({ customers, serviceList, employee }: Props) => {
             {step === 2 && (
                 <div>
                     <h3 className="text-green-700 mb-6">Elige el sevicio</h3>
-                    <ServiceList serviceList={serviceList} />
+                    <ServiceList serviceList={serviceList} isAuthenticated />
                 </div>
             )
             }

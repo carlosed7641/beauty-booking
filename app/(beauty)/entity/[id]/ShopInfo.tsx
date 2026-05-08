@@ -2,7 +2,7 @@
 
 import { FollowButton, ReviewsModal } from '../../components'
 
-export const ShopInfo = ({ data, reviews, className = '' }: {
+export const ShopInfo = ({ data, reviews, isAuthenticated, className = '', }: {
     data: {
         id: string
         userId?: string
@@ -15,6 +15,7 @@ export const ShopInfo = ({ data, reviews, className = '' }: {
         isFollowing: boolean
     },
     reviews: ReviewList[],
+    isAuthenticated?: boolean
     className?: string
 }) => {
     
@@ -33,6 +34,7 @@ export const ShopInfo = ({ data, reviews, className = '' }: {
                 entityId={data.id}
                 userId={data.userId}
                 isFollowing={data.isFollowing}
+                isAuthenticated={isAuthenticated ?? false}
             />
             <div className="flex flex-col items-center">
                 <p className="text-zinc-800 font-bold">{data.scheduling}</p>

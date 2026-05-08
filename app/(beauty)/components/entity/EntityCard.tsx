@@ -8,9 +8,10 @@ import { FollowButton } from '../follow-button/FollowButton'
 
 interface Props {
     entity: SimpleEntity
+    isAuthenticated?: boolean
 }
 
-export const EntityCard = ({ entity }: Props) => {
+export const EntityCard = ({ entity, isAuthenticated }: Props) => {
     return (
         <div>
             <div className="relative">
@@ -36,6 +37,7 @@ export const EntityCard = ({ entity }: Props) => {
                         initialValue={entity._count.followers}
                         userId={entity.userId}
                         isFollowing={entity.isFollowing ?? false}
+                        isAuthenticated={isAuthenticated ?? false}
                         alternativeStyles
                     />
                     <p className="text-sm text-zinc-500">

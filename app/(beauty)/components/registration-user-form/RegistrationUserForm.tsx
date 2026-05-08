@@ -1,9 +1,7 @@
 'use client'
 
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { PiUserFocusThin } from 'react-icons/pi'
 import { CgSpinner } from 'react-icons/cg'
 import clsx from 'clsx'
 import { GENDERS } from '@/util/const'

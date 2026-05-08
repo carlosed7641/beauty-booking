@@ -64,6 +64,7 @@ export default async function EntitiesPage({ searchParams }: Props) {
                   <EntityCard
                     entity={data}
                     key={entity.numberId}
+                    isAuthenticated={!!session}
                   />
                 )
               })

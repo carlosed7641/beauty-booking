@@ -1,11 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import clsx from 'clsx'
 import { RxCaretDown } from 'react-icons/rx'
 import { useModal, useService } from '@/store'
 import { formatDisplayNumber } from '@/helpers'
+import { Modal, ModalHeader } from '../ui/modal'
 
 export const ServiceList = ({ serviceList, isAuthenticated, entityNumberId }: {
     serviceList: Service[]
@@ -17,7 +17,7 @@ export const ServiceList = ({ serviceList, isAuthenticated, entityNumberId }: {
     const serviceState = useService(state => state.serviceState)
     const setServiceState = useService(state => state.setServiceState)
     const setOpenModal = useModal(state => state.setOpenModal)
-    const router = useRouter()
+    const openModal = useModal(state => state.openModal)
 
 
     const handleSelectService = (serviceItem: ServiceItem) => {
@@ -67,7 +67,7 @@ export const ServiceList = ({ serviceList, isAuthenticated, entityNumberId }: {
                                     <button onClick={() =>
                                         isAuthenticated
                                             ? handleSelectService({ ...service, category: s.category })
-                                            : router.push(`/auth/login?redirectTo=/entity/${entityNumberId}`)
+                                            : setOpenModal('AuthModal')
                                     }
                                         className="btn-primary font-bold rounded-md">Agendar</button>
                                 </li>
@@ -76,6 +76,17 @@ export const ServiceList = ({ serviceList, isAuthenticated, entityNumberId }: {
                     </div>
                 ))
             }
+            {/* {
+                openModal === 'AuthModal' &&
+                <Modal>
+                    <ModalHeader>
+                        Login
+                    </ModalHeader>
+                    <p>
+                        Esto es un login
+                    </p>
+                </Modal>
+            } */}
         </>
     )
 }

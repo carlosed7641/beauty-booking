@@ -1,16 +1,36 @@
 'use server'
 
 import { signIn } from '@/auth.config'
+import prisma from '@/lib/prisma'
+import { revalidatePath } from 'next/cache'
 
 export const login = async (email: string, password: string) => {
+  try {
+    await signIn('credentials', { email, password, redirect: false })
+    const user = await prisma.user.findUnique({
+      where: {
+        email
+      },
+      select: {
+        id: true,
+        followers: {
+          select: {
+            entityId: true
+          }
+        }
+      }
+    })
 
-    try {
-      await signIn('credentials', { email, password, redirect: false }, )
-
-      return { ok: true }
-
-    } catch (error) {
-      console.error('error', error)
-      return { ok: false, message: error }
+    return {
+      ok: true,
+      data: {
+        id: user?.id,
+        following: user?.followers.map(({ entityId }) => entityId)
+      }
     }
+
+  } catch (error) {
+    console.error('error', error)
+    return { ok: false, message: error }
+  }
 }
