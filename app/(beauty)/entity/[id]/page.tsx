@@ -108,7 +108,7 @@ export default async function EntityPage({ params }: Props) {
                 serviceList={services}
                 professionals={professionals}
                 entity={{ id: data.id, numberId: data.numberId }}
-                isAuthenticated={!!session}
+                userId={session?.user?.id}
             />,
             visible: services?.length > 0
         },

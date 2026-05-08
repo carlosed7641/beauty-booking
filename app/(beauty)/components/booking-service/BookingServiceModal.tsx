@@ -117,6 +117,7 @@ export const BookingServiceModal = ({
                         entityId={entityId}
                         price={currentProfessionalService?.price!}
                         duration={currentProfessionalService?.duration!}
+                        isAdmin={isAdmin ?? false}
                     />
                 )}
             </div>

@@ -73,10 +73,11 @@ export const upsertEvent = async (event: Event): Promise<EventDate> => {
     } else {
 
         let customerId = event.customer?.id
-
+        
         if (!customerId) {
+            if (!event.userId) throw new Error('Ocurrió un error al crear evento')
             const existingCustomer = await prisma.customer.findFirst({
-                where: { userId: session?.user?.id, entityId: event.entityId },
+                where: { userId: event.userId, entityId: event.entityId },
                 select: { id: true }
             })
 
@@ -86,7 +87,7 @@ export const upsertEvent = async (event: Event): Promise<EventDate> => {
                 const newCustomer = await prisma.customer.create({
                     data: {
                         entityId: event.entityId,
-                        userId: session?.user?.id
+                        userId: event.userId
                     }
                 })
 

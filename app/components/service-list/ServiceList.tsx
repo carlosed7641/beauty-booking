@@ -5,19 +5,15 @@ import clsx from 'clsx'
 import { RxCaretDown } from 'react-icons/rx'
 import { useModal, useService } from '@/store'
 import { formatDisplayNumber } from '@/helpers'
-import { Modal, ModalHeader } from '../ui/modal'
 
-export const ServiceList = ({ serviceList, isAuthenticated, entityNumberId }: {
+export const ServiceList = ({ serviceList }: {
     serviceList: Service[]
-    isAuthenticated?: boolean
-    entityNumberId?: number
 }) => {
 
     const [currentOpenCategory, setCurrentOpenCategory] = useState<string | null>(null)
     const serviceState = useService(state => state.serviceState)
     const setServiceState = useService(state => state.setServiceState)
     const setOpenModal = useModal(state => state.setOpenModal)
-    const openModal = useModal(state => state.openModal)
 
 
     const handleSelectService = (serviceItem: ServiceItem) => {
@@ -64,11 +60,7 @@ export const ServiceList = ({ serviceList, isAuthenticated, entityNumberId }: {
                                         {service.description && <p className="text-zinc-500">{service.description}</p>}
                                         <p className="text-green-700 font-bold">${formatDisplayNumber(service.price)}</p>
                                     </div>
-                                    <button onClick={() =>
-                                        isAuthenticated
-                                            ? handleSelectService({ ...service, category: s.category })
-                                            : setOpenModal('AuthModal')
-                                    }
+                                    <button onClick={() => handleSelectService({ ...service, category: s.category })}
                                         className="btn-primary font-bold rounded-md">Agendar</button>
                                 </li>
                             ))}
@@ -76,17 +68,6 @@ export const ServiceList = ({ serviceList, isAuthenticated, entityNumberId }: {
                     </div>
                 ))
             }
-            {/* {
-                openModal === 'AuthModal' &&
-                <Modal>
-                    <ModalHeader>
-                        Login
-                    </ModalHeader>
-                    <p>
-                        Esto es un login
-                    </p>
-                </Modal>
-            } */}
         </>
     )
 }

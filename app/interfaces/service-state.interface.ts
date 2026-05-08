@@ -11,4 +11,5 @@ interface ServiceState {
         id: string
         name: string
     }
+    userId?: string
 }

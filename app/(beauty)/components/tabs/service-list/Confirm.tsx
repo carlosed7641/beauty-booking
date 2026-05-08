@@ -12,9 +12,10 @@ interface Props {
     }
     price: number,
     entityId: string
+    isAdmin: boolean
 }
 
-export const Confirm = ({ duration, price, entityId }: Props) => {
+export const Confirm = ({ duration, price, entityId, isAdmin }: Props) => {
 
     const serviceState = useService(state => state.serviceState)
     const setOpenModal = useModal(state => state.setOpenModal)
@@ -25,6 +26,11 @@ export const Confirm = ({ duration, price, entityId }: Props) => {
 
     const handleConfirmBooking = () => {
         setError(false)
+
+        if (!isAdmin && !serviceState.userId) {
+            setOpenModal('ServiceGuard')
+            return
+        }
 
         startTransition(async () => {
             try {
