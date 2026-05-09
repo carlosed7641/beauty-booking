@@ -16,6 +16,7 @@ export default async function BeautyLayout({
 }>) {
 
     const session = await auth()
+    let userName = null
 
     if (session?.user?.role === 'admin' || session?.user?.role === 'employee') return redirect('/admin')
 
@@ -32,6 +33,8 @@ export default async function BeautyLayout({
         })
 
         if (!user) throw new Error('Ocurrió un error con el usuario')
+
+        userName = user.name
 
         if (!user?.countryId) {
             const countries = await getCountries()
@@ -54,7 +57,7 @@ export default async function BeautyLayout({
 
     return (
         <>
-            <Header session={session} />
+            <Header session={session} userName={userName ?? ''} />
             <main className="min-h-screen max-w-300 my-0 mx-auto py-5 px-2">
                 {children}
             </main>

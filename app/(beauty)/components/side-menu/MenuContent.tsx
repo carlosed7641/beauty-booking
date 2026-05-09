@@ -6,7 +6,7 @@ import { useKeyboardOptions } from '@/hooks'
 import { showInitials } from '@/helpers'
 import { MENU_OPTIONS } from '@/util/const'
 
-export const MenuContent = () => {
+export const MenuContent = ({ userName }: { userName: string}) => {
 
     const setIsOpenMenu = useMenu(state => state.setIsOpenMenu)
     const options = MENU_OPTIONS.filter(opt => !opt.onBotton?.only)
@@ -22,11 +22,11 @@ export const MenuContent = () => {
                 <Link onClick={() => setIsOpenMenu(false)} href="/profile" className="flex gap-2 p-3 pl-5 flex-1">
                     <span className="flex items-center justify-center rounded-full p-2 h-12 w-12 bg-white text-black border border-zinc-400">
                         {
-                            showInitials('Carlos Castro')
+                            showInitials(userName)
                         }
                     </span>
                     <div className="flex flex-col">
-                        <p className="font-bold">Carlos Eduardo</p>
+                        <p className="font-bold">{userName}</p>
                         <span className="flex items-center h-5">
                             Mi perfil
                             <RxCaretRight size={24} />

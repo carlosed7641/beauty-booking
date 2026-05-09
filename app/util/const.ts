@@ -134,11 +134,6 @@ export const MENU_OPTIONS = [
         href: '/my-reputation'
     },
     {
-        label: 'Favoritos',
-        Icon: GrFavorite,
-        href: '/favorite-work-samples'
-    },
-    {
         label: 'Mapa',
         Icon: FiMapPin,
         href: '/map',

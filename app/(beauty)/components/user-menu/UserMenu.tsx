@@ -9,7 +9,7 @@ import { MENU_OPTIONS } from '@/util/const'
 
 const options = MENU_OPTIONS.filter(opt => opt.href !== '/')
 
-export const UserMenu = () => {
+export const UserMenu = ({ userName }: { userName: string}) => {
 
     const [isOpenDialog, setIsOpenDialog] = useState(false)
 
@@ -19,10 +19,10 @@ export const UserMenu = () => {
             onMouseLeave={() => setIsOpenDialog(false)}
             className="hidden gap-2 items-center cursor-pointer relative md:flex">
             <span className="flex items-center justify-center rounded-full h-10 w-10 bg-white text-black">
-                {showInitials("Carlos Castro")}
+                {showInitials(userName)}
             </span>
             <p className="flex items-end">
-                {shortName('Carlos Castro')}
+                {shortName(userName)}
                 <RxCaretDown />
             </p>
             {
@@ -32,10 +32,10 @@ export const UserMenu = () => {
                         <li>
                             <Link onClick={() => setIsOpenDialog(false)} href="/profile" className="pt-4 pb-2 px-5 flex gap-2 hover:bg-zinc-100">
                                 <span className="flex items-center justify-center rounded-full border border-zinc-200 w-10 h-10 bg-white text-black">
-                                    {showInitials('Carlos Castro')}
+                                    {showInitials(userName)}
                                 </span>
                                 <div className="flex flex-col">
-                                    <span className="font-bold">Carlos Castro</span>
+                                    <span className="font-bold">{userName}</span>
                                     <span className="text-sm flex items-center">
                                         Mi perfil
                                         <RxCaretDown className="rotate-270" />
