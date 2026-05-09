@@ -37,14 +37,13 @@ export const Confirm = ({ duration, price, entityId, isAdmin }: Props) => {
                 const event = await upsertEvent(
                     {
                         ...serviceState,
-                        price, 
-                        durationHours: duration.hours, 
+                        price,
+                        durationHours: duration.hours,
                         durationMinutes: duration.minutes,
                         entityId,
-                       
                     }
                 )
-                setOpenModal(null)
+                setOpenModal(isAdmin ? null : 'SuccessBooking')
                 const newEvents = events.filter(ev => ev.id !== event.id)
                 setEvents([...newEvents, event])
             } catch {

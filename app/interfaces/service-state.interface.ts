@@ -4,6 +4,7 @@ interface ServiceState {
     selectedProfessional: {
         id: string
         name: string
+        photo?: string
     } | null
     selectedDate: Date | null
     selectedHour: string | null

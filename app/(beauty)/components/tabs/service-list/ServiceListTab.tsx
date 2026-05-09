@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { useModal, useService } from '@/store'
-import { LoginForm, Modal, ServiceList } from '@/components'
+import { ErrorBooking, LoginForm, Modal, ServiceList, SucessBooking } from '@/components'
 import { BookingServiceModal } from '../..'
-import { professionals as allProfessionals } from '@/util/fake-data'
 import { upsertEvent } from '@/actions'
 
 interface Props {
@@ -13,6 +12,7 @@ interface Props {
     professionalData?: {
         id: string
         name: string
+        photo?: string
     }
     entity: {
         id: string
@@ -27,6 +27,7 @@ export const ServiceListTab = ({ serviceList, professionals, professionalData, e
     const serviceState = useService(state => state.serviceState)
     const setServiceState = useService(state => state.setServiceState)
     const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
 
     useEffect(() => {
         if (openModal) {
@@ -36,7 +37,8 @@ export const ServiceListTab = ({ serviceList, professionals, professionalData, e
                 ...(professionalData?.id && {
                     selectedProfessional: {
                         id: professionalData.id,
-                        name: professionalData.name
+                        name: professionalData.name,
+                        photo: professionalData.photo
                     }
                 })
             })
@@ -51,46 +53,60 @@ export const ServiceListTab = ({ serviceList, professionals, professionalData, e
     )
 
     const completeBooking = async (userId?: string) => {
+
+        const currentProfessionalService = professionals
+            ?.find(p => p.id === serviceState.selectedProfessional?.id)
+            ?.services.find(s => s.id === serviceState.selectedService?.serviceId) ?? serviceState?.selectedService
+
         try {
-            const event = await upsertEvent(
+            await upsertEvent(
                 {
                     ...serviceState,
                     userId,
-                    price,
-                    durationHours: duration.hours,
-                    durationMinutes: duration.minutes,
-                    entityId,
+                    price: currentProfessionalService?.price!,
+                    durationHours: currentProfessionalService?.duration.hours!,
+                    durationMinutes: currentProfessionalService?.duration.minutes!,
+                    entityId: entity.id,
                 }
             )
-            // setSucces()
+            setOpenModal('SuccessBooking')
         } catch {
-            // setError(true)
+            setOpenModal('ErrorBooking')
         }
     }
 
 
-return (
-    <>
-        <ServiceList
-            serviceList={serviceList}
-        />
-        {openModal === 'ServiceList' && serviceState.selectedService &&
-            <BookingServiceModal
-                setStep={setStep}
-                step={step}
-                professionals={professionalsByService}
-                entityId={entity.id}
-                isProfessionalView={professionalData?.id ? true : false}
+    return (
+        <>
+            <ServiceList
+                serviceList={serviceList}
             />
-        }
-        {
-            openModal === 'ServiceGuard' &&
-            <Modal className="sm:w-112.5! overflow-hidden!">
-                <div className="pt-6">
-                    <LoginForm callback={completeBooking} />
-                </div>
-            </Modal>
-        }
-    </>
-)
+            {openModal === 'ServiceList' && serviceState.selectedService &&
+                <BookingServiceModal
+                    setStep={setStep}
+                    step={step}
+                    professionals={professionalsByService}
+                    entityId={entity.id}
+                    isProfessionalView={professionalData?.id ? true : false}
+                />
+            }
+            {
+                openModal === 'ServiceGuard' &&
+                <Modal className="sm:w-112.5! overflow-hidden!">
+                    <div className="pt-6">
+                        <LoginForm callback={completeBooking} />
+                    </div>
+                </Modal>
+            }
+            {
+                openModal === 'SuccessBooking' &&
+                <SucessBooking />
+            }
+            {
+                openModal === 'ErrorBooking' && 
+                <ErrorBooking />
+            }   
+
+        </>
+    )
 }

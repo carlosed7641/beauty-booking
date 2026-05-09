@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { EntityCard } from '../components'
 import { searchEntity } from '@/actions'
 import { auth } from '@/auth.config'
@@ -37,7 +38,7 @@ export default async function EntitiesPage({ searchParams }: Props) {
   }
 
   return (
-    <>
+    <Fragment key={session?.user?.id}>
       {
         results.length === 0 ?
           <div className="flex items-center justify-center h-[25vh]">
@@ -71,6 +72,6 @@ export default async function EntitiesPage({ searchParams }: Props) {
             }
           </div>
       }
-    </>
+    </Fragment>
   )
 }

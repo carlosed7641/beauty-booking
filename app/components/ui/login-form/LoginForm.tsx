@@ -6,7 +6,6 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { login } from '@/actions'
 import clsx from 'clsx'
 import { CgSpinner } from 'react-icons/cg'
-import { useModal } from '@/store'
 
 interface Inputs {
     email: string
@@ -26,7 +25,6 @@ export const LoginForm = ({ isAdmin = false, callback }: Props) => {
     const { handleSubmit, register } = useForm<Inputs>()
     const [showPassword, setShowPassword] = useState(false)
     const [formState, setFormState] = useState({ error: '', loading: false })
-    const setOpenModal = useModal(state => state.setOpenModal)
 
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -42,7 +40,6 @@ export const LoginForm = ({ isAdmin = false, callback }: Props) => {
 
         if (callback) {
             router.refresh()
-            setOpenModal(null)
             callback(response.data?.id, response.data?.following) 
             return
         }

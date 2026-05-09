@@ -23,13 +23,15 @@ export const FollowButton = ({ initialValue, entityId, userId, alternativeStyles
     const [isLoading, setIsLoading] = useState(false)
     const openModal = useModal(state => state.openModal)
     const setOpenModal = useModal(state => state.setOpenModal)
-    
+
     const toggleFollow = async (receivedUserId?: string, receivedFollowing?: string[]) => {
+
+        setOpenModal(null)
         setIsLoading(true)
 
         try {
-            setFollowing(prev => !prev)
             if (receivedFollowing?.includes(entityId)) return
+            setFollowing(prev => !prev)
             setFollowers(prev => following ? prev - 1 : prev + 1)
             await toggleFollower(entityId, receivedUserId ?? userId ?? '', following)
         } catch {
@@ -40,55 +42,55 @@ export const FollowButton = ({ initialValue, entityId, userId, alternativeStyles
         }
     }
 
-        return (
-            <>
-                <button className={
+    return (
+        <>
+            <button className={
+                clsx(
+                    "flex flex-col cursor-pointer",
+                    {
+                        "items-end": alternativeStyles,
+                        "items-center": !alternativeStyles,
+                        "opacity-40 pointer-events-none": isLoading
+                    }
+                )
+            }
+                onClick={() => {
+                    isAuthenticated ?
+                        toggleFollow() :
+                        setOpenModal(entityId)
+                }}
+            >
+                <p className="text-green-700 font-bold">
+                    {
+                        following ?
+                            '- Dejar de seguir'
+                            :
+                            '+ Seguir'
+                    }
+                </p>
+                <p className={
                     clsx(
-                        "flex flex-col cursor-pointer",
+                        "text-zinc-500",
                         {
-                            "items-end": alternativeStyles,
-                            "items-center": !alternativeStyles,
-                            "opacity-40 pointer-events-none": isLoading
+                            "text-sm": alternativeStyles,
+                            "text-base": !alternativeStyles
                         }
                     )
-                }
-                    onClick={() => {
-                        isAuthenticated ? 
-                            toggleFollow() : 
-                            setOpenModal(entityId)
-                    }}
-                >
-                    <p className="text-green-700 font-bold">
-                        {
-                            following ?
-                                '- Dejar de seguir'
-                                :
-                                '+ Seguir'
-                        }
-                    </p>
-                    <p className={
-                        clsx(
-                            "text-zinc-500",
-                            {
-                                "text-sm": alternativeStyles,
-                                "text-base": !alternativeStyles
-                            }
-                        )
-                    }>
-                        {followers === 0 ? 'Sin seguidores'
-                            : followers === 1 ? '1 seguidor' :
-                                `${followers} seguidores `
-                        }
-                    </p>
-                </button>
-                {
-                    openModal === entityId &&
-                    <Modal className="sm:w-112.5! overflow-hidden!">
-                        <div className="pt-6">
-                            <LoginForm callback={toggleFollow} />
-                        </div>
-                    </Modal>
-                }
-            </>
+                }>
+                    {followers === 0 ? 'Sin seguidores'
+                        : followers === 1 ? '1 seguidor' :
+                            `${followers} seguidores `
+                    }
+                </p>
+            </button>
+            {
+                openModal === entityId &&
+                <Modal className="sm:w-112.5! overflow-hidden!">
+                    <div className="pt-6">
+                        <LoginForm callback={toggleFollow} />
+                    </div>
+                </Modal>
+            }
+        </>
     )
 }

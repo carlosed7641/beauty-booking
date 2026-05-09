@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { FiMapPin } from 'react-icons/fi'
-import { Tabs, ServiceListTab, Professionals, ReviewsModal } from '../../components'
+import { Tabs, ServiceListTab, Professionals } from '../../components'
 import { WorkSamples } from '@/components'
 import { getEntityById } from '@/actions'
 import { Social } from './Social'
@@ -200,6 +200,7 @@ export default async function EntityPage({ params }: Props) {
                         Ver en el mapa
                     </Link>
                     <ShopInfo
+                        key={session?.user?.id}
                         reviews={reviews}
                         data={shopInfo}
                         isAuthenticated={!!session}
@@ -208,6 +209,7 @@ export default async function EntityPage({ params }: Props) {
                 </div>
             </div>
             <ShopInfo
+                key={session?.user?.id}
                 reviews={reviews}
                 data={shopInfo}
                 isAuthenticated={!!session}

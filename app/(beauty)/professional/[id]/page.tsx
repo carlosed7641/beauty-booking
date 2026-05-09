@@ -107,7 +107,7 @@ export default async function ProfessionalPage({ params }: Props) {
             tab: <ServiceListTab
                 serviceList={services}
                 entity={{ id: data.entity!.id, numberId: data.entity!.numberId }}
-                professionalData={{ id: data.id, name: data.name ?? '' }}
+                professionalData={{ id: data.id, name: data.name ?? '', photo: data.photo ?? undefined }}
                 userId={session?.user?.id}
                 professionals={professionals}
             />,
