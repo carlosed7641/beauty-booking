@@ -22,6 +22,7 @@ export * from './get-followers'
 export * from './get-popular-shops'
 export * from './get-services-by-entityId'
 export * from './get-user-by-id'
+export * from './get-user-collection'
 export * from './get-workdays-by-id'
 export * from './get-workdays-by-entityId'
 

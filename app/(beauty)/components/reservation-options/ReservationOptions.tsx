@@ -5,11 +5,12 @@ import { useModal, useService } from '@/store'
 import { BookingCancelModal, BookingServiceModal } from '..'
 import { SERVICE_INITIAL_STATE } from '@/util/const'
 
-export const ReservationOptions = () => {
+export const ReservationOptions = ({ professionals }: { professionals: ProfessionalSchedule[] }) => {
 
     const [step, setStep] = useState(1)
-    const { setServiceState } = useService()
-    const { openModal } = useModal()
+    const serviceState = useService(state => state.serviceState)
+    const setServiceState = useService(state => state.setServiceState)
+    const openModal = useModal(state => state.openModal)
 
     useEffect(() => {
         if (!openModal) {
@@ -25,6 +26,9 @@ export const ReservationOptions = () => {
                 <BookingServiceModal
                     step={step}
                     setStep={setStep}
+                    entityId={serviceState.id ?? ''}
+                    professionals={professionals}
+                    isProfessionalView
                 />
             }
             {

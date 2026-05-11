@@ -13,4 +13,5 @@ interface ServiceState {
         name: string
     }
     userId?: string
+    entityId?: string
 }

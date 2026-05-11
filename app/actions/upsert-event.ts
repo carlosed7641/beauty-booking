@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma'
 import { EventStatus } from '@/generated/prisma/enums'
 import { getTotalMinutes } from '@/helpers'
 import { auth } from '@/auth.config'
+import { revalidatePath } from 'next/cache'
 
 interface Event extends ServiceState {
     price: number
@@ -114,6 +115,8 @@ export const upsertEvent = async (event: Event): Promise<EventDate> => {
         })
     }
 
+    revalidatePath('/')
+
     return {
         id: eventResponse.id,
         title: eventResponse.title,
@@ -156,6 +159,8 @@ export const cancelEvent = async (id: string, professionalId: string) => {
             professionalId
         }
     })
+
+    revalidatePath('/')
 }
 
 interface Props {

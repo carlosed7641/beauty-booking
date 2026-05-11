@@ -2,35 +2,44 @@ import { useModal, useService } from '@/store'
 
 export const useReservationOptions = () => {
 
-    const { setOpenModal } = useModal()
-    const { setServiceState } = useService()
+    const setOpenModal = useModal(state => state.setOpenModal)
+    const serviceState = useService(state => state.serviceState)
+    const setServiceState = useService(state => state.setServiceState)
 
-    const handleUpdate = (reservation: EventDate) => {
+    const handleUpdate = (reservation: EventDate, userId?: string) => {
 
         const hours = String(reservation.start.getHours()).padStart(2, '0')
         const minutes = String(reservation.start.getMinutes()).padStart(2, '0')
 
         const selectedHour = `${hours}:${minutes}`
 
-        setOpenModal('Reservation:Update')
         const r: ServiceState = {
             id: reservation.id,
             selectedService: reservation.selectedService,
             selectedProfessional: reservation.selectedProfessional,
             selectedDate: reservation.start,
             selectedHour,
+            entityId: reservation.entity?.id,
             customer: {
                 id: reservation.customer.id,
                 name: reservation.customer.name,
-                phone: reservation.customer.phone.number
-            }
+            },
+            userId
         }
 
         setServiceState(r)
+        setOpenModal('Reservation:Update')
     }
 
-    const handleCancel = (id: string) => {
-        // SetRemove(id)
+    const handleCancel = (id: string, professionalId: string) => {
+        setServiceState({
+            ...serviceState,
+            id,
+            selectedProfessional: {
+                ...serviceState.selectedProfessional!,
+                id: professionalId
+            }
+        })
         setOpenModal('Reservation:Cancel')
     }
 

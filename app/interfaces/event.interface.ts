@@ -5,8 +5,8 @@ interface Customer {
         indicator: string
         number: string
     }
-    birthDay: Date | null
-    gender: Gender | null
+    birthDay?: Date | null
+    gender?: Gender | null
     userId?: string | null
     isBlocked?: boolean
     customerAvgRating?: number | null
@@ -18,6 +18,10 @@ interface EventDate {
     start: Date
     end: Date
     customer: Customer
+    entity?: {
+        id?: string
+        name?: string
+    }
     selectedService: {
         serviceId: string
         category?: string
