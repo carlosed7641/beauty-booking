@@ -2,11 +2,10 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import clsx from 'clsx'
 import { FaStar } from 'react-icons/fa6'
 import { useService } from '@/store'
-import { MdOutlinePhotoLibrary } from 'react-icons/md'
 
 interface Props {
     cardWidth?: number,
@@ -33,18 +32,18 @@ export const ShopCard = ({
 }: Props) => {
 
     const title = serviceName ? serviceName : shopName
-    const { serviceState, setServiceState } = useService()
+    const serviceState = useService(state => state.serviceState)
+    const setServiceState = useService(state => state.setServiceState)
+
+    const router = useRouter()
 
     const handleClickCta = () => {
-
-        const { entityId, ...selectedService } = ctaData
-
         setServiceState({
             ...serviceState,
-            selectedService
+            selectedService: ctaData
         })
 
-        redirect(href)
+        router.push(href)
     }
 
     return (

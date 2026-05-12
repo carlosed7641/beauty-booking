@@ -2,21 +2,31 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Title } from '@/components'
 import { StarQuantity } from '..'
-import { favoriteEntities } from '@/util/fake-data'
 
-export const FavoriteEntites = () => {
-    
-    const favorites = favoriteEntities.slice(0, 2)
+interface Props {
+    favorites: {
+        numberId: number
+        imageSrc: string | null
+        name: string | null
+        reviews: {
+            points: number
+            counts: number
+        }
+    }[]
+}
+
+export const FavoriteEntites = ({ favorites }: Props) => {
+
     return (
         <div className="mb-6">
             <Title title="Tus favoritos" />
             <ul className="flex md:flex-wrap gap-2 overflow-x-scroll md:overflow-hidden scroll-none -mr-2 md:mr-0">
                 {
-                        
+
                     favorites.map(f => (
-                        <li className="shrink-0 w-[90%] md:w-auto" key={f.id}>
-                            <Link className="flex items-center bg-[#e8f7ea] md:w-[350px]" href={`/entity/${f.id}`}>
-                                <Image src={f.imageSrc} alt={f.name} width={140} height={140} />
+                        <li className="shrink-0 w-[90%] md:w-auto" key={f.numberId}>
+                            <Link className="flex items-center bg-[#e8f7ea] md:w-87.5" href={`/entity/${f.numberId}`}>
+                                <Image className="bg-white" src={f.imageSrc ?? '/images/placeholder.jpg'} alt={f.name ?? ''} width={140} height={140} />
                                 <div className="p-2">
                                     <p>{f.name}</p>
                                     <StarQuantity points={f.reviews.points} />

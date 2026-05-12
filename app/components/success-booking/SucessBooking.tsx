@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { FaCheckCircle } from 'react-icons/fa'
 import { useModal, useService } from '@/store'
 import { Modal, ModalHeader } from '../ui/modal'
@@ -10,6 +11,12 @@ export const SucessBooking = () => {
 
     const serviceState = useService(state => state.serviceState)
     const setOpenModal = useModal(state => state.setOpenModal)
+    const router = useRouter()
+
+    const handleClick = () => {
+        setOpenModal(null)
+        router.push('/')
+    }
 
     return (
         <Modal className="md:max-w-120 overflow-hidden!">
@@ -45,7 +52,7 @@ export const SucessBooking = () => {
                     <span className="text-xl text-green-700 font-bold">{formatTextHour(serviceState.selectedHour!)}</span>
                 </div>
                 <span>Recuerda llegar 5 minutos antes</span>
-                <button onClick={() => setOpenModal(null)} className="btn-primary rounded-full">Cerrar</button>
+                <button onClick={handleClick} className="btn-primary rounded-full">Ir al inicio</button>
             </div>
         </Modal>
     )

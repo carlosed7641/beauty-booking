@@ -26,7 +26,7 @@ export const ReservationOptions = ({ professionals }: { professionals: Professio
                 <BookingServiceModal
                     step={step}
                     setStep={setStep}
-                    entityId={serviceState.id ?? ''}
+                    entityId={serviceState.entityId ?? ''}
                     professionals={professionals}
                     isProfessionalView
                 />

@@ -38,11 +38,11 @@ export default async function HomePage() {
   if (session?.user?.id) {
     userData = await getUserCollection(session.user.id)
 
-    if (userData.events.length > 0) {
+    if (userData.nextReservations.length > 0) {
 
       const professionalIds = [
         ...new Set(
-          userData.events.map((ev) => ev.selectedProfessional.id)
+          userData.nextReservations.map((ev) => ev.selectedProfessional.id)
         )
       ]
 
@@ -74,7 +74,7 @@ export default async function HomePage() {
 
       const entitiesIds = [
         ...new Set(
-          userData.events.map((ev) => ev.entity.id)
+          userData.nextReservations.map((ev) => ev.entity!.id!)
         )
       ]
 
@@ -162,15 +162,23 @@ export default async function HomePage() {
     <>
       {session && (
         <>
-          {userData?.events?.length! > 0 && (
+          {(userData?.nextReservations ?? []).length > 0 && (
             <NextReservations
-              events={userData?.events}
+              events={userData?.nextReservations}
               professionals={professionals}
               userId={session.user?.id ?? ''}
             />
           )}
-          <RecentServices />
-          <FavoriteEntites />
+          {(userData?.nextReservations ?? []).length > 0 && (
+            <RecentServices 
+              services={userData?.services ?? []} 
+            />
+          )}
+          {(userData?.favorites ?? []).length > 0 && (
+            <FavoriteEntites 
+              favorites={userData?.favorites ?? []} 
+            />
+          )}
         </>
       )}
       <PopularShops />

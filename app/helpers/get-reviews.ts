@@ -1,6 +1,6 @@
 export const getReviews = (
     events: {
-        id: string
+        id?: string
         customerRating: number | null
     }[]
 ) => {
