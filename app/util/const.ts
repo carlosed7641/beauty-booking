@@ -257,19 +257,8 @@ export const ADDITIONAL_FUNCTIONS_CONFIG = [
             { value: 5, label: '5m' }, { value: 10, label: '10m' }, { value: 15, label: '15m' }, { value: 20, label: '20m' },
             { value: 25, label: '25m' }, { value: 30, label: '30m' }, { value: 35, label: '35m' }, { value: 40, label: '40m' },
             { value: 45, label: '45m' }, { value: 50, label: '50m' }, { value: 55, label: '55m' }, { value: 60, label: '1h' },
-            { value: 90, label: '1h30m' }
+            { value: 90, label: '1h30m' }, { value: 120, label: '2h' }
         ]
-    },
-    // {
-    //     id: 'showAdminAgenda',
-    //     title: 'Mostrar agenda del adminstrador',
-    //     hint: 'Habilita esta opción para ver la agenda del administrador'
-    // },
-    {
-        id: 'advanceBookingControl',
-        title: 'Control de antelación',
-        hint: 'Ej: si pones 15min los clientes tendrán que agendar mínimo con 15min de antelación',
-        options: [{ value: 0, label: '0m' }, { value: 15, label: '15m' }, { value: '30', label: '30m' }, { value: '60', label: '1h' }]
     }
 ]
 

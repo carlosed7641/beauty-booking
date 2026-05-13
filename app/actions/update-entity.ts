@@ -9,8 +9,6 @@ import { uploadImage } from '@/helpers/upload-image'
 interface EntityDTO {
     entityId: string
     cancelDateTime?: number
-    showAdminAgenda?: boolean
-    advanceBookingControl?: number
     name?: string
     shopType?: string
     logo?: { url: string, file?: File[] } | null

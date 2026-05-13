@@ -21,6 +21,7 @@ interface EventDate {
     entity?: {
         id?: string
         name?: string
+        cancelDateTime?: number
     }
     selectedService: {
         serviceId: string
@@ -34,6 +35,7 @@ interface EventDate {
         price: number
     },
     professionalRating?: number | null
+    customerRating?: number | null
     selectedProfessional: {
         id: string
         name: string

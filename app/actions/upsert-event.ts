@@ -116,6 +116,7 @@ export const upsertEvent = async (event: Event): Promise<EventDate> => {
     }
 
     revalidatePath('/')
+    revalidatePath('/my-reservations')
 
     return {
         id: eventResponse.id,
@@ -161,11 +162,13 @@ export const cancelEvent = async (id: string, professionalId: string) => {
     })
 
     revalidatePath('/')
+    revalidatePath('/my-reservations')
 }
 
 interface Props {
     id: string
     professionalRating?: number
+    customerRating?: number
 }
 
 export const updateEventReview = async ({ id, professionalRating }: Props) => {
@@ -187,5 +190,25 @@ export const updateEventReview = async ({ id, professionalRating }: Props) => {
         data,
         where: { id }
     }))
+
+}
+
+export const updateEventUserRate = async ({ id, customerRating }: Props) => {
+
+    const data: any = {}
+
+    if (customerRating) {
+        data.customerRating = customerRating
+        data.customerRatedAt = new Date()
+    }
+
+    if (Object.keys(data).length === 0) return
+
+    await prisma.event.update(({
+        data,
+        where: { id }
+    }))
+
+    // revalidatePath('/my-reservations')
 
 }

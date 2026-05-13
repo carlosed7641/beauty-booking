@@ -1,7 +1,7 @@
 'use server'
 
 import prisma from "@/lib/prisma"
-import { getReviews, isLessOrEqualThan } from "@/helpers"
+import { getReviews } from "@/helpers"
 
 const ENTITY_FIELDS = {
     id: true,
@@ -18,7 +18,13 @@ const ENTITY_FIELDS = {
     }
 } as const
 
-export const getUserCollection = async (id: string) => {
+export const getUserCollection = async ({
+    id,
+    status
+}: {
+    id: string
+    status?: EventStatus[]
+}) => {
     const data = await prisma.user.findUnique({
         where: { id },
         select: {
@@ -26,7 +32,7 @@ export const getUserCollection = async (id: string) => {
                 select: {
                     events: {
                         where: {
-                            status: { in: ['pending', 'completed'] },
+                            ...(status && { status: { in: status } }),
                             service: { archived: false }
                         },
                         include: {
@@ -37,7 +43,10 @@ export const getUserCollection = async (id: string) => {
                                 }
                             },
                             entity: {
-                                select: ENTITY_FIELDS
+                                select: {
+                                    ...ENTITY_FIELDS,
+                                    cancelDateTime: true
+                                },
                             },
                             service: {
                                 select: {
@@ -68,7 +77,6 @@ export const getUserCollection = async (id: string) => {
         }
     })
 
-
     const events =
         data?.customers.flatMap(item => item.events) ?? []
 
@@ -82,9 +90,11 @@ export const getUserCollection = async (id: string) => {
                 title: event.title,
                 start: event.start,
                 end: event.end,
+                customerRating: event.customerRating,
                 entity: {
                     id: event.entity.id,
-                    name: event.entity?.name ?? ''
+                    name: event.entity?.name ?? '',
+                    cancelDateTime: event?.entity?.cancelDateTime
                 },
                 customer: {
                     id: event.customer.id,
@@ -114,8 +124,8 @@ export const getUserCollection = async (id: string) => {
                 typeBooking: event.typeBooking,
                 status: event.status
             }))
-            .filter(event => !isLessOrEqualThan(event.start, new Date()) && event.status === 'pending')
-            .slice(0, 3) ?? [],
+            .filter(event => status ? event.start.getTime() >= new Date().getTime() && event.status === 'pending' : true)
+            .slice(0, status ? 3 : undefined),
         services:
             events
                 .sort((a, b) => b?.start.getTime() - a?.start.getTime())

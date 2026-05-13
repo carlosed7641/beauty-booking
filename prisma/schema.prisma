@@ -20,9 +20,7 @@ model Entity {
   addressReference      String?
   shopType              String?
   createdAt             DateTime      @default(now())
-  cancelDateTime        Int           @default(20)
-  advanceBookingControl Int           @default(30)
-  showAdminAgenda       Boolean       @default(true)
+  cancelDateTime        Int           @default(20) 
   linkingCode           String        @unique
   country               Country       @relation(fields: [countryId], references: [id])
   owner                 User          @relation("EntityOwner", fields: [ownerId], references: [id])

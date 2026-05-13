@@ -36,7 +36,7 @@ export default async function HomePage() {
   let professionals: ProfessionalSchedule[] = []
 
   if (session?.user?.id) {
-    userData = await getUserCollection(session.user.id)
+    userData = await getUserCollection({ id: session.user.id, status: ['pending', 'completed'] })
 
     if (userData.nextReservations.length > 0) {
 

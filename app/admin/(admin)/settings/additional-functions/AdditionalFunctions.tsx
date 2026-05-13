@@ -21,9 +21,7 @@ export const AdditionalFunctions = ({ values, entityId }: Props) => {
 
         const previousSaved = { ...savedFunctions }
         const payload = { 
-            cancelDateTime: Number(functions.cancelDateTime),
-            showAdminAgenda: functions.showAdminAgenda as boolean,
-            advanceBookingControl: Number(functions.advanceBookingControl)
+            cancelDateTime: Number(functions.cancelDateTime)
         }
 
         setIsLoading(true)

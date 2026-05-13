@@ -12,9 +12,7 @@ export default  async function SettingsPage() {
     const shopData = await getEntityById(user?.entityId ?? '')
 
     const values = {
-        cancelDateTime: shopData?.cancelDateTime ?? 20,
-        showAdminAgenda: shopData?.showAdminAgenda ?? true,
-        advanceBookingControl: shopData?.advanceBookingControl ?? 30
+        cancelDateTime: shopData?.cancelDateTime ?? 20
     }
 
     return (
