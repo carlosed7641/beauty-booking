@@ -1,6 +1,6 @@
+import prisma from '@/lib/prisma'
 import { FaRegStar } from 'react-icons/fa'
 import { ReviewItem } from '../components'
-import { reviews as apiReviews } from '@/util/fake-data'
 import { auth } from '@/auth.config'
 
 const userId = '27'
@@ -8,13 +8,45 @@ const userId = '27'
 export default async function MyReviewsPage() {
 
   const session = await auth()
-  const reviews = apiReviews.filter(r => r.user.id === userId)
 
   if (!session) {
     return (
       <p className="text-center my-4">Aún no hay reseñas</p>
     )
   }
+
+  const data = await prisma.user.findFirst({
+    where: {
+      id: session?.user?.id
+    },
+    select: {
+      customers: {
+        select: {
+          events: {
+            where: {
+              customerRating: {
+                not: null
+              }
+            },
+            select: {
+              id: true,
+              title: true,
+              customerRating: true,
+              customerRatedAt: true,
+              professional: {
+                select: {
+                  name: true,
+                  photo: true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+
+  const events = data?.customers.flatMap(item => item.events) ?? []
 
   return (
     <>
@@ -23,18 +55,21 @@ export default async function MyReviewsPage() {
         Mis reseñas
       </h1>
       {
+        events.length > 0 ?
           <ul className="flex flex-col gap-3 md:gap-6">
-            {/* {reviews.map(review =>
+            {events.map(event =>
               <ReviewItem
-                key={review.id}
-                date={review.date}
-                name={review.professional.name}
-                photoUrl={review.professional.photo}
-                serviceName={review.service.name}
-                points={review.points}
+                key={event.id}
+                date={event.customerRatedAt}
+                name={event.professional.name ?? ''}
+                photoUrl={event.professional.photo ?? undefined}
+                serviceName={event.title}
+                points={event.customerRating!}
               />)
-            } */}
+            }
           </ul>
+          :
+          <p className="my-4">Aún no hay reseñas</p>
       }
     </>
   )

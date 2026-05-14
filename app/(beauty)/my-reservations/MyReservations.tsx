@@ -46,7 +46,7 @@ export const MyReservations = ({ events, professionals, userId }: Props) => {
     const [rating, setRating] = useState(0)
     const [isRatingLoading, setIsRatingLoading] = useState(false)
     const router = useRouter()
-    
+
 
     const displayValue = hovered || rating
 
@@ -57,7 +57,7 @@ export const MyReservations = ({ events, professionals, userId }: Props) => {
         setOpenModal(null)
         router.refresh()
     }
-    
+
     useEffect(() => {
         setHovered(0)
         setRating(0)
@@ -70,27 +70,34 @@ export const MyReservations = ({ events, professionals, userId }: Props) => {
                 <TfiAgenda />
                 Mis reservas
             </h1>
-            <SimpleTabs
-                tabs={tabs}
-                activeTab={currentTab}
-                setActiveTab={setCurrentTab}
-            />
-            <>
-                {
-                    currentTab === 'current' ?
-                        <ReservationList
-                            reservations={currentReservations}
-                            professionals={professionals}
-                            userId={userId}
+            {
+                events.length > 0 ? (
+                    <>
+                        <SimpleTabs
+                            tabs={tabs}
+                            activeTab={currentTab}
+                            setActiveTab={setCurrentTab}
                         />
-                        :
-                        <ReservationList
-                            reservations={oldReservations}
-                            professionals={professionals}
-                            userId={userId}
-                        />
-                }
-            </>
+                        {
+                            currentTab === 'current' ?
+                                <ReservationList
+                                    reservations={currentReservations}
+                                    professionals={professionals}
+                                    userId={userId}
+                                />
+                                :
+                                <ReservationList
+                                    reservations={oldReservations}
+                                    professionals={professionals}
+                                    userId={userId}
+                                />
+                        }
+                    </>
+                )
+                :
+                <p>No hay reservas</p>
+            }
+
             {
                 openModal === 'SuccessBooking' && (
                     <Modal className="md:max-w-120 overflow-hidden!">
@@ -141,7 +148,7 @@ export const MyReservations = ({ events, professionals, userId }: Props) => {
                             <ul className="flex justify-center my-2">
                                 {
                                     Array.from({ length: 5 }, (_, index) => (
-                                        <li 
+                                        <li
                                             key={index}
                                             className="p-1"
                                             onClick={() => setRating(index + 1)}
@@ -165,9 +172,9 @@ export const MyReservations = ({ events, professionals, userId }: Props) => {
 
                                     ))
                                 }
-                            </ul> 
+                            </ul>
                             <button onClick={handleRate} disabled={rating === 0 || isRatingLoading} className="btn-primary rounded-full font-bold mb-2">
-                                {isRatingLoading ? 'Procesando...': 'Enviar'}
+                                {isRatingLoading ? 'Procesando...' : 'Enviar'}
                             </button>
                             <button onClick={() => setOpenModal(null)} className="text-green-700 cursor-pointer hover:underline">
                                 Calificar más tarde
