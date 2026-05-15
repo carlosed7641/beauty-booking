@@ -5,9 +5,9 @@ import { FaEdit } from 'react-icons/fa'
 import { useModal } from '@/store'
 import { Modal, ModalHeader, ProfileForm } from '@/components'
 import { updateUser } from '@/actions'
-import { UserDTO, UserWithEntity } from '@/interfaces/user.interface'
+import { UserDTO } from '@/interfaces/user.interface'
 
-export const UpdateProfile = ({ userData }: { userData: UserWithEntity }) => {
+export const UpdateProfile = ({ userData }: { userData: UserDTO }) => {
 
     const [profileFormState, setProfileFormState] = useState({ loading: false, error: '' })
 
@@ -25,7 +25,8 @@ export const UpdateProfile = ({ userData }: { userData: UserWithEntity }) => {
         role: userData.role,
     }
 
-    const { openModal, setOpenModal } = useModal()
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
 
     const onSubmit = async (data: UserDTO) => {
 
@@ -33,7 +34,7 @@ export const UpdateProfile = ({ userData }: { userData: UserWithEntity }) => {
         
         const userData = {
             ...data,
-            birthDay: new Date(data.birthDay as Date)
+            birthDay: new Date(`${data.birthDay}T00:00:00`)
         } as UserDTO
 
         for (const [key, value] of Object.entries(userData)) {
@@ -56,7 +57,7 @@ export const UpdateProfile = ({ userData }: { userData: UserWithEntity }) => {
 
     return (
         <>
-            <button onClick={() => setOpenModal(UpdateProfile.name)} className="text-green-700 w-fit flex gap-1 items-center cursor-pointer font-bold underline">
+            <button onClick={() => setOpenModal(UpdateProfile.name)} className="text-green-700 w-fit flex gap-1 items-center cursor-pointer font-bold underline mx-auto md:mx-0">
                 <FaEdit />
                 Editar perfil
             </button>

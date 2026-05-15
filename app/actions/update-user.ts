@@ -29,6 +29,7 @@ export const updateUser = async (data: UserDTO) => {
 
         revalidatePath('/admin')
         revalidatePath('/admin/profile')
+        revalidatePath('/profile')
 
         return { ok: true }
     } catch (e) {

@@ -1,5 +1,4 @@
 export * from './danger-buttons/DangerButtons'
-export * from './profile-photo/ProfilePhoto'
 export * from './profile-visibility/ProfileVisibility'
 export * from './skills/Skills'
 

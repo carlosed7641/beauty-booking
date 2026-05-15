@@ -29,7 +29,7 @@ export const ProfilePhoto = ({ name, photo }: Props) => {
             setOptimisticPhoto(tempPhotoUrl)
             await updateUser({ photo: Array.from(files) })
         })
-        
+
         setShowTooltip(false)
     }
 
@@ -49,7 +49,7 @@ export const ProfilePhoto = ({ name, photo }: Props) => {
 
     return (
         <>
-            <div className="relative rounded-full hover:bg-black hover:opacity-65 cursor-pointer" onClick={() => setShowTooltip(prev => !prev)}>
+            <div className="relative rounded-full hover:bg-black hover:opacity-65 cursor-pointer" onClick={() =>setShowTooltip(prev => !prev)}>
                 {
                     optimisticPhoto ?
                         <Image
@@ -60,7 +60,7 @@ export const ProfilePhoto = ({ name, photo }: Props) => {
                             alt={name}
                         />
                         :
-                        <div className="rounded-full text-3xl md:text-5xl C h-21.25 w-21.25 md:h-25 md:w-25 flex items-center justify-center bg-green-700 text-white">
+                        <div className="rounded-full text-3xl md:text-5xl h-21.25 w-21.25 md:h-25 md:w-25 flex items-center justify-center bg-green-700 text-white select-none">
                             {name[0]}
                         </div>
                 }
@@ -70,7 +70,7 @@ export const ProfilePhoto = ({ name, photo }: Props) => {
             </div>
             {
                 showTooltip &&
-                <label ref={tooltipRef} className="bg-white absolute -bottom-8.5 -left-5 rounded-md text-sm border hover:bg-zinc-100 border-zinc-200 px-2 py-0.5 cursor-pointer">
+                <label ref={tooltipRef} className="bg-white absolute -bottom-8.5 -left-5 rounded-md text-sm border hover:bg-zinc-100 border-zinc-200 px-2 py-0.5 cursor-pointer select-none">
                     {optimisticPhoto ? 'Cambiar foto de perfil' : 'Elegir foto de perfil'}
                     <input disabled={isPending} onChange={handleFileChange} className="hidden" type="file" accept="image/png, image/jpeg, image/webp" />
                 </label>

@@ -35,7 +35,7 @@ export const RegistrationUserForm = ({ countries }: Props) => {
             
             const data = {
                 ...formData,
-                birthDay: formData.birthDay && new Date(formData.birthDay),
+                birthDay: formData.birthDay && new Date(`${formData.birthDay}T00:00:00`),
                 indicator: formData.phone ? formData.indicator : null,
                 isRegisterCompleted: true
             }

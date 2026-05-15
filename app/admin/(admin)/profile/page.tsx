@@ -1,9 +1,8 @@
 import Link from 'next/link'
 import { IoMdArrowRoundBack } from 'react-icons/io'
-import { UpdateProfile } from '@/components'
+import { ProfilePhoto, UpdateProfile } from '@/components'
 import {
     DangerButtons,
-    ProfilePhoto,
     ProfileVisibility,
     ProfileWorkSamples,
     Skills,
@@ -12,9 +11,7 @@ import {
 import { SignOut } from './sign-out/SignOut'
 import { getEntityById, getUserById } from '@/actions'
 import { auth } from '@/auth.config'
-import { UserWithEntity } from '@/interfaces/user.interface'
-import { is } from 'date-fns/locale'
-
+import { UserDTO } from '@/interfaces/user.interface'
 
 export default async function ProfilePage() {
 
@@ -43,7 +40,7 @@ export default async function ProfilePage() {
                         <ProfilePhoto name={userData.name ?? ''} photo={userData.photo} />
                         <div className="flex flex-col gap-2">
                             <p className="text-2xl text-green-700">{userData.name}</p>
-                            <UpdateProfile userData={userData as UserWithEntity} />
+                            <UpdateProfile userData={userData as UserDTO} />
                             <ProfileVisibility isPublic={userData.isPublicProfile} />
                         </div>
                     </div>

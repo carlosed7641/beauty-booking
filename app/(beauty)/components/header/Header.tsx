@@ -4,7 +4,7 @@ import { SearchBar } from '../search-bar/SearchBar'
 import { SideMenu } from '../side-menu/SideMenu'
 import { UserMenu } from '../user-menu/UserMenu'
 
-export const Header = ({ session, userName }: { session: Session | null, userName: string }) => {
+export const Header = ({ session, userName, userPhoto }: { session: Session | null, userName: string, userPhoto?: string }) => {
 
     return (
         <>
@@ -13,12 +13,12 @@ export const Header = ({ session, userName }: { session: Session | null, userNam
                     <Link href="/" className="hidden md:block"><span className="font-bold">Beauty /</span> Booking</Link>
                     <SearchBar />
                     <div className="flex gap-3 text-sm items-center">
-                        { session && <UserMenu userName={userName} /> }
+                        { session && <UserMenu userName={userName} userPhoto={userPhoto} /> }
                         <Link href="/my-reservations" className="text-zinc-500 hidden md:block cursor-pointer">Mis reservas</Link>
                     </div>
                 </div>
             </header>
-            <SideMenu userName={userName} />
+            <SideMenu userName={userName} userPhoto={userPhoto} />
         </>
     )
 }

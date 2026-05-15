@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { RxCaretDown } from 'react-icons/rx'
 import { Dialog } from '@/components'
 import { shortName, showInitials } from '@/helpers'
@@ -9,7 +10,7 @@ import { MENU_OPTIONS } from '@/util/const'
 
 const options = MENU_OPTIONS.filter(opt => opt.href !== '/')
 
-export const UserMenu = ({ userName }: { userName: string}) => {
+export const UserMenu = ({ userName, userPhoto }: { userName: string, userPhoto?: string }) => {
 
     const [isOpenDialog, setIsOpenDialog] = useState(false)
 
@@ -18,9 +19,20 @@ export const UserMenu = ({ userName }: { userName: string}) => {
             onMouseEnter={() => setIsOpenDialog(true)}
             onMouseLeave={() => setIsOpenDialog(false)}
             className="hidden gap-2 items-center cursor-pointer relative md:flex">
-            <span className="flex items-center justify-center rounded-full h-10 w-10 bg-white text-black">
-                {showInitials(userName)}
-            </span>
+            {
+                userPhoto ?
+                    <Image
+                        src={userPhoto}
+                        className="rounded-full h-10 w-10"
+                        alt={userName}
+                        width={40}
+                        height={40}
+                    />
+                    :
+                    <span className="flex items-center justify-center rounded-full h-10 w-10 bg-white text-black">
+                        {showInitials(userName)}
+                    </span>
+            }
             <p className="flex items-end">
                 {shortName(userName)}
                 <RxCaretDown />
@@ -31,9 +43,20 @@ export const UserMenu = ({ userName }: { userName: string}) => {
                     <ul className="pb-3">
                         <li>
                             <Link onClick={() => setIsOpenDialog(false)} href="/profile" className="pt-4 pb-2 px-5 flex gap-2 hover:bg-zinc-100">
-                                <span className="flex items-center justify-center rounded-full border border-zinc-200 w-10 h-10 bg-white text-black">
-                                    {showInitials(userName)}
-                                </span>
+                                {
+                                    userPhoto ?
+                                        <Image
+                                            src={userPhoto}
+                                            className="rounded-full h-10 w-10"
+                                            alt={userName}
+                                            width={40}
+                                            height={40}
+                                        />
+                                        :
+                                        <span className="flex items-center justify-center rounded-full h-10 w-10 bg-white text-black">
+                                            {showInitials(userName)}
+                                        </span>
+                                }
                                 <div className="flex flex-col">
                                     <span className="font-bold">{userName}</span>
                                     <span className="text-sm flex items-center">

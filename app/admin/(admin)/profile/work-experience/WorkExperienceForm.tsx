@@ -31,8 +31,8 @@ export const WorkExperienceForm = () => {
 
     const formatedData = {
       ...data,
-      startDate: new Date(data.startDate),
-      endDate: data.endDate ? new Date(data.endDate) : null
+      startDate: new Date(`${data.startDate}T00:00:00`),
+      endDate: data.endDate ? new Date(`${data.endDate}T00:00:00`) : null
     }
 
     const result = data.id

@@ -1,7 +1,7 @@
-import { auth } from '@/auth.config'
-import { Categories, FavoriteEntites, NextReservations, PopularShops, RecentServices } from './components'
-import { getUserCollection } from '@/actions'
 import prisma from '@/lib/prisma'
+import { auth } from '@/auth.config'
+import { getUserCollection } from '@/actions'
+import { Categories, FavoriteEntites, NextReservations, PopularShops, RecentServices } from './components'
 import { WORKDAY_FIELDS } from '@/util/const'
 import { minutesToTime, toMinutes } from '@/helpers'
 

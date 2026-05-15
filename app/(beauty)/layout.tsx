@@ -1,5 +1,3 @@
-import { Suspense } from 'react'
-import Loading from './loading'
 import { Header } from './components/header/Header'
 import { BottomMenu } from './components/bottom-menu/BottomMenu'
 import { auth } from '@/auth.config'
@@ -17,6 +15,7 @@ export default async function BeautyLayout({
 
     const session = await auth()
     let userName = null
+    let userPhoto = undefined
 
     if (session?.user?.role === 'admin' || session?.user?.role === 'employee') return redirect('/admin')
 
@@ -25,6 +24,7 @@ export default async function BeautyLayout({
             where: { id: session?.user?.id },
             select: {
                 name: true,
+                photo: true,
                 countryId: true,
                 phone: true,
                 isRegisterCompleted: true,
@@ -35,21 +35,22 @@ export default async function BeautyLayout({
         if (!user) throw new Error('Ocurrió un error con el usuario')
 
         userName = user.name
+        userPhoto = user.photo
 
         if (!user?.countryId) {
             const countries = await getCountries()
             return (
-                 <SelectCountry  
+                <SelectCountry
                     countries={countries}
                     isUser
-                 />
+                />
             )
         }
 
         if (!user.isRegisterCompleted) {
             const countries = await getCountries()
             return (
-                 <RegistrationUserForm countries={countries} />
+                <RegistrationUserForm countries={countries} />
             )
         }
 
@@ -57,7 +58,11 @@ export default async function BeautyLayout({
 
     return (
         <>
-            <Header session={session} userName={userName ?? ''} />
+            <Header
+                session={session}
+                userName={userName ?? ''}
+                userPhoto={userPhoto ?? undefined}
+            />
             <main className="min-h-screen max-w-300 my-0 mx-auto py-5 px-2">
                 {children}
             </main>

@@ -44,7 +44,7 @@ export const ProfileForm = ({ initialValues, onSubmit, isLoading, error }: Props
                 ...initialValues,
                 birthDay: initialValues.birthDay ? formatInputDate(initialValues.birthDay as Date) : null
             } : {}
-            
+
             reset(defaultValues)
         }
     }, [initialValues, countries])
@@ -53,16 +53,17 @@ export const ProfileForm = ({ initialValues, onSubmit, isLoading, error }: Props
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
             <div className="grid md:grid-cols-3 gap-3">
                 <div className="flex flex-col">
-                    <label htmlFor="phone">Celular*</label>
+                    <label htmlFor="phone">Celular {`${watchRole !== 'user' ? '*' : ''}`}</label>
                     <div className="flex flex-1 gap-2 mt-2">
-                        <select disabled={countries.length === 0} className="min-w-18 border border-green-700 p-1 rounded-md focus:outline-0 disabled:opacity-55" {...register("indicator", { required: true })}>
+                        <select disabled={countries.length === 0} className="min-w-18 border border-green-700 p-1 rounded-md focus:outline-0 disabled:opacity-55"
+                            {...register("indicator", { required: watchRole !== 'user' })}>
                             {
                                 countries.map(country => <option key={country.indicator} value={country.indicator}>+{country.indicator}</option>)
                             }
                         </select>
                         <input {...register("phone",
                             {
-                                required: true,
+                                required: watchRole !== 'user',
                                 setValueAs: value =>
                                     typeof value === 'string' ? value.trim() : value
                             })

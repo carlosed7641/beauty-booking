@@ -5,8 +5,9 @@ import { useMenu } from '@/store'
 import { useKeyboardOptions } from '@/hooks'
 import { showInitials } from '@/helpers'
 import { MENU_OPTIONS } from '@/util/const'
+import Image from 'next/image'
 
-export const MenuContent = ({ userName }: { userName: string}) => {
+export const MenuContent = ({ userName, userPhoto }: { userName: string, userPhoto?: string }) => {
 
     const setIsOpenMenu = useMenu(state => state.setIsOpenMenu)
     const options = MENU_OPTIONS.filter(opt => !opt.onBotton?.only)
@@ -20,11 +21,22 @@ export const MenuContent = ({ userName }: { userName: string}) => {
         <div className="h-auto w-full">
             <div className="flex justify-between items-center bg-[#E2F5E5]">
                 <Link onClick={() => setIsOpenMenu(false)} href="/profile" className="flex gap-2 p-3 pl-5 flex-1">
-                    <span className="flex items-center justify-center rounded-full p-2 h-12 w-12 bg-white text-black border border-zinc-400">
-                        {
-                            showInitials(userName)
-                        }
-                    </span>
+                    {
+                        userPhoto ?
+                            <Image
+                                src={userPhoto}
+                                className="rounded-full h-12 w-12"
+                                alt={userName}
+                                width={48}
+                                height={48}
+                            />
+                            :
+                            <span className="flex items-center justify-center rounded-full p-2 h-12 w-12 bg-white text-black border border-zinc-400">
+                                {
+                                    showInitials(userName)
+                                }
+                            </span>
+                    }
                     <div className="flex flex-col">
                         <p className="font-bold">{userName}</p>
                         <span className="flex items-center h-5">

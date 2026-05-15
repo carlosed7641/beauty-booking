@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import { useMenu } from '@/store'
 import { MenuContent } from '.'
 
-export const SideMenu = ({ userName }: { userName: string}) => {
+export const SideMenu = ({ userName, userPhoto }: { userName: string, userPhoto?: string}) => {
 
     const isOpenMenu = useMenu(state => state.isOpenMenu)
 
@@ -17,7 +17,7 @@ export const SideMenu = ({ userName }: { userName: string}) => {
             "fixed top-0 left-0 z-20 h-full w-full bg-white shadow-lg md:hidden flex",
             isOpenMenu ? "translate-x-0" : "translate-x-full"
         )}>
-            <MenuContent userName={userName} />
+            <MenuContent userName={userName} userPhoto={userPhoto} />
         </aside>
     )
 }

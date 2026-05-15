@@ -1,40 +1,136 @@
-import Image from 'next/image'
-import { FaToggleOff, FaToggleOn } from 'react-icons/fa6'
-import { UpdateProfile } from '@/components'
-import { ImproveExperience, RecentServices } from '../components'
-import { session } from '@/util/fake-data'
+import prisma from '@/lib/prisma'
 import { auth } from '@/auth.config'
+import { ProfilePhoto, UpdateProfile } from '@/components'
+import { ImproveExperience, RecentServices } from '../components'
+import { formatDate, getReviews } from '@/helpers'
+import { GENDERS } from '@/util/const'
+
+const ENTITY_FIELDS = {
+  id: true,
+  numberId: true,
+  name: true,
+  logo: true,
+  events: {
+    where: {
+      status: 'completed'
+    },
+    select: {
+      customerRating: true
+    }
+  }
+} as const
 
 export default async function ProfilePage() {
 
-  const sessionDB = await auth()
+  const session = await auth()
+  if (!session) return <ImproveExperience />
 
-  const [year, month, day] = session.birthDay.split('-')
-  const birthDate = `${day}/${month}/${year}`
+  const user = await prisma.user.findFirst({
+    where: { id: session.user?.id },
+    select: {
+      indicator: true,
+      phone: true,
+      photo: true,
+      name: true,
+      countryId: true,
+      birthDay: true,
+      gender: true,
+      role: true,
+      customers: {
+        select: {
+          events: {
+            where: {
+              status: { in: ['pending', 'completed'] },
+              service: { archived: false }
+            },
+            include: {
+              entity: {
+                select: {
+                  ...ENTITY_FIELDS,
+                }
+              },
+              service: {
+                select: {
+                  name: true,
+                  id: true,
+                  category: true,
+                  basePrice: true,
+                  baseDurationHours: true,
+                  baseDurationMinutes: true
+                }
+              }
+            }
+          }
+        }
 
-  if (!sessionDB) return <ImproveExperience />
+      }
+    }
+  })
+
+  const events =
+    user?.customers.flatMap(item => item.events) ?? []
+
+  const seen = new Set()
+
+  const recentServices =
+    events
+      .sort((a, b) => b?.start.getTime() - a?.start.getTime())
+      .map(({ entity, service }) => {
+        const { ratingCount, ratingPotins } = getReviews(entity.events)
+        return {
+          ctaData: {
+            serviceId: service.id,
+            price: service.basePrice,
+            name: service.name,
+            duration: {
+              hours: service.baseDurationHours,
+              minutes: service.baseDurationMinutes
+            }
+          },
+          href: `/entity/${entity.numberId}`,
+          imageSrc: entity.logo,
+          ratingCount,
+          ratingPotins,
+          serviceName: service.name,
+          shopName: entity.name ?? ''
+        }
+      })
+      .filter(item => {
+        const id = item.ctaData.serviceId
+
+        if (seen.has(id)) return false
+
+        seen.add(id)
+        return true
+      })
+      .slice(0, 5) ?? []
+
+
 
   return (
     <>
-      <div className="flex flex-col md:flex-row items-center gap-3 mb-12">
-        <Image src={session.photo ?? ''} alt={session.name} width={180} height={180} />
-        <div className="flex flex-col gap-3">
-          <p className="text-2xl text-green-700">{session.name}</p>
-          <p className="text-zinc-500">{session.gender} - {birthDate}</p>
-          {/* <UpdateProfile /> */}
-          <button className='flex gap-2 items-center cursor-pointer w-fit'>
-
-            {
-              session.shareNumberPhone ?
-                <FaToggleOn className="text-green-700 text-xl" /> :
-                <FaToggleOff className="text-green-700 text-xl" />
-            }
-
-            Compartir número
-          </button>
+      <div className="flex flex-col md:flex-row items-center gap-3 mb-12 text-center md:text-left relative">
+        <ProfilePhoto
+          name={user?.name ?? ''}
+          photo={user!.photo}
+        />
+        <div className="flex flex-col gap-1.5">
+          <p className="text-xl text-green-700">{user?.name}</p>
+          {user?.birthDay && <p className="text-zinc-500">{user.gender && GENDERS[user.gender] + ' -'} {formatDate({ date: user.birthDay, month: 'numeric' })}</p>}
+          <UpdateProfile
+            userData={{
+              birthDay: user?.birthDay,
+              countryId: user?.countryId,
+              gender: user?.gender,
+              indicator: user?.indicator,
+              name: user?.name,
+              phone: user?.phone,
+              role: user?.role,
+            }}
+          />
         </div>
       </div>
-      <RecentServices />
+      <RecentServices services={recentServices} />
     </>
   )
 }
