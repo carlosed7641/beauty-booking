@@ -1,6 +1,7 @@
 import { auth } from '@/auth.config'
 import { Emotion } from '@/components'
-import { formatedDate } from '@/helpers'
+import { formatDate, formatedDate } from '@/helpers'
+import prisma from '@/lib/prisma'
 import { RiEmotionHappyLine } from 'react-icons/ri'
 
 const professionalReviews = [
@@ -63,13 +64,6 @@ export default async function MyReputationPage() {
 
   const session = await auth()
 
-  const reputationList = professionalReviews.filter(pr => userId === pr.userId)
-  const totalPoints = reputationList.reduce((sum, pr) => sum + pr.points, 0)
-  const averagePoints = reputationList.length > 0
-    ? totalPoints / reputationList.length
-    : 0
-  const reputationLevel = averagePoints >= 2.5 ? 'Buena' : averagePoints >= 1.5 ? 'Regular' : 'Mala'
-
   if (!session) {
     return (
       <div className="flex flex-col items-center my-4 gap-3">
@@ -78,6 +72,42 @@ export default async function MyReputationPage() {
       </div>
     )
   }
+
+
+  const data = await prisma.user.findFirst({
+    where: {
+      id: session.user?.id
+    },
+    select: {
+      customers: {
+        select: {
+          events: {
+            where: {
+              professionalRating: { not: null }
+            },
+            select: {
+              id: true,
+              professionalRating: true,
+              professionalRatedAt: true,
+              professional: {
+                select: {
+                  name: true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  })
+
+  const events = data?.customers.flatMap(({ events }) => events) ?? []
+
+  const totalPoints = events.reduce((sum, pr) => sum + (pr.professionalRating ?? 0), 0)
+  const averagePoints = events.length > 0
+    ? totalPoints / events.length
+    : 0
+  const reputationLevel = averagePoints >= 2.5 ? 'Buena' : averagePoints >= 1.5 ? 'Regular' : 'Mala'
 
   return (
     <>
@@ -91,14 +121,16 @@ export default async function MyReputationPage() {
         </div>
       </div>
       <ul className="flex flex-col gap-5">
-        {reputationList.map(rp => (
-          <li className="flex gap-5 items-center justify-between px-2 md:px-0" key={rp.userId + rp.date}>
+        {events.map(rp => (
+          <li className="flex gap-5 items-center justify-between px-2 md:px-0" key={rp.id}>
             <div className="flex flex-col">
               <p className="text-green-700">{rp.professional.name}</p>
-              <p className="text-zinc-500">{rp.comment}</p>
-              <p className="text-zinc-500">Creado el {formatedDate(rp.date)}</p>
+              <p className="text-zinc-500">
+                {(rp.professionalRating ?? 0) >= 2.5 ? 'Llegó a tiempo' : (rp.professionalRating ?? 0) >= 1.5 ? 'Llegó tarde' : 'No llegó'}
+              </p>
+              {rp.professionalRatedAt && <p className="text-zinc-500">Creado el {formatDate({ date: rp.professionalRatedAt, month: 'numeric' })}</p>}
             </div>
-            <Emotion averagePoints={rp.points} />
+            <Emotion averagePoints={rp.professionalRating ?? 1} />
           </li>
         ))}
       </ul>
