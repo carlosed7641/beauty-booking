@@ -1,6 +1,7 @@
 'use server'
 
 import prisma from "@/lib/prisma"
+import { revalidatePath } from "next/cache"
 
 export const toggleFollower = async (entityId: string, userId: string, alreadyFollow: boolean) => {
 
@@ -16,4 +17,6 @@ export const toggleFollower = async (entityId: string, userId: string, alreadyFo
     } else {
         await prisma.follower.create(({ data: { entityId, userId } }))
     }
+
+    revalidatePath('/favorite-entities')
 }
