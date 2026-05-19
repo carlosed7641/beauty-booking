@@ -169,7 +169,7 @@ export default async function HomePage() {
               userId={session.user?.id ?? ''}
             />
           )}
-          {(userData?.nextReservations ?? []).length > 0 && (
+          {(userData?.services ?? []).length > 0 && (
             <RecentServices 
               services={userData?.services ?? []} 
             />

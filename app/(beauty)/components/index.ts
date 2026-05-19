@@ -1,6 +1,7 @@
 export * from './bottom-menu/BottomMenu'
 export * from './categories/Categories'
 export * from './entity/EntityCard'
+export * from './expired-events-modal/ExpiredEventsModal'
 export * from './favorite-entities/FavoriteEntites'
 export * from './filter-list/FilterList'
 export * from './follow-button/FollowButton'

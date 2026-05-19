@@ -3,7 +3,7 @@
 import { linkProfessional } from '@/actions'
 import { useState, useTransition } from 'react'
 import { RegistrationData } from '../registration-data/RegistrationData'
-import { SignOut } from '../../profile/sign-out/SignOut'
+import { SignOut } from '@/components'
 
 interface Props {
     countries: Country[]

@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 import prisma from '@/lib/prisma'
 import { getCountries } from '@/actions'
 import { SelectCountry } from '@/components'
-import { RegistrationUserForm } from './components'
+import { RegistrationUserForm, ExpiredEventsModal } from './components'
 
 export default async function BeautyLayout({
     children,
@@ -16,6 +16,7 @@ export default async function BeautyLayout({
     const session = await auth()
     let userName = null
     let userPhoto = undefined
+    let expiredEvents: EventReview[] = []
 
     if (session?.user?.role === 'admin' || session?.user?.role === 'employee') return redirect('/admin')
 
@@ -54,6 +55,36 @@ export default async function BeautyLayout({
             )
         }
 
+
+        expiredEvents = await prisma.event.findMany({
+            where: {
+                customer: {
+                    userId: session.user?.id
+                },
+                end: {
+                    lt: new Date()
+                },
+                status: {
+                    in: ['completed', 'pending']
+                },
+                customerRating: null,
+                expiredViewed: false
+            },
+            orderBy: {
+                start: 'asc'
+            },
+            select: {
+                id: true,
+                title: true,
+                start: true,
+                professional: {
+                    select: {
+                        name: true,
+                        photo: true
+                    }
+                }
+            }
+        })
     }
 
     return (
@@ -67,6 +98,7 @@ export default async function BeautyLayout({
                 {children}
             </main>
             <BottomMenu />
+            <ExpiredEventsModal events={expiredEvents} />
         </>
     )
 }

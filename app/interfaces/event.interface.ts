@@ -46,10 +46,20 @@ interface EventDate {
 }
 
 const EventStatus = {
-  completed: 'completed',
-  pending: 'pending',
-  cancelled: 'cancelled',
-  aborted: 'aborted'
+    completed: 'completed',
+    pending: 'pending',
+    cancelled: 'cancelled',
+    aborted: 'aborted'
 } as const
 
 type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
+
+interface EventReview {
+    id: string
+    title: string
+    start: Date
+    professional: {
+        name: string | null
+        photo: string | null
+    }
+}

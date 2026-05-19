@@ -8,13 +8,19 @@ import { SERVICE_INITIAL_STATE } from '@/util/const'
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
 
     const pathname = usePathname()
-    const openModal  = useModal(state => state.openModal)
+    const openModal = useModal(state => state.openModal)
     const setOpenModal = useModal(state => state.setOpenModal)
     const serviceState = useService(state => state.serviceState)
     const setServiceState = useService(state => state.setServiceState)
 
     useEffect(() => {
-        setOpenModal(serviceState.selectedService && pathname.includes('entity') ? 'ServiceList': null)
+        if (
+            serviceState.selectedService &&
+            pathname.includes('entity')
+        ) {
+            setOpenModal('ServiceList')
+        }
+
     }, [pathname])
 
     useEffect(() => {

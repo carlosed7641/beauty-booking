@@ -8,7 +8,7 @@ import {
     Skills,
     WorkExperience,
 } from '.'
-import { SignOut } from './sign-out/SignOut'
+import { SignOut } from '@/components'
 import { getEntityById, getUserById } from '@/actions'
 import { auth } from '@/auth.config'
 import { UserDTO } from '@/interfaces/user.interface'

@@ -1,6 +1,6 @@
 import prisma from '@/lib/prisma'
 import { auth } from '@/auth.config'
-import { ProfilePhoto, UpdateProfile } from '@/components'
+import { ProfilePhoto, SignOut, UpdateProfile } from '@/components'
 import { ImproveExperience, RecentServices } from '../components'
 import { formatDate, getReviews } from '@/helpers'
 import { GENDERS } from '@/util/const'
@@ -128,6 +128,7 @@ export default async function ProfilePage() {
               role: user?.role,
             }}
           />
+         <SignOut /> 
         </div>
       </div>
       <RecentServices services={recentServices} />

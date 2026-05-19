@@ -8,30 +8,30 @@ datasource db {
 }
 
 model Entity {
-  id                    String        @id @default(uuid())
-  numberId              Int           @unique @default(autoincrement())
-  logo                  String?
-  cover                 String?
-  name                  String?
-  contactUrl            String?
-  countryId             String
-  ownerId               String        @unique
-  address               String?
-  addressReference      String?
-  shopType              String?
-  createdAt             DateTime      @default(now())
-  cancelDateTime        Int           @default(20) 
-  linkingCode           String        @unique
-  country               Country       @relation(fields: [countryId], references: [id])
-  owner                 User          @relation("EntityOwner", fields: [ownerId], references: [id])
-  services              Service[]
-  users                 User[]
-  workdays              WorkDay[]
-  samples               WorkSample[]
-  blockedUsers          BlockedUser[]
-  customers             Customer[]
-  events                Event[]
-  followers             Follower[]
+  id               String        @id @default(uuid())
+  numberId         Int           @unique @default(autoincrement())
+  logo             String?
+  cover            String?
+  name             String?
+  contactUrl       String?
+  countryId        String
+  ownerId          String        @unique
+  address          String?
+  addressReference String?
+  shopType         String?
+  createdAt        DateTime      @default(now())
+  cancelDateTime   Int           @default(20)
+  linkingCode      String        @unique
+  country          Country       @relation(fields: [countryId], references: [id])
+  owner            User          @relation("EntityOwner", fields: [ownerId], references: [id])
+  services         Service[]
+  users            User[]
+  workdays         WorkDay[]
+  samples          WorkSample[]
+  blockedUsers     BlockedUser[]
+  customers        Customer[]
+  events           Event[]
+  followers        Follower[]
 }
 
 model User {
@@ -113,6 +113,7 @@ model Event {
   title           String
   start           DateTime
   end             DateTime
+  expiredViewed   Boolean      @default(false)
   typeBooking     String
   status          EventStatus?
   customerId      String

@@ -74,7 +74,7 @@ export const upsertEvent = async (event: Event): Promise<EventDate> => {
     } else {
 
         let customerId = event.customer?.id
-        
+
         if (!customerId) {
             if (!event.userId) throw new Error('Ocurrió un error al crear evento')
             const existingCustomer = await prisma.customer.findFirst({
@@ -204,11 +204,24 @@ export const updateEventUserRate = async ({ id, customerRating }: Props) => {
 
     if (Object.keys(data).length === 0) return
 
+    data.expiredViewed = true
+
     await prisma.event.update(({
         data,
         where: { id }
     }))
+}
 
-    // revalidatePath('/my-reservations')
 
+export const updateExpiredEvents = async (evetns: EventReview[]) => {
+    await prisma.event.updateMany({
+        where: {
+            id: {
+                in: evetns.map(ev => ev.id)
+            }
+        },
+        data: {
+            expiredViewed: true
+        }
+    })
 }
