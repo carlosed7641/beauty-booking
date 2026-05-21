@@ -13,7 +13,8 @@ interface Props {
 
 export const ServiceOrder = ({ selectedOrder, setSelectedOrder }: Props) => {
 
-    const { openModal, setOpenModal } = useModal()
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
 
     const handleClickOption = (option: string) => {
         if (option === selectedOrder) return
@@ -29,7 +30,7 @@ export const ServiceOrder = ({ selectedOrder, setSelectedOrder }: Props) => {
             </div>
             {
                 openModal === 'ServiceOrder.name' &&
-                <Modal className="md:w-[550px]! overflow-hidden!">
+                <Modal className="md:w-137.5! overflow-hidden!">
                     <ModalHeader>
                         <p className="text-green-700 text-xl">Ordenar por</p>
                     </ModalHeader>

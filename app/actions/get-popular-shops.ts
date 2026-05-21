@@ -17,7 +17,7 @@ export const getPopularShops = async () => {
             logo: true,
             events: {
                 where: {
-                    status: 'completed'
+                    status:{ in: ['completed', 'pending']}
                 },
                 select: {
                     id: true,

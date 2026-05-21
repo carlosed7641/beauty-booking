@@ -17,14 +17,14 @@ export const searchEntity = async (contains: string, take?: number) => {
                         followers: true,
                         events: {
                             where: {
-                                status: 'completed'
+                                status:  { in: ['pending', 'completed']}
                             }
                         }
                     }
                 },
                 events: {
                     where: {
-                        status: 'completed'
+                        status: { in: ['pending', 'completed']}
                     },
                     select: {
                         id: true,

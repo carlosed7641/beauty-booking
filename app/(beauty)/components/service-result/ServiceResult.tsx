@@ -3,18 +3,23 @@
 import { useState } from 'react'
 import { useSelectedFilters } from '@/store'
 import { FilterList, ServiceResultList, ServiceFilters, ServiceOrder } from '..'
-import { orderBy, getServiceResults } from '@/helpers'
+import { orderBy } from '@/helpers'
 
-export const ServiceResult = ({ serviceList }: { serviceList: Service[]}) => {
+export const ServiceResult = ({ results }: { results: ServiceResult[] }) => {
 
-    const { selectedFilters, setSelectedFilters } = useSelectedFilters()
+    const selectedFilters = useSelectedFilters(state => state.selectedFilters)
+    const setSelectedFilters = useSelectedFilters(state => state.setSelectedFilters)
     const [selectedOrder, setSelectedOrder] = useState<string | null>(null)
 
-    const results = selectedFilters.length ?
-        serviceList.filter(s => selectedFilters.includes(s.category.toLowerCase())).flatMap(getServiceResults) :
-        serviceList.flatMap(getServiceResults)
+    const filteredResults =
+        selectedFilters.length > 0
+            ? results.filter(result => selectedFilters.includes(result.category))
+            : results
 
-    const orderedResults = orderBy(results, selectedOrder ?? '')
+    const orderedResults = selectedOrder
+        ? orderBy(filteredResults, selectedOrder)
+        : filteredResults
+
 
     const handleClickFilter = (filter: string) => {
         setSelectedFilters(selectedFilters.filter(item => item !== filter))
@@ -30,18 +35,26 @@ export const ServiceResult = ({ serviceList }: { serviceList: Service[]}) => {
                 {selectedFilters.length > 0 &&
                     <>
                         <span className="flex text-xl text-green-700">Filtros seleccionados</span>
-                        <FilterList items={selectedFilters}
+                        <FilterList
+                            items={selectedFilters}
                             handleClick={handleClickFilter}
-                            selectedFilters={selectedFilters} />
+                            selectedFilters={selectedFilters}
+                        />
                     </>
                 }
             </div>
             {
-                orderedResults.length ? <ServiceResultList services={orderedResults} />
+                results.length > 0
+                    ?
+                    orderedResults.length > 0 ? <ServiceResultList services={orderedResults} />
+                        :
+                        <div>
+                            No se encontraron servicios asociados a {' '}
+                            {selectedFilters.length > 1 ? 'las categorías indicadas' : 'la categoría indicada'}
+                        </div>
                     :
                     <div>
-                        No se encontraron servicios asociados{' '}
-                        {selectedFilters.length > 1 ? 'las categorías indicadas' : 'la categoría indicada'}
+                        No se encontraron servicios cercarnos
                     </div>
             }
         </>

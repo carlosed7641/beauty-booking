@@ -22,17 +22,18 @@ import { IconType } from 'react-icons'
 import { AiOutlineDollar } from 'react-icons/ai'
 import { FaRegStar } from 'react-icons/fa'
 import { FiMapPin, FiUsers } from 'react-icons/fi'
-import { GiComb } from 'react-icons/gi'
-import { GrFavorite, GrGallery } from 'react-icons/gr'
+import { GiEyelashes, GiFingersCrossed, GiLipstick } from 'react-icons/gi'
+import { GrGallery } from 'react-icons/gr'
 import { HiOutlineLockClosed } from 'react-icons/hi2'
-import { IoHomeOutline, IoStorefrontOutline, IoCutOutline } from 'react-icons/io5'
+import { IoHomeOutline, IoStorefrontOutline } from 'react-icons/io5'
 import { LuCalendarCheck, LuCopyCheck, LuListTodo, LuNotebook } from 'react-icons/lu'
-import { MdOutlineCalendarToday } from 'react-icons/md'
-import { PiMedalLight } from 'react-icons/pi'
+import { MdInvertColors, MdOutlineCalendarToday } from 'react-icons/md'
+import { PiEyeClosed, PiHairDryer, PiMedalLight } from 'react-icons/pi'
 import { RiCalendarScheduleLine, RiUserSettingsLine } from 'react-icons/ri'
-import { TbClockHour3, TbClockHour5, TbUserHeart, TbUsers } from 'react-icons/tb'
+import { TbClockHour3, TbClockHour5, TbMassage, TbUserHeart, TbUsers } from 'react-icons/tb'
 import { VscGraph } from 'react-icons/vsc'
 import { Gender } from '@/generated/prisma/enums'
+import { IoMdCut } from 'react-icons/io'
 
 export const SERVICE_INITIAL_STATE = {
     selectedService: null,
@@ -86,7 +87,7 @@ export const GENDERS: Record<Gender, string> = {
   other: 'Otro'
 }
 
-export const ORDER_OPTIONS = ['Precio mayor', 'Precio menor', 'Predeterminado'] //TODO: Más cerca de ti
+export const ORDER_OPTIONS = ['Precio mayor', 'Precio menor', 'Predeterminado']
 
 export const MONTHS = [
     { month: 'ene', days: 31 },
@@ -154,9 +155,14 @@ export const MENU_OPTIONS = [
 ]
 
 export const SERVICE_ICONS: { [key: string]: IconType } = {
-    'cortes': IoCutOutline,
-    'peinados': GiComb
-    // uñas, impieza facial
+    maquillajes: GiLipstick,
+    masajes: TbMassage,
+    pestañas: PiEyeClosed,
+    cejas: GiEyelashes,
+    uñas: GiFingersCrossed,
+    color: MdInvertColors,
+    peinados: PiHairDryer,
+    cortes: IoMdCut,
 }
 
 export const DEFAULT_SERVICES_LIST = {

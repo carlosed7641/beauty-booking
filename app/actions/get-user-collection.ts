@@ -8,14 +8,6 @@ const ENTITY_FIELDS = {
     numberId: true,
     name: true,
     logo: true,
-    events: {
-        where: {
-            status: 'completed'
-        },
-        select: {
-            customerRating: true
-        }
-    }
 } as const
 
 export const getUserCollection = async ({
@@ -45,6 +37,14 @@ export const getUserCollection = async ({
                             entity: {
                                 select: {
                                     ...ENTITY_FIELDS,
+                                    events: {
+                                        where: {
+                                            status: { in: ['completed', 'pending'] }
+                                        },
+                                        select: {
+                                            customerRating: true
+                                        }
+                                    },
                                     cancelDateTime: true
                                 },
                             },
@@ -70,7 +70,18 @@ export const getUserCollection = async ({
             followers: {
                 select: {
                     entity: {
-                        select: ENTITY_FIELDS
+                        select: {
+                            ...ENTITY_FIELDS,
+                            events: {
+                                where: {
+                                    status: { in: ['completed', 'pending'] }
+                                },
+                                select: {
+                                    customerRating: true
+                                }
+                            },
+                        },
+
                     }
                 }
             }

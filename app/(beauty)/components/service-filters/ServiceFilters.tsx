@@ -5,12 +5,14 @@ import { LiaFilterSolid } from 'react-icons/lia'
 import { useModal, useSelectedFilters } from '@/store'
 import { Modal, ModalHeader } from '@/components'
 import { FilterList } from '..'
-import { serviceCategories } from '@/util/fake-data'
+import { DEFAULT_SERVICES_LIST } from '@/util/const'
 
 export const ServiceFilters = () => {
 
-    const { openModal, setOpenModal } = useModal()
-    const { selectedFilters, setSelectedFilters } = useSelectedFilters()
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
+    const selectedFilters = useSelectedFilters(state => state.selectedFilters)
+    const setSelectedFilters = useSelectedFilters(state => state.setSelectedFilters)
     const [temporalSelectedFilters, setTemporalSelectedFilters] = useState([...selectedFilters])
 
     useEffect(() => {
@@ -38,12 +40,12 @@ export const ServiceFilters = () => {
             </div>
             {
                 openModal === ServiceFilters.name &&
-                <Modal className="md:w-[550px]! overflow-hidden!">
+                <Modal className="md:w-137.5! overflow-hidden!">
                     <ModalHeader>
                         <p className="text-green-700 text-xl">Filtrar por categoría</p>
                     </ModalHeader>
-                    <FilterList items={serviceCategories} handleClick={handleClickCategory} selectedFilters={temporalSelectedFilters} />
-                    <button onClick={handleClickButton} className="btn-primary mt-8 justify-center rounded-md flex justify-self-center w-[130px]">Listo</button>
+                    <FilterList items={Object.keys(DEFAULT_SERVICES_LIST)} handleClick={handleClickCategory} selectedFilters={temporalSelectedFilters} />
+                    <button onClick={handleClickButton} className="btn-primary mt-8 justify-center rounded-md flex justify-self-center w-32.5">Listo</button>
                 </Modal>
             }
         </>

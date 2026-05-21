@@ -13,7 +13,7 @@ export const Categories = () => {
                         <CategoryCard
                             key={category}
                             name={category}
-                            iconId="store"
+                            iconId={category.toLocaleLowerCase()}
                         />
                     ))
                 }

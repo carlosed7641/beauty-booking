@@ -399,5 +399,3 @@ export const session: Session = {
   shareNumberPhone: true,
   role: 'admin'
 }
-
-export const serviceCategories = ['Color cabello', 'Cortes', 'Peinados']
