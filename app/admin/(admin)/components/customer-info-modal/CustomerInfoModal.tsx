@@ -10,7 +10,7 @@ import { PiHairDryerLight } from 'react-icons/pi'
 import { TbGenderMale } from 'react-icons/tb'
 import { useModal } from '@/store'
 import { Emotion, Modal, ModalHeader } from '@/components'
-import { formatDate, formatDisplayNumber, formatNumber, getDaysSince } from '@/helpers'
+import { formatDate, formatDisplayNumber, getDaysSince } from '@/helpers'
 import { GENDERS } from '@/util/const'
 
 interface Props {

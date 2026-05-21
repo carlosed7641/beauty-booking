@@ -8,7 +8,8 @@ import { deleteBlockedUser } from '@/actions'
 
 export const BlockedUsers = ({ users, entityId }: { users: UserInfo[], entityId: string }) => {
 
-    const { openModal, setOpenModal } = useModal()
+    const openModal = useModal(state => state.openModal)
+    const setOpenModal = useModal(state => state.setOpenModal)
     const [currentUserId, setCurrentUserId] = useState<string | null>(null)
     const [isPending, startTransition] = useTransition()
 

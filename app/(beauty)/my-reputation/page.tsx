@@ -1,64 +1,8 @@
 import { auth } from '@/auth.config'
 import { Emotion } from '@/components'
-import { formatDate, formatedDate } from '@/helpers'
+import { formatDate } from '@/helpers'
 import prisma from '@/lib/prisma'
 import { RiEmotionHappyLine } from 'react-icons/ri'
-
-const professionalReviews = [
-  {
-    userId: 1,
-    professional: {
-      id: 'abc',
-      name: 'Gregorio Carrena',
-      photo: 'https://picsum.photos/150/150',
-      entityId: '422',
-      resume: 'Barbero con más de 10 años de experiencia',
-      reviews: {
-        points: 4.7,
-        count: 224
-      }
-    },
-    comment: 'Llegó a tiempo',
-    date: 1746382434738,
-    points: 3
-  },
-  {
-    userId: 1,
-    professional: {
-      id: 'abc',
-      name: 'Carlos Castro',
-      photo: 'https://picsum.photos/150/150',
-      entityId: '422',
-      resume: 'Barbero con más de 10 años de experiencia',
-      reviews: {
-        points: 4.7,
-        count: 224
-      }
-    },
-    comment: 'Llegó tarde',
-    date: 1746382434739,
-    points: 2
-  },
-  {
-    userId: 2,
-    professional: {
-      id: 'abc',
-      name: 'Cristiano Ronaldo',
-      photo: 'https://picsum.photos/150/150',
-      entityId: '422',
-      resume: 'Barbero con más de 10 años de experiencia',
-      reviews: {
-        points: 4.7,
-        count: 224
-      }
-    },
-    comment: 'No llegó',
-    date: 1746382434738,
-    points: 1
-  }
-]
-
-const userId = 1
 
 export default async function MyReputationPage() {
 

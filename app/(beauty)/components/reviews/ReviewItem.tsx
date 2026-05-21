@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { FaStar } from 'react-icons/fa'
-import { formatedDate } from '@/helpers'
 
 interface Props {
     photoUrl?: string

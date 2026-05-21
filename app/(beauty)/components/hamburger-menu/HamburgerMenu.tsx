@@ -5,7 +5,9 @@ import clsx from 'clsx'
 import { useMenu } from '@/store'
 
 export const HamburgerMenu = () => {
-  const { setIsOpenMenu, isOpenMenu } = useMenu()
+
+  const isOpenMenu = useMenu(state => state.isOpenMenu)
+  const setIsOpenMenu = useMenu(state => state.setIsOpenMenu)
   const handleOpenMenu = () => setIsOpenMenu(true)
 
   return (

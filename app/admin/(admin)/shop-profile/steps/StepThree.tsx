@@ -3,7 +3,9 @@ import { useProfileSteps } from '../../store'
 
 export const StepThree = () => {
 
-    const { data, showErrors, setData } = useProfileSteps()
+    const data = useProfileSteps(state => state.data)
+    const setData = useProfileSteps(state => state.setData)
+    const showErrors = useProfileSteps(state => state.showErrors)
 
     return (
         <>

@@ -3,7 +3,9 @@ import { SHOP_TYPES } from '@/util/const'
 
 export const StepTwo = () => {
 
-    const { data, setData, showErrors } = useProfileSteps()
+    const data = useProfileSteps(state => state.data)
+    const setData = useProfileSteps(state => state.setData)
+    const showErrors = useProfileSteps(state => state.showErrors)
 
     const handleSetType = (type: string) => {
         const { shopType } = data

@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { CgSpinner } from 'react-icons/cg'
+import { useRouter, useSearchParams } from 'next/navigation'
 import clsx from 'clsx'
 import { login, registerUser } from '@/actions'
-import { useParams, useRouter, useSearchParams } from 'next/navigation'
 
 interface Inputs {
     email: string
@@ -25,8 +25,6 @@ export const NewAccountForm = () => {
     const [formState, setFormState] = useState({ error: '', loading: false })
     const watchPassword = watch('password')
     const watchConfirmPassord = watch('confirmPassword')
-
-
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
 

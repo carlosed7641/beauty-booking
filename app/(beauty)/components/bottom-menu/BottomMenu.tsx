@@ -14,7 +14,8 @@ export const BottomMenu = () => {
 
     const pathname = usePathname()
     const [currentActive, setCurrentActive] = useState(pathname)
-    const { isOpenMenu, setIsOpenMenu } = useMenu()
+    const isOpenMenu = useMenu(state => state.isOpenMenu)
+    const setIsOpenMenu = useMenu(state => state.setIsOpenMenu)
 
     const handleClick = (href: string) => {
         setCurrentActive(href)

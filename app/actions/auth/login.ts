@@ -2,7 +2,6 @@
 
 import { signIn } from '@/auth.config'
 import prisma from '@/lib/prisma'
-import { revalidatePath } from 'next/cache'
 
 export const login = async (email: string, password: string) => {
   try {

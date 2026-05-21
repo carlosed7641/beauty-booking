@@ -14,7 +14,8 @@ const imageFields: { key: ImageKeys, label: string }[] = [
 
 export const StepOne = () => {
 
-    const { data, setData } = useProfileSteps()
+    const data = useProfileSteps(state => state.data)
+    const setData = useProfileSteps(state => state.setData)
 
     const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return

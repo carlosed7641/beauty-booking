@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { Tabs, ReviewsModal, ServiceListTab } from '../../components'
 import { WorkSamples } from '@/components'
 import { auth } from '@/auth.config'

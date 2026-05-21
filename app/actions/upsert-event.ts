@@ -45,7 +45,7 @@ export const upsertEvent = async (event: Event): Promise<EventDate> => {
 
     const start = new Date(event.selectedDate as Date)
     const [hours, minutes] = event.selectedHour!.split(':').map(Number)
-    start.setHours(hours, minutes, 0, 0);
+    start.setHours(hours, minutes, 0, 0)
 
     const duration = getTotalMinutes({ hours: event.durationHours, minutes: event.durationMinutes })
     const end = new Date(start.getTime() + duration * 60000)

@@ -99,7 +99,10 @@ export const getAvailableSlots = async ({
 const isSlotOccupied = (
     slotStart: Date,
     serviceDuration: number,
-    events: { start: Date; end: Date }[]
+    events: {
+        start: Date
+        end: Date
+    }[]
 ) => {
 
     const slotEnd = new Date(slotStart.getTime() + serviceDuration * 60000)

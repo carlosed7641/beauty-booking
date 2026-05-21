@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { useSteps } from '../../store'
 
 export const Stepper = () => {
+    
     const step = useSteps(state => state.step)
 
     return (

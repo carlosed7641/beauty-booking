@@ -12,7 +12,6 @@ export const ProfileVisibility = ({ isPublic }: { isPublic: boolean }) => {
             (_, newVisibility: boolean) => newVisibility
         )
 
-
     const handleToggleVisibility = async () => {
 
         const nextValue = !optimisticVisibility

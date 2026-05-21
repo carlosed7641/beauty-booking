@@ -2,7 +2,7 @@ import { FaArrowCircleUp, FaTrashRestore } from 'react-icons/fa'
 import { MdEdit } from 'react-icons/md'
 import { useModal } from '@/store'
 import { useServiceFormData } from '../store'
-import { formatDisplayNumber, formatNumber } from '@/helpers'
+import { formatDisplayNumber } from '@/helpers'
 import { updateService } from '@/actions'
 import { useState } from 'react'
 

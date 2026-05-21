@@ -4,7 +4,8 @@ import { useProfileSteps } from '../../store'
 
 export const Stepper = ({ title, stepsLength }: { title: string, stepsLength: number }) => {
 
-    const { step, setStep } = useProfileSteps()
+    const step= useProfileSteps(state => state.step)
+    const setStep = useProfileSteps(state => state.setStep)
 
     const calcProgressWidth = () => {
         const width = Math.ceil(((step + 1) / stepsLength) * 100)

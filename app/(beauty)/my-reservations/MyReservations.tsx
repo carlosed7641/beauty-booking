@@ -12,7 +12,6 @@ import { MdStar, MdStarOutline } from 'react-icons/md'
 import { updateEventUserRate } from '@/actions'
 import { useRouter } from 'next/navigation'
 
-
 interface Props {
     events: EventDate[]
     professionals: ProfessionalSchedule[]

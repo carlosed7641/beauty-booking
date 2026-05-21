@@ -3,8 +3,6 @@ import { FaRegStar } from 'react-icons/fa'
 import { ReviewItem } from '../components'
 import { auth } from '@/auth.config'
 
-const userId = '27'
-
 export default async function MyReviewsPage() {
 
   const session = await auth()

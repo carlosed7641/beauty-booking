@@ -94,7 +94,7 @@ export const getEventsDataByRange = async ({ dateRange, professionalId, entityId
                     existingService.quantity += 1
                     existingService.total += price
                 } else {
-                    acc.groupSales.push({ id: service.id, name: service.name, quantity: 1, total: price });
+                    acc.groupSales.push({ id: service.id, name: service.name, quantity: 1, total: price })
                 }
 
                 acc.groupSales = acc.groupSales.sort((s1, s2) => s2.total - s1.total)

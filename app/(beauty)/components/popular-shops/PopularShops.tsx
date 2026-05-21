@@ -3,8 +3,6 @@ import { ShopCardLayout, ShopCard } from '..'
 import { getPopularShops } from '@/actions'
 import { getReviews } from '@/helpers'
 
-
-
 export const PopularShops = async () => {
 
     const data = await getPopularShops()

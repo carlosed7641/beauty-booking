@@ -26,8 +26,3 @@ interface Service {
   category: string
   services: ServiceItem[]
 }
-
-interface ServiceItemExtended extends ServiceItem {
-  entityName: string
-  category: string
-}

@@ -78,8 +78,7 @@ export const FLAGS: Record<string, ()=> React.JSX.Element> = {
   RD: DominicanRepublicFlag,
   UY: UruguayFlag,
   VE: VenezuelaFlag,
-};
-
+}
 
 export const GENDERS: Record<Gender, string> = {
   men: 'Hombre',
@@ -364,7 +363,6 @@ export const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
 
 export const CALENDAR_VIEWS: View[] = ['month', 'week', 'day']
 
-
 export const SERVICE_INITIAL_DATA = {
     serviceId: '',
     name: '',
@@ -379,12 +377,7 @@ export const SERVICE_INITIAL_DATA = {
 export const DEFAULT_PROFESSIONAL = {
     id: '',
     name: '',
-    entityId: '',
-    // resume: '',
-    // reviews: {
-    //     points: 0,
-    //     count: 0
-    // }
+    entityId: ''
 }
 
 export const DEFAULT_REPORT_DATA_SUMMARY: ReportDataSummary = {

@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from "../app/generated/prisma/client";
+import { PrismaClient, Prisma } from "../app/generated/prisma/client"
 import { PrismaPg } from '@prisma/adapter-pg'
 import 'dotenv/config'
 
@@ -8,7 +8,7 @@ const adapter = new PrismaPg({
 
 const prisma = new PrismaClient({
   adapter,
-});
+})
 
 // export const countries = [
 //   { shortName: 'AR', name: 'Argentina', indicator: '54' },
@@ -31,31 +31,8 @@ const prisma = new PrismaClient({
 //   { shortName: 'VE', name: 'Venezuela', indicator: '58' }
 // ]
 
-// const categories = [ 
-//   { categoryName: "Cortes" },
-//   { categoryName: "Peinados" },
-//   { categoryName: "Color" },
-//   { categoryName: "Uñas" },
-//   { categoryName: "Cejas" },
-//   { categoryName: "Pestañas" },
-//   { categoryName: "Masajes" },
-//   { categoryName: "Maquillajes" }
-// ]
-
-const defaultServices: Record<string, string[]> = {
-  'Cortes': ['Corte', 'Corte hombre', 'Corte con barba', 'Corte niño'],
-  'Peinados': ['Peinados', 'Trenzas'],
-  'Color': ['Diseño color', 'Mechas', 'Efecto raíz'],
-  'Uñas': ['Manos', 'Pies', 'Manos y pies'],
-  'Cejas': ['Laminado', 'Micropigmentación'],
-  'Pestañas': ['Efecto natural', 'Efecto pestañina'],
-  'Masajes': ['Relajante', 'Deportivo', 'Reductor'],
-  'Maquillajes': ['Sencillo', 'Artístico']
-}
-
-
 export async function main() {
 
 }
 
-main();
+main()

@@ -2,9 +2,8 @@
 
 import clsx from 'clsx'
 import { useService } from '@/store'
-import { format24, getClosestTime, getTotalMinutes } from '@/helpers'
-import { useEffect, useMemo, useState } from 'react'
-import { isSameDay } from '@/helpers'
+import { getClosestTime, getTotalMinutes } from '@/helpers'
+import { useEffect, useState } from 'react'
 import { getAvailableSlots } from '@/actions'
 import { ImSpinner8 } from 'react-icons/im'
 
@@ -12,7 +11,6 @@ interface Props {
     duration: { hours: number, minutes: number }
     workdays: WorkDays[]
 }
-
 
 export const SelectHour = ({ duration, workdays }: Props) => {
 

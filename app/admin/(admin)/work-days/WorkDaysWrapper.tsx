@@ -28,8 +28,6 @@ export const WorkDaysWrapper = ({ workdays }: { workdays: WorkDays[] }) => {
         } finally {
             setIsLoading(false)
         }
-
-
     }
 
     const isValid = !data.workdays.some(({ error }) => error)

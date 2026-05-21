@@ -4,8 +4,6 @@ import prisma from '@/lib/prisma'
 import { auth } from '@/auth.config'
 import { revalidatePath } from 'next/cache'
 import { uploadImage } from '@/helpers/upload-image'
-
-
 interface EntityDTO {
     entityId: string
     cancelDateTime?: number
