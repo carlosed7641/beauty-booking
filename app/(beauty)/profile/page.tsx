@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import prisma from '@/lib/prisma'
 import { auth } from '@/auth.config'
 import { ProfilePhoto, SignOut, UpdateProfile } from '@/components'
@@ -19,6 +20,11 @@ const ENTITY_FIELDS = {
     }
   }
 } as const
+
+export const metadata: Metadata = {
+  title: 'Mi perfil'
+}
+
 
 export default async function ProfilePage() {
 

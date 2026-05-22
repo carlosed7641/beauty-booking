@@ -5,13 +5,11 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Beauty Booking',
-  description: 'The best beauty salons, spas and barbershops'
+  description: 'Encuentra barberías, salones de belleza y spas a tu alrededor.'
 }
 
-// Campos condicionales en server components
-// Metadata
-// Imágenes Cloduinary 
-// Map
+// TODO: Replace and delete cloudinary images
+// TODO: Map & geolocalization
 
 export default function RootLayout({
   children,

@@ -1,4 +1,5 @@
 
+import { Metadata } from 'next'
 import prisma from '@/lib/prisma'
 import { auth } from '@/auth.config'
 import { getUserCollection } from '@/actions'
@@ -29,6 +30,10 @@ interface EntityData {
     order: number
     disabled: boolean
   }[]
+}
+
+export const metadata: Metadata = {
+  title: 'Mis reservas'
 }
 
 export default async function MyReservationsPage() {

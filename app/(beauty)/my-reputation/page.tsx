@@ -1,8 +1,13 @@
+import { Metadata } from 'next'
 import { auth } from '@/auth.config'
 import { Emotion } from '@/components'
 import { formatDate } from '@/helpers'
 import prisma from '@/lib/prisma'
 import { RiEmotionHappyLine } from 'react-icons/ri'
+
+export const metadata: Metadata = {
+  title: 'Mi reputación'
+}
 
 export default async function MyReputationPage() {
 

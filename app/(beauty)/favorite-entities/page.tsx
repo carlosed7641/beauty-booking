@@ -1,7 +1,12 @@
+import { Metadata } from 'next'
 import prisma from '@/lib/prisma'
 import { auth } from '@/auth.config'
 import { EntityCard } from '../components'
 import { getReviews } from '@/helpers'
+
+export const metadata: Metadata = {
+  title: 'Negocios Seguidos'
+}
 
 export default async function FavoriteEntitiesPage() {
 

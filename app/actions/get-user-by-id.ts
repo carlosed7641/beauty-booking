@@ -30,7 +30,7 @@ export const getUserById = async (id: string) => {
                 },
                 professionalEvents: {
                     where: {
-                        status: 'completed'
+                        status: { in: ['completed', 'pending']}
                     },
                     select: {
                         id: true,

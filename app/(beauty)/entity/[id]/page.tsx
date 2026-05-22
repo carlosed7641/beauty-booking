@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
@@ -8,11 +9,26 @@ import { getEntityById } from '@/actions'
 import { Social } from './Social'
 import { ShopInfo } from './ShopInfo'
 import { getServiceList, minutesToTime, toMinutes } from '@/helpers'
-import { auth } from '@/auth.config'
 import prisma from '@/lib/prisma'
+import { auth } from '@/auth.config'
 
 interface Props {
     params: Promise<{ id: string }>
+}
+
+export async function generateMetadata(
+    { params }: Props
+): Promise<Metadata> {
+
+    const { id } = await params
+    const data = await prisma.entity.findFirst({
+        where: { numberId: Number(id) },
+        select: { name: true }
+    })
+
+    return {
+        title: data?.name,
+    }
 }
 
 export default async function EntityPage({ params }: Props) {

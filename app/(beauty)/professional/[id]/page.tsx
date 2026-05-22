@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import prisma from '@/lib/prisma'
 import { Tabs, ReviewsModal, ServiceListTab } from '../../components'
 import { WorkSamples } from '@/components'
 import { auth } from '@/auth.config'
@@ -10,6 +12,22 @@ import { getServiceList, minutesToTime, toMinutes } from '@/helpers'
 interface Props {
     params: Promise<{ id: string }>
 }
+
+export async function generateMetadata(
+    { params }: Props
+): Promise<Metadata> {
+
+    const { id } = await params
+    const data = await prisma.user.findUnique({
+        where: { id },
+        select: { name: true }
+    })
+
+    return {
+        title: data?.name,
+    }
+}
+
 
 export default async function ProfessionalPage({ params }: Props) {
 

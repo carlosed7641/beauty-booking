@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { Fragment } from 'react'
 import { EntityCard } from '../components'
 import { searchEntity } from '@/actions'
@@ -6,8 +7,18 @@ import { getReviews } from '@/helpers'
 import prisma from '@/lib/prisma'
 
 interface Props {
-  params: Promise<{ type: string }>
   searchParams: Promise<{ q: string }>
+}
+
+export async function generateMetadata(
+  { searchParams }: Props
+): Promise<Metadata> {
+
+  const { q } = await searchParams
+
+  return {
+    title: q ?? 'Negocios',
+  }
 }
 
 export default async function EntitiesPage({ searchParams }: Props) {

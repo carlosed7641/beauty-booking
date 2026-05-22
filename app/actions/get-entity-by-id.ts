@@ -36,7 +36,7 @@ export const getEntityById = async (id: string | number) => {
                         },
                         professionalEvents: {
                             where: {
-                                status: 'completed'
+                                status: { in: ['completed', 'pending'] }
                             },
                             select: {
                                 id: true,

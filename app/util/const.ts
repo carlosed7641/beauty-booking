@@ -121,7 +121,7 @@ export const MENU_OPTIONS = [
     {
         label: 'Negocios Seguidos',
         Icon: IoStorefrontOutline,
-        href: 'favorite-entities'
+        href: '/favorite-entities'
     },
     {
         label: 'Mis Reseñas',

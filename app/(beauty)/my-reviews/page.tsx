@@ -1,7 +1,12 @@
+import { Metadata } from 'next'
 import prisma from '@/lib/prisma'
 import { FaRegStar } from 'react-icons/fa'
 import { ReviewItem } from '../components'
 import { auth } from '@/auth.config'
+
+export const metadata: Metadata = {
+  title: 'Mis reseñas'
+}
 
 export default async function MyReviewsPage() {
 

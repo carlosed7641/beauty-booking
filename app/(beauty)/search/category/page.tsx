@@ -1,6 +1,11 @@
+import { Metadata } from 'next'
 import prisma from '@/lib/prisma'
 import { ServiceResult } from '../../components'
 import { getReviews } from '@/helpers'
+
+export const metadata: Metadata = {
+  title: 'Buscar por categoría'
+}
 
 export default async function SearchPage() {
 
