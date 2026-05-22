@@ -3,7 +3,6 @@ import { BottomMenu } from './components/bottom-menu/BottomMenu'
 import { auth } from '@/auth.config'
 import { redirect } from 'next/navigation'
 import prisma from '@/lib/prisma'
-import { getCountries } from '@/actions'
 import { SelectCountry } from '@/components'
 import { RegistrationUserForm, ExpiredEventsModal } from './components'
 
@@ -39,19 +38,16 @@ export default async function BeautyLayout({
         userPhoto = user.photo
 
         if (!user?.countryId) {
-            const countries = await getCountries()
             return (
                 <SelectCountry
-                    countries={countries}
                     isUser
                 />
             )
         }
 
         if (!user.isRegisterCompleted) {
-            const countries = await getCountries()
             return (
-                <RegistrationUserForm countries={countries} />
+                <RegistrationUserForm />
             )
         }
 

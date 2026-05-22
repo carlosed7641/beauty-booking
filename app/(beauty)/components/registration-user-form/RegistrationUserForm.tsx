@@ -4,14 +4,9 @@ import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { CgSpinner } from 'react-icons/cg'
 import clsx from 'clsx'
-import { GENDERS } from '@/util/const'
+import { COUNTRIES, GENDERS } from '@/util/const'
 import { Gender } from '@/generated/prisma/enums'
 import { updateUser } from '@/actions'
-
-interface Props {
-    countries: Country[]
-}
-
 interface Inputs {
     indicator?: string
     phone?: string
@@ -20,7 +15,7 @@ interface Inputs {
     birthDay: Date | null
 }
 
-export const RegistrationUserForm = ({ countries }: Props) => {
+export const RegistrationUserForm = () => {
 
     const { register, handleSubmit, formState: { isValid } } = useForm<Inputs>()
     const [isLoading, setIsLoading] = useState(false)
@@ -59,7 +54,7 @@ export const RegistrationUserForm = ({ countries }: Props) => {
                         <label htmlFor="phone">Celular (opcional)</label>
                         <div className="flex gap-2">
                             <select className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" {...register('indicator')}>
-                                {countries.map(country => <option key={country.indicator} value={country.indicator}>+{country.indicator}</option>)}
+                                {COUNTRIES.map(country => <option key={country.indicator} value={country.indicator}>+{country.indicator}</option>)}
                             </select>
                             <input id="phone" {...register('phone')} className="flex-1 p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" type="text" />
                         </div>

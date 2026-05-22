@@ -7,11 +7,10 @@ import { updateUser } from '@/actions'
 import { SelectCountry } from '@/components'
 
 interface Props {
-    countries: Country[]
     isEmployee: boolean
 }
 
-export const RegistrationData = ({ countries, isEmployee }: Props) => {
+export const RegistrationData = ({ isEmployee }: Props) => {
 
     const [showCountryStep, setShowCountryStep] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
@@ -40,7 +39,7 @@ export const RegistrationData = ({ countries, isEmployee }: Props) => {
 
     return (
         <>
-            {showCountryStep ? <SelectCountry countries={countries} /> : <RegistrationForm onSubmit={onSubmit} countries={countries} isLoading={isLoading}  />}
+            {showCountryStep ? <SelectCountry /> : <RegistrationForm onSubmit={onSubmit} isLoading={isLoading}  />}
         </>
     )
 }

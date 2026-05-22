@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { FaEdit } from 'react-icons/fa'
 import { useModal } from '@/store'
 import { Modal, ModalHeader, ProfileForm } from '@/components'
@@ -11,7 +11,7 @@ export const UpdateProfile = ({ userData }: { userData: UserDTO }) => {
 
     const [profileFormState, setProfileFormState] = useState({ loading: false, error: '' })
 
-    const initialValues: UserDTO = {
+    const initialValues = useMemo<UserDTO>(() => ({
         artisticName: userData.artisticName,
         birthDay: userData.birthDay,
         countryId: userData.countryId,
@@ -23,7 +23,7 @@ export const UpdateProfile = ({ userData }: { userData: UserDTO }) => {
         name: userData.name,
         phone: userData.phone,
         role: userData.role,
-    }
+    }), [userData])
 
     const openModal = useModal(state => state.openModal)
     const setOpenModal = useModal(state => state.setOpenModal)

@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation'
 import { LinkingCodeScreen, RegistrationData, RegistrationSteps } from './components'
 import { SelectCountry } from '@/components'
-import { getCountries } from '@/actions'
 import { auth } from '@/auth.config'
 import prisma from '@/lib/prisma'
 
@@ -32,23 +31,19 @@ export default async function AdminLayout({
   if (!user) throw new Error('Ocurrió un error con el usuario')
 
   if (!user.entityId && user.role === 'employee') {
-    const countries = await getCountries() 
     return (
         <LinkingCodeScreen 
-          countries={countries} 
           needRegistration={!user?.name || !user?.countryId || !user?.phone}
         />
       )
   }
   
   if (!user?.name || !user?.countryId || !user?.phone) {
-    const countries = await getCountries() 
-    return <RegistrationData countries={countries} isEmployee={user.role === 'employee'} />
+    return <RegistrationData isEmployee={user.role === 'employee'} />
   } 
 
   if (!user.entityId && user.role === 'admin') {
-     const countries = await getCountries() 
-    return <SelectCountry countries={countries} />  
+    return <SelectCountry />  
   }
   
   if (!user.isRegisterCompleted && user.entityId && user.role === 'admin') {

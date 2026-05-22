@@ -6,14 +6,14 @@ import { useForm } from 'react-hook-form'
 import { PiUserFocusThin } from 'react-icons/pi'
 import { CgSpinner } from 'react-icons/cg'
 import clsx from 'clsx'
+import { COUNTRIES } from '@/util/const'
 
 interface Props {
     onSubmit(data: RegistrationInputs): void
-    countries: Country[]
     isLoading: boolean
 }
 
-export const RegistrationForm = ({ onSubmit, countries, isLoading }: Props) => {
+export const RegistrationForm = ({ onSubmit, isLoading }: Props) => {
 
     const { register, handleSubmit, formState: { isValid }, watch } = useForm<RegistrationInputs>()
     const [tempPhoto, setTempPhoto] = useState('')
@@ -49,7 +49,7 @@ export const RegistrationForm = ({ onSubmit, countries, isLoading }: Props) => {
                         <select defaultValue="" className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" {...register('countryId', { required: true })}>
                             <option value="" disabled>-- Selecciona un país --</option>
                             {
-                                countries.map(country => <option key={country.id} value={country.id}>{country.name}</option>)
+                                COUNTRIES.map(country => <option key={country.id} value={country.id}>{country.name}</option>)
                             }
                         </select>
                     </label>
@@ -57,7 +57,7 @@ export const RegistrationForm = ({ onSubmit, countries, isLoading }: Props) => {
                         <label htmlFor="phone">Número de contacto</label>
                         <div className="flex gap-2">
                             <select className="p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" {...register('indicator', { required: true })}>
-                                {countries.map(country => <option key={country.indicator} value={country.indicator}>+{country.indicator}</option>)}
+                                {COUNTRIES.map(country => <option key={country.indicator} value={country.indicator}>+{country.indicator}</option>)}
                             </select>
                             <input id="phone" {...register('phone', { required: true })} className="flex-1 p-2 border border-zinc-300 rounded-md focus:outline-0 focus:border-green-700" type="text" />
                         </div>

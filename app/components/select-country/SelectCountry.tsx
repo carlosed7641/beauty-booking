@@ -6,9 +6,9 @@ import { CgSpinner } from 'react-icons/cg'
 import { createEntity, updateUser } from '@/actions'
 import { RegistrationSteps } from '../../admin/(admin)/components'
 import { RegistrationUserForm } from '@/(beauty)/components'
-import { FLAGS } from '@/util/const'
+import { COUNTRIES, FLAGS } from '@/util/const'
 
-export const SelectCountry = ({ countries, isUser }: { countries: Country[], isUser?: boolean }) => {
+export const SelectCountry = ({ isUser }: { isUser?: boolean }) => {
 
     const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null)
     const [showNextStep, setNextStep] = useState(false)
@@ -40,7 +40,7 @@ export const SelectCountry = ({ countries, isUser }: { countries: Country[], isU
             {
                 showNextStep ? (
                      isUser ? 
-                     <RegistrationUserForm countries={countries} />
+                     <RegistrationUserForm />
                      :
                      <RegistrationSteps entityId={entityId} />
                 ) :
@@ -50,9 +50,9 @@ export const SelectCountry = ({ countries, isUser }: { countries: Country[], isU
                                 {isUser ? '¿De qué país eres?' : 'Selecciona el país donde tienes tu negocio' }
                             </h1>
                             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6">
-                                {countries.map(({ id, name, shortName }) => {
+                                {COUNTRIES.map(({ id, name }) => {
 
-                                    const Flag = FLAGS[shortName]
+                                    const Flag = FLAGS[id]
 
                                     return (
                                         <div onClick={() => setSelectedCountryId(id)} className={

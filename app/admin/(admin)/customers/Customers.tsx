@@ -18,11 +18,10 @@ const tabs = [
 
 interface Props {
     customers: CustomerData[]
-    countries: Country[]
     entityId: string
 }
 
-export const Customers = ({ customers, countries, entityId }: Props) => {
+export const Customers = ({ customers, entityId }: Props) => {
 
     const [selectedCustomer, setSelectedCustomer] = useState<CustomerData | null>(null)
     const [searchValue, setSearchValue] = useState('')
@@ -118,7 +117,6 @@ export const Customers = ({ customers, countries, entityId }: Props) => {
                 openModal === 'CustomerUpdate' && selectedCustomer &&
                 <CustomerFormModal
                     selectedCustomer={selectedCustomer}
-                    countries={countries}
                     entityId={entityId}
                 />
             }

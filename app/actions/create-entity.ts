@@ -13,9 +13,7 @@ export const createEntity = async (countryId: string) => {
      const entityId = await prisma.$transaction(async tx => {
           const entity = await tx.entity.create({
                data: {
-                    country: {
-                         connect: { id: countryId },
-                    },
+                    countryId,
                     owner: {
                          connect: { id: session?.user?.id },
                     },

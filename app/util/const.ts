@@ -421,3 +421,96 @@ export const WORKDAY_FIELDS = {
     disabled: true,
     professionalId: true
 }
+
+export const COUNTRIES = [
+  {
+    id: 'AR',
+    name: 'Argentina',
+    indicator: '54'
+  },
+  {
+    id: 'BO',
+    name: 'Bolivia',
+    indicator: '591'
+  },
+  {
+    id: 'CL',
+    name: 'Chile',
+    indicator: '56'
+  },
+  {
+    id: 'CO',
+    name: 'Colombia',
+    indicator: '57'
+  },
+  {
+    id: 'CR',
+    name: 'Costa Rica',
+    indicator: '506'
+  },
+  {
+    id: 'CU',
+    name: 'Cuba',
+    indicator: '53'
+  },
+  {
+    id: 'EC',
+    name: 'Ecuador',
+    indicator: '593'
+  },
+  {
+    id: 'SL',
+    name: 'El Salvador',
+    indicator: '503'
+  },
+  {
+    id: 'GT',
+    name: 'Guatemala',
+    indicator: '502'
+  },
+  {
+    id: 'HN',
+    name: 'Honduras',
+    indicator: '504'
+  },
+  {
+    id: 'MX',
+    name: 'México',
+    indicator: '52'
+  },
+  {
+    id: 'NC',
+    name: 'Nicaragua',
+    indicator: '505'
+  },
+  {
+    id: 'PN',
+    name: 'Panamá',
+    indicator: '507'
+  },
+  {
+    id: 'PY',
+    name: 'Paraguay',
+    indicator: '595'
+  },
+  {
+    id: 'PE',
+    name: 'Perú',
+    indicator: '51'
+  },
+  {
+    id: 'RD',
+    name: 'Rep. Dominicana',
+    indicator: '1'
+  },
+  {
+    id: 'UY',
+    name: 'Uruguay',
+    indicator: '598'
+  },
+  {
+    id: 'VE',
+    name: 'Venezuela',
+    indicator: '58'
+  }
+]

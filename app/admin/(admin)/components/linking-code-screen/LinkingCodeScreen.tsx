@@ -6,11 +6,10 @@ import { RegistrationData } from '../registration-data/RegistrationData'
 import { SignOut } from '@/components'
 
 interface Props {
-    countries: Country[]
     needRegistration: boolean
 }
 
-export const LinkingCodeScreen = ({ countries, needRegistration }: Props) => {
+export const LinkingCodeScreen = ({ needRegistration }: Props) => {
 
     const [code, setCode] = useState('')
     const [isPending, startTransition] = useTransition()
@@ -41,7 +40,7 @@ export const LinkingCodeScreen = ({ countries, needRegistration }: Props) => {
         <>
             {
                 showNextStep ?
-                    <RegistrationData countries={countries} isEmployee />
+                    <RegistrationData isEmployee />
                     :
                     (
                         <div className="bg-zinc-100 flex flex-col items-center justify-center pt-24 md:items-center gap-5 px-4 md:pt-0 h-screen">

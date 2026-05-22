@@ -22,7 +22,6 @@ model Entity {
   createdAt        DateTime      @default(now())
   cancelDateTime   Int           @default(20)
   linkingCode      String        @unique
-  country          Country       @relation(fields: [countryId], references: [id])
   owner            User          @relation("EntityOwner", fields: [ownerId], references: [id])
   services         Service[]
   users            User[]
@@ -57,7 +56,6 @@ model User {
   isActive            Boolean           @default(true)
   entityOwner         Entity?           @relation("EntityOwner")
   professionalEvents  Event[]           @relation("EventProfessional")
-  country             Country?          @relation(fields: [countryId], references: [id])
   entity              Entity?           @relation(fields: [entityId], references: [id])
   samples             WorkSample[]
   workExperiences     WorkExperience[]
@@ -229,14 +227,6 @@ model WorkSampleImage {
   sample   WorkSample @relation(fields: [sampleId], references: [id], onDelete: Cascade)
 }
 
-model Country {
-  id        String   @id @default(uuid())
-  name      String
-  shortName String
-  indicator String
-  entity    Entity[]
-  users     User[]
-}
 
 enum Gender {
   men

@@ -5,14 +5,14 @@ import { IoArrowBackOutline } from 'react-icons/io5'
 import { useModal } from '@/store'
 import { Modal, ModalHeader } from '@/components'
 import { updateCustomer } from '@/actions'
+import { COUNTRIES } from '@/util/const'
 
 interface Props {
     selectedCustomer: CustomerData
-    countries: Country[]
     entityId: string
 }
 
-export const CustomerFormModal = ({ selectedCustomer, countries, entityId }: Props) => {
+export const CustomerFormModal = ({ selectedCustomer, entityId }: Props) => {
 
     const { id, name, phone: { indicator, number } } = selectedCustomer
 
@@ -62,7 +62,7 @@ export const CustomerFormModal = ({ selectedCustomer, countries, entityId }: Pro
                     <label className="text-green-700" htmlFor="number">Número de contacto</label>
                     <div className="flex gap-2">
                         <select onChange={handleChangeField} value={formData.indicator} className="w-25 border border-green-700 px-3 py-1 rounded-md focus:outline-0" name="indicator">
-                            {countries.map(country => <option key={country.indicator} value={country.indicator}>+{country.indicator}</option>)}
+                            {COUNTRIES.map(country => <option key={country.indicator} value={country.indicator}>+{country.indicator}</option>)}
                         </select>
                         <input onChange={handleChangeField} className="w-full border border-green-700 px-3 py-1 rounded-md focus:outline-0" type="tel" name="phone" id="phone" value={formData.phone} />
                     </div>
