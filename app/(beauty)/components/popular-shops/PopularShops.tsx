@@ -21,6 +21,7 @@ export const PopularShops = async () => {
         }
     })
 
+    if (items.length === 0) return null
 
     return (
         <>

@@ -52,6 +52,15 @@ export default async function MyReputationPage() {
 
   const events = data?.customers.flatMap(({ events }) => events) ?? []
 
+  if (events.length === 0) {
+    return (
+      <div className="flex flex-col items-center my-4 gap-3">
+        <RiEmotionHappyLine className="text-5xl" />
+        <p className="text-xl text-center">Ningún profesional te ha dejado calificaciones aún</p>
+      </div>
+    )
+  }
+
   const totalPoints = events.reduce((sum, pr) => sum + (pr.professionalRating ?? 0), 0)
   const averagePoints = events.length > 0
     ? totalPoints / events.length

@@ -137,7 +137,7 @@ export default async function ProfilePage() {
          <SignOut /> 
         </div>
       </div>
-      <RecentServices services={recentServices} />
+      {recentServices.length > 0 && <RecentServices services={recentServices} />}
     </>
   )
 }
