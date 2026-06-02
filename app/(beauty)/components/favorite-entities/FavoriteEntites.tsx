@@ -29,8 +29,13 @@ export const FavoriteEntites = ({ favorites }: Props) => {
                                 <Image className="bg-white" src={f.imageSrc ?? '/images/placeholder.jpg'} alt={f.name ?? ''} width={140} height={140} />
                                 <div className="p-2">
                                     <p>{f.name}</p>
-                                    <StarQuantity points={f.reviews.points} />
-                                    <p className="text-zinc-500">{f.reviews.counts} reseñas</p>
+                                    {
+                                        f.reviews.counts > 0 &&
+                                        <>
+                                            <StarQuantity points={f.reviews.points} />
+                                            <p className="text-zinc-500">{f.reviews.counts} reseñas</p>
+                                        </>
+                                    }
                                 </div>
                             </Link>
                         </li>

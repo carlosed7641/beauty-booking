@@ -112,12 +112,12 @@ export const GeneralReportsPanel = ({ isLoading, dataSummary, selectedProfession
             />
             <Summary
                 title="Agendamientos manuales"
-                value={manualScheduling}
+                value={adminScheduling}
                 isLoading={isLoading}
             />
             <Summary
                 title="Agendamientos Beauty Booking"
-                value={adminScheduling}
+                value={manualScheduling}
                 isLoading={isLoading}
             />
             <Summary
