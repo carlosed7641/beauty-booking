@@ -31,7 +31,7 @@ export const ProfileWorkSamples = ({ samples, entityId, authorId }: Props) => {
                 <div className="flex flex-col gap-3">
                     {
                         samples.length > 0 ?
-                            <WorkSamples key={samplesKey} workSamples={samples} hideFilters hideName />
+                            <WorkSamples key={samplesKey} workSamples={samples} hideFilters />
                             : <p>No hay nada acá aún</p>
                     }
                 </div>
