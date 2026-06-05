@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { login } from '@/actions'
 import clsx from 'clsx'
@@ -15,13 +15,12 @@ interface Inputs {
 interface Props {
     callback?: (id?: string, arr?: string[]) => Promise<void>
     isAdmin?: boolean
+    redirectTo?: string
 } 
 
-export const LoginForm = ({ isAdmin = false, callback }: Props) => {
+export const LoginForm = ({ isAdmin = false, callback, redirectTo }: Props) => {
 
     const router = useRouter()
-    const searchParams = useSearchParams()
-    const redirectTo = searchParams.get('redirectTo')
     const { handleSubmit, register } = useForm<Inputs>()
     const [showPassword, setShowPassword] = useState(false)
     const [formState, setFormState] = useState({ error: '', loading: false })

@@ -1,10 +1,16 @@
 import { LoginForm } from '@/components'
-import { Suspense } from 'react'
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams
+}: {
+  searchParams: Promise<{ redirectTo?: string }>
+}) {
+
+    const params = await searchParams
     return (
-        <Suspense fallback={null}>
-            <LoginForm isAdmin />
-        </Suspense>
+        <LoginForm 
+            isAdmin
+            redirectTo={params.redirectTo}
+        />
     )
 }

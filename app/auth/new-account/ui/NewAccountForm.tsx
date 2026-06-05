@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { CgSpinner } from 'react-icons/cg'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import clsx from 'clsx'
 import { login, registerUser } from '@/actions'
 
@@ -15,11 +15,9 @@ interface Inputs {
     confirmPassword: string
 }
 
-export const NewAccountForm = () => {
+export const NewAccountForm = ({ redirectTo }: { redirectTo?: string}) => {
 
     const router = useRouter()
-    const searchParams = useSearchParams()
-    const redirectTo = searchParams.get('redirectTo')
     const { register, handleSubmit, watch, formState: { isValid } } = useForm<Inputs>()
     const [showPassword, setShowPassword] = useState(false)
     const [formState, setFormState] = useState({ error: '', loading: false })

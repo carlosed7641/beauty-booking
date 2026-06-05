@@ -1,10 +1,14 @@
-import { Suspense } from 'react'
 import { NewAccountForm } from './ui/NewAccountForm'
 
-export default function NewAccountnPage() {
+export default async function NewAccountnPage({
+  searchParams
+}: {
+  searchParams: Promise<{ redirectTo?: string }>
+}) {
+    
+    const params = await searchParams
+
     return (
-        <Suspense fallback={null}>
-        <NewAccountForm />
-        </Suspense>
+        <NewAccountForm redirectTo={params.redirectTo} />
     )
 }
