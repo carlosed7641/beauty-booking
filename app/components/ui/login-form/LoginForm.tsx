@@ -46,8 +46,6 @@ export const LoginForm = ({ isAdmin = false, callback, redirectTo }: Props) => {
         router.push(isAdmin ? '/admin' : redirectTo ?? '/')
     }
 
-    console.log({ redirectTo })
-
     const newAccountUrl = isAdmin ? '/admin/auth/new-account' : '/auth/new-account'
 
     return (

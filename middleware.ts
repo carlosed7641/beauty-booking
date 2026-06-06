@@ -31,6 +31,7 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.AUTH_SECRET })
   const role = token?.data?.role ?? ''
 
+  console.log({ cookies: req.cookies.getAll()})
   console.log(token, { auth: process.env.AUTH_SECRET  })
 
   const isAdminOrEmployee = ADMIN_ROLES.includes(role)
