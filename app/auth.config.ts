@@ -5,6 +5,9 @@ import { z } from 'zod'
 import prisma from '@/lib/prisma'
 
 export const authConfig: NextAuthConfig = {
+    session: {
+        strategy: 'jwt'
+    },
     pages: {
         signIn: '/auth/login',
         newUser: '/auth/new-account'

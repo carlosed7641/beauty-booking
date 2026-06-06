@@ -28,18 +28,7 @@ const ADMIN_ONLY_ROUTES = [
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
 
-  try {
-  const token = await getToken({
-    req,
-    secret: process.env.AUTH_SECRET,
-  })
-
-  console.log('TOKEN', token)
-} catch (e) {
-  console.error('GET TOKEN ERROR', e)
-}
-
-  const token = await getToken({ req, secret: process.env.AUTH_SECRET })
+  const token = await getToken({ req, secret: process.env.AUTH_SECRET, secureCookie: true })
   const role = token?.data?.role ?? ''
 
   const isAdminOrEmployee = ADMIN_ROLES.includes(role)
