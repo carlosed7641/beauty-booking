@@ -57,12 +57,12 @@ export const UpdateProfile = ({ userData }: { userData: UserDTO }) => {
 
     return (
         <>
-            <button onClick={() => setOpenModal(UpdateProfile.name)} className="text-green-700 w-fit flex gap-1 items-center cursor-pointer font-bold underline mx-auto md:mx-0">
+            <button onClick={() => setOpenModal('UpdateProfile')} className="text-green-700 w-fit flex gap-1 items-center cursor-pointer font-bold underline mx-auto md:mx-0">
                 <FaEdit />
                 Editar perfil
             </button>
             {
-                openModal === UpdateProfile.name &&
+                openModal === 'UpdateProfile' &&
                 <Modal>
                     <ModalHeader>
                         <p className="text-green-700 text-lg">Editar datos del perfil</p>

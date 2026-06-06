@@ -26,7 +26,7 @@ export const ProfileWorkSamples = ({ samples, entityId, authorId }: Props) => {
             <div className="bg-white w-full rounded-md p-7">
                 <div className="flex justify-between md:justify-start md:gap-3 items-center mb-3 text-green-700">
                     <span className="text-xl md:text-2xl">Mi trabajo</span>
-                    <PiPlusCircleBold onClick={() => setOpenModal(ProfileWorkSamples.name)} className="text-2xl cursor-pointer" />
+                    <PiPlusCircleBold onClick={() => setOpenModal('ProfileWorkSamples')} className="text-2xl cursor-pointer" />
                 </div>
                 <div className="flex flex-col gap-3">
                     {
@@ -36,7 +36,7 @@ export const ProfileWorkSamples = ({ samples, entityId, authorId }: Props) => {
                     }
                 </div>
             </div>
-            {openModal === ProfileWorkSamples.name && (
+            {openModal === 'ProfileWorkSamples' && (
                 <WorkSamplesModal
                     workSamples={samples}
                     authorId={authorId}
