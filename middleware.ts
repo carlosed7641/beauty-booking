@@ -31,8 +31,15 @@ export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.AUTH_SECRET })
   const role = token?.data?.role ?? ''
 
-  console.log({ cookies: req.cookies.getAll()})
-  console.log(token, { auth: process.env.AUTH_SECRET  })
+    console.log(
+      'AUTH_SECRET middleware:',
+      process.env.AUTH_SECRET?.slice(0, 10)
+    )
+
+    console.log(
+  'session cookie exists:',
+  !!req.cookies.get('__Secure-authjs.session-token')
+)
 
   const isAdminOrEmployee = ADMIN_ROLES.includes(role)
   const isAdminRoute = pathname.startsWith('/admin')

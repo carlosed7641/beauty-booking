@@ -4,6 +4,11 @@ import Credentials from 'next-auth/providers/credentials'
 import { z } from 'zod'
 import prisma from '@/lib/prisma'
 
+console.log(
+  'AUTH_SECRET auth.ts:',
+  process.env.AUTH_SECRET?.slice(0, 10)
+)
+
 export const authConfig: NextAuthConfig = {
     pages: {
         signIn: '/auth/login',
